@@ -24,6 +24,8 @@ Route::post('register', 'AuthController@register');
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('cans', CanController::class);
     Route::get('logout', 'AuthController@logout')->name('logout');
+
+    Route::get('cans/getUser/{id}','UserController@getUser');
  
 });
 
