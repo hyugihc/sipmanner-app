@@ -46,46 +46,46 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="{{ route('cans.update', $can->id) }}" method="POST" id="quickForm">
+                    <form action="{{ route('users.update', $user->id) }}" method="POST" id="quickForm">
                         @csrf
                         @method('PUT')
 
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Nomor SK</label>
-                                <input type="text" name="nomor_sk" value="{{ $can->nomor_sk }}" class="form-control"
-                                    id="exampleInputEmail1" placeholder="">
+                                <label>Nama</label>
+                                <input type="text" name="name" class="form-control" placeholder="" value="{{$user->name}}">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Tanggal SK</label>
-                                <input type="date" name="tanggal_sk" value="{{ $can->tanggal_sk }}" class="form-control"
-                                    id="exampleInputEmail1" placeholder="">
+                                <label>Email</label>
+                                <input type="text" name="email" class="form-control" placeholder="" value="{{$user->email}}">
                             </div>
+
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Perihal SK</label>
-                                <input type="text" name="perihal_sk" value="{{ $can->perihal_sk }}" class="form-control"
-                                    id="exampleInputEmail1" placeholder="">
+                                <label>Password</label>
+                                <input type="password" name="password" class="form-control" placeholder="" value=":******">
                             </div>
+
                             <div class="form-group">
-                                <label for="exampleInputEmail1">File SK</label>
-                                <a href="{{ $can->file_sk }}"> File Sk</a>
-                                <input type="file" name="file_sk" value="" class="form-control"
-                                    id="exampleInputEmail1" placeholder="">
+                                <label>NIP Lama</label>
+                                <input type="text" name="nip_lama" class="form-control" placeholder="" value="{{$user->nip_lama}}">
                             </div>
+
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Kode Org</label>
-                                <input type="text" name="kode_org" value="{{ $can->kode_org }}" class="form-control"
-                                    id="exampleInputEmail1" placeholder="">
+                                <label>Role</label>
+                                <select class="form-control" name="role_id" >
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
+
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Approval</label>
-                                <input type="text" name="aproval" value="{{ $can->approval }}" class="form-control"
-                                    id="exampleInputEmail1" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Alasan</label>
-                                <input type="text" name="alasan" value="{{ $can->alasan }}" class="form-control"
-                                    id="exampleInputEmail1" placeholder="">
+                                <label>Wilayah</label>
+                                <select class="form-control" name="provinsi_id">
+                                    @foreach ($provinsis as $provinsi)
+                                        <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                         </div>

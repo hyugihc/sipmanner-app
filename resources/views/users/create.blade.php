@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard</h1>
+                    <h1 class="m-0">Create</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -33,93 +33,46 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('cans.store') }}" method="POST" id="quickForm">
+                        <form action="{{ route('users.store') }}" method="POST" id="quickForm">
                             @csrf
 
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Nomor SK</label>
-                                    <input type="text" name="nomor_sk" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
+                                    <label>Nama</label>
+                                    <input type="text" name="name" class="form-control" placeholder="">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Tanggal SK</label>
-                                    <input type="date" name="tanggal_sk" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Perihal SK</label>
-                                    <input type="text" name="perihal_sk" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">File SK</label>
-                                    <input type="file" name="file_sk" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
+                                    <label>Email</label>
+                                    <input type="text" name="email" class="form-control" placeholder="">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Kode Org</label>
-                                    <input type="text" name="kode_org" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
+                                    <label>Password</label>
+                                    <input type="password" name="password" class="form-control" placeholder="">
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Aproval</label>
-                                    <input type="text" name="aproval" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
+                                    <label>NIP Lama</label>
+                                    <input type="text" name="nip_lama" class="form-control" placeholder="">
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Alasan</label>
-                                    <input type="text" name="alasan" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
+                                    <label>Role</label>
+                                    <select class="form-control" name="role_id">
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->id }}">{{ $role->nama }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
-                                <input type='text' id='search' name='search' placeholder='Enter userid 1-27'>
-
-                                <input type='button' value='Search' id='but_search'>
-                                <br />
-                                <br />
-
-                                <table class="table table-bordered" id='userTable'>
-                                    <thead>
-                                        <tr>
-                                            <th>Nip Lama</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            {{-- <th>Action</th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody id="user_table"></tbody>
-                                </table>
-
-                                <br />
-
-
-                                <div class="well clearfix">
-                                    <a id="add-row" class="btn btn-primary pull-right add-record" data-added="0"><i
-                                            class="glyphicon glyphicon-plus"></i> Add Row</a>
+                                <div class="form-group">
+                                    <label>Wilayah</label>
+                                    <select class="form-control" name="provinsi_id">
+                                        @foreach ($provinsis as $provinsi)
+                                            <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-
-                                <br />
-
-                                <table class="table table-bordered" id="tbl_posts">
-                                    <thead>
-                                        <tr>
-                                            <th>Nip Lama</th>
-                                            <th>Nama</th>
-                                            <th>Email</th>
-                                            {{-- <th>Action</th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbl_posts_body">
-
-                                    </tbody>
-                                </table>
-
-                                <select id="selectedUser" name="users[]" multiple>
-                                </select>
-
-
 
                             </div>
                             <!-- /.card-body -->

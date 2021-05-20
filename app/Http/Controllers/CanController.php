@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Can;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CanController extends Controller
 {
@@ -49,10 +50,24 @@ class CanController extends Controller
             'file_sk' => 'required',
         ]);
         
-        // $can= new Can;
-        // $can->name = $request->name;
+        $can= new Can;
+        $can->nomor_sk = $request->nomor_sk;
+        $can->tanggal_sk = $request->tanggal_sk;
+        $can->perihal_sk = $request->perihal_sk;
+     //   $can->file_sk = $request->file_sk;
+        $can->approval = $request->approval;
+        $can->kode_org = $request->kode_org;
+        $can->alasan = $request->alasan;
+
+        $can->file_sk = Storage::putFile('cans',$request->file_sk);
+        
+       
+        
+        $can->save();
+
+        $can->users()->attach($request->users);
   
-        Can::create($request->all());
+       // Can::create($request->all());
    
         return redirect()->route('cans.index')
                         ->with('success','Can created successfully.');

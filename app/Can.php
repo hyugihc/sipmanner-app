@@ -12,8 +12,9 @@ class Can extends Model
         'nomor_sk', 'tanggal_sk', 'perihal_sk', 'file_sk', 'approval', 'kode_org', 'alasan'
     ];
 
-    public function user()
+    public function users()
     {
         return $this->belongsToMany(User::class);
     }
+
 }

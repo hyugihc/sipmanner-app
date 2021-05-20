@@ -24,9 +24,20 @@ Route::post('register', 'AuthController@register');
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('cans', CanController::class);
     Route::get('logout', 'AuthController@logout')->name('logout');
+    Route::get('cans/getUser/{nipLama}','UserController@getUser');
 
-    Route::get('cans/getUser/{id}','UserController@getUser');
- 
+    Route::get('users', 'UserController@index')->name('users.index');
+  
+    Route::get('users/create', 'UserController@create')->name('users.create');
+    Route::post('users', 'UserController@store')->name('users.store');
+    Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit');
+    Route::put('users/{user}', 'UserController@update')->name('users.update');
+    Route::delete('users/{user}', 'UserController@destroy')->name('users.destroy');
+    Route::get('users/{user}', 'UserController@show')->name('users.show');
+
+
+    //Route::resource('users', UserController::class);
+    
 });
 
 // Route::get('/', function () {
