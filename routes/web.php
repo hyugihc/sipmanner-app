@@ -14,20 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 
- 
+
 Route::get('/', 'AuthController@showFormLogin')->name('login');
 Route::get('login', 'AuthController@showFormLogin')->name('login');
 Route::post('login', 'AuthController@login');
 Route::get('register', 'AuthController@showFormRegister')->name('register');
 Route::post('register', 'AuthController@register');
- 
+
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('cans', CanController::class);
+
     Route::get('logout', 'AuthController@logout')->name('logout');
-    Route::get('cans/getUser/{nipLama}','UserController@getUser');
+    Route::get('cans/getUser/{nipLama}', 'UserController@getUser');
+
 
     Route::get('users', 'UserController@index')->name('users.index');
-  
     Route::get('users/create', 'UserController@create')->name('users.create');
     Route::post('users', 'UserController@store')->name('users.store');
     Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit');
@@ -36,12 +36,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('users/{user}', 'UserController@show')->name('users.show');
 
 
-    //Route::resource('users', UserController::class);
-    
+    Route::resource('cans', CanController::class);
+    // Route::get('{file_sk}', 'CanController@downloadFileSk')->name('cans.download');
+    Route::get('cans/{can}/download', 'CanController@downloadFileSk')->name('cans.download');
+
+    Route::resource('program_intervensis', ProgramIntervensiController::class);
+    Route::resource('progress_programs', ProgressProgramController::class);
 });
 
 // Route::get('/', function () {
 //     return view('layouts.master');
 // });
-
-

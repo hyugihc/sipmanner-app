@@ -8,7 +8,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <a class="btn btn-block btn-primary btn-sm" href="{{ route('users.create') }}">Create</a>
+                    <a class="btn btn-block btn-primary btn-sm"
+                        href="{{ route('program_intervensis.create') }}">Create</a>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -54,32 +55,33 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
+                                    <th>Jenis Program Intervensi</th>
                                     <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Nip Lama</th>
-                                    <th>Role</th>
-                                    <th>Provinsi</th>
-                                    <th>Aksi</th>
+                                    <th>Uraian Kegiatan</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach ($program_intervensis as $program_intervensi)
                                     <tr>
-                                        <td>{{ $user->nama }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->nip_lama }}</td>
-                                        <td>{{ $user->role['name'] }}</td>
-                                        <td>{{ $user->provinsi['nama'] }}</td>
+                                        <td>
+                                            @if ({{ $program_intervensi->jenis=1 }})
+                                            Program Intervensi Nasional
+                                            @else  Program Intervensi khusus
+                                            @endif  
+                                        </td>
+                                        <td>{{ $program_intervensi->nama }}</td>
+                                        <td>{{ $program_intervensi->uraian_kegiatan }}</td>
                                         <td>
 
-                                            <form action="{{ route('users.destroy', $user) }}" method="POST">
+                                            <form action="{{ route('program_intervensis.destroy', $program_intervensi) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a class="btn btn-block btn-primary btn-sm"
-                                                    href="{{ route('users.show', $user) }}">Show</a>
+                                                    href="{{ route('program_intervensis.show', $program_intervensi) }}">Show</a>
 
                                                 <a class="btn btn-block btn-warning btn-sm"
-                                                    href="{{ route('users.edit', $user) }}">Edit</a>
+                                                    href="{{ route('program_intervensis.edit', $program_intervensi) }}">Edit</a>
 
                                                 <button type="submit"
                                                     class="btn btn-block btn-danger btn-sm">Delete</button>
@@ -91,7 +93,7 @@
 
                             </tbody>
                         </table>
-                        {{ $users->links() }}
+                        {{ $program_intervensis->links() }}
                     </div>
                     <!-- /.card-body -->
                 </div>

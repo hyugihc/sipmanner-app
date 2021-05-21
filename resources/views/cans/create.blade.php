@@ -33,7 +33,8 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('cans.store') }}" method="POST" id="quickForm">
+                        <form action="{{ route('cans.store') }}" method="POST" id="quickForm"
+                            enctype="multipart/form-data">
                             @csrf
 
                             <div class="card-body">

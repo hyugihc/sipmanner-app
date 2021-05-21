@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\can_user;
 use Illuminate\Http\Request;
+use App\ProgressProgram;
+use App\ProgramIntervensi;
 
-class CanUserController extends Controller
+class ProgressProgramController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +16,10 @@ class CanUserController extends Controller
     public function index()
     {
         //
+
+
+        $progress_programs = ProgressProgram::with(['program_intervensi'])->paginate(5);
+        return view('progressprogram.index', compact('$progress_programs'));
     }
 
     /**
@@ -25,6 +30,8 @@ class CanUserController extends Controller
     public function create()
     {
         //
+        $program_intervensis = ProgramIntervensi::all();
+        return view('programintervensi.create', compact('program_intervensis'));
     }
 
     /**
@@ -41,10 +48,10 @@ class CanUserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\can_user  $can_user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(can_user $can_user)
+    public function show($id)
     {
         //
     }
@@ -52,10 +59,10 @@ class CanUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\can_user  $can_user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(can_user $can_user)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +71,10 @@ class CanUserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\can_user  $can_user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, can_user $can_user)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +82,10 @@ class CanUserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\can_user  $can_user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(can_user $can_user)
+    public function destroy($id)
     {
         //
     }

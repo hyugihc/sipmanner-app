@@ -17,8 +17,8 @@ class CanController extends Controller
     {
         //
         $cans = Can::latest()->paginate(5);
-  
-        return view('cans.index',compact('cans'))
+
+        return view('cans.index', compact('cans'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -49,28 +49,30 @@ class CanController extends Controller
             'perihal_sk' => 'required',
             'file_sk' => 'required',
         ]);
-        
-        $can= new Can;
+
+        $can = new Can;
         $can->nomor_sk = $request->nomor_sk;
         $can->tanggal_sk = $request->tanggal_sk;
         $can->perihal_sk = $request->perihal_sk;
-     //   $can->file_sk = $request->file_sk;
+        //   $can->file_sk = $request->file_sk;
         $can->approval = $request->approval;
         $can->kode_org = $request->kode_org;
         $can->alasan = $request->alasan;
 
-        $can->file_sk = Storage::putFile('cans',$request->file_sk);
-        
-       
-        
+        $can->file_sk = Storage::putFile('public/cans', $request->file_sk);
+
+        // $can->file_sk = Storage::putFileAs('cans', $request->file('file_sk'), $request->user()->nomor_sk);
+
+
+
         $can->save();
 
         $can->users()->attach($request->users);
-  
-       // Can::create($request->all());
-   
+
+        // Can::create($request->all());
+
         return redirect()->route('cans.index')
-                        ->with('success','Can created successfully.');
+            ->with('success', 'Can created successfully.');
     }
 
     /**
@@ -82,7 +84,7 @@ class CanController extends Controller
     public function show(Can $can)
     {
         //
-        return view('cans.show',compact('can'));
+        return view('cans.show', compact('can'));
     }
 
     /**
@@ -94,7 +96,7 @@ class CanController extends Controller
     public function edit(Can $can)
     {
         //
-        return view('cans.edit',compact('can'));
+        return view('cans.edit', compact('can'));
     }
 
     /**
@@ -114,12 +116,16 @@ class CanController extends Controller
             'perihal_sk' => 'required',
             'file_sk' => 'required',
         ]);
-  
-  
+
+
+
+
+
+
         $can->update($request->all());
-  
+
         return redirect()->route('cans.index')
-                        ->with('success','Can updated successfully');
+            ->with('success', 'Can updated successfully');
     }
 
     /**
@@ -132,12 +138,20 @@ class CanController extends Controller
     {
         //
         $can->delete();
-  
+
         return redirect()->route('cans.index')
-                        ->with('success','Can deleted successfully');
+            ->with('success', 'Can deleted successfully');
     }
 
- 
+    public function downloadFileSk(Can $can)
+    {
 
+        try {
+            //code...
 
+            return Storage::disk('local')->download($can->file_sk);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }
