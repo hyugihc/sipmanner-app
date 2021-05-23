@@ -15,11 +15,20 @@ class ProgressProgramController extends Controller
      */
     public function index()
     {
-        //
-
-
         $progress_programs = ProgressProgram::with(['program_intervensi'])->paginate(5);
-        return view('progressprogram.index', compact('$progress_programs'));
+        return view('progress_programs.index', compact('progress_programs'));
+    }
+
+    public function pi_index()
+    {
+        $program_intervensis = ProgramIntervensi::paginate(5);
+        return view('progress_programs.pi_index', compact('program_intervensis'));
+    }
+
+    public function ppi_index(ProgramIntervensi $program_intervensi)
+    {
+        $progress_programs = $program_intervensi->progress_programs()->paginate(5);
+        return view('progress_programs.ppi_index', compact('progress_programs'));
     }
 
     /**
@@ -31,7 +40,7 @@ class ProgressProgramController extends Controller
     {
         //
         $program_intervensis = ProgramIntervensi::all();
-        return view('programintervensi.create', compact('program_intervensis'));
+        return view('progress_programs.create', compact('program_intervensis'));
     }
 
     /**
@@ -43,6 +52,10 @@ class ProgressProgramController extends Controller
     public function store(Request $request)
     {
         //
+        ProgressProgram::create($request->all());
+
+        return redirect()->route('progress_programs.index')
+            ->with('success', 'Progress Programs created successfully.');
     }
 
     /**
@@ -51,9 +64,11 @@ class ProgressProgramController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ProgressProgram $progress_program)
     {
         //
+
+        return view('progress_programs.show', compact('progress_program'));
     }
 
     /**
@@ -62,9 +77,10 @@ class ProgressProgramController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ProgressProgram $progress_program)
     {
         //
+        return view('progress_programs.edit', compact('progress_program'));
     }
 
     /**
@@ -74,9 +90,15 @@ class ProgressProgramController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ProgressProgram $progress_program)
     {
         //
+
+        //
+        $progress_program->update($request->all());
+
+        return redirect()->route('progress_programs.index')
+            ->with('success', 'Progress Program updated successfully');
     }
 
     /**
@@ -85,8 +107,10 @@ class ProgressProgramController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ProgressProgram $progress_program)
     {
-        //
+        $progress_program->delete();
+        return redirect()->route('progress_programs.index')
+            ->with('success', 'Progress program deleted successfully');
     }
 }

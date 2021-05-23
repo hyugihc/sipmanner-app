@@ -33,10 +33,19 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('program_intervensi.store') }}" method="POST" id="quickForm">
+                        <form action="{{ route('program_intervensis.store') }}" method="POST" id="quickForm">
                             @csrf
 
                             <div class="card-body">
+
+                                <div class="form-group">
+                                    <label>Jenis Program Intervensi</label>
+                                    <select class="form-control" name="jenis">
+                                        <option value="1">Nasional</option>
+                                        <option value="2" selected>Khusus</option>
+                                    </select>
+                                </div>
+
                                 <div class="form-group">
                                     <label>Nama</label>
                                     <input type="text" name="nama" class="form-control" placeholder="">
@@ -44,17 +53,20 @@
                                 <div class="form-group">
                                     <label>Uraian Kegiatan</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control" placeholder="">
-                                                                                                </textarea>
+                                                                                                                                                                                                                                            </textarea>
                                 </div>
+
+
 
                                 <div class="form-group">
                                     <label>Nilai Pia</label>
-                                    <select class="form-control" name="provinsi_id">
+                                    <select class="form-control" name="pias[]" multiple>
                                         @foreach ($pias as $pia)
                                             <option value="{{ $pia->id }}">{{ $pia->nama }}</option>
                                         @endforeach
                                     </select>
                                 </div>
+
 
                                 <div class="form-group">
                                     <label>Volume Kegiatan Setahun</label>
@@ -63,12 +75,12 @@
 
                                 <div class="form-group">
                                     <label>Output</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder="">
+                                    <input type="text" name="output" class="form-control" placeholder="">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Outcome</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder="">
+                                    <input type="text" name="outcome" class="form-control" placeholder="">
                                 </div>
 
                                 <div class="form-group">
@@ -83,9 +95,20 @@
 
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <textarea type="text" name="keterangan" class="form-control" placeholder="">
-                                                     </textarea>
+                                    <textarea type="text" name="keterangan" class="form-control" placeholder=""></textarea>
+                                    </textarea>
                                 </div>
+
+                                @if (Auth::User()->role_id == 1)
+                                    <div class="form-group">
+                                        <label>Provinsis</label>
+                                        <select class="form-control" name="provinsi_id">
+                                            @foreach ($provinsis as $provinsi)
+                                                <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
 
                             </div>
                             <!-- /.card-body -->

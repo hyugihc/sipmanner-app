@@ -33,59 +33,64 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('program_intervensi.store') }}" method="POST" id="quickForm">
+                        <form action="{{ route('progress_programs.update', $progress_program->id) }}" method="POST"
+                            id="quickForm">
                             @csrf
+                            @method('PUT')
 
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label>Nama</label>
-                                    <input type="text" name="nama" class="form-control" placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label>Uraian Kegiatan</label>
-                                    <textarea type="text" name="uraian_kegiatan" class="form-control" placeholder="">
-                                                                                                </textarea>
-                                </div>
 
                                 <div class="form-group">
-                                    <label>Nilai Pia</label>
-                                    <select class="form-control" name="provinsi_id">
-                                        @foreach ($pias as $pia)
-                                            <option value="{{ $pia->id }}">{{ $pia->nama }}</option>
-                                        @endforeach
+                                    <label>Program Intervensi</label>
+                                    <label>{{ $progress_program->program_intervensi['nama'] }}</label>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Volume Kegiatan Setahun</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder="">
+                                    <label>Nama</label>
+                                    <input type="text" name="nama" class="form-control" placeholder=""
+                                        value="{{ $progress_program->nama }}">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>Tanggal Kegiatan</label>
+                                    <input type="date" name="tanggal_kegiatan" class="form-control" placeholder=""
+                                        value="{{ $progress_program->tanggal_kegiatan }}">
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label>Progress Kegiatan</label>
+                                    <input type="number" name="progress_kegiatan" class="form-control" placeholder=""
+                                        value="{{ $progress_program->progress_kegiatan }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Output</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder="">
+                                    <label>Progress Output</label>
+                                    <input type="number" name="progress_output" class="form-control" placeholder=""
+                                        value="{{ $progress_program->progress_output }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Outcome</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder="">
+                                    <label>Upload Dokumentasi</label>
+                                    <input type="file" name="upload_dokumentasi" class="form-control" placeholder=""
+                                        value="{{ $progress_program->upload_dokumentasi }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Awal Pelaksanaan</label>
-                                    <input type="date" name="awal_pelaksanaan" class="form-control" placeholder="">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Selesai Pelaksanaan</label>
-                                    <input type="date" name="selesai_pelaksanaan" class="form-control" placeholder="">
+                                    <label>Upload Bukti Dukung</label>
+                                    <input type="file" name="upload_bukti_dukung" class="form-control" placeholder=""
+                                        value="{{ $progress_program->upload_bukti_dukung }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <textarea type="text" name="keterangan" class="form-control" placeholder="">
-                                                     </textarea>
+                                    <input type="text" name="awal_pelaksanaan" class="form-control" placeholder=""
+                                        value="{{ $progress_program->keterangan }}">
                                 </div>
+
 
                             </div>
                             <!-- /.card-body -->

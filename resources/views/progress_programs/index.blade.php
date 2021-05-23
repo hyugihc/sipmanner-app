@@ -8,8 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <a class="btn btn-block btn-primary btn-sm"
-                        href="{{ route('progress_programs.create') }}">Create</a>
+                    <a class="btn btn-block btn-primary btn-sm" href="{{ route('progress_programs.create') }}">Create</a>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -35,7 +34,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Responsive Hover Table</h3>
+                        <h3 class="card-title">Progress Programs</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -56,18 +55,18 @@
                             <thead>
                                 <tr>
                                     <th>Jenis Program Intervensi</th>
-                                    <th>Nama</th>
-                                    <th>Uraian Kegiatan</th>
+                                    <th>Nama Program Intervensi</th>
+                                    <th>Nama Kegiatan</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($progress_programs as $progress_program)
                                     <tr>
                                         <td>
-                                            @if ({{ $progress_program->jenis=1 }})
-                                            Program Intervensi Nasional
-                                            @else  Program Intervensi khusus
-                                            @endif  
+                                            @if ($progress_program->program_intervensi['jenis'] == 1)
+                                                {{ 'Program Intervensi Nasional' }}
+                                            @else {{ 'Program Intervensi Khusus' }}
+                                            @endif
                                         </td>
                                         <td>{{ $progress_program->program_intervensi['nama'] }}</td>
                                         <td>{{ $progress_program->nama }}</td>

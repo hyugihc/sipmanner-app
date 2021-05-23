@@ -16,7 +16,7 @@
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{Auth::user()->name}}</a>
+                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -29,6 +29,9 @@
                with font-awesome or any other icon font library -->
 
                 <li class="nav-header">Sipmanner Menu</li>
+
+
+
 
                 <li class="nav-item">
                     <a href="{{ route('users.index') }}" class="nav-link">
@@ -49,7 +52,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/gallery.html" class="nav-link">
+                    <a href="{{ route('program_intervensis.index') }}" class="nav-link">
                         <i class="nav-icon far fa-image"></i>
                         <p>
                             Program Intervensi
@@ -57,7 +60,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/kanban.html" class="nav-link">
+                    <a href="{{ route('pi_index') }}" class="nav-link">
                         <i class="nav-icon fas fa-columns"></i>
                         <p>
                             Progress Program

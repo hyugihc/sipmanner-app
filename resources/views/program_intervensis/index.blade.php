@@ -8,7 +8,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <a class="btn btn-block btn-primary btn-sm" href="{{ route('users.create') }}">Create</a>
+                    <a class="btn btn-block btn-primary btn-sm"
+                        href="{{ route('program_intervensis.create') }}">Create</a>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -34,7 +35,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Users</h3>
+                        <h3 class="card-title">Program Intervensis</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -54,36 +55,37 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
+                                    <th>Jenis Program Intervensi</th>
                                     <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Nip Lama</th>
-                                    <th>Role</th>
-                                    <th>Provinsi</th>
-                                    <th>Aksi</th>
+                                    <th>Uraian Kegiatan</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach ($program_intervensis as $program_intervensi)
                                     <tr>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->nip_lama }}</td>
-                                        <td>{{ $user->role['name'] }}</td>
-                                        <td>{{ $user->provinsi['nama'] }}</td>
+                                        <td>
+                                            @if ($program_intervensi->jenis == 1)
+                                                {{ 'Nasional' }}
+                                            @else
+                                                {{ 'Khusus' }}
+                                            @endif
+                                        </td>
+                                        <td>{{ $program_intervensi->nama }}</td>
+                                        <td>{{ $program_intervensi->uraian_kegiatan }}</td>
                                         <td>
 
-                                            <form action="{{ route('users.destroy', $user) }}" method="POST">
+                                            <form action="{{ route('program_intervensis.destroy', $program_intervensi) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('DELETE')
+                                                <a class="btn btn-block btn-primary btn-sm"
+                                                    href="{{ route('program_intervensis.show', $program_intervensi) }}">Show</a>
 
-                                                <a class="btn btn-block btn-primary btn-xs"
-                                                    href="{{ route('users.show', $user) }}">Show</a>
-
-                                                <a class="btn btn-block btn-warning btn-xs"
-                                                    href="{{ route('users.edit', $user) }}">Edit</a>
+                                                <a class="btn btn-block btn-warning btn-sm"
+                                                    href="{{ route('program_intervensis.edit', $program_intervensi) }}">Edit</a>
 
                                                 <button type="submit"
-                                                    class="btn btn-block btn-danger btn-xs">Delete</button>
+                                                    class="btn btn-block btn-danger btn-sm">Delete</button>
                                             </form>
                                         </td>
 
@@ -92,7 +94,7 @@
 
                             </tbody>
                         </table>
-                        {{ $users->links() }}
+                        {{ $program_intervensis->links() }}
                     </div>
                     <!-- /.card-body -->
                 </div>

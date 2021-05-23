@@ -1,6 +1,5 @@
 @extends('layouts.master')
 
-
 @section('content')
 
     <!-- Content Header (Page header) -->
@@ -8,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard</h1>
+                    <h1 class="m-0">Create</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -23,18 +22,6 @@
 
     <!-- Main content -->
     <section class="content">
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         <div class="container-fluid">
             <div class="row">
                 <!-- left column -->
@@ -46,43 +33,59 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('cans.update', $can->id) }}" method="POST" id="quickForm">
+                        <form action="{{ route('progress_programs.store') }}" method="POST" id="quickForm">
                             @csrf
-                            @method('PUT')
 
                             <div class="card-body">
+
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Nomor SK</label>
-                                    <input type="text" name="nomor_sk" value="{{ $can->nomor_sk }}" class="form-control"
-                                        id="exampleInputEmail1" placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Tanggal SK</label>
-                                    <input type="date" name="tanggal_sk" value="{{ $can->tanggal_sk }}"
-                                        class="form-control" id="exampleInputEmail1" placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Perihal SK</label>
-                                    <input type="text" name="perihal_sk" value="{{ $can->perihal_sk }}"
-                                        class="form-control" id="exampleInputEmail1" placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">File SK</label>
-                                    <a href="{{ route('cans.download', $can) }}"> {{ $can->file_sk }}</a>
-                                    <input type="file" name="file_sk" value="" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
+                                    <label>Program Intervensi</label>
+                                    <select class="form-control" name="program_intervensi_id">
+                                        @foreach ($program_intervensis as $program_intervensi)
+                                            <option value="{{ $program_intervensi->id }}">
+                                                {{ $program_intervensi->nama }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Approval</label>
-                                    <input type="text" name="aproval" value="{{ $can->approval }}" class="form-control"
-                                        id="exampleInputEmail1" placeholder="">
+                                    <label>Nama</label>
+                                    <input type="text" name="nama" class="form-control" placeholder="">
                                 </div>
+
+
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Alasan</label>
-                                    <input type="text" name="alasan" value="{{ $can->alasan }}" class="form-control"
-                                        id="exampleInputEmail1" placeholder="">
+                                    <label>Tanggal Kegiatan</label>
+                                    <input type="date" name="tanggal_kegiatan" class="form-control" placeholder="">
                                 </div>
+
+
+
+                                <div class="form-group">
+                                    <label>Progress Kegiatan</label>
+                                    <input type="number" name="progress_kegiatan" class="form-control" placeholder="">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Progress Output</label>
+                                    <input type="number" name="progress_output" class="form-control" placeholder="">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Upload Dokumentasi</label>
+                                    <input type="file" name="upload_dokumentasi" class="form-control" placeholder="">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Upload Bukti Dukung</label>
+                                    <input type="file" name="upload_bukti_dukung" class="form-control" placeholder="">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Keterangan</label>
+                                    <input type="text" name="keterangan" class="form-control" placeholder="">
+                                </div>
+
 
                             </div>
                             <!-- /.card-body -->
@@ -102,5 +105,7 @@
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
+
+
 
     @endsection

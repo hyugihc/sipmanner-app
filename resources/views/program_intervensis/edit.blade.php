@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Create</h1>
+                    <h1 class="m-0">Edit</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -33,37 +33,41 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('program_intervensi.store') }}" method="POST" id="quickForm">
+                        <form action="{{ route('program_intervensis.update', $program_intervensi->id) }}" method="POST"
+                            id="quickForm">
                             @csrf
+                            @method('PUT')
 
                             <div class="card-body">
 
                                 <div class="form-group">
                                     <label>Jenis Program Intervensi</label>
-                                    <select class="form-control" name="provinsi_id">
-                                       @if ($program_intervensi->jenis=1)
-                                            <option value="1" selected >Nasional</option>
+                                    <select class="form-control" name="jenis">
+                                        @if ($program_intervensi->jenis == 1)
+                                            <option value="1" selected>Nasional</option>
                                             <option value="2">Khusus</option>
-                                       @else
-                                             <option value="1">Nasional</option>
-                                             <option value="2" selected>Khusus</option>
-                                       @endif
+                                        @else
+                                            <option value="1">Nasional</option>
+                                            <option value="2" selected>Khusus</option>
+                                        @endif
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" name="nama" class="form-control" placeholder="" value="{{$program_intervensi->nama}}">
+                                    <input type="text" name="nama" class="form-control" placeholder=""
+                                        value="{{ $program_intervensi->nama }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Uraian Kegiatan</label>
-                                    <textarea type="text" name="uraian_kegiatan" class="form-control" value="{{$program_intervensi->}}" placeholder="">
-                                                                                                </textarea>
+                                    <textarea type="text" name="uraian_kegiatan" class="form-control"
+                                        placeholder="">{{ $program_intervensi->uraian_kegiatan }}
+                                                                                                                            </textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Nilai Pia</label>
-                                    <select class="form-control" name="pias_id">
+                                    <select class="form-control" name="pias_id" multiple>
                                         @foreach ($pias as $pia)
                                             <option value="{{ $pia->id }}">{{ $pia->nama }}</option>
                                         @endforeach
@@ -72,34 +76,50 @@
 
                                 <div class="form-group">
                                     <label>Volume Kegiatan Setahun</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder="" value="{{$program_intervensi->vol_keg_tahun}}">
+                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder=""
+                                        value="{{ $program_intervensi->vol_keg_tahun }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Output</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder="" value="{{$program_intervensi->output}}">
+                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder=""
+                                        value="{{ $program_intervensi->output }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Outcome</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder="" value="{{$program_intervensi->outcome}}">
+                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder=""
+                                        value="{{ $program_intervensi->outcome }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Awal Pelaksanaan</label>
-                                    <input type="date" name="awal_pelaksanaan" class="form-control" placeholder="" value="{{$program_intervensi->awal_pelaksanaan}}">
+                                    <input type="date" name="awal_pelaksanaan" class="form-control" placeholder=""
+                                        value="{{ $program_intervensi->awal_pelaksanaan }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Selesai Pelaksanaan</label>
-                                    <input type="date" name="selesai_pelaksanaan" class="form-control" placeholder="" value="{{$program_intervensi->selesai_pelaksanaan}}">
+                                    <input type="date" name="selesai_pelaksanaan" class="form-control" placeholder=""
+                                        value="{{ $program_intervensi->selesai_pelaksanaan }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <textarea type="text" name="keterangan" class="form-control" placeholder="" value="{{$program_intervensi->keterangan}}">
-                                      </textarea>
+                                    <textarea type="text" name="keterangan" class="form-control" placeholder="">{{ $program_intervensi->keterangan }}
+                                                                  </textarea>
                                 </div>
+
+                                @if (Auth::User()->role_id == 1)
+                                    <div class="form-group">
+                                        <label>Provinsis</label>
+                                        <select class="form-control" name="provinsi_id">
+                                            @foreach ($provinsis as $provinsi)
+                                                <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
 
                             </div>
                             <!-- /.card-body -->

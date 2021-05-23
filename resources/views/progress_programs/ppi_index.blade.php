@@ -8,8 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <a class="btn btn-block btn-primary btn-sm"
-                        href="{{ route('program_intervensis.create') }}">Create</a>
+                    <a class="btn btn-block btn-primary btn-sm" href="{{ route('progress_programs.create') }}">Create</a>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -35,7 +34,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Responsive Hover Table</h3>
+                        <h3 class="card-title">Progress Programs</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -56,32 +55,32 @@
                             <thead>
                                 <tr>
                                     <th>Jenis Program Intervensi</th>
-                                    <th>Nama</th>
-                                    <th>Uraian Kegiatan</th>
+                                    <th>Nama Program Intervensi</th>
+                                    <th>Nama Kegiatan</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($program_intervensis as $program_intervensi)
+                                @foreach ($progress_programs as $progress_program)
                                     <tr>
                                         <td>
-                                            @if ({{ $program_intervensi->jenis=1 }})
-                                            Program Intervensi Nasional
-                                            @else  Program Intervensi khusus
-                                            @endif  
+                                            @if ($progress_program->program_intervensi['jenis'] == 1)
+                                                {{ 'Program Intervensi Nasional' }}
+                                            @else {{ 'Program Intervensi Khusus' }}
+                                            @endif
                                         </td>
-                                        <td>{{ $program_intervensi->nama }}</td>
-                                        <td>{{ $program_intervensi->uraian_kegiatan }}</td>
+                                        <td>{{ $progress_program->program_intervensi['nama'] }}</td>
+                                        <td>{{ $progress_program->nama }}</td>
                                         <td>
 
-                                            <form action="{{ route('program_intervensis.destroy', $program_intervensi) }}"
+                                            <form action="{{ route('progress_programs.destroy', $progress_program) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a class="btn btn-block btn-primary btn-sm"
-                                                    href="{{ route('program_intervensis.show', $program_intervensi) }}">Show</a>
+                                                    href="{{ route('progress_programs.show', $progress_program) }}">Show</a>
 
                                                 <a class="btn btn-block btn-warning btn-sm"
-                                                    href="{{ route('program_intervensis.edit', $program_intervensi) }}">Edit</a>
+                                                    href="{{ route('progress_programs.edit', $progress_program) }}">Edit</a>
 
                                                 <button type="submit"
                                                     class="btn btn-block btn-danger btn-sm">Delete</button>
@@ -93,7 +92,7 @@
 
                             </tbody>
                         </table>
-                        {{ $program_intervensis->links() }}
+                        {{ $progress_programs->links() }}
                     </div>
                     <!-- /.card-body -->
                 </div>

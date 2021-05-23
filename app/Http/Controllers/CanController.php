@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Can;
+use App\Provinsi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class CanController extends Controller
@@ -16,7 +18,11 @@ class CanController extends Controller
     public function index()
     {
         //
-        $cans = Can::latest()->paginate(5);
+        if (Auth::user()->role_id == 1 or Auth::user()->role_id == 5) {
+            $cans = Can::paginate(5);
+        } else {
+            $cans = Can::where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
+        }
 
         return view('cans.index', compact('cans'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -30,7 +36,8 @@ class CanController extends Controller
     public function create()
     {
         //
-        return view('cans.create');
+        $provinsis = Provinsi::all();
+        return view('cans.create', compact('provinsis'));
     }
 
     /**
@@ -54,10 +61,16 @@ class CanController extends Controller
         $can->nomor_sk = $request->nomor_sk;
         $can->tanggal_sk = $request->tanggal_sk;
         $can->perihal_sk = $request->perihal_sk;
-        //   $can->file_sk = $request->file_sk;
         $can->approval = $request->approval;
-        $can->kode_org = $request->kode_org;
         $can->alasan = $request->alasan;
+
+        if (Auth::user()->role_id == 1) {
+            $can->provinsi_id = $request->provinsi_id;
+        } else {
+            $can->provinsi_id = Auth::user()->provinsi_id;
+        }
+
+
 
         $can->file_sk = Storage::putFile('public/cans', $request->file_sk);
 
@@ -116,10 +129,6 @@ class CanController extends Controller
             'perihal_sk' => 'required',
             'file_sk' => 'required',
         ]);
-
-
-
-
 
 
         $can->update($request->all());

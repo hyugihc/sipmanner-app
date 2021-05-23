@@ -7,10 +7,4 @@ use App\User;
 
 class Provinsi extends Model
 {
-    //
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
-
 }

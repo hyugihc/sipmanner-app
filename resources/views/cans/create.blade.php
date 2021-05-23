@@ -59,11 +59,17 @@
                                         placeholder="">
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Kode Org</label>
-                                    <input type="text" name="kode_org" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
-                                </div>
+                                @if (Auth::User()->role_id == 1)
+                                    <div class="form-group">
+                                        <label>Provinsis</label>
+                                        <select class="form-control" name="provinsi_id">
+                                            @foreach ($provinsis as $provinsi)
+                                                <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
+
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Aproval</label>
                                     <input type="text" name="aproval" class="form-control" id="exampleInputEmail1"

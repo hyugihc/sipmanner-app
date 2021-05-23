@@ -37,11 +37,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::resource('cans', CanController::class);
-    // Route::get('{file_sk}', 'CanController@downloadFileSk')->name('cans.download');
     Route::get('cans/{can}/download', 'CanController@downloadFileSk')->name('cans.download');
 
     Route::resource('program_intervensis', ProgramIntervensiController::class);
     Route::resource('progress_programs', ProgressProgramController::class);
+
+    Route::get('pi_index', 'ProgressProgramController@pi_index')->name('pi_index');
+    Route::get('ppiindex/{program_intervensi}', 'ProgressProgramController@ppi_index')->name('ppi_index');
 });
 
 // Route::get('/', function () {
