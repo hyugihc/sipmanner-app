@@ -34,7 +34,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Progress Programs</h3>
+                        <h3 class="card-title">{{ $program_intervensi->nama }}</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -54,36 +54,30 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>Jenis Program Intervensi</th>
-                                    <th>Nama Program Intervensi</th>
                                     <th>Nama Kegiatan</th>
+                                    <th>Tanggal Kegiatan</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($progress_programs as $progress_program)
                                     <tr>
-                                        <td>
-                                            @if ($progress_program->program_intervensi['jenis'] == 1)
-                                                {{ 'Program Intervensi Nasional' }}
-                                            @else {{ 'Program Intervensi Khusus' }}
-                                            @endif
-                                        </td>
-                                        <td>{{ $progress_program->program_intervensi['nama'] }}</td>
                                         <td>{{ $progress_program->nama }}</td>
+                                        <td>{{ $progress_program->tanggal_kegiatan }}</td>
                                         <td>
 
                                             <form action="{{ route('progress_programs.destroy', $progress_program) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <a class="btn btn-block btn-primary btn-sm"
+                                                <a class="btn btn-block btn-primary btn-xs"
                                                     href="{{ route('progress_programs.show', $progress_program) }}">Show</a>
 
-                                                <a class="btn btn-block btn-warning btn-sm"
+                                                <a class="btn btn-block btn-warning btn-xs"
                                                     href="{{ route('progress_programs.edit', $progress_program) }}">Edit</a>
 
                                                 <button type="submit"
-                                                    class="btn btn-block btn-danger btn-sm">Delete</button>
+                                                    class="btn btn-block btn-danger btn-xs">Delete</button>
                                             </form>
                                         </td>
 

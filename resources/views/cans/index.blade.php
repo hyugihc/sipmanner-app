@@ -7,13 +7,24 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <a class="btn btn-block btn-primary btn-sm" href="{{ route('cans.create') }}">Create</a>
+
+                <div class="col-sm-2">
+                    @can('create', App\Can::class)
+                        <a class="btn btn-block btn-primary btn-sm" href="{{ route('cans.create') }}">Create</a>
+                    @endcan
                 </div><!-- /.col -->
+
+                <div class="col-sm-4">
+
+                </div><!-- /.col -->
+
+
+
+
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v1</li>
+                        <li class="breadcrumb-item">Home</li>
+                        <li class="breadcrumb-item active">Cans</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -59,7 +70,6 @@
                                     <th>Perihal SK</th>
                                     <th>Approval</th>
                                     <th>Provinsi</th>
-                                    <th>Alasan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -71,7 +81,6 @@
                                         <td>{{ $can->perihal_sk }}</td>
                                         <td><span class="tag tag-success">{{ $can->approval }}</span></td>
                                         <td>{{ $can->provinsi['nama'] }}</td>
-                                        <td>{{ $can->alasan }}</td>
                                         {{-- <td>
                                         <button type="button" class="btn btn-block btn-primary btn-sm">Show</button>
                                     </td>
@@ -88,16 +97,21 @@
                                                 @csrf
                                                 @method('DELETE')
 
-                                                <a class="btn btn-block btn-primary btn-sm"
+                                                <a class="btn btn-block btn-primary btn-xs"
                                                     href="{{ route('cans.show', $can->id) }}">Show</a>
 
-                                                <a class="btn btn-block btn-warning btn-sm"
-                                                    href="{{ route('cans.edit', $can->id) }}">Edit</a>
+                                                @can('update', $can)
+                                                    <a class="btn btn-block btn-warning btn-xs"
+                                                        href="{{ route('cans.edit', $can->id) }}">Edit</a>
+                                                @endcan
+
+                                                @can('delete', $can)
+                                                    <button type="submit"
+                                                        class="btn btn-block btn-danger btn-xs">Delete</button>
+                                                @endcan
 
 
 
-                                                <button type="submit"
-                                                    class="btn btn-block btn-danger btn-sm">Delete</button>
                                             </form>
                                         </td>
 

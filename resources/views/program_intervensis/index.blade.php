@@ -35,7 +35,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Program Intervensis</h3>
+                        <h3 class="card-title">Program Intervensi Nasionals</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -55,7 +55,69 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>Jenis Program Intervensi</th>
+                                    <th>Nama</th>
+                                    <th>Uraian Kegiatan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($program_intervensi_nasionals as $program_intervensi)
+                                    <tr>
+                                        <td>{{ $program_intervensi->nama }}</td>
+                                        <td>{{ $program_intervensi->uraian_kegiatan }}</td>
+                                        <td>
+
+                                            <form action="{{ route('program_intervensis.destroy', $program_intervensi) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a class="btn btn-block btn-primary btn-xs"
+                                                    href="{{ route('program_intervensis.show', $program_intervensi) }}">Show</a>
+
+                                                <a class="btn btn-block btn-warning btn-xs"
+                                                    href="{{ route('program_intervensis.edit', $program_intervensi) }}">Edit</a>
+
+                                                <button type="submit"
+                                                    class="btn btn-block btn-danger btn-xs">Delete</button>
+                                            </form>
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                        {{ $program_intervensi_nasionals->links() }}
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Program Intervensi Khususes</h3>
+
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right"
+                                    placeholder="Search">
+
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
                                     <th>Nama</th>
                                     <th>Uraian Kegiatan</th>
                                 </tr>
@@ -63,13 +125,6 @@
                             <tbody>
                                 @foreach ($program_intervensis as $program_intervensi)
                                     <tr>
-                                        <td>
-                                            @if ($program_intervensi->jenis == 1)
-                                                {{ 'Nasional' }}
-                                            @else
-                                                {{ 'Khusus' }}
-                                            @endif
-                                        </td>
                                         <td>{{ $program_intervensi->nama }}</td>
                                         <td>{{ $program_intervensi->uraian_kegiatan }}</td>
                                         <td>

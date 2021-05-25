@@ -110,16 +110,6 @@
                                                                   </textarea>
                                 </div>
 
-                                @if (Auth::User()->role_id == 1)
-                                    <div class="form-group">
-                                        <label>Provinsis</label>
-                                        <select class="form-control" name="provinsi_id">
-                                            @foreach ($provinsis as $provinsi)
-                                                <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @endif
 
                             </div>
                             <!-- /.card-body -->

@@ -19,6 +19,7 @@ class ProgramIntervensiPolicy
     public function viewAny(User $user)
     {
         //
+        return  $user->role_id == 4 ? false : true;
     }
 
     /**

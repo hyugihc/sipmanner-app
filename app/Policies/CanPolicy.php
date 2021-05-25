@@ -20,7 +20,7 @@ class CanPolicy
     public function viewAny(User $user)
     {
         //
-
+        return  $user->role_id == 4 ? false : true;
     }
 
     /**
@@ -32,7 +32,9 @@ class CanPolicy
      */
     public function view(User $user, Can $can)
     {
-        return $user->role_id == 1 or $user->role_id == 5  ? true : $user->provinsi_id == $can->provinsi_id;
+        if ($user->role_id == 1 or $user->role_id == 5) return true;
+        if ($user->role_id == 4) return false;
+        return  $user->provinsi_id == $can->provinsi_id;
     }
 
     /**
@@ -43,7 +45,7 @@ class CanPolicy
      */
     public function create(User $user)
     {
-        return $user->role_id == 4 or $user->role_id == 5 ? false : true;
+        return $user->role_id == 3 or $user->role_id == 1 ? true : false;
     }
 
     /**
@@ -58,9 +60,7 @@ class CanPolicy
         //
         if ($user->role_id == 1) {
             return true;
-        } elseif ($user->role_id == 4 or $user->role_id == 5) {
-            return false;
-        } elseif ($user->provinsi_id == $can->provinsi_id and $can->approval != 1) {
+        } elseif ($user->provinsi_id == $can->provinsi_id and $can->approval != 1 and $user->role_id == 3) {
             return true;
         } else {
             return false;
@@ -110,5 +110,17 @@ class CanPolicy
     public function forceDelete(User $user, Can $can)
     {
         //
+    }
+
+    public function approval(User $user, Can $can)
+    {
+        //
+        if ($user->role_id == 1) {
+            return true;
+        } elseif ($user->role_id == 3 and $can->approval != 1) {
+            return $user->provinsi_id == $can->provinsi_id;
+        } else {
+            return false;
+        }
     }
 }

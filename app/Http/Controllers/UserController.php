@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Provinsi;
 use App\Role;
+use Illuminate\Support\Facades\Auth;
 use Redirect, Response;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,10 +21,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //  $users = User::latest()->paginate(5);
+        
+        Auth::user()->cannot('viewAny', User::class)?  abort(403):true;
 
-
-        //   $users = User::with(['role', 'provinsi'])->latest()->paginate(5);
         $users = User::with(['role', 'provinsi'])->paginate(5);
         return view('users.index', compact('users'));
     }
@@ -31,12 +31,16 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
+        Auth::user()->cannot('view', $user)?  abort(403):true;
+
         return view('users.show', compact('user'));
     }
 
     public function create()
     {
         //
+        Auth::user()->cannot('create',  User::class)?  abort(403):true;
+
         $roles = Role::all();
         $provinsis = Provinsi::all();
         return view('users.create', compact('roles', 'provinsis'));
@@ -47,6 +51,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        Auth::user()->cannot('create',  User::class)?  abort(403):true;
 
         $user = new User;
         $user->name = $request->name;
@@ -67,6 +72,9 @@ class UserController extends Controller
     public function edit(User $user)
     {
         //
+
+        Auth::user()->cannot('update',  $user)?  abort(403):true;
+
         $roles = Role::all();
         $provinsis = Provinsi::all();
         return view('users.edit', compact('user', 'roles', 'provinsis'));
@@ -74,6 +82,8 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+
+        Auth::user()->cannot('update',  $user)?  abort(403):true;
 
         $user->name = $request->name;
         $user->email = $request->email;
@@ -95,6 +105,8 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+        Auth::user()->cannot('delete',  $user)?  abort(403):true;
+
         $user->delete();
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');

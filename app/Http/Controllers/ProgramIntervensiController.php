@@ -17,9 +17,15 @@ class ProgramIntervensiController extends Controller
      */
     public function index()
     {
-        //
-        $program_intervensis = ProgramIntervensi::paginate(5);
-        return view('program_intervensis.index', compact('program_intervensis'));
+
+        $program_intervensi_nasionals = ProgramIntervensi::where('jenis', 1)->paginate(5);
+        $program_intervensis = ProgramIntervensi::where('jenis', 2)->paginate(5);
+
+      //  $program_intervensis = ProgramIntervensi::where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
+
+
+
+        return view('program_intervensis.index', compact('program_intervensi_nasionals', 'program_intervensis'));
     }
 
     // public function index_progress()
@@ -56,10 +62,11 @@ class ProgramIntervensiController extends Controller
         $program_intervensi = new ProgramIntervensi();
 
         //cek policy
-        if ($request->user()->cannot('create', $program_intervensi)) abort(403);
+      //  if ($request->user()->cannot('create', $program_intervensi)) abort(403);
 
         //create one
         $program_intervensi = ProgramIntervensi::create($request->all());
+
         Auth::user()->role_id == 1 ? $program_intervensi->provinsi_id = $request->provinsi_id :
             $program_intervensi->provinsi_id = Auth::user()->provinsi_id;
         $program_intervensi->pias()->attach($request->pias);
@@ -102,8 +109,11 @@ class ProgramIntervensiController extends Controller
      */
     public function update(Request $request, ProgramIntervensi $program_intervensi)
     {
-        //
-        $program_intervensi->update($request->all());
+        //cek policy
+        $request->user()->cannot('update', $program_intervensi) ?
+            abort(403) : $program_intervensi->update($request->all());
+
+
 
         return redirect()->route('program_intervensis.index')
             ->with('success', 'Program Intervensi updated successfully');

@@ -102,5 +102,6 @@
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
+    </section>
 
-    @endsection
+@endsection

@@ -12,7 +12,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v1</li>
+                        <li class="breadcrumb-item active">Cans</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -71,17 +71,14 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Aproval</label>
-                                    <input type="text" name="aproval" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Alasan</label>
-                                    <input type="text" name="alasan" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
+                                    <label for="exampleInputEmail1">Change Leader, Change Champions dan Change Agent</label>
+                                    <input class="form-control" type='text' id='search' name='search' placeholder='Enter nip lama'>
                                 </div>
 
-                                <input type='text' id='search' name='search' placeholder='Enter userid 1-27'>
+                               
+                               
+
+                               
 
                                 <input type='button' value='Search' id='but_search'>
                                 <br />
@@ -104,7 +101,7 @@
 
                                 <div class="well clearfix">
                                     <a id="add-row" class="btn btn-primary pull-right add-record" data-added="0"><i
-                                            class="glyphicon glyphicon-plus"></i> Add Row</a>
+                                            class="glyphicon glyphicon-plus"></i> Tambahkan pegawai</a>
                                 </div>
 
                                 <br />
@@ -123,8 +120,20 @@
                                     </tbody>
                                 </table>
 
-                                <select id="selectedUser" name="users[]" multiple>
+                                <select id="selectedUser" name="users[]" multiple hidden>
                                 </select>
+
+                                {{-- <div class="form-group">
+                                    <label for="exampleInputEmail1">Aproval</label>
+                                    <input type="text" name="aproval" class="form-control" id="exampleInputEmail1"
+                                        placeholder="">
+                                </div> --}}
+
+                                {{-- <div class="form-group">
+                                    <label for="exampleInputEmail1">Alasan</label>
+                                    <input type="text" name="alasan" class="form-control" id="exampleInputEmail1"
+                                        placeholder="">
+                                </div> --}}
 
 
 

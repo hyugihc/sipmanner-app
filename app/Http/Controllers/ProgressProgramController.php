@@ -21,14 +21,17 @@ class ProgressProgramController extends Controller
 
     public function pi_index()
     {
-        $program_intervensis = ProgramIntervensi::paginate(5);
-        return view('progress_programs.pi_index', compact('program_intervensis'));
+
+        $program_intervensi_nasionals = ProgramIntervensi::where('jenis', 1)->paginate(5);
+        $program_intervensis = ProgramIntervensi::where('jenis', 2)->paginate(5);
+
+        return view('progress_programs.pi_index', compact('program_intervensi_nasionals', 'program_intervensis'));
     }
 
     public function ppi_index(ProgramIntervensi $program_intervensi)
     {
         $progress_programs = $program_intervensi->progress_programs()->paginate(5);
-        return view('progress_programs.ppi_index', compact('progress_programs'));
+        return view('progress_programs.ppi_index', compact('program_intervensi','progress_programs'));
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Can;
+use App\Policies\CanPolicy;
 use App\Provinsi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,9 @@ class CanController extends Controller
     public function index()
     {
         //
+
+        Auth::user()->cannot('viewAny', Can::class) ?  abort(403) : true;
+
         if (Auth::user()->role_id == 1 or Auth::user()->role_id == 5) {
             $cans = Can::paginate(5);
         } else {
@@ -36,6 +40,8 @@ class CanController extends Controller
     public function create()
     {
         //
+        Auth::user()->cannot('create', Can::class) ?  abort(403) : true;
+
         $provinsis = Provinsi::all();
         return view('cans.create', compact('provinsis'));
     }
@@ -49,6 +55,8 @@ class CanController extends Controller
     public function store(Request $request)
     {
         //
+        Auth::user()->cannot('create', Can::class) ?  abort(403) : true;
+
         $request->validate([
             'nomor_sk' => 'required',
             'tanggal_sk' => 'required',
@@ -97,6 +105,9 @@ class CanController extends Controller
     public function show(Can $can)
     {
         //
+
+        Auth::user()->cannot('view', $can) ?  abort(403) : true;
+
         return view('cans.show', compact('can'));
     }
 
@@ -109,6 +120,9 @@ class CanController extends Controller
     public function edit(Can $can)
     {
         //
+        Auth::user()->cannot('update', $can) ?  abort(403) : true;
+
+
         return view('cans.edit', compact('can'));
     }
 
@@ -122,6 +136,9 @@ class CanController extends Controller
     public function update(Request $request, Can $can)
     {
         // //
+
+        Auth::user()->cannot('update', $can) ?  abort(403) : true;
+
         $request->validate([
             'nomor_sk' => 'required',
             'tanggal_sk' => 'required',
@@ -146,6 +163,8 @@ class CanController extends Controller
     public function destroy(Can $can)
     {
         //
+        Auth::user()->cannot('delete', $can) ?  abort(403) : true;
+
         $can->delete();
 
         return redirect()->route('cans.index')

@@ -41,8 +41,12 @@
                                 <div class="form-group">
                                     <label>Jenis Program Intervensi</label>
                                     <select class="form-control" name="jenis">
-                                        <option value="1">Nasional</option>
-                                        <option value="2" selected>Khusus</option>
+                                        @if (Auth::user()->role_id==1)
+                                            <option value="1">Nasional</option>
+                                            <option value="2" selected>Khusus</option>
+                                        @else
+                                            <option value="2" selected>Khusus</option>
+                                        @endif
                                     </select>
                                 </div>
 
@@ -55,7 +59,6 @@
                                     <textarea type="text" name="uraian_kegiatan" class="form-control" placeholder="">
                                                                                                                                                                                                                                             </textarea>
                                 </div>
-
 
 
                                 <div class="form-group">

@@ -30,43 +30,51 @@
 
                 <li class="nav-header">Sipmanner Menu</li>
 
+                @can('viewAny', App\User::class)
+                    <li class="nav-item">
+                        <a href="{{ route('users.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-columns"></i>
+                            <p>
+                                User
+                            </p>
+                        </a>
+                    </li>
+                @endcan
 
+                @can('viewAny', App\Can::class)
+                    <li class="nav-item">
+                        <a href="{{ route('cans.index') }}" class="nav-link">
+                            <i class="nav-icon far fa-calendar-alt"></i>
+                            <p>
+                                Cans
+                                <span class="badge badge-info right">2</span>
+                            </p>
+                        </a>
+                    </li>
+                @endcan
 
+                @can('viewAny', App\ProgramIntervensi::class)
+                    <li class="nav-item">
+                        <a href="{{ route('program_intervensis.index') }}" class="nav-link">
+                            <i class="nav-icon far fa-image"></i>
+                            <p>
+                                Program Intervensi
+                            </p>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="nav-item">
-                    <a href="{{ route('users.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-columns"></i>
-                        <p>
-                            User
-                        </p>
-                    </a>
-                </li>
+                @can('viewAny', App\ProgressProgram::class)
+                    <li class="nav-item">
+                        <a href="{{ route('pi_index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-columns"></i>
+                            <p>
+                                Progress Program
+                            </p>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="nav-item">
-                    <a href="{{ route('cans.index') }}" class="nav-link">
-                        <i class="nav-icon far fa-calendar-alt"></i>
-                        <p>
-                            Cans
-                            <span class="badge badge-info right">2</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('program_intervensis.index') }}" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
-                        <p>
-                            Program Intervensi
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('pi_index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-columns"></i>
-                        <p>
-                            Progress Program
-                        </p>
-                    </a>
-                </li>
 
 
             </ul>
