@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard</h1>
+                    <h1 class="m-0">Cans Create</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -20,8 +20,19 @@
     </div>
     <!-- /.content-header -->
 
+
     <!-- Main content -->
     <section class="content">
+        {{-- @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif --}}
+
         <div class="container-fluid">
             <div class="row">
                 <!-- left column -->
@@ -40,24 +51,36 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nomor SK</label>
-                                    <input type="text" name="nomor_sk" class="form-control" id="exampleInputEmail1"
+                                    <input type="text" name="nomor_sk" class="form-control" value="{{ old('nomor_sk') }}"
                                         placeholder="">
                                 </div>
+                                @error('nomor_sk')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tanggal SK</label>
-                                    <input type="date" name="tanggal_sk" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
+                                    <input type="date" name="tanggal_sk" class="form-control"
+                                        value="{{ old('tanggal_sk') }}" placeholder="">
                                 </div>
+                                @error('tanggal_sk')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Perihal SK</label>
-                                    <input type="text" name="perihal_sk" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
+                                    <input type="text" name="perihal_sk" class="form-control"
+                                        value="{{ old('perihal_sk') }}" placeholder="">
                                 </div>
+                                @error('perihal_sk')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">File SK</label>
-                                    <input type="file" name="file_sk" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
+                                    <input type="file" name="file_sk" class="form-control" value="{{ old('file_sk') }} "
+                                        accept=".pdf" placeholder="">
                                 </div>
+                                @error('file_sk')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
 
                                 @if (Auth::User()->role_id == 1)
                                     <div class="form-group">
@@ -71,14 +94,13 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Change Leader, Change Champions dan Change Agent</label>
-                                    <input class="form-control" type='text' id='search' name='search' placeholder='Enter nip lama'>
+                                    <label for="exampleInputEmail1">Cari pegawai berdasarkan NIP lama</label>
+                                    <input class="form-control" type='text' id='search' name='search'
+                                        placeholder='Enter nip lama'>
                                 </div>
 
-                               
-                               
 
-                               
+
 
                                 <input type='button' value='Search' id='but_search'>
                                 <br />
@@ -105,20 +127,26 @@
                                 </div>
 
                                 <br />
+                                <div class="form-group">
+                                    {{-- <label for="exampleInputEmail1">Change Leader, Change Champions dan Change Agent</label> --}}
+                                    <table class="table table-bordered" id="tbl_posts">
+                                        <thead>
+                                            <tr>
+                                                <th>Nip Lama</th>
+                                                <th>Nama</th>
+                                                <th>Email</th>
+                                                {{-- <th>Action</th> --}}
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbl_posts_body">
 
-                                <table class="table table-bordered" id="tbl_posts">
-                                    <thead>
-                                        <tr>
-                                            <th>Nip Lama</th>
-                                            <th>Nama</th>
-                                            <th>Email</th>
-                                            {{-- <th>Action</th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbl_posts_body">
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                                    </tbody>
-                                </table>
+                                @error('users')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
 
                                 <select id="selectedUser" name="users[]" multiple hidden>
                                 </select>

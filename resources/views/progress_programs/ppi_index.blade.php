@@ -7,13 +7,19 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <a class="btn btn-block btn-primary btn-sm" href="{{ route('progress_programs.create') }}">Create</a>
                 </div><!-- /.col -->
+
+                <div class="col-sm-4">
+
+                </div><!-- /.col -->
+
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v1</li>
+                        <li class="breadcrumb-item active">Progress Program</li>
+                        <li class="breadcrumb-item active">{{ $program_intervensi->nama }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->

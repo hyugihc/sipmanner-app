@@ -19,9 +19,14 @@ class ProgramIntervensiController extends Controller
     {
 
         $program_intervensi_nasionals = ProgramIntervensi::where('jenis', 1)->paginate(5);
-        $program_intervensis = ProgramIntervensi::where('jenis', 2)->paginate(5);
 
-      //  $program_intervensis = ProgramIntervensi::where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
+        if (Auth::user()->role_id == 1) {
+            $program_intervensis = ProgramIntervensi::where('jenis', 2)->paginate(5);
+        } else {
+            $program_intervensis = ProgramIntervensi::where('jenis', 2)->where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
+        }
+
+        //  $program_intervensis = ProgramIntervensi::where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
 
 
 
@@ -59,17 +64,32 @@ class ProgramIntervensiController extends Controller
     public function store(Request $request)
     {
 
+        $request->validate([
+            'nama' => 'required|min:3|max:50',
+            'jenis' => 'required',
+            'uraian_kegiatan' => 'required|max:50',
+            'vol_keg_tahun' => 'required',
+            'output' => 'required',
+            'outcome' => 'required',
+            'awal_pelaksanaan' => 'required',
+            'selesai_pelaksanaan' => 'required',
+            'keterangan' => 'required',
+            'pias' => 'required',
+        ]);
+
         $program_intervensi = new ProgramIntervensi();
 
         //cek policy
-      //  if ($request->user()->cannot('create', $program_intervensi)) abort(403);
+        //  if ($request->user()->cannot('create', $program_intervensi)) abort(403);
 
         //create one
         $program_intervensi = ProgramIntervensi::create($request->all());
 
         Auth::user()->role_id == 1 ? $program_intervensi->provinsi_id = $request->provinsi_id :
             $program_intervensi->provinsi_id = Auth::user()->provinsi_id;
+        $program_intervensi->save();
         $program_intervensi->pias()->attach($request->pias);
+
 
         return redirect()->route('program_intervensis.index')
             ->with('success', 'Program Intervensi created successfully.');

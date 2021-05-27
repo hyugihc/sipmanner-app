@@ -19,7 +19,8 @@ class ProgramIntervensiPolicy
     public function viewAny(User $user)
     {
         //
-        return  $user->role_id == 4 ? false : true;
+        if ($user->role_id == 4) return false;
+        return true;
     }
 
     /**
@@ -31,8 +32,13 @@ class ProgramIntervensiPolicy
      */
     public function view(User $user, ProgramIntervensi $programIntervensi)
     {
-        //
-        return $user->role_id == 1 or $user->role_id == 5 ? true : $user->provinsi_id == $programIntervensi->provinsi_id;
+
+        if ($user->role_id == 4) return false;
+        if ($user->role_id == 1 or $user->role_id == 5 or $programIntervensi->jenis == 1) {
+            return true;
+        } else {
+            return  $user->provinsi_id == $programIntervensi->provinsi_id;
+        }
     }
 
     /**
@@ -44,7 +50,8 @@ class ProgramIntervensiPolicy
     public function create(User $user)
     {
         //
-        return $user->role_id == 4 or $user->role_id == 5 ? false : true;
+        if ($user->role_id == 4) return false;
+        return  $user->role_id == 5  ? false : true;
     }
 
     /**
@@ -57,12 +64,13 @@ class ProgramIntervensiPolicy
     public function update(User $user, ProgramIntervensi $programIntervensi)
     {
         //
-        if ($user->role_id == 4 or $user->role_id == 5) {
+        if ($user->role_id == 4) return false;
+        if ($user->role_id == 5 or $user->role_id == 2) {
             return false;
-        } elseif ($user->provinsi_id == $programIntervensi->provinsi_id or $user->role_id == 1) {
+        } elseif ($user->role_id == 1) {
             return true;
         } else {
-            return false;
+            return $user->provinsi_id == $programIntervensi->provinsi_id;
         }
     }
 
@@ -76,12 +84,13 @@ class ProgramIntervensiPolicy
     public function delete(User $user, ProgramIntervensi $programIntervensi)
     {
         //
-        if ($user->role_id == 4 or $user->role_id == 5) {
+        if ($user->role_id == 4) return false;
+        if ($user->role_id == 5 or $user->role_id == 2) {
             return false;
-        } elseif ($user->provinsi_id == $programIntervensi->provinsi_id or $user->role_id == 1) {
+        } elseif ($user->role_id == 1) {
             return true;
         } else {
-            return false;
+            return $user->provinsi_id == $programIntervensi->provinsi_id;
         }
     }
 

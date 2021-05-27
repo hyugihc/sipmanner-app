@@ -54,7 +54,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nomor SK</label>
                                     <input type="text" name="nomor_sk" value="{{ $can->nomor_sk }}" class="form-control"
-                                        id="exampleInputEmail1" placeholder="">
+                                        id="exampleInputEmail1" placeholder="" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tanggal SK</label>
@@ -68,12 +68,21 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">File SK</label>
-                                    <a href="{{ route('cans.download', $can) }}"> {{ $can->file_sk }}</a>
+                                    <a href="{{ route('cans.download', $can) }}"> file SK </a>
                                     <input type="file" name="file_sk" value="" class="form-control" id="exampleInputEmail1"
                                         placeholder="">
                                 </div>
 
+
                                 <div class="form-group">
+                                    <label>Anggota</label>
+                                    @foreach ($can->users as $user)
+                                        <dd> {{ $user->name }} sebagai {{ $user->role['name'] }}</dd>
+
+                                    @endforeach
+                                </div>
+
+                                {{-- <div class="form-group">
                                     <label for="exampleInputEmail1">Approval</label>
                                     <input type="text" name="aproval" value="{{ $can->approval }}" class="form-control"
                                         id="exampleInputEmail1" placeholder="">
@@ -82,7 +91,7 @@
                                     <label for="exampleInputEmail1">Alasan</label>
                                     <input type="text" name="alasan" value="{{ $can->alasan }}" class="form-control"
                                         id="exampleInputEmail1" placeholder="">
-                                </div>
+                                </div> --}}
 
                             </div>
                             <!-- /.card-body -->

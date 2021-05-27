@@ -79,7 +79,17 @@
                                         <td>{{ $can->nomor_sk }}</td>
                                         <td>{{ $can->tanggal_sk }}</td>
                                         <td>{{ $can->perihal_sk }}</td>
-                                        <td><span class="tag tag-success">{{ $can->approval }}</span></td>
+                                        <td>
+                                            @if ($can->approval == 1)
+                                                <dd>Sudah Disetujui</dd>
+                                            @elseif ($can->approval == 2)
+                                                <dd>Tidak Disetujui</dd>
+                                                <dd> {{ $can->alasan }}</dd>
+                                            @elseif($can->approval == 3)
+                                                <dd>Belum Disetujui</dd>
+                                            @endif
+
+                                        </td>
                                         <td>{{ $can->provinsi['nama'] }}</td>
                                         {{-- <td>
                                         <button type="button" class="btn btn-block btn-primary btn-sm">Show</button>

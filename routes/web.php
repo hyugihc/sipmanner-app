@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('cans', CanController::class);
     Route::get('cans/{can}/download', 'CanController@downloadFileSk')->name('cans.download');
+    Route::put('cans/{can}/approval', 'CanController@approval')->name('cans.approval');
 
     Route::resource('program_intervensis', ProgramIntervensiController::class);
     Route::resource('progress_programs', ProgressProgramController::class);

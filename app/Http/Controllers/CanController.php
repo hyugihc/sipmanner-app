@@ -58,18 +58,18 @@ class CanController extends Controller
         Auth::user()->cannot('create', Can::class) ?  abort(403) : true;
 
         $request->validate([
-            'nomor_sk' => 'required',
-            'tanggal_sk' => 'required',
+            'nomor_sk' => 'required|unique:cans|min:3|max:255',
             'tanggal_sk' => 'required',
             'perihal_sk' => 'required',
-            'file_sk' => 'required',
+            'file_sk' => 'required|mimes:pdf',
+            'users' => 'required',
         ]);
 
         $can = new Can;
         $can->nomor_sk = $request->nomor_sk;
         $can->tanggal_sk = $request->tanggal_sk;
         $can->perihal_sk = $request->perihal_sk;
-        $can->approval = $request->approval;
+        $can->approval = 3;
         $can->alasan = $request->alasan;
 
         if (Auth::user()->role_id == 1) {
@@ -122,7 +122,6 @@ class CanController extends Controller
         //
         Auth::user()->cannot('update', $can) ?  abort(403) : true;
 
-
         return view('cans.edit', compact('can'));
     }
 
@@ -140,11 +139,11 @@ class CanController extends Controller
         Auth::user()->cannot('update', $can) ?  abort(403) : true;
 
         $request->validate([
-            'nomor_sk' => 'required',
-            'tanggal_sk' => 'required',
+
             'tanggal_sk' => 'required',
             'perihal_sk' => 'required',
-            'file_sk' => 'required',
+            'file_sk' => 'required|mimes:pdf',
+            'users' => 'required',
         ]);
 
 
@@ -181,5 +180,18 @@ class CanController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    public function approval(Request $request, Can $can)
+    {
+        Auth::user()->cannot('approval', $can) ?  abort(403) : true;
+
+        $can->update($request->all());
+
+        // $can->approval = $request->approval;
+        // $can->alasan = $request->alasan;
+        // $can->save();
+        return redirect()->route('cans.index')
+            ->with('success', 'Can Approval successfully');
     }
 }

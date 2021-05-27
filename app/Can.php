@@ -17,6 +17,7 @@ class Can extends Model
         return $this->belongsToMany(User::class);
     }
 
+
     public function provinsi()
     {
         return $this->belongsTo(Provinsi::class);

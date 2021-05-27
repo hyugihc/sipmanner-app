@@ -34,7 +34,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('cans.update', $can->id) }}" method="POST" id="quickForm">
+                        <form action="{{ route('cans.approval', $can->id) }}" method="POST" id="quickForm">
                             @csrf
                             @method('PUT')
 
@@ -48,32 +48,45 @@
                                     <dd>{{ $can->perihal_sk }}</dd>
                                     <dt>File SK</dt>
                                     <dd> <a href="{{ route('cans.download', $can) }}"> File SK</a></dd>
-                                </dl>
-                                @if ($can->approval == 1)
+                                    <dt>Anggota</dt>
+                                    @foreach ($can->users as $user)
+                                        <dd> {{ $user->name }} sebagai {{ $user->role['name'] }}</dd>
+
+                                    @endforeach
+
                                     <dt>Approval</dt>
-                                    <dd>Sudah Disetujui</dd>
-                                @endif
+                                    @if ($can->approval == 1)
+                                        <dd>Sudah Disetujui</dd>
+                                    @elseif ($can->approval == 2)
+                                        <dd>Tidak Disetujui</dd>
+                                        <dt>Alasan Tidak Disetujui</dt>
+                                        <dd> {{ $can->alasan }}</dd>
+                                    @elseif($can->approval == 3)
+                                        <dd>Belum Disetujui</dd>
+                                    @endif
+                                </dl>
                                 @can('approval', $can)
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Approval</label>
-                                        <select class="form-control" name="approval">
+                                        <label>Tindakan</label>
+                                        <select id="selectA" class="form-control" name="approval">
                                             <option value="1">Setuju</option>
                                             <option value="2">Tidak Setuju</option>
                                         </select>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" id="divtextarea">
                                         <label for="exampleInputEmail1">Alasan</label>
-                                        <input type="text" name="alasan" value="{{ $can->alasan }}" class="form-control"
-                                            id="exampleInputEmail1" placeholder="">
+                                        <textarea type="text" name="alasan" value="{{ $can->alasan }}" class="form-control"
+                                            placeholder=""></textarea>
                                     </div>
-                                @endcan
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            @endcan
 
-                            </div>
-                            <!-- /.card-body -->
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
+
                         </form>
                     </div>
                     <!-- /.card -->
@@ -88,5 +101,27 @@
             <!-- /.row -->
         </div><!-- /.container-fluid -->
     </section>
+
+    <script>
+        $(document).ready(function() {
+            var textarea = $('#divtextarea');
+            textarea.hide();
+        });
+
+        $('#selectA').on('change', function() {
+            var textarea = $('#divtextarea');
+            var select = $(this).val();
+
+            textarea.hide();
+
+            if (select == '2') {
+                textarea.show();
+            }
+            if (select == '1') {
+                textarea.hide();
+            }
+        });
+
+    </script>
 
 @endsection

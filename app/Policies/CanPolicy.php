@@ -60,7 +60,7 @@ class CanPolicy
         //
         if ($user->role_id == 1) {
             return true;
-        } elseif ($user->provinsi_id == $can->provinsi_id and $can->approval != 1 and $user->role_id == 3) {
+        } elseif ($user->provinsi_id == $can->provinsi_id and $can->approval != 1 and $user->role_id == 3 and $can->approval != 2) {
             return true;
         } else {
             return false;
@@ -81,7 +81,7 @@ class CanPolicy
             return true;
         } elseif ($user->role_id == 4 or $user->role_id == 5) {
             return false;
-        } elseif ($user->provinsi_id == $can->provinsi_id and $can->approval != 1) {
+        } elseif ($user->provinsi_id == $can->provinsi_id and $can->approval != 1 and $can->approval != 2) {
             return true;
         } else {
             return false;
@@ -117,10 +117,17 @@ class CanPolicy
         //
         if ($user->role_id == 1) {
             return true;
-        } elseif ($user->role_id == 3 and $can->approval != 1) {
+        } elseif ($user->role_id == 2 and $can->approval != 1 and $can->approval != 2) {
             return $user->provinsi_id == $can->provinsi_id;
         } else {
             return false;
+        }
+    }
+
+    public function nasional(User $user)
+    {
+        if ($user->role_id == 1) {
+            return true;
         }
     }
 }

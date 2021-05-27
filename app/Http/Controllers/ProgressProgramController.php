@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ProgressProgram;
 use App\ProgramIntervensi;
+use Illuminate\Support\Facades\Auth;
 
 class ProgressProgramController extends Controller
 {
@@ -30,8 +31,12 @@ class ProgressProgramController extends Controller
 
     public function ppi_index(ProgramIntervensi $program_intervensi)
     {
-        $progress_programs = $program_intervensi->progress_programs()->paginate(5);
-        return view('progress_programs.ppi_index', compact('program_intervensi','progress_programs'));
+        if (Auth::user()->role_id == 1) {
+            $progress_programs = $program_intervensi->progress_programs()->paginate(5);
+        } else {
+            $progress_programs = $program_intervensi->progress_programs()->where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
+        }
+        return view('progress_programs.ppi_index', compact('program_intervensi', 'progress_programs'));
     }
 
     /**
@@ -55,9 +60,12 @@ class ProgressProgramController extends Controller
     public function store(Request $request)
     {
         //
-        ProgressProgram::create($request->all());
+        $progress_program = ProgressProgram::create($request->all());
+        $progress_program->provinsi_id = Auth::user()->provinsi_id;
+        $progress_program->save();
 
-        return redirect()->route('progress_programs.index')
+
+        return redirect()->route('pi_index')
             ->with('success', 'Progress Programs created successfully.');
     }
 
@@ -100,7 +108,7 @@ class ProgressProgramController extends Controller
         //
         $progress_program->update($request->all());
 
-        return redirect()->route('progress_programs.index')
+        return redirect()->route('pi_index')
             ->with('success', 'Progress Program updated successfully');
     }
 
@@ -113,7 +121,7 @@ class ProgressProgramController extends Controller
     public function destroy(ProgressProgram $progress_program)
     {
         $progress_program->delete();
-        return redirect()->route('progress_programs.index')
+        return redirect()->route('pi_index')
             ->with('success', 'Progress program deleted successfully');
     }
 }

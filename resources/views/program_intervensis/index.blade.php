@@ -7,14 +7,17 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <a class="btn btn-block btn-primary btn-sm"
                         href="{{ route('program_intervensis.create') }}">Create</a>
+                </div><!-- /.col -->
+                <div class="col-sm-4">
+
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v1</li>
+                        <li class="breadcrumb-item active">Program Intervensi</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -57,6 +60,7 @@
                                 <tr>
                                     <th>Nama</th>
                                     <th>Uraian Kegiatan</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,14 +74,22 @@
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <a class="btn btn-block btn-primary btn-xs"
-                                                    href="{{ route('program_intervensis.show', $program_intervensi) }}">Show</a>
 
-                                                <a class="btn btn-block btn-warning btn-xs"
-                                                    href="{{ route('program_intervensis.edit', $program_intervensi) }}">Edit</a>
+                                                @can('view', $program_intervensi)
+                                                    <a class="btn btn-block btn-primary btn-sm"
+                                                        href="{{ route('program_intervensis.show', $program_intervensi) }}">Show</a>
+                                                @endcan
 
-                                                <button type="submit"
-                                                    class="btn btn-block btn-danger btn-xs">Delete</button>
+                                                @can('update', $program_intervensi)
+                                                    <a class="btn btn-block btn-warning btn-sm"
+                                                        href="{{ route('program_intervensis.edit', $program_intervensi) }}">Edit</a>
+                                                @endcan
+
+                                                @can('delete', $program_intervensi)
+                                                    <button type="submit"
+                                                        class="btn btn-block btn-danger btn-sm">Delete</button>
+                                                @endcan
+
                                             </form>
                                         </td>
 
@@ -120,6 +132,7 @@
                                 <tr>
                                     <th>Nama</th>
                                     <th>Uraian Kegiatan</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -129,18 +142,28 @@
                                         <td>{{ $program_intervensi->uraian_kegiatan }}</td>
                                         <td>
 
-                                            <form action="{{ route('program_intervensis.destroy', $program_intervensi) }}"
+                                            <form
+                                                action="{{ route('program_intervensis.destroy', $program_intervensi) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <a class="btn btn-block btn-primary btn-sm"
-                                                    href="{{ route('program_intervensis.show', $program_intervensi) }}">Show</a>
 
-                                                <a class="btn btn-block btn-warning btn-sm"
-                                                    href="{{ route('program_intervensis.edit', $program_intervensi) }}">Edit</a>
+                                                @can('view', $program_intervensi)
+                                                    <a class="btn btn-block btn-primary btn-sm"
+                                                        href="{{ route('program_intervensis.show', $program_intervensi) }}">Show</a>
+                                                @endcan
 
-                                                <button type="submit"
-                                                    class="btn btn-block btn-danger btn-sm">Delete</button>
+                                                @can('update', $program_intervensi)
+                                                    <a class="btn btn-block btn-warning btn-sm"
+                                                        href="{{ route('program_intervensis.edit', $program_intervensi) }}">Edit</a>
+                                                @endcan
+
+                                                @can('delete', $program_intervensi)
+                                                    <button type="submit"
+                                                        class="btn btn-block btn-danger btn-sm">Delete</button>
+                                                @endcan
+
+
                                             </form>
                                         </td>
 
