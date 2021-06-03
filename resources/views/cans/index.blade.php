@@ -65,42 +65,64 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
+                                    <th>Tahun SK</th>
                                     <th>Nomor SK</th>
                                     <th>Tanggal SK</th>
                                     <th>Perihal SK</th>
-                                    <th>Approval</th>
-                                    <th>Provinsi</th>
+                                    <th>Status</th>
+                                    @if (Auth::user()->role_id == 1)
+                                        <th>Provinsi</th>
+                                    @endif
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($cans as $can)
                                     <tr>
+                                        <td>{{ $can->tahun_sk }}</td>
                                         <td>{{ $can->nomor_sk }}</td>
                                         <td>{{ $can->tanggal_sk }}</td>
                                         <td>{{ $can->perihal_sk }}</td>
                                         <td>
-                                            @if ($can->approval == 1)
-                                                <dd>Sudah Disetujui</dd>
-                                            @elseif ($can->approval == 2)
+                                            {{-- @if ($can->status_sk == 0)
+                                                <dd>Draft</dd>
+                                            @elseif ($can->status_sk == 1)
+                                                <dd>Belum Disetujui</dd>
+                                            @elseif($can->status_sk == 2)
+                                                <dd>Sudah Disetujui<b>aktif</b></dd>
+                                            @elseif($can->status_sk == 3)
                                                 <dd>Tidak Disetujui</dd>
                                                 <dd> {{ $can->alasan }}</dd>
-                                            @elseif($can->approval == 3)
-                                                <dd>Belum Disetujui</dd>
-                                            @endif
+                                            @elseif($can->status_sk == 4)
+                                                <dd>Sudah Disetujui<b>tidak aktif</b></dd>
+                                            @endif --}}
+
+                                            @switch($can->status_sk)
+                                                @case(0)
+                                                    <dd>Draft</dd>
+                                                @break
+                                                @case(1)
+                                                    <dd>Belum Disetujui</dd>
+                                                @break
+                                                @case(2)
+                                                    <dd>Sudah Disetujui<b>aktif</b></dd>
+                                                @break
+                                                @case(3)
+                                                    <dd>Tidak Disetujui</dd>
+                                                    <dd> {{ $can->alasan }}</dd>
+                                                @break
+                                                @case(4)
+                                                    <dd>Sudah Disetujui<b>tidak aktif</b></dd>
+                                                @break
+
+                                                @default
+
+                                            @endswitch
 
                                         </td>
-                                        <td>{{ $can->provinsi['nama'] }}</td>
-                                        {{-- <td>
-                                        <button type="button" class="btn btn-block btn-primary btn-sm">Show</button>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-block btn-warning btn-sm">Edit</button>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-block btn-danger btn-sm">Delete</button>
-                                    </td> --}}
-
+                                        @if (Auth::user()->role_id == 1)
+                                            <td>{{ $can->provinsi['nama'] }}</td>
+                                        @endif
                                         <td>
 
                                             <form action="{{ route('cans.destroy', $can->id) }}" method="POST">

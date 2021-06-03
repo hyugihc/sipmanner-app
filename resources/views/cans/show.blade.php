@@ -40,6 +40,8 @@
 
                             <div class="card-body">
                                 <dl>
+                                    <dt> Tahun SK</dt>
+                                    <dd> {{ $can->tahun_sk }}</dd>
                                     <dt> Nomor SK</dt>
                                     <dd> {{ $can->nomor_sk }}</dd>
                                     <dt>Tanggal SK</dt>

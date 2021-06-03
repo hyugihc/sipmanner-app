@@ -16,7 +16,7 @@
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="/logout" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -28,12 +28,23 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-                <li class="nav-header">Sipmanner Menu</li>
+
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+
 
                 @can('viewAny', App\User::class)
                     <li class="nav-item">
                         <a href="{{ route('users.index') }}" class="nav-link">
-                            <i class="nav-icon fas fa-columns"></i>
+                            <i class="nav-icon far fa-plus-square"></i>
                             <p>
                                 User
                             </p>
@@ -44,21 +55,23 @@
                 @can('viewAny', App\Can::class)
                     <li class="nav-item">
                         <a href="{{ route('cans.index') }}" class="nav-link">
-                            <i class="nav-icon far fa-calendar-alt"></i>
+                            <i class="nav-icon fas fa-chart-pie"></i>
                             <p>
-                                Cans
+                                Data
                                 <span class="badge badge-info right">2</span>
                             </p>
                         </a>
                     </li>
                 @endcan
 
+                <li class="nav-header">Program</li>
+
                 @can('viewAny', App\ProgramIntervensi::class)
                     <li class="nav-item">
                         <a href="{{ route('program_intervensis.index') }}" class="nav-link">
-                            <i class="nav-icon far fa-image"></i>
+                            <i class="nav-icon fas fa-file"></i>
                             <p>
-                                Program Intervensi
+                                Rencana
                             </p>
                         </a>
                     </li>
@@ -67,13 +80,22 @@
                 @can('viewAny', App\ProgressProgram::class)
                     <li class="nav-item">
                         <a href="{{ route('pi_index') }}" class="nav-link">
-                            <i class="nav-icon fas fa-columns"></i>
+                            <i class="nav-icon far fa-calendar-alt"></i>
                             <p>
-                                Progress Program
+                                Progress
                             </p>
                         </a>
                     </li>
                 @endcan
+
+                <li class="nav-item">
+                    <a href="{{ route('pi_index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Laporan
+                        </p>
+                    </a>
+                </li>
 
 
 

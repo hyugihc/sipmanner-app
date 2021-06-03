@@ -3,6 +3,7 @@
 
 @section('content')
 
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -51,52 +52,93 @@
                             @method('PUT')
 
                             <div class="card-body">
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Tahun SK</label>
+                                    <input type="number" name="tahun_sk" value="{{ $can->tahun_sk }}" class="form-control"
+                                        placeholder="">
+                                </div>
+
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nomor SK</label>
                                     <input type="text" name="nomor_sk" value="{{ $can->nomor_sk }}" class="form-control"
-                                        id="exampleInputEmail1" placeholder="" disabled>
+                                        placeholder="">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tanggal SK</label>
                                     <input type="date" name="tanggal_sk" value="{{ $can->tanggal_sk }}"
-                                        class="form-control" id="exampleInputEmail1" placeholder="">
+                                        class="form-control" placeholder="">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Perihal SK</label>
                                     <input type="text" name="perihal_sk" value="{{ $can->perihal_sk }}"
-                                        class="form-control" id="exampleInputEmail1" placeholder="">
+                                        class="form-control" placeholder="">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">File SK</label>
                                     <a href="{{ route('cans.download', $can) }}"> file SK </a>
-                                    <input type="file" name="file_sk" value="" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
+                                    <input type="file" name="file_sk" value="" class="form-control" placeholder="">
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label>Anggota</label>
-                                    @foreach ($can->users as $user)
-                                        <dd> {{ $user->name }} sebagai {{ $user->role['name'] }}</dd>
-
-                                    @endforeach
+                                    <label for="exampleInputEmail1">Change Network</label>
+                                    <button type="button" class="btn btn-default float-right" data-toggle="modal"
+                                        data-target="#modal-default">
+                                        + Tambahkan Change Agent
+                                    </button>
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Cek (✓)</th>
+                                                <th>Nip Lama</th>
+                                                <th>Nama</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($can->change_leaders as $user)
+                                                <tr>
+                                                    <td><input type="checkbox" name="change_leaders[]" value="{{ $user->id }}"
+                                                            checked disabled></td>
+                                                    <td>{{ $user->nip_lama }}</td>
+                                                    <td>{{ $user->name }}</td>
+                                                    <td>{{ $user->email }}</td>
+                                                    <td>Change Leader</td>
+                                                </tr>
+                                            @endforeach
+                                            @foreach ($can->change_champions as $user)
+                                                <tr>
+                                                    <td><input type="checkbox" name="change_champions[]" value="{{ $user->id }}"
+                                                            checked disabled></td>
+                                                    <td>{{ $user->nip_lama }}</td>
+                                                    <td>{{ $user->name }}</td>
+                                                    <td>{{ $user->email }}</td>
+                                                    <td>Change Champions</td>
+                                                </tr>
+                                            @endforeach
+                                            @foreach ($can->change_agents as $ca)
+                                                <tr>
+                                                    <td><input type="checkbox" name="change_agents[]" value="{{ $ca->id }}"
+                                                            checked></td>
+                                                    <td>{{ $ca->nip_lama }}</td>
+                                                    <td>{{ $ca->name }}</td>
+                                                    <td>{{ $ca->email }}</td>
+                                                    <td>Change Agent</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
 
-                                {{-- <div class="form-group">
-                                    <label for="exampleInputEmail1">Approval</label>
-                                    <input type="text" name="aproval" value="{{ $can->approval }}" class="form-control"
-                                        id="exampleInputEmail1" placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Alasan</label>
-                                    <input type="text" name="alasan" value="{{ $can->alasan }}" class="form-control"
-                                        id="exampleInputEmail1" placeholder="">
-                                </div> --}}
+
 
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <input type="submit" name="draft" value="Save as Draft">
+                                <input type="submit" name="submit" value="Submit">
                             </div>
                         </form>
                     </div>
@@ -112,5 +154,116 @@
             <!-- /.row -->
         </div><!-- /.container-fluid -->
     </section>
+
+    <!-- .modal -->
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cari Pegawai</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Cari pegawai berdasarkan NIP lama</label>
+                        <input class="form-control" type='text' id='p_input' name='search' placeholder='Enter nip lama'>
+                    </div>
+
+                    <input type='button' value='Search' id='sp_button'> <br /> <br />
+
+                    <table class="table table-bordered" id='userTable'>
+                        <thead>
+                            <tr>
+
+                                <th>Nip Lama</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user_table"></tbody>
+
+                    </table>
+
+                    <br />
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="add_pegawai">Tambah Pegawai</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <!-- /.modal -->
+
+    <script>
+        $(document).ready(function() {
+            $('#sp_button').click(function() {
+                var id = Number($('#p_input').val().trim());
+                if (id > 0) {
+                    cariPegawai(id);
+                }
+            });
+
+        });
+
+
+        var tr_str;
+
+
+        function cariPegawai(id) {
+            $.ajax({
+                url: '/getuser_by_niplama/' + id,
+                type: 'get',
+                dataType: 'json',
+                success: function(response) {
+                    var len = 0;
+                    $('#userTable tbody').empty(); // Empty <tbody>
+                    if (response['data'] != null) {
+                        var id = response['data'].id;
+                        var name = response['data'].name;
+                        var email = response['data'].email;
+                        var nip_lama = response['data'].nip_lama;
+                        //alert(name);
+                        tr_str = "<tr><td ><input type = 'checkbox' name = 'change_agents[]' value = '" +
+                            id + "'  checked > </td>" +
+                            "<td>" + nip_lama + "</td>" +
+                            "<td>" + name + "</td>" +
+                            "<td>" + email + "</td>" +
+                            "<td>" + "Change Agent" + "</td>" +
+                            "</tr>";
+                        var tr_str2 = "<tr>" +
+                            "<td>" + nip_lama + "</td>" +
+                            "<td>" + name + "</td>" +
+                            "<td>" + email + "</td>" +
+                            "</tr>";
+                        $("#userTable tbody").append(tr_str2);
+                    }
+                }
+            });
+
+
+
+        }
+        //end cari pegawai
+
+        $(document).ready(function() {
+            $('#add_pegawai').click(function() {
+                $('#userTable tbody').empty();
+                $('#example1 tbody').prepend(tr_str);
+
+            });
+
+        });
+
+    </script>
+
+
+
 
 @endsection

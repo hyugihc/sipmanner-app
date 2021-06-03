@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Can;
-use App\Policies\CanPolicy;
 use App\Provinsi;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -12,24 +12,30 @@ use Illuminate\Support\Facades\Storage;
 class CanController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Can::class, 'can');
+    }
+
+
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $cans = (Auth::user()->role_id == 1 or Auth::user()->role_id == 5) ?
+            Can::paginate(5) :
+            Can::where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
 
-        Auth::user()->cannot('viewAny', Can::class) ?  abort(403) : true;
 
-        if (Auth::user()->role_id == 1 or Auth::user()->role_id == 5) {
-            $cans = Can::paginate(5);
-        } else {
-            $cans = Can::where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
-        }
-
-        return view('cans.index', compact('cans'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('cans.index', compact('cans'));
     }
 
     /**
@@ -39,62 +45,65 @@ class CanController extends Controller
      */
     public function create()
     {
-        //
-        Auth::user()->cannot('create', Can::class) ?  abort(403) : true;
-
         $provinsis = Provinsi::all();
-        return view('cans.create', compact('provinsis'));
+        $change_leaders = User::where('role_id', 2)->where('provinsi_id', Auth::user()->provinsi_id)->get();
+        $change_champions = User::where('role_id', 3)->where('provinsi_id', Auth::user()->provinsi_id)->get();
+        return view('cans.create', compact('provinsis', 'change_leaders', 'change_champions'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store and submit.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
-        Auth::user()->cannot('create', Can::class) ?  abort(403) : true;
-
         $request->validate([
+            'tahun_sk' => 'required|min:4|max:4',
             'nomor_sk' => 'required|unique:cans|min:3|max:255',
             'tanggal_sk' => 'required',
             'perihal_sk' => 'required',
             'file_sk' => 'required|mimes:pdf',
-            'users' => 'required',
+            'change_agents' => 'required',
         ]);
 
-        $can = new Can;
-        $can->nomor_sk = $request->nomor_sk;
-        $can->tanggal_sk = $request->tanggal_sk;
-        $can->perihal_sk = $request->perihal_sk;
-        $can->approval = 3;
-        $can->alasan = $request->alasan;
 
-        if (Auth::user()->role_id == 1) {
-            $can->provinsi_id = $request->provinsi_id;
-        } else {
-            $can->provinsi_id = Auth::user()->provinsi_id;
-        }
-
-
-
+        $can = Can::create($request->all());
         $can->file_sk = Storage::putFile('public/cans', $request->file_sk);
-
         // $can->file_sk = Storage::putFileAs('cans', $request->file('file_sk'), $request->user()->nomor_sk);
-
-
-
+        Auth::user()->role_id == 1 ?
+            $can->provinsi_id = $request->provinsi_id :
+            $can->provinsi_id = Auth::user()->provinsi_id;
+        $can->status_sk  = ($request->has('draft')) ? 0 : 1;
         $can->save();
 
-        $can->users()->attach($request->users);
 
-        // Can::create($request->all());
+        foreach ($request->change_agents as $change_agent) {
+            $can->change_agents()->attach($change_agent, ['role_id' => 4]);
+        }
+
+        // foreach ($request->users as $user) {
+        //     $can->users()->attach($user, ['role_id' => 4]);
+        // }
+
+        $change_leaders = User::where('role_id', 2)->where('provinsi_id', Auth::user()->provinsi_id)->get();
+        $change_champions = User::where('role_id', 3)->where('provinsi_id', Auth::user()->provinsi_id)->get();
+
+        foreach ($change_leaders as $cl) {
+            $can->change_leaders()->attach($cl, ['role_id' => 2]);
+        }
+        foreach ($change_champions as $cc) {
+            $can->change_champions()->attach($cc, ['role_id' => 3]);
+        }
+
+        //  $can->users()->syncWithPivotValues($request->users, ['role_id' => 4]);
+
 
         return redirect()->route('cans.index')
-            ->with('success', 'Can created successfully.');
+            ->with('success', 'Can submitted successfully.');
     }
+
 
     /**
      * Display the specified resource.
@@ -104,10 +113,6 @@ class CanController extends Controller
      */
     public function show(Can $can)
     {
-        //
-
-        Auth::user()->cannot('view', $can) ?  abort(403) : true;
-
         return view('cans.show', compact('can'));
     }
 
@@ -119,9 +124,6 @@ class CanController extends Controller
      */
     public function edit(Can $can)
     {
-        //
-        Auth::user()->cannot('update', $can) ?  abort(403) : true;
-
         return view('cans.edit', compact('can'));
     }
 
@@ -134,24 +136,52 @@ class CanController extends Controller
      */
     public function update(Request $request, Can $can)
     {
-        // //
-
-        Auth::user()->cannot('update', $can) ?  abort(403) : true;
-
         $request->validate([
-
+            'tahun_sk' => 'required|min:4|max:4',
+            'nomor_sk' => 'required|min:3|max:255',
             'tanggal_sk' => 'required',
             'perihal_sk' => 'required',
-            'file_sk' => 'required|mimes:pdf',
+            'file_sk' => 'required',
             'users' => 'required',
         ]);
 
 
         $can->update($request->all());
+        // $can->file_sk = Storage::putFile('public/cans', $request->file_sk);
+        $can->provinsi_id = (Auth::user()->role_id == 1) ?
+            $request->provinsi_id :
+            Auth::user()->provinsi_id;
+        $can->status_sk  = ($request->has('draft')) ? 0 : 1;
 
-        return redirect()->route('cans.index')
-            ->with('success', 'Can updated successfully');
+
+        $can->change_agents()->detach();
+        if ($request->change_agents != null) {
+            foreach ($request->change_agents as $change_agent) {
+                $can->change_agents()->attach($change_agent, ['role_id' => 4]);
+            }
+        }
+
+        $can->save();
+
+        if ($can->status_sk == 0) {
+            return redirect()->route('cans.index')
+                ->with('success', 'Draft Can updated successfully');
+        } else {
+            return redirect()->route('cans.index')
+                ->with('success', 'Can submited successfully');
+        }
     }
+
+    private function mapChangeAgents($change_agents)
+    {
+        return collect($change_agents)->map(function ($i) {
+            return ['amount' => $i];
+        });
+    }
+
+
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -161,9 +191,6 @@ class CanController extends Controller
      */
     public function destroy(Can $can)
     {
-        //
-        Auth::user()->cannot('delete', $can) ?  abort(403) : true;
-
         $can->delete();
 
         return redirect()->route('cans.index')
@@ -174,8 +201,6 @@ class CanController extends Controller
     {
 
         try {
-            //code...
-
             return Storage::disk('local')->download($can->file_sk);
         } catch (\Throwable $th) {
             throw $th;
@@ -184,13 +209,12 @@ class CanController extends Controller
 
     public function approval(Request $request, Can $can)
     {
-        Auth::user()->cannot('approval', $can) ?  abort(403) : true;
+        Auth::user()->cannot('approve', $can) ?  abort(403) : true;
 
-        $can->update($request->all());
+        $can->status_sk = $request->status_sk;
+        $can->alasan = $request->alasan;
+        $can->save();
 
-        // $can->approval = $request->approval;
-        // $can->alasan = $request->alasan;
-        // $can->save();
         return redirect()->route('cans.index')
             ->with('success', 'Can Approval successfully');
     }

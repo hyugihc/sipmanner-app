@@ -49,6 +49,16 @@
                             @csrf
 
                             <div class="card-body">
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Tahun SK</label>
+                                    <input type="number" name="tahun_sk" class="form-control"
+                                        value="{{ old('tahun_sk') }}" placeholder="">
+                                </div>
+                                @error('tahun_sk')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nomor SK</label>
                                     <input type="text" name="nomor_sk" class="form-control" value="{{ old('nomor_sk') }}"
@@ -93,82 +103,61 @@
                                     </div>
                                 @endif
 
+
+
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Cari pegawai berdasarkan NIP lama</label>
-                                    <input class="form-control" type='text' id='search' name='search'
-                                        placeholder='Enter nip lama'>
-                                </div>
-
-
-
-
-                                <input type='button' value='Search' id='but_search'>
-                                <br />
-                                <br />
-
-                                <table class="table table-bordered" id='userTable'>
-                                    <thead>
-                                        <tr>
-                                            <th>Nip Lama</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            {{-- <th>Action</th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody id="user_table"></tbody>
-                                </table>
-
-                                <br />
-
-
-                                <div class="well clearfix">
-                                    <a id="add-row" class="btn btn-primary pull-right add-record" data-added="0"><i
-                                            class="glyphicon glyphicon-plus"></i> Tambahkan pegawai</a>
-                                </div>
-
-                                <br />
-                                <div class="form-group">
-                                    {{-- <label for="exampleInputEmail1">Change Leader, Change Champions dan Change Agent</label> --}}
-                                    <table class="table table-bordered" id="tbl_posts">
+                                    <label for="exampleInputEmail1">Change Network</label>
+                                    <button type="button" class="btn btn-default float-right" data-toggle="modal"
+                                        data-target="#modal-default">
+                                        + Tambahkan Change Agent
+                                    </button>
+                                    <table id="example1" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
+                                                <th>Cek (✓)</th>
                                                 <th>Nip Lama</th>
                                                 <th>Nama</th>
                                                 <th>Email</th>
-                                                {{-- <th>Action</th> --}}
+                                                <th>Role</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="tbl_posts_body">
+                                        <tbody>
+
+                                            @foreach ($change_leaders as $change_leader)
+                                                <tr>
+                                                    <td>(✓)</td>
+                                                    <td>{{ $change_leader->nip_lama }}</td>
+                                                    <td>{{ $change_leader->name }}</td>
+                                                    <td>{{ $change_leader->email }}</td>
+                                                    <td>Change Leader</td>
+                                                </tr>
+                                            @endforeach
+                                            @foreach ($change_champions as $cc)
+                                                <tr>
+                                                    <td>(✓)</td>
+                                                    <td>{{ $cc->nip_lama }}</td>
+                                                    <td>{{ $cc->name }}</td>
+                                                    <td>{{ $cc->email }}</td>
+                                                    <td>Change Champions</td>
+                                                </tr>
+                                            @endforeach
+
 
                                         </tbody>
                                     </table>
                                 </div>
 
-                                @error('users')
+                                @error('change_agents')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
-
-                                <select id="selectedUser" name="users[]" multiple hidden>
-                                </select>
-
-                                {{-- <div class="form-group">
-                                    <label for="exampleInputEmail1">Aproval</label>
-                                    <input type="text" name="aproval" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
-                                </div> --}}
-
-                                {{-- <div class="form-group">
-                                    <label for="exampleInputEmail1">Alasan</label>
-                                    <input type="text" name="alasan" class="form-control" id="exampleInputEmail1"
-                                        placeholder="">
-                                </div> --}}
-
 
 
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <input type="submit" class="btn btn-primary" name=" draft" value="Save as Draft">
+                                <input type="submit" class="btn btn-primary" name=" submit" value="Submit">
+                                {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
                             </div>
                         </form>
                     </div>
@@ -183,136 +172,102 @@
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
+    </section>
 
-        <script type="text/javascript">
+    <!-- .modal -->
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cari Pegawai</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Cari pegawai berdasarkan NIP lama</label>
+                        <input class="form-control" type='text' id='p_input' name='search' placeholder='Enter nip lama'>
+                    </div>
 
+                    <input type='button' value='Search' id='sp_button'> <br /> <br />
 
+                    <table class="table table-bordered" id='userTable'>
+                        <thead>
+                            <tr>
+                                <th>Nip Lama</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user_table"></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="add_pegawai">Tambah Pegawai</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
-        </script>
+    <!-- /.modal -->
 
-        {{-- tambah dan hapus data --}}
-
-        <script type="text/javascript">
-            $(document).ready(function() {
-                jQuery(document).delegate('a.add-record', 'click', function(e) {
-                    e.preventDefault();
-                    var content = jQuery('#user_table tr'),
-                        size = jQuery('#tbl_posts >tbody >tr').length + 1,
-                        element = null,
-                        element = content.clone();
-                    element.attr('id', 'rec-' + size);
-                    element.find('.delete-record').attr('data-id', size);
-                    element.appendTo('#tbl_posts_body');
-                    element.find('.sn').html(size);
-
-
-
-                });
-                jQuery(document).delegate('a.delete-record', 'click', function(e) {
-                    e.preventDefault();
-                    var didConfirm = confirm("Are you sure You want to delete");
-                    if (didConfirm == true) {
-                        var id = jQuery(this).attr('data-id');
-                        var targetDiv = jQuery(this).attr('targetDiv');
-                        jQuery('#rec-' + id).remove();
-                        removeUserOptions(jQuery(this).attr('data-uid'));
-                        //regnerate index number on table
-                        // $('#tbl_posts_body tr').each(function(index) {
-                        //     $(this).find('span.sn').html(index + 1);
-                        // });
-
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#sp_button').click(function() {
+                var id = Number($('#p_input').val().trim());
+                if (id > 0) {
+                    cariPegawai(id);
+                }
             });
+        });
+        var tr_str;
 
-        </script>
-
-        {{-- cari data --}}
-
-        <script type='text/javascript'>
-            $(document).ready(function() {
-                // Search by userid
-                $('#but_search').click(function() {
-                    var id = Number($('#search').val().trim());
-
-                    if (id > 0) {
-                        fetchRecords(id);
+        function cariPegawai(id) {
+            $.ajax({
+                url: '/getuser_by_niplama/' + id,
+                type: 'get',
+                dataType: 'json',
+                success: function(response) {
+                    var len = 0;
+                    $('#userTable tbody').empty(); // Empty <tbody>
+                    if (response['data'] != null) {
+                        var id = response['data'].id;
+                        var name = response['data'].name;
+                        var email = response['data'].email;
+                        var nip_lama = response['data'].nip_lama;
+                        //alert(name);
+                        tr_str = "<tr><td ><input type = 'checkbox' name = 'change_agents[]' value = '" +
+                            id + "'  checked > </td>" +
+                            "<td>" + nip_lama + "</td>" +
+                            "<td>" + name + "</td>" +
+                            "<td>" + email + "</td>" +
+                            "<td>" + "Change Agent" + "</td>" +
+                            "</tr>";
+                        var tr_str2 = "<tr>" +
+                            "<td>" + nip_lama + "</td>" +
+                            "<td>" + name + "</td>" +
+                            "<td>" + email + "</td>" +
+                            "</tr>";
+                        $("#userTable tbody").append(tr_str2);
                     }
-
-                });
-
+                }
             });
-
-            function fetchRecords(id) {
-                $.ajax({
-                    url: 'getUser/' + id,
-                    type: 'get',
-                    dataType: 'json',
-                    success: function(response) {
-
-                        var len = 0;
-                        $('#userTable tbody').empty(); // Empty <tbody>
-                        if (response['data'] != null) {
-                            len = response['data'].length;
-                        }
-
-                        if (len > 0) {
-                            for (var i = 0; i < len; i++) {
-                                var id = response['data'][i].id;
-                                var name = response['data'][i].name;
-                                var email = response['data'][i].email;
-                                var nipLama = response['data'][i].nip_lama;
-
-                                var tr_str = "<tr>" +
-                                    "<td align='center'>" + nipLama + "</td>" +
-                                    "<td align='center'>" + name + "</td>" +
-                                    "<td align='center'> <a  id = 'tabel_atas' value='" + id +
-                                    "' class='btn btn-xs delete-record' data-uid= '" + id +
-                                    "' data-id=" +
-                                    id +
-                                    " hidden> delete</a >" + email + "</td>" +
-                                    "</tr>";
-
-                                $("#userTable tbody").append(tr_str);
-
-                            }
-                        } else {
-                            var tr_str = "<tr>" +
-                                "<td align='center' colspan='4'>No record found.</td>" +
-                                "</tr>";
-
-                            $("#userTable tbody").append(tr_str);
-                        }
-
-                    }
-                });
-            }
-
-            function addUserOptions(id) {
-                $("#selectedUser").append('<option value="' + id + '" selected>' + id + '</option>');
-            }
-
-            function removeUserOptions(id) {
-                $("#selectedUser option[value='" + id + "']").remove();
-            }
-
-            $(document).ready(function() {
-                $("#add-row").click(function() {
-                    var id = jQuery("#tabel_atas").attr('data-id');
-                    addUserOptions(id);
-                });
+        }
+        $(document).ready(function() {
+            $('#add_pegawai').click(function() {
+                $('#userTable tbody').empty();
+                $('#example1 tbody').prepend(tr_str);
             });
+        });
 
-            // $(document).ready(function() {
-            //     $("#add-row").click(function() {
-            //         var id = jQuery("#tabel_atas").attr('data-id');
-            //         addUserOptions(id);
-            //     });
-            // });
+    </script>
 
-        </script>
 
-    @endsection
+
+
+
+@endsection

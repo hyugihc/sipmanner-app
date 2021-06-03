@@ -67,7 +67,7 @@
 
                                 <div class="form-group">
                                     <label>Nilai Pia</label>
-                                    <select class="form-control" name="pias_id" multiple>
+                                    <select class="form-control" name="pias[]" multiple>
                                         @foreach ($pias as $pia)
                                             <option value="{{ $pia->id }}">{{ $pia->nama }}</option>
                                         @endforeach

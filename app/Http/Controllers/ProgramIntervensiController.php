@@ -117,6 +117,7 @@ class ProgramIntervensiController extends Controller
     {
         //
         $pias = Pia::all();
+
         return view('program_intervensis.edit', compact('program_intervensi', 'pias'));
     }
 
@@ -131,8 +132,12 @@ class ProgramIntervensiController extends Controller
     {
         //cek policy
         $request->user()->cannot('update', $program_intervensi) ?
-            abort(403) : $program_intervensi->update($request->all());
+            abort(403) : true;
 
+        $program_intervensi->update($request->all());
+        $program_intervensi->pias()->detach();
+        $program_intervensi->pias()->attach($request->pias);
+        $program_intervensi->save();
 
 
         return redirect()->route('program_intervensis.index')

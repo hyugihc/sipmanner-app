@@ -48,6 +48,11 @@
                                 <dd>{{ $program_intervensi->nama }}</dd>
                                 <dt>Uraian Kegiatan</dt>
                                 <dd>{{ $program_intervensi->uraian_kegiatan }}</dd>
+                                <dt>Nilai Pia</dt>
+                                @foreach ($program_intervensi->pias as $pia)
+                                    <dd>{{ $pia->nama }}</dd>
+                                @endforeach
+
                                 <dt>Volume Kegiatan setahun</dt>
                                 <dd>{{ $program_intervensi->vol_keg_tahun }}</dd>
                                 <dt>Output</dt>

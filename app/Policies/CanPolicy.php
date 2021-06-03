@@ -19,8 +19,12 @@ class CanPolicy
      */
     public function viewAny(User $user)
     {
-        //
-        return  $user->role_id == 4 ? false : true;
+
+        if ($user->role_id == 1) return true;
+        if ($user->role_id == 2) return true;
+        if ($user->role_id == 3) return true;
+        if ($user->role_id == 5) return true;
+        return false;
     }
 
     /**
@@ -32,24 +36,31 @@ class CanPolicy
      */
     public function view(User $user, Can $can)
     {
-        if ($user->role_id == 1 or $user->role_id == 5) return true;
-        if ($user->role_id == 4) return false;
-        return  $user->provinsi_id == $can->provinsi_id;
+        if ($user->role_id == 1) return true;
+        if ($user->role_id == 5) return true;
+        if ($user->role_id == 3 or $user->role_id == 2) {
+            return  $user->provinsi_id == $can->provinsi_id;
+        }
+        return false;
     }
 
     /**
-     * Determine whether the user can create models.
+     * Determine whether the user can create.
      *
      * @param  \App\User  $user
      * @return mixed
      */
     public function create(User $user)
     {
-        return $user->role_id == 3 or $user->role_id == 1 ? true : false;
+        if ($user->role_id == 1) return true;
+        if ($user->role_id == 2) return true;
+        if ($user->role_id == 3) return true;
+
+        return false;
     }
 
-    /**
-     * Determine whether the user can update the model.
+    /** 
+     * Determine whether the user can update from draft.
      *
      * @param  \App\User  $user
      * @param  \App\Can  $can
@@ -57,14 +68,12 @@ class CanPolicy
      */
     public function update(User $user, Can $can)
     {
-        //
-        if ($user->role_id == 1) {
-            return true;
-        } elseif ($user->provinsi_id == $can->provinsi_id and $can->approval != 1 and $user->role_id == 3 and $can->approval != 2) {
-            return true;
-        } else {
-            return false;
+        if ($user->role_id == 3 or $user->role_id == 2) {
+            if ($can->status_sk == 0 or $can->status_sk == 3) {
+                return $user->provinsi_id == $can->provinsi_id;
+            }
         }
+        return false;
     }
 
     /**
@@ -77,15 +86,11 @@ class CanPolicy
     public function delete(User $user, Can $can)
     {
         //
-        if ($user->role_id == 1) {
-            return true;
-        } elseif ($user->role_id == 4 or $user->role_id == 5) {
-            return false;
-        } elseif ($user->provinsi_id == $can->provinsi_id and $can->approval != 1 and $can->approval != 2) {
-            return true;
-        } else {
-            return false;
+        if ($user->role_id == 1) return true;
+        if ($user->role_id == 2 or $user->role_id == 3) {
+            return $can->status_sk == 0 ? $user->provinsi_id == $can->provinsi_id : false;
         }
+        return false;
     }
 
     /**
@@ -112,22 +117,11 @@ class CanPolicy
         //
     }
 
-    public function approval(User $user, Can $can)
+    public function approve(User $user, Can $can)
     {
-        //
-        if ($user->role_id == 1) {
-            return true;
-        } elseif ($user->role_id == 2 and $can->approval != 1 and $can->approval != 2) {
+        if ($user->role_id == 2 and $can->status_sk == 1) {
             return $user->provinsi_id == $can->provinsi_id;
-        } else {
-            return false;
         }
-    }
-
-    public function nasional(User $user)
-    {
-        if ($user->role_id == 1) {
-            return true;
-        }
+        return false;
     }
 }

@@ -23,9 +23,11 @@ Route::post('register', 'AuthController@register');
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('logout', 'AuthController@logout')->name('logout');
-    Route::get('cans/getUser/{nipLama}', 'UserController@getUser');
+   
 
+    Route::get('logout', 'AuthController@logout')->name('logout');
+    Route::get('getUser/{nipLama}', 'UserController@getUser');
+    Route::get('getuser_by_niplama/{nip_lama}', 'UserController@getuser_by_niplama');
 
     Route::get('users', 'UserController@index')->name('users.index');
     Route::get('users/create', 'UserController@create')->name('users.create');

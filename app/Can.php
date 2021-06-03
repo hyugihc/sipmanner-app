@@ -9,13 +9,31 @@ class Can extends Model
 {
     //
     protected $fillable = [
-        'nomor_sk', 'tanggal_sk', 'perihal_sk', 'file_sk', 'approval', 'provinsi_id', 'alasan'
+        'nomor_sk', 'tanggal_sk', 'perihal_sk', 'file_sk', 'provinsi_id', 'alasan', 'tahun_sk'
     ];
 
-    public function users()
+    // public function users()
+    // {
+    //     return $this->belongsToMany(User::class)->withPivot(['role_id']);
+    // }
+
+    public function change_champions()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->wherePivot('role_id', 3);
     }
+
+    public function change_leaders()
+    {
+        return $this->belongsToMany(User::class)->wherePivot('role_id', 2);
+    }
+
+    public function change_agents()
+    {
+        return $this->belongsToMany(User::class)->wherePivot('role_id', 4);
+    }
+
+
+
 
 
     public function provinsi()
