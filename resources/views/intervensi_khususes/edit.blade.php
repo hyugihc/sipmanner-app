@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Create</h1>
+                    <h1 class="m-0">Edit</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -33,46 +33,38 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('program_intervensis.store') }}" method="POST" id="quickForm">
+                        <form action="{{ route('intervensi_khususes.update', $intervensiKhusus->id) }}" method="POST"
+                            id="quickForm">
                             @csrf
+                            @method('PUT')
 
                             <div class="card-body">
 
                                 <div class="form-group">
                                     <label>Jenis Program Intervensi</label>
-                                    <select id="jenispi" class="form-control" name="jenis">
-
-                                        @if (Auth::user()->role_id == 1)
-                                            <option value="1">Nasional</option>
-                                            <option value="2" selected>Khusus</option>
-                                        @else
-                                            <option value="2" selected>Khusus</option>
-                                        @endif
+                                    <select class="form-control" name="jenis">
+                                        <option selected disabled>Khusus</option>
                                     </select>
                                 </div>
 
-                                @error('jenis')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" name="nama" class="form-control" placeholder="">
+                                    <input type="text" name="nama" class="form-control" placeholder=""
+                                        value="{{ $intervensiKhusus->nama }}">
                                 </div>
-
-                                @error('nama')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-
                                 <div class="form-group">
                                     <label>Uraian Kegiatan</label>
-                                    <textarea type="text" name="uraian_kegiatan" class="form-control" placeholder="">
-                                                                                                                                                                                                                                                                                                                                                                </textarea>
+                                    <textarea type="text" name="uraian_kegiatan" class="form-control"
+                                        placeholder="">{{ $intervensiKhusus->uraian_kegiatan }}
+                                                                                                                                                                                                        </textarea>
                                 </div>
 
-                                @error('uraian_kegiatan')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
+
+                                <div class="form-group">
+                                    <label>Volume Kegiatan Setahun</label>
+                                    <input type="text" name="volume" class="form-control" placeholder=""
+                                        value="{{ $intervensiKhusus->volume }}">
+                                </div>
 
 
                                 <div class="form-group">
@@ -84,48 +76,25 @@
                                     </select>
                                 </div>
 
-                                @error('pias')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-
-
-                                <div class="form-group">
-                                    <label>Volume Kegiatan Setahun</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder="">
-                                </div>
-
-                                @error('vol_keg_tahun')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-
                                 <div class="form-group">
                                     <label>Output</label>
-                                    <input type="text" name="output" class="form-control" placeholder="">
+                                    <input type="text" name="output" class="form-control" placeholder=""
+                                        value="{{ $intervensiKhusus->output }}">
                                 </div>
-
-                                @error('output')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
 
                                 <div class="form-group">
                                     <label>Outcome</label>
-                                    <input type="text" name="outcome" class="form-control" placeholder="">
+                                    <input type="text" name="outcome" class="form-control" placeholder=""
+                                        value="{{ $intervensiKhusus->outcome }}">
                                 </div>
-
-                                @error('outcome')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
 
 
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <textarea type="text" name="keterangan" class="form-control" placeholder=""></textarea>
-                                    </textarea>
+                                    <textarea type="text" name="keterangan" class="form-control"
+                                        placeholder="">{{ $intervensiKhusus->keterangan }}
+                                                                                                                                              </textarea>
                                 </div>
-
-                                @error('keterangan')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
 
                                 @if (Auth::User()->role_id == 1)
                                     <div id="provinsi_id" class="form-group">
@@ -137,6 +106,7 @@
                                         </select>
                                     </div>
                                 @endif
+
 
                             </div>
                             <!-- /.card-body -->
@@ -156,27 +126,6 @@
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
-
-        <script>
-            // $(document).ready(function() {
-            //     var textarea = $('#divtextarea');
-            //     textarea.hide();
-            // });
-
-            $('#jenispi').on('change', function() {
-                var provinsi = $('#provinsi_id');
-                var select = $(this).val();
-
-                if (select == '1') {
-                    provinsi.hide();
-                    provinsi.val("99");
-                } else {
-                    provinsi.show();
-                }
-
-            });
-
-        </script>
 
 
 

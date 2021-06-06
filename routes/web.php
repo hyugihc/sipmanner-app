@@ -23,7 +23,7 @@ Route::post('register', 'AuthController@register');
 
 Route::group(['middleware' => 'auth'], function () {
 
-   
+
 
     Route::get('logout', 'AuthController@logout')->name('logout');
     Route::get('getUser/{nipLama}', 'UserController@getUser');
@@ -44,6 +44,34 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('program_intervensis', ProgramIntervensiController::class);
     Route::resource('progress_programs', ProgressProgramController::class);
+
+    Route::resource('programs', ProgramController::class);
+    Route::resource('progress', ProgressController::class);
+
+    Route::resource('intervensi_nasionals', IntervensiNasionalController::class);
+    Route::resource('intervensi_khususes', IntervensiKhususController::class);
+
+
+    // Route::resource('progress_intervensi_nasionals', ProgressIntervensiNasionalController::class);
+    Route::get('progress_intervensi_nasionals/{intervensiNasional}', 'ProgressIntervensiNasionalController@index')->name('progress_intervensi_nasionals.index');
+    Route::get('progress_intervensi_nasionals/{intervensiNasional}/create', 'ProgressIntervensiNasionalController@create')->name('progress_intervensi_nasionals.create');
+    Route::post('progress_intervensi_nasionals/{intervensiNasional}', 'ProgressIntervensiNasionalController@store')->name('progress_intervensi_nasionals.store');
+    Route::get('progress_intervensi_nasionals/{progressIntervensiNasional}/edit', 'ProgressIntervensiNasionalController@edit')->name('progress_intervensi_nasionals.edit');
+    Route::put('progress_intervensi_nasionals/{progressIntervensiNasional}', 'ProgressIntervensiNasionalController@update')->name('progress_intervensi_nasionals.update');
+    Route::delete('progress_intervensi_nasionals/{progressIntervensiNasional}', 'ProgressIntervensiNasionalController@destroy')->name('progress_intervensi_nasionals.destroy');
+    Route::get('progress_intervensi_nasionals/{progressIntervensiNasional}', 'ProgressIntervensiNasionalController@show')->name('progress_intervensi_nasionals.show');
+
+    // Route::resource('progress_intervensi_khususes', ProgressIntervensiKhususController::class);
+    Route::get('progress_intervensi_khususes/{intervensiKhusus}', 'ProgressIntervensiKhususController@index')->name('progress_intervensi_khususes.index');
+    Route::get('progress_intervensi_khususes/{intervensiKhusus}/create', 'ProgressIntervensiKhususController@create')->name('progress_intervensi_khususes.create');
+    Route::post('progress_intervensi_khususes/{intervensiKhusus}', 'ProgressIntervensiKhususController@store')->name('progress_intervensi_khususes.store');
+    Route::get('progress_intervensi_khususes/{progressIntervensiKhusus}/edit', 'ProgressIntervensiKhususController@edit')->name('progress_intervensi_khususes.edit');
+    Route::put('progress_intervensi_khususes/{progressIntervensiKhusus}', 'ProgressIntervensiKhususController@update')->name('progress_intervensi_khususes.update');
+    Route::delete('progress_intervensi_khususes/{progressIntervensiKhusus}', 'ProgressIntervensiKhususController@destroy')->name('progress_intervensi_khususes.destroy');
+    Route::get('progress_intervensi_khususes/{progressIntervensiKhusus}', 'ProgressIntervensiKhususController@show')->name('progress_intervensi_khususes.show');
+
+
+
 
     Route::get('pi_index', 'ProgressProgramController@pi_index')->name('pi_index');
     Route::get('ppiindex/{program_intervensi}', 'ProgressProgramController@ppi_index')->name('ppi_index');

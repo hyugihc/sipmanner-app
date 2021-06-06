@@ -3,11 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\ProgressProgram;
 use App\Pia;
+use App\ProgressIntervensiKhusus;
 use App\Provinsi;
 
-class ProgramIntervensi extends Model
+class IntervensiKhusus extends Model
 {
     //
 
@@ -17,19 +17,17 @@ class ProgramIntervensi extends Model
      * @var array
      */
     protected $fillable = [
-        'nama', 'uraian_kegiatan', 'provinsi_id', 'vol_keg_tahun', 'output', 'outcome', 'keterangan', 'jenis'
+        'nama', 'uraian_kegiatan', 'volume', 'output', 'outcome', 'keterangan', 'provinsi_id'
     ];
-
-
 
     public function pias()
     {
         return $this->belongsToMany(Pia::class);
     }
 
-    public function progress_programs()
+    public function progress_intervensi_khususes()
     {
-        return $this->hasMany(ProgressProgram::class);
+        return $this->hasMany(ProgressIntervensiKhusus::class);
     }
 
     public function provinsi()

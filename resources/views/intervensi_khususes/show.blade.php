@@ -12,8 +12,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Program Intervensi</li>
-                        <li class="breadcrumb-item active">{{ $program_intervensi->nama }}</li>
+                        <li class="breadcrumb-item active">Program Intervensi Khusus</li>
+                        <li class="breadcrumb-item active">{{ $intervensiKhusus->nama }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -31,7 +31,7 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">{{ $program_intervensi->nama }} <small>program intervensi</small></h3>
+                            <h3 class="card-title">{{ $intervensiKhusus->nama }} <small>program intervensi</small></h3>
                         </div>
                         <!-- /.card-header -->
 
@@ -39,28 +39,27 @@
                         <div class="card-body">
                             <dl>
                                 <dt> Jenis</dt>
-                                @if ($program_intervensi->jenis == 1)
-                                    <dd>Program Intervensi Nasional</dd>
-                                @else
-                                    <dd>Program Intervensi Khusus</dd>
-                                @endif
+                                <dd>Program Intervensi Khusus</dd>
                                 <dt>Nama Program Intervensi</dt>
-                                <dd>{{ $program_intervensi->nama }}</dd>
+                                <dd>{{ $intervensiKhusus->nama }}</dd>
                                 <dt>Uraian Kegiatan</dt>
-                                <dd>{{ $program_intervensi->uraian_kegiatan }}</dd>
+                                <dd>{{ $intervensiKhusus->uraian_kegiatan }}</dd>
+                                <dt>Volume Kegiatan setahun</dt>
+                                <dd>{{ $intervensiKhusus->volume }}</dd>
                                 <dt>Nilai Pia</dt>
-                                @foreach ($program_intervensi->pias as $pia)
+                                @foreach ($intervensiKhusus->pias as $pia)
                                     <dd>{{ $pia->nama }}</dd>
                                 @endforeach
-
-                                <dt>Volume Kegiatan setahun</dt>
-                                <dd>{{ $program_intervensi->vol_keg_tahun }}</dd>
                                 <dt>Output</dt>
-                                <dd> {{ $program_intervensi->output }} </dd>
+                                <dd> {{ $intervensiKhusus->output }} </dd>
                                 <dt>Outcome</dt>
-                                <dd> {{ $program_intervensi->outcome }} </dd>
+                                <dd> {{ $intervensiKhusus->outcome }} </dd>
                                 <dt>keterangan</dt>
-                                <dd> {{ $program_intervensi->keterangan }} </dd>
+                                <dd> {{ $intervensiKhusus->keterangan }} </dd>
+                                <dt>keterangan</dt>
+                                <dd> {{ $intervensiKhusus->status }} </dd>
+                                <dt>Unit Kerja</dt>
+                                <dd> {{ $intervensiKhusus->provinsi['nama'] }} </dd>
 
 
                             </dl>

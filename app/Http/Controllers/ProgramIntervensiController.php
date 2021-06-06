@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Auth;
 
 class ProgramIntervensiController extends Controller
 {
+
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(ProgramIntervensi::class, 'programIntervensi');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -71,8 +82,6 @@ class ProgramIntervensiController extends Controller
             'vol_keg_tahun' => 'required',
             'output' => 'required',
             'outcome' => 'required',
-            'awal_pelaksanaan' => 'required',
-            'selesai_pelaksanaan' => 'required',
             'keterangan' => 'required',
             'pias' => 'required',
         ]);

@@ -66,7 +66,7 @@
 
                 <li class="nav-header">Program</li>
 
-                @can('viewAny', App\ProgramIntervensi::class)
+                {{-- @can('viewAny', App\ProgramIntervensi::class)
                     <li class="nav-item">
                         <a href="{{ route('program_intervensis.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-file"></i>
@@ -86,7 +86,25 @@
                             </p>
                         </a>
                     </li>
-                @endcan
+                @endcan --}}
+
+                <li class="nav-item">
+                    <a href="{{ route('programs.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>
+                            Rencana 2
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('progress.index') }}" class="nav-link">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>
+                            Progress 2
+                        </p>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a href="{{ route('pi_index') }}" class="nav-link">

@@ -33,7 +33,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('program_intervensis.store') }}" method="POST" id="quickForm">
+                        <form action="{{ route('intervensi_nasionals.store') }}" method="POST" id="quickForm">
                             @csrf
 
                             <div class="card-body">
@@ -41,19 +41,9 @@
                                 <div class="form-group">
                                     <label>Jenis Program Intervensi</label>
                                     <select id="jenispi" class="form-control" name="jenis">
-
-                                        @if (Auth::user()->role_id == 1)
-                                            <option value="1">Nasional</option>
-                                            <option value="2" selected>Khusus</option>
-                                        @else
-                                            <option value="2" selected>Khusus</option>
-                                        @endif
+                                        <option selected>Nasional</option>
                                     </select>
                                 </div>
-
-                                @error('jenis')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
 
                                 <div class="form-group">
                                     <label>Nama</label>
@@ -67,7 +57,7 @@
                                 <div class="form-group">
                                     <label>Uraian Kegiatan</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control" placeholder="">
-                                                                                                                                                                                                                                                                                                                                                                </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                    </textarea>
                                 </div>
 
                                 @error('uraian_kegiatan')
@@ -91,10 +81,10 @@
 
                                 <div class="form-group">
                                     <label>Volume Kegiatan Setahun</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder="">
+                                    <input type="text" name="volume" class="form-control" placeholder="">
                                 </div>
 
-                                @error('vol_keg_tahun')
+                                @error('volume')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
 
@@ -127,16 +117,7 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
 
-                                @if (Auth::User()->role_id == 1)
-                                    <div id="provinsi_id" class="form-group">
-                                        <label>Wilayah</label>
-                                        <select class="form-control" name="provinsi_id">
-                                            @foreach ($provinsis as $provinsi)
-                                                <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @endif
+
 
                             </div>
                             <!-- /.card-body -->
@@ -157,26 +138,6 @@
             <!-- /.row -->
         </div><!-- /.container-fluid -->
 
-        <script>
-            // $(document).ready(function() {
-            //     var textarea = $('#divtextarea');
-            //     textarea.hide();
-            // });
-
-            $('#jenispi').on('change', function() {
-                var provinsi = $('#provinsi_id');
-                var select = $(this).val();
-
-                if (select == '1') {
-                    provinsi.hide();
-                    provinsi.val("99");
-                } else {
-                    provinsi.show();
-                }
-
-            });
-
-        </script>
 
 
 

@@ -33,7 +33,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('program_intervensis.update', $program_intervensi->id) }}" method="POST"
+                        <form action="{{ route('intervensi_nasionals.update', $intervensiNasional->id) }}" method="POST"
                             id="quickForm">
                             @csrf
                             @method('PUT')
@@ -43,27 +43,29 @@
                                 <div class="form-group">
                                     <label>Jenis Program Intervensi</label>
                                     <select class="form-control" name="jenis">
-                                        @if ($program_intervensi->jenis == 1)
-                                            <option value="1" selected>Nasional</option>
-                                            <option value="2">Khusus</option>
-                                        @else
-                                            <option value="1">Nasional</option>
-                                            <option value="2" selected>Khusus</option>
-                                        @endif
+                                        <option selected disabled>Nasional</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Nama</label>
                                     <input type="text" name="nama" class="form-control" placeholder=""
-                                        value="{{ $program_intervensi->nama }}">
+                                        value="{{ $intervensiNasional->nama }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Uraian Kegiatan</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control"
-                                        placeholder="">{{ $program_intervensi->uraian_kegiatan }}
-                                                                                                                                </textarea>
+                                        placeholder="">{{ $intervensiNasional->uraian_kegiatan }}
+                                                                                                                                                                                                </textarea>
                                 </div>
+
+
+                                <div class="form-group">
+                                    <label>Volume Kegiatan Setahun</label>
+                                    <input type="text" name="volume" class="form-control" placeholder=""
+                                        value="{{ $intervensiNasional->volume }}">
+                                </div>
+
 
                                 <div class="form-group">
                                     <label>Nilai Pia</label>
@@ -75,29 +77,23 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Volume Kegiatan Setahun</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder=""
-                                        value="{{ $program_intervensi->vol_keg_tahun }}">
-                                </div>
-
-                                <div class="form-group">
                                     <label>Output</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder=""
-                                        value="{{ $program_intervensi->output }}">
+                                    <input type="text" name="output" class="form-control" placeholder=""
+                                        value="{{ $intervensiNasional->output }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Outcome</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder=""
-                                        value="{{ $program_intervensi->outcome }}">
+                                    <input type="text" name="outcome" class="form-control" placeholder=""
+                                        value="{{ $intervensiNasional->outcome }}">
                                 </div>
-
 
 
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <textarea type="text" name="keterangan" class="form-control" placeholder="">{{ $program_intervensi->keterangan }}
-                                                                      </textarea>
+                                    <textarea type="text" name="keterangan" class="form-control"
+                                        placeholder="">{{ $intervensiNasional->keterangan }}
+                                                                                                                                      </textarea>
                                 </div>
 
 
