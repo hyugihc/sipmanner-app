@@ -50,7 +50,7 @@ class ProgressIntervensiKhususController extends Controller
         $progressIntervensiKhusus->save();
 
 
-        return redirect()->route('progress_intervensi_khususes', $intervensiKhusus)
+        return redirect()->route('progress_intervensi_khususes.index', $intervensiKhusus)
             ->with('success', 'Progress Programs created successfully.');
     }
 
@@ -60,9 +60,10 @@ class ProgressIntervensiKhususController extends Controller
      * @param  \App\ProgressIntervensiKhusus  $progressIntervensiKhusus
      * @return \Illuminate\Http\Response
      */
-    public function show(ProgressIntervensiKhusus $progressIntervensiKhusus)
+    public function show(IntervensiKhusus $intervensiKhusus,ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
+        return view('progress.khususes.show', compact('intervensiKhusus', 'progressIntervensiKhusus'));
     }
 
     /**
@@ -71,9 +72,10 @@ class ProgressIntervensiKhususController extends Controller
      * @param  \App\ProgressIntervensiKhusus  $progressIntervensiKhusus
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProgressIntervensiKhusus $progressIntervensiKhusus)
+    public function edit(IntervensiKhusus $intervensiKhusus,ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
+        return view('progress.khususes.edit', compact('intervensiKhusus','progressIntervensiKhusus'));
     }
 
     /**
@@ -83,9 +85,13 @@ class ProgressIntervensiKhususController extends Controller
      * @param  \App\ProgressIntervensiKhusus  $progressIntervensiKhusus
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProgressIntervensiKhusus $progressIntervensiKhusus)
+    public function update(Request $request,IntervensiKhusus $intervensiKhusus, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
+        $progressIntervensiKhusus->update($request->all());
+
+        return redirect()->route('progress_intervensi_khususes.index', $intervensiKhusus)
+            ->with('success', 'Progress Program updated successfully');
     }
 
     /**
@@ -94,8 +100,11 @@ class ProgressIntervensiKhususController extends Controller
      * @param  \App\ProgressIntervensiKhusus  $progressIntervensiKhusus
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProgressIntervensiKhusus $progressIntervensiKhusus)
+    public function destroy( IntervensiKhusus $intervensiKhusus,ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
+        $progressIntervensiKhusus->delete();
+        return redirect()->route('progress_intervensi_khususes.index',$intervensiKhusus)
+            ->with('success', 'Progress program intervensi khusus deleted successfully');
     }
 }

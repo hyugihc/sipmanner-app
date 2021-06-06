@@ -33,53 +33,56 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('progress_intervensi_khususes.store', $intervensiKhusus) }}" method="POST"
+                        <form action="{{ route('progress_intervensi_nasionals.update',[$intervensiNasional, $progressIntervensiNasional]) }}" method="POST"
                             id="quickForm">
                             @csrf
+                            @method('PUT')
 
                             <div class="card-body">
 
                                 <div class="form-group">
                                     <label>Program Intervensi</label>
-                                    <select class="form-control" name="intervensi_khusus_id">
-                                        <option value="{{ $intervensiKhusus->id }}">
-                                            {{ $intervensiKhusus->nama }}</option>
+                                    <select class="form-control" name="intervensi_nasional_id">
+                                        <option value="{{ $intervensiNasional->id }}">
+                                            {{ $intervensiNasional->nama }}</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Uraian Kegiatan</label>
-                                    <input type="text" name="uraian_program" class="form-control" placeholder="">
+                                    <input type="text" name="uraian_program" class="form-control" placeholder="" value="{{$progressIntervensiNasional->uraian_program}}">
                                 </div>
 
 
                                 <div class="form-group">
                                     <label>Bulan</label>
-                                    <input type="date" name="bulan" class="form-control" placeholder="">
+                                    <input type="date" name="bulan" class="form-control" placeholder="" value="{{$progressIntervensiNasional->bulan}}>
                                 </div>
 
 
 
                                 <div class="form-group">
                                     <label>Presentase Program</label>
-                                    <input type="number" name="presentase_program" class="form-control" placeholder="">
+                                    <input type="number" name="presentase_program" class="form-control" placeholder="" value="{{$progressIntervensiNasional->presentase_program}}>
                                 </div>
 
 
                                 <div class="form-group">
                                     <label>Upload Dokumentasi</label>
-                                    <input type="file" name="upload_dokumentasi" class="form-control" placeholder="">
+                                    <input type="file" name="upload_dokumentasi" class="form-control" placeholder="" value="{{$progressIntervensiNasional->upload_dokumentasi}}>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Upload Bukti Dukung</label>
-                                    <input type="file" name="upload_bukti_dukung" class="form-control" placeholder="">
+                                    <input type="file" name="upload_bukti_dukung" class="form-control" placeholder="" value="{{$progressIntervensiNasional->upload_bukti_dukung}}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <input type="text" name="keterangan" class="form-control" placeholder="">
+                                    <input type="text" name="keterangan" class="form-control" placeholder="" value="{{$progressIntervensiNasional->keterangan}}">
                                 </div>
+
+
 
 
                             </div>

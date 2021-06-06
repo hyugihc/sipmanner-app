@@ -74,15 +74,15 @@
                                         <td>
 
                                             <form
-                                                action="{{ route('progress_intervensi_nasionals.destroy', $progress_program) }}"
+                                                action="{{ route('progress_intervensi_nasionals.destroy', [$intervensiNasional,$progress_program]) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a class="btn btn-block btn-primary btn-xs"
-                                                    href="{{ route('progress_intervensi_nasionals.show', $progress_program) }}">Show</a>
+                                                    href="{{ route('progress_intervensi_nasionals.show', [$intervensiNasional,$progress_program]) }}">Show</a>
 
                                                 <a class="btn btn-block btn-warning btn-xs"
-                                                    href="{{ route('progress_intervensi_nasionals.edit', $progress_program) }}">Edit</a>
+                                                    href="{{ route('progress_intervensi_nasionals.edit', [$intervensiNasional,$progress_program]) }}">Edit</a>
 
                                                 <button type="submit"
                                                     class="btn btn-block btn-danger btn-xs">Delete</button>

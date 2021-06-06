@@ -92,7 +92,7 @@
                     <a href="{{ route('programs.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-file"></i>
                         <p>
-                            Rencana 2
+                            Rencana 
                         </p>
                     </a>
                 </li>
@@ -101,7 +101,7 @@
                     <a href="{{ route('progress.index') }}" class="nav-link">
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>
-                            Progress 2
+                            Progress 
                         </p>
                     </a>
                 </li>

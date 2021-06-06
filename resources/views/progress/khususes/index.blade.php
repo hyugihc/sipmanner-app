@@ -61,7 +61,7 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>Nama Kegiatan</th>
+                                    <th>Uraian Kegiatan</th>
                                     <th>Bulan</th>
                                     <th>Action</th>
                                 </tr>
@@ -69,20 +69,20 @@
                             <tbody>
                                 @foreach ($progressPrograms as $progress_program)
                                     <tr>
-                                        <td>{{ $progress_program->uraian }}</td>
+                                        <td>{{ $progress_program->uraian_program }}</td>
                                         <td>{{ $progress_program->bulan }}</td>
                                         <td>
 
                                             <form
-                                                action="{{ route('progress_intervensi_khususes.destroy', $progress_program) }}"
+                                                action="{{ route('progress_intervensi_khususes.destroy', [$intervensiKhusus,$progress_program]) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a class="btn btn-block btn-primary btn-xs"
-                                                    href="{{ route('progress_intervensi_khususes.show', $progress_program) }}">Show</a>
+                                                    href="{{ route('progress_intervensi_khususes.show', [$intervensiKhusus,$progress_program]) }}">Show</a>
 
                                                 <a class="btn btn-block btn-warning btn-xs"
-                                                    href="{{ route('progress_intervensi_khususes.edit', $progress_program) }}">Edit</a>
+                                                    href="{{ route('progress_intervensi_khususes.edit', [$intervensiKhusus,$progress_program]) }}">Edit</a>
 
                                                 <button type="submit"
                                                     class="btn btn-block btn-danger btn-xs">Delete</button>

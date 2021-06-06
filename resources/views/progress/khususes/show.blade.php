@@ -13,7 +13,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Progress Program</li>
-                        <li class="breadcrumb-item active">{{ $intervensiNasional->nama }}</li>
+                        <li class="breadcrumb-item active">{{ $intervensiKhusus->nama }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -31,7 +31,7 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">{{ $intervensiNasional->nama }}   <small>  &nbsp; progress program</small></h3>
+                            <h3 class="card-title">{{$intervensiKhusus->nama}}<small> &nbsp;progress program</small></h3>
                         </div>
                         <!-- /.card-header -->
 
@@ -39,17 +39,17 @@
                         <div class="card-body">
                             <dl>
                                 <dt>Uraian</dt>
-                                <dd>{{ $progressIntervensiNasional->uraian_program }}</dd>
+                                <dd>{{ $progressIntervensiKhusus->uraian_program }}</dd>
                                 <dt>Bulan</dt>
-                                <dd>{{ $progressIntervensiNasional->bulan }}</dd>
+                                <dd>{{ $progressIntervensiKhusus->bulan }}</dd>
                                 <dt>Presentase Program</dt>
-                                <dd> {{ $progressIntervensiNasional->presentase_program }} </dd>
+                                <dd> {{ $progressIntervensiKhusus->presentase_program }} </dd>
                                 <dt>Upload Dokumentasi</dt>
-                                <dd> {{ $progressIntervensiNasional->upload_dokumentasi }} </dd>
+                                <dd> {{ $progressIntervensiKhusus->upload_dokumentasi }} </dd>
                                 <dt>Upload Bukti Dukung</dt>
-                                <dd> {{ $progressIntervensiNasional->upload_bukti_dukung }} </dd>
+                                <dd> {{ $progressIntervensiKhusus->upload_bukti_dukung }} </dd>
                                 <dt>Keterangan</dt>
-                                <dd> {{ $progressIntervensiNasional->keterangan }} </dd>
+                                <dd> {{ $progressIntervensiKhusus->keterangan }} </dd>
 
 
                             </dl>

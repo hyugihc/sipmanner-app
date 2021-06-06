@@ -61,9 +61,10 @@ class ProgressIntervensiNasionalController extends Controller
      * @param  \App\ProgressIntervensiNasional  $progressIntervensiNasional
      * @return \Illuminate\Http\Response
      */
-    public function show(ProgressIntervensiNasional $progressIntervensiNasional)
+    public function show(IntervensiNasional $intervensiNasional, ProgressIntervensiNasional $progressIntervensiNasional)
     {
         //
+        return view('progress.nasionals.show', compact('intervensiNasional', 'progressIntervensiNasional'));
     }
 
     /**
@@ -72,9 +73,10 @@ class ProgressIntervensiNasionalController extends Controller
      * @param  \App\ProgressIntervensiNasional  $progressIntervensiNasional
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProgressIntervensiNasional $progressIntervensiNasional)
+    public function edit(IntervensiNasional $intervensiNasional, ProgressIntervensiNasional $progressIntervensiNasional)
     {
         //
+        return view('progress.nasionals.edit', compact('intervensiNasional', 'progressIntervensiNasional'));
     }
 
     /**
@@ -84,9 +86,14 @@ class ProgressIntervensiNasionalController extends Controller
      * @param  \App\ProgressIntervensiNasional  $progressIntervensiNasional
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProgressIntervensiNasional $progressIntervensiNasional)
+    public function update(Request $request, IntervensiNasional $intervensiNasional,ProgressIntervensiNasional $progressIntervensiNasional)
     {
         //
+        $progressIntervensiNasional->update($request->all());
+
+        return redirect()->route('progress_intervensi_nasionals.index', $intervensiNasional)
+            ->with('success', 'Progress Program updated successfully');
+
     }
 
     /**
@@ -95,8 +102,11 @@ class ProgressIntervensiNasionalController extends Controller
      * @param  \App\ProgressIntervensiNasional  $progressIntervensiNasional
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProgressIntervensiNasional $progressIntervensiNasional)
+    public function destroy(IntervensiNasional $intervensiNasional, ProgressIntervensiNasional $progressIntervensiNasional)
     {
         //
+        $progressIntervensiNasional->delete();
+        return redirect()->route('progress_intervensi_nasionals.index', $intervensiNasional)
+            ->with('success', 'Progress program intervensi nasional deleted successfully');
     }
 }
