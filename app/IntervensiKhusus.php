@@ -17,7 +17,7 @@ class IntervensiKhusus extends Model
      * @var array
      */
     protected $fillable = [
-        'nama', 'uraian_kegiatan', 'volume', 'output', 'outcome', 'keterangan', 'provinsi_id'
+        'nama', 'uraian_kegiatan', 'volume', 'output', 'outcome', 'keterangan'
     ];
 
     public function pias()

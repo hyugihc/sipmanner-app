@@ -101,7 +101,7 @@
                     <a href="{{ route('progress.index') }}" class="nav-link">
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>
-                            Progress 
+                            Progres
                         </p>
                     </a>
                 </li>

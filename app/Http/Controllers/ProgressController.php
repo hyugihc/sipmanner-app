@@ -19,7 +19,7 @@ class ProgressController extends Controller
         //
         $intervensiNasionals = IntervensiNasional::paginate(5);
         $intervensiKhususes = (Auth::user()->role_id == 1) ?
-            IntervensiKhusus::paginate(5) : IntervensiKhusus::where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
+            IntervensiKhusus::paginate(5) : IntervensiKhusus::where('provinsi_id', Auth::user()->provinsi_id)->where('status', 2)->paginate(5);
 
 
         return view('progress.index', compact('intervensiNasionals', 'intervensiKhususes'));

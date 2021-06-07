@@ -2,13 +2,11 @@
 
 namespace App\Policies;
 
-use App\Can;
+use App\ProgressIntervensiKhusus;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Auth\Access\Response;
-use Illuminate\Support\Facades\DB;
 
-class CanPolicy
+class ProgressIntervensiKhususPolicy
 {
     use HandlesAuthorization;
 
@@ -20,7 +18,7 @@ class CanPolicy
      */
     public function viewAny(User $user)
     {
-
+        //
         if ($user->role_id == 1) return true; //adminTS
         if ($user->role_id == 2) return true; //cl
         if ($user->role_id == 3) return true; //cc
@@ -32,56 +30,44 @@ class CanPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Can  $can
+     * @param  \App\ProgressIntervensiKhusus  $progressIntervensiKhusus
      * @return mixed
      */
-    public function view(User $user, Can $can)
+    public function view(User $user, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         if ($user->role_id == 1) return true;
         if ($user->role_id == 5) return true;
         if ($user->role_id == 3 or $user->role_id == 2) {
-            return  $user->provinsi_id == $can->provinsi_id;
+            return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
         }
         return false;
     }
 
     /**
-     * Determine whether the user can create.
+     * Determine whether the user can create models.
      *
      * @param  \App\User  $user
      * @return mixed
      */
     public function create(User $user)
     {
-        //if ($user->role_id == 1) return true;
-        //if ($user->role_id == 2) return true;
-        if ($user->role_id == 3) {
-            return !(DB::table('cans')->orWhere('status_sk', 3)->orWhere('status_sk', 0)->orWhere('status_sk', 1)->where('provinsi_id', $user->provinsi_id)->exists()) ? Response::allow()
-                : Response::deny('Masih ada yang belum disetujui');
-        }
-
+        //
+        if ($user->role_id == 3) return true; //cc
         return false;
     }
 
-    /** 
-     * Determine whether the user can update from draft.
-     * status_sk
-     * 0 -> draft
-     * 1 -> submit
-     * 2 -> approved
-     * 3 -> rejected
-     * 4 -> approved (tidak aktif)
-     * 
+    /**
+     * Determine whether the user can update the model.
+     *
      * @param  \App\User  $user
-     * @param  \App\Can  $can
+     * @param  \App\ProgressIntervensiKhusus  $progressIntervensiKhusus
      * @return mixed
      */
-    public function update(User $user, Can $can)
+    public function update(User $user, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
+        //
         if ($user->role_id == 3) {
-            if ($can->status_sk == 0 or $can->status_sk == 3) {
-                return $user->provinsi_id == $can->provinsi_id;
-            }
+            return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
         }
         return false;
     }
@@ -90,14 +76,14 @@ class CanPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Can  $can
+     * @param  \App\ProgressIntervensiKhusus  $progressIntervensiKhusus
      * @return mixed
      */
-    public function delete(User $user, Can $can)
+    public function delete(User $user, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
         if ($user->role_id == 3) {
-            return ($can->status_sk == 0 or $can->status_sk == 3)  ? $user->provinsi_id == $can->provinsi_id : false;
+            return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
         }
         return false;
     }
@@ -106,10 +92,10 @@ class CanPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Can  $can
+     * @param  \App\ProgressIntervensiKhusus  $progressIntervensiKhusus
      * @return mixed
      */
-    public function restore(User $user, Can $can)
+    public function restore(User $user, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
     }
@@ -118,19 +104,11 @@ class CanPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Can  $can
+     * @param  \App\ProgressIntervensiKhusus  $progressIntervensiKhusus
      * @return mixed
      */
-    public function forceDelete(User $user, Can $can)
+    public function forceDelete(User $user, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
-    }
-
-    public function approve(User $user, Can $can)
-    {
-        if ($user->role_id == 2 and $can->status_sk == 1) {
-            return $user->provinsi_id == $can->provinsi_id;
-        }
-        return false;
     }
 }

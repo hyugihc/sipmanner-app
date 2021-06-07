@@ -51,9 +51,10 @@
                             <div class="card-body">
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Tahun SK</label>
-                                    <input type="number" name="tahun_sk" class="form-control"
-                                        value="{{ old('tahun_sk') }}" placeholder="">
+                                    <label>Tahun SK</label>
+                                    <select name="tahun_sk" class="form-control">
+                                        <option id="year" value="2021"></option>
+                                    </select>
                                 </div>
                                 @error('tahun_sk')
                                     <div class="alert alert-danger">{{ $message }}</div>
@@ -217,6 +218,10 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+            var year = new Date().getFullYear();
+            $("#year").append('<option value=' + year + '>' + year + '</option>');
+        });
+        $(document).ready(function() {
             $('#sp_button').click(function() {
                 var id = Number($('#p_input').val().trim());
                 if (id > 0) {
@@ -265,6 +270,7 @@
         });
 
     </script>
+
 
 
 

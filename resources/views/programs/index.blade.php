@@ -38,8 +38,10 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-2">
-                        <a class="btn btn-block btn-primary btn-sm"
-                            href="{{ route('intervensi_nasionals.create') }}">Create</a>
+                        @can('create', App\IntervensiNasional::class)
+                            <a class="btn btn-block btn-primary btn-xs"
+                                href="{{ route('intervensi_nasionals.create') }}">Create</a>
+                        @endcan
                     </div><!-- /.col -->
                     <div class="col-sm-10">
 
@@ -90,19 +92,22 @@
                                                 @csrf
                                                 @method('DELETE')
 
-
-                                                <a class="btn btn-block btn-primary btn-sm"
-                                                    href="{{ route('intervensi_nasionals.show', $program_intervensi) }}">Show</a>
-
-
-
-                                                <a class="btn btn-block btn-warning btn-sm"
-                                                    href="{{ route('intervensi_nasionals.edit', $program_intervensi) }}">Edit</a>
+                                                @can('view', $program_intervensi)
+                                                    <a class="btn btn-block btn-primary btn-xs"
+                                                        href="{{ route('intervensi_nasionals.show', $program_intervensi) }}">Show</a>
+                                                @endcan
 
 
+                                                @can('update', $program_intervensi)
+                                                    <a class="btn btn-block btn-warning btn-xs"
+                                                        href="{{ route('intervensi_nasionals.edit', $program_intervensi) }}">Edit</a>
+                                                @endcan
 
-                                                <button type="submit"
-                                                    class="btn btn-block btn-danger btn-sm">Delete</button>
+                                                @can('delete', $program_intervensi)
+                                                    <button type="submit"
+                                                        class="btn btn-block btn-danger btn-xs">Delete</button>
+                                                @endcan
+
 
 
                                             </form>
@@ -125,8 +130,10 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-2">
-                        <a class="btn btn-block btn-primary btn-sm"
-                            href="{{ route('intervensi_khususes.create') }}">Create</a>
+                        @can('create', App\IntervensiKhusus::class)
+                            <a class="btn btn-block btn-primary btn-xs"
+                                href="{{ route('intervensi_khususes.create') }}">Create</a>
+                        @endcan
                     </div><!-- /.col -->
                     <div class="col-sm-10">
 
@@ -177,20 +184,20 @@
                                                 @csrf
                                                 @method('DELETE')
 
+                                                @can('view', $program_intervensi)
+                                                    <a class="btn btn-block btn-primary btn-xs"
+                                                        href="{{ route('intervensi_khususes.show', $program_intervensi) }}">Show</a>
+                                                @endcan
 
-                                                <a class="btn btn-block btn-primary btn-sm"
-                                                    href="{{ route('intervensi_khususes.show', $program_intervensi) }}">Show</a>
+                                                @can('update', $program_intervensi)
+                                                    <a class="btn btn-block btn-warning btn-xs"
+                                                        href="{{ route('intervensi_khususes.edit', $program_intervensi) }}">Edit</a>
+                                                @endcan
 
-
-
-                                                <a class="btn btn-block btn-warning btn-sm"
-                                                    href="{{ route('intervensi_khususes.edit', $program_intervensi) }}">Edit</a>
-
-
-
-                                                <button type="submit"
-                                                    class="btn btn-block btn-danger btn-sm">Delete</button>
-
+                                                @can('delete', $program_intervensi)
+                                                    <button type="submit"
+                                                        class="btn btn-block btn-danger btn-xs">Delete</button>
+                                                @endcan
 
 
                                             </form>

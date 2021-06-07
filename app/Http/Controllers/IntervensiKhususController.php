@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class IntervensiKhususController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -18,9 +19,12 @@ class IntervensiKhususController extends Controller
     public function index()
     {
         //
+
+        Auth::user()->cannot('viewAny', IntervensiKhusus::class) ?  abort(403) : true;
+
         $intervensiKhususes = (Auth::user()->role_id == 1) ?
             IntervensiKhusus::paginate(5) : IntervensiKhusus::where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
-        return view('intervensi_khususes.index', compact('intervensiKhususes'));
+        return view('programs.intervensi_khususes.index', compact('intervensiKhususes'));
     }
 
     /**
@@ -31,9 +35,11 @@ class IntervensiKhususController extends Controller
     public function create()
     {
         //
+        Auth::user()->cannot('create', IntervensiKhusus::class) ?  abort(403) : true;
+
         $pias = Pia::all();
         $provinsis = Provinsi::all();
-        return view('intervensi_khususes.create', compact('pias', 'provinsis'));
+        return view('programs.intervensi_khususes.create', compact('pias', 'provinsis'));
     }
 
     /**
@@ -45,6 +51,8 @@ class IntervensiKhususController extends Controller
     public function store(Request $request)
     {
         //
+        Auth::user()->cannot('create', IntervensiKhusus::class) ?  abort(403) : true;
+
         $request->validate([
             'nama' => 'required|min:3|max:50',
             'uraian_kegiatan' => 'required|max:50',
@@ -60,12 +68,12 @@ class IntervensiKhususController extends Controller
         $intervensi->provinsi_id = ($request->user()->role_id == 1)  ? $request->provinsi_id :
             $request->user()->provinsi_id;
         $intervensi->pias()->attach($request->pias);
-        $intervensi->status = 1;
+        $intervensi->status  = ($request->has('draft')) ? 0 : 1;
         $intervensi->save();
 
-
+        $message = ($intervensi->status == 0) ? 'Program Intervensi Khusus drafted successfully.' : 'Program Intervensi Khusus submitted successfully.';
         return redirect()->route('programs.index')
-            ->with('success', 'Program Intervensi Khusus created successfully.');
+            ->with('success', $message);
     }
 
     /**
@@ -77,7 +85,9 @@ class IntervensiKhususController extends Controller
     public function show(IntervensiKhusus $intervensiKhusus)
     {
         //
-        return view('intervensi_khususes.show', compact('intervensiKhusus'));
+        Auth::user()->cannot('view', $intervensiKhusus) ?  abort(403) : true;
+
+        return view('programs.intervensi_khususes.show', compact('intervensiKhusus'));
     }
 
     /**
@@ -88,10 +98,12 @@ class IntervensiKhususController extends Controller
      */
     public function edit(IntervensiKhusus $intervensiKhusus)
     {
-        //
+        //     
+        Auth::user()->cannot('update', $intervensiKhusus) ?  abort(403) : true;
+
         $pias = Pia::all();
         $provinsis = Provinsi::all();
-        return view('intervensi_khususes.edit', compact('intervensiKhusus', 'pias', 'provinsis'));
+        return view('programs.intervensi_khususes.edit', compact('intervensiKhusus', 'pias', 'provinsis'));
     }
 
     /**
@@ -104,6 +116,8 @@ class IntervensiKhususController extends Controller
     public function update(Request $request, IntervensiKhusus $intervensiKhusus)
     {
         //
+        Auth::user()->cannot('update', $intervensiKhusus) ?  abort(403) : true;
+
         $request->validate([
             'nama' => 'required|min:3|max:50',
             'uraian_kegiatan' => 'required|max:50',
@@ -117,11 +131,13 @@ class IntervensiKhususController extends Controller
         $intervensiKhusus->update($request->all());
         $intervensiKhusus->provinsi_id = ($request->user()->role_id == 1)  ? $request->provinsi_id :
             $request->user()->provinsi_id;
+        $intervensiKhusus->status  = ($request->has('draft')) ? 0 : 1;
         $intervensiKhusus->pias()->sync($request->pias);
         $intervensiKhusus->save();
 
+        $message = ($intervensiKhusus->status == 0) ? 'Program Intervensi Khusus drafted successfully.' : 'Program Intervensi Khusus submitted successfully.';
         return redirect()->route('programs.index')
-            ->with('success', 'Program Intervensi Khusus updated successfully');
+            ->with('success', $message);
     }
 
     /**
@@ -133,8 +149,21 @@ class IntervensiKhususController extends Controller
     public function destroy(IntervensiKhusus $intervensiKhusus)
     {
         //
+        Auth::user()->cannot('delete', $intervensiKhusus) ?  abort(403) : true;
+
         $intervensiKhusus->delete();
         return redirect()->route('programs.index')
             ->with('success', 'Program Intervensi Khusus deleted successfully');
+    }
+
+    public function approve(Request $request, IntervensiKhusus $intervensiKhusus)
+    {
+        Auth::user()->cannot('approve', $intervensiKhusus) ?  abort(403) : true;
+        $intervensiKhusus->status = $request->status;
+        $intervensiKhusus->alasan = $request->alasan;
+        $intervensiKhusus->save();
+
+        return redirect()->route('programs.index')
+            ->with('success', 'Approval is successfully assigned');
     }
 }

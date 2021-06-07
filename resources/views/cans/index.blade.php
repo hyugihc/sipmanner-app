@@ -13,13 +13,8 @@
                         <a class="btn btn-block btn-primary btn-sm" href="{{ route('cans.create') }}">Create</a>
                     @endcan
                 </div><!-- /.col -->
-
                 <div class="col-sm-4">
-
                 </div><!-- /.col -->
-
-
-
 
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -84,19 +79,6 @@
                                         <td>{{ $can->tanggal_sk }}</td>
                                         <td>{{ $can->perihal_sk }}</td>
                                         <td>
-                                            {{-- @if ($can->status_sk == 0)
-                                                <dd>Draft</dd>
-                                            @elseif ($can->status_sk == 1)
-                                                <dd>Belum Disetujui</dd>
-                                            @elseif($can->status_sk == 2)
-                                                <dd>Sudah Disetujui<b>aktif</b></dd>
-                                            @elseif($can->status_sk == 3)
-                                                <dd>Tidak Disetujui</dd>
-                                                <dd> {{ $can->alasan }}</dd>
-                                            @elseif($can->status_sk == 4)
-                                                <dd>Sudah Disetujui<b>tidak aktif</b></dd>
-                                            @endif --}}
-
                                             @switch($can->status_sk)
                                                 @case(0)
                                                     <dd>Draft</dd>
@@ -105,14 +87,14 @@
                                                     <dd>Belum Disetujui</dd>
                                                 @break
                                                 @case(2)
-                                                    <dd>Sudah Disetujui<b>aktif</b></dd>
+                                                    <dd>Sudah Disetujui<b>&nbsp;(Aktif)</b></dd>
                                                 @break
                                                 @case(3)
                                                     <dd>Tidak Disetujui</dd>
                                                     <dd> {{ $can->alasan }}</dd>
                                                 @break
                                                 @case(4)
-                                                    <dd>Sudah Disetujui<b>tidak aktif</b></dd>
+                                                <dd>Sudah Disetujui<b>&nbsp;(Tidak Aktif)</b></dd>
                                                 @break
 
                                                 @default
@@ -160,33 +142,5 @@
         </div>
 
 
-        {{-- <table class="table table-bordered">
-        <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Details</th>
-            <th width="280px">Action</th>
-        </tr>
-        @foreach ($products as $product)
-        <tr>
-            <td>{{ ++$i }}</td>
-            <td>{{ $product->name }}</td>
-            <td>{{ $product->detail }}</td>
-            <td>
-                <form action="{{ route('products.destroy',$product->id) }}" method="POST">
-   
-                    <a class="btn btn-info" href="{{ route('products.show',$product->id) }}">Show</a>
-    
-                    <a class="btn btn-primary" href="{{ route('products.edit',$product->id) }}">Edit</a>
-   
-                    @csrf
-                    @method('DELETE')
-      
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
-    </table> --}}
 
     @endsection

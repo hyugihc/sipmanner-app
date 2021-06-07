@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\IntervensiKhusus;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,4 +16,10 @@ class ProgressIntervensiKhusus extends Model
     protected $fillable = [
         'intervensi_khusus_id', 'uraian_program', 'bulan', 'presentase_program', 'upload_dokumentasi', 'upload_bukti_dukung', 'keterangan'
     ];
+
+    public function intervensi_khusus()
+    {
+        return $this->belongsTo(IntervensiKhusus::class);
+    }
+
 }

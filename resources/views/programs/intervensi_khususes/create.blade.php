@@ -2,6 +2,12 @@
 
 @section('content')
 
+
+
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -33,27 +39,17 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('program_intervensis.store') }}" method="POST" id="quickForm">
+                        <form action="{{ route('intervensi_khususes.store') }}" method="POST" id="quickForm">
                             @csrf
 
                             <div class="card-body">
 
                                 <div class="form-group">
                                     <label>Jenis Program Intervensi</label>
-                                    <select id="jenispi" class="form-control" name="jenis">
-
-                                        @if (Auth::user()->role_id == 1)
-                                            <option value="1">Nasional</option>
-                                            <option value="2" selected>Khusus</option>
-                                        @else
-                                            <option value="2" selected>Khusus</option>
-                                        @endif
+                                    <select class="form-control">
+                                        <option selected>Khusus</option>
                                     </select>
                                 </div>
-
-                                @error('jenis')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
 
                                 <div class="form-group">
                                     <label>Nama</label>
@@ -67,7 +63,7 @@
                                 <div class="form-group">
                                     <label>Uraian Kegiatan</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control" placeholder="">
-                                                                                                                                                                                                                                                                                                                                                                </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </textarea>
                                 </div>
 
                                 @error('uraian_kegiatan')
@@ -77,24 +73,26 @@
 
                                 <div class="form-group">
                                     <label>Nilai Pia</label>
-                                    <select class="form-control" name="pias[]" multiple>
-                                        @foreach ($pias as $pia)
-                                            <option value="{{ $pia->id }}">{{ $pia->nama }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="select2-purple">
+                                        <select class="select2" multiple="multiple" data-placeholder="Pilih nilai Pia"
+                                            data-dropdown-css-class="select2-purple" style="width: 100%;" name="pias[]">
+                                            @foreach ($pias as $pia)
+                                                <option value="{{ $pia->id }}">{{ $pia->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
 
                                 @error('pias')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
 
-
                                 <div class="form-group">
                                     <label>Volume Kegiatan Setahun</label>
-                                    <input type="text" name="vol_keg_tahun" class="form-control" placeholder="">
+                                    <input type="text" name="volume" class="form-control" placeholder="">
                                 </div>
 
-                                @error('vol_keg_tahun')
+                                @error('volume')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
 
@@ -138,10 +136,13 @@
                                     </div>
                                 @endif
 
+
+
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <input type="submit" class="btn btn-primary" name=" draft" value="Save as Draft">
+                                <input type="submit" class="btn btn-primary" name=" submit" value="Submit">
                             </div>
                         </form>
                     </div>
@@ -157,27 +158,21 @@
             <!-- /.row -->
         </div><!-- /.container-fluid -->
 
+
+        <script src="{{ asset('') }}assets/plugins/select2/js/select2.full.min.js"></script>
         <script>
-            // $(document).ready(function() {
-            //     var textarea = $('#divtextarea');
-            //     textarea.hide();
-            // });
+            $(function() {
+                //Initialize Select2 Elements
+                $('.select2').select2()
 
-            $('#jenispi').on('change', function() {
-                var provinsi = $('#provinsi_id');
-                var select = $(this).val();
-
-                if (select == '1') {
-                    provinsi.hide();
-                    provinsi.val("99");
-                } else {
-                    provinsi.show();
-                }
-
-            });
-
+                //Initialize Select2 Elements
+                $('.select2bs4').select2({
+                    theme: 'bootstrap4'
+                })
+            })
         </script>
 
 
+    </section>
 
-    @endsection
+@endsection

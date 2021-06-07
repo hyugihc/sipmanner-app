@@ -6,9 +6,12 @@ use App\IntervensiNasional;
 use App\Pia;
 use App\Provinsi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IntervensiNasionalController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +20,10 @@ class IntervensiNasionalController extends Controller
     public function index()
     {
         //
+        Auth::user()->cannot('viewAny', IntervensiNasional::class) ?  abort(403) : true;
+
         $intervensiNasionals = IntervensiNasional::paginate(5);
-        return view('intervensi_nasionals.index', compact('intervensiNasionals'));
+        return view('programs.intervensi_nasionals.index', compact('intervensiNasionals'));
     }
 
     /**
@@ -29,9 +34,11 @@ class IntervensiNasionalController extends Controller
     public function create()
     {
         //
+        Auth::user()->cannot('create', IntervensiNasional::class) ?  abort(403) : true;
+
         $pias = Pia::all();
         $provinsis = Provinsi::all();
-        return view('intervensi_nasionals.create', compact('pias', 'provinsis'));
+        return view('programs.intervensi_nasionals.create', compact('pias', 'provinsis'));
     }
 
     /**
@@ -43,6 +50,8 @@ class IntervensiNasionalController extends Controller
     public function store(Request $request)
     {
         //
+        Auth::user()->cannot('create', IntervensiNasional::class) ?  abort(403) : true;
+
         $request->validate([
             'nama' => 'required|min:3|max:50',
             'uraian_kegiatan' => 'required|max:50',
@@ -73,7 +82,9 @@ class IntervensiNasionalController extends Controller
     public function show(IntervensiNasional $intervensiNasional)
     {
         //
-        return view('intervensi_nasionals.show', compact('intervensiNasional'));
+        Auth::user()->cannot('view', $intervensiNasional) ?  abort(403) : true;
+
+        return view('programs.intervensi_nasionals.show', compact('intervensiNasional'));
     }
 
     /**
@@ -85,8 +96,10 @@ class IntervensiNasionalController extends Controller
     public function edit(IntervensiNasional $intervensiNasional)
     {
         //
+        Auth::user()->cannot('update', $intervensiNasional) ?  abort(403) : true;
+
         $pias = Pia::all();
-        return view('intervensi_nasionals.edit', compact('intervensiNasional', 'pias'));
+        return view('programs.intervensi_nasionals.edit', compact('intervensiNasional', 'pias'));
     }
 
     /**
@@ -99,6 +112,8 @@ class IntervensiNasionalController extends Controller
     public function update(Request $request, IntervensiNasional $intervensiNasional)
     {
         //
+        Auth::user()->cannot('update', $intervensiNasional) ?  abort(403) : true;
+
         $request->validate([
             'nama' => 'required|min:3|max:50',
             'uraian_kegiatan' => 'required|max:50',
@@ -126,7 +141,10 @@ class IntervensiNasionalController extends Controller
     public function destroy(IntervensiNasional $intervensiNasional)
     {
         //
+        Auth::user()->cannot('delete', $intervensiNasional) ?  abort(403) : true;
+
         $intervensiNasional->delete();
+        
         return redirect()->route('programs.index')
             ->with('success', 'Program Intervensi Nasional deleted successfully');
     }

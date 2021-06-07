@@ -2,6 +2,10 @@
 
 @section('content')
 
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -57,7 +61,7 @@
                                 <div class="form-group">
                                     <label>Uraian Kegiatan</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control" placeholder="">
-                                                                                                                                                                                                                                                                                                                                                                                                    </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                    </textarea>
                                 </div>
 
                                 @error('uraian_kegiatan')
@@ -67,11 +71,14 @@
 
                                 <div class="form-group">
                                     <label>Nilai Pia</label>
-                                    <select class="form-control" name="pias[]" multiple>
-                                        @foreach ($pias as $pia)
-                                            <option value="{{ $pia->id }}">{{ $pia->nama }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="select2-purple">
+                                        <select class="select2" multiple="multiple" data-placeholder="Pilih nilai Pia"
+                                            data-dropdown-css-class="select2-purple" style="width: 100%;" name="pias[]">
+                                            @foreach ($pias as $pia)
+                                                <option value="{{ $pia->id }}">{{ $pia->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
 
                                 @error('pias')
@@ -137,8 +144,21 @@
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
+        <script src="{{ asset('') }}assets/plugins/select2/js/select2.full.min.js"></script>
+        <script>
+            $(function() {
+                //Initialize Select2 Elements
+                $('.select2').select2()
+
+                //Initialize Select2 Elements
+                $('.select2bs4').select2({
+                    theme: 'bootstrap4'
+                })
+            })
+
+        </script>
+
+    </section>
 
 
-
-
-    @endsection
+@endsection

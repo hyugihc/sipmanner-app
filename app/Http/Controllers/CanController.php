@@ -31,10 +31,8 @@ class CanController extends Controller
     public function index()
     {
         $cans = (Auth::user()->role_id == 1 or Auth::user()->role_id == 5) ?
-            Can::paginate(5) :
-            Can::where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
-
-
+            Can::orderBy('status_sk')->paginate(5) :
+            Can::orderBy('status_sk')->where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
         return view('cans.index', compact('cans'));
     }
 
@@ -64,14 +62,17 @@ class CanController extends Controller
             'nomor_sk' => 'required|unique:cans|min:3|max:255',
             'tanggal_sk' => 'required',
             'perihal_sk' => 'required',
-            'file_sk' => 'required|mimes:pdf',
+            'file_sk' => 'required|mimes:pdf|max:3000',
             'change_agents' => 'required',
         ]);
 
 
         $can = Can::create($request->all());
-        $can->file_sk = Storage::putFile('public/cans', $request->file_sk);
-        // $can->file_sk = Storage::putFileAs('cans', $request->file('file_sk'), $request->user()->nomor_sk);
+        $can->file_sk = $request->file('file_sk')->storeAs(
+            'cans',
+            'sk_' . $request->tahun_sk . '_' .
+                $request->user()->provinsi_id . '_' . $can->id . '.pdf'
+        );
         Auth::user()->role_id == 1 ?
             $can->provinsi_id = $request->provinsi_id :
             $can->provinsi_id = Auth::user()->provinsi_id;
@@ -100,8 +101,10 @@ class CanController extends Controller
         //  $can->users()->syncWithPivotValues($request->users, ['role_id' => 4]);
 
 
+        $message = ($can->status_sk == 0) ? 'Can drafted successfully.' : 'Can submitted successfully.';
+
         return redirect()->route('cans.index')
-            ->with('success', 'Can submitted successfully.');
+            ->with('success', $message);
     }
 
 
@@ -141,13 +144,23 @@ class CanController extends Controller
             'nomor_sk' => 'required|min:3|max:255',
             'tanggal_sk' => 'required',
             'perihal_sk' => 'required',
-            'file_sk' => 'required',
-            'users' => 'required',
+            'file_sk' => 'nullable|max:3000|mimes:pdf',
+            'change_agents' => 'required',
         ]);
 
 
         $can->update($request->all());
-        // $can->file_sk = Storage::putFile('public/cans', $request->file_sk);
+
+        if ($request->file_sk != null) {
+            //Storage::delete($can->file_sk);
+            $can->file_sk = $request->file('file_sk')->storeAs(
+                'cans',
+                'sk_' . $can->tahun_sk . '_' .
+                    $request->user()->provinsi_id . '_' . $can->id . '.pdf'
+            );
+        }
+
+
         $can->provinsi_id = (Auth::user()->role_id == 1) ?
             $request->provinsi_id :
             Auth::user()->provinsi_id;
@@ -163,13 +176,10 @@ class CanController extends Controller
 
         $can->save();
 
-        if ($can->status_sk == 0) {
-            return redirect()->route('cans.index')
-                ->with('success', 'Draft Can updated successfully');
-        } else {
-            return redirect()->route('cans.index')
-                ->with('success', 'Can submited successfully');
-        }
+        $message = ($can->status_sk == 0) ? 'Can drafted successfully.' : 'Can submitted successfully.';
+
+        return redirect()->route('cans.index')
+            ->with('success', $message);
     }
 
     private function mapChangeAgents($change_agents)
@@ -207,10 +217,15 @@ class CanController extends Controller
         }
     }
 
-    public function approval(Request $request, Can $can)
+    public function approve(Request $request, Can $can)
     {
         Auth::user()->cannot('approve', $can) ?  abort(403) : true;
 
+        $oldCan = Can::where('provinsi_id', $can->provinsi_id)->where('status_sk', '2')->first();
+        if ($oldCan != null) {
+            $oldCan->status_sk = 4;
+            $oldCan->save();
+        }
         $can->status_sk = $request->status_sk;
         $can->alasan = $request->alasan;
         $can->save();

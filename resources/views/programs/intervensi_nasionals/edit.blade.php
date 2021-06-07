@@ -2,6 +2,10 @@
 
 @section('content')
 
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -33,7 +37,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('intervensi_khususes.update', $intervensiKhusus->id) }}" method="POST"
+                        <form action="{{ route('intervensi_nasionals.update', $intervensiNasional->id) }}" method="POST"
                             id="quickForm">
                             @csrf
                             @method('PUT')
@@ -43,69 +47,68 @@
                                 <div class="form-group">
                                     <label>Jenis Program Intervensi</label>
                                     <select class="form-control" name="jenis">
-                                        <option selected disabled>Khusus</option>
+                                        <option selected disabled>Nasional</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Nama</label>
                                     <input type="text" name="nama" class="form-control" placeholder=""
-                                        value="{{ $intervensiKhusus->nama }}">
+                                        value="{{ $intervensiNasional->nama }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Uraian Kegiatan</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control"
-                                        placeholder="">{{ $intervensiKhusus->uraian_kegiatan }}
-                                                                                                                                                                                                        </textarea>
+                                        placeholder="">{{ $intervensiNasional->uraian_kegiatan }}
+                                                                                                                                                                                                                </textarea>
                                 </div>
 
 
                                 <div class="form-group">
                                     <label>Volume Kegiatan Setahun</label>
                                     <input type="text" name="volume" class="form-control" placeholder=""
-                                        value="{{ $intervensiKhusus->volume }}">
+                                        value="{{ $intervensiNasional->volume }}">
                                 </div>
 
 
                                 <div class="form-group">
                                     <label>Nilai Pia</label>
-                                    <select class="form-control" name="pias[]" multiple>
-                                        @foreach ($pias as $pia)
-                                            <option value="{{ $pia->id }}">{{ $pia->nama }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="select2-purple">
+                                        <select class="select2" multiple="multiple" data-placeholder="Pilih nilai Pia"
+                                            data-dropdown-css-class="select2-purple" style="width: 100%;" name="pias[]">
+                                            @foreach ($pias as $pia)
+                                                @foreach ($intervensiNasional->pias as $piaselected)
+                                                    @if ($piaselected->id == $pia->id)
+                                                        <option value="{{ $pia->id }}" selected>{{ $pia->nama }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $pia->id }}">{{ $pia->nama }}</option>
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Output</label>
                                     <input type="text" name="output" class="form-control" placeholder=""
-                                        value="{{ $intervensiKhusus->output }}">
+                                        value="{{ $intervensiNasional->output }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Outcome</label>
                                     <input type="text" name="outcome" class="form-control" placeholder=""
-                                        value="{{ $intervensiKhusus->outcome }}">
+                                        value="{{ $intervensiNasional->outcome }}">
                                 </div>
 
 
                                 <div class="form-group">
                                     <label>Keterangan</label>
                                     <textarea type="text" name="keterangan" class="form-control"
-                                        placeholder="">{{ $intervensiKhusus->keterangan }}
-                                                                                                                                              </textarea>
+                                        placeholder="">{{ $intervensiNasional->keterangan }}
+                                                                                                                                                      </textarea>
                                 </div>
-
-                                @if (Auth::User()->role_id == 1)
-                                    <div id="provinsi_id" class="form-group">
-                                        <label>Wilayah</label>
-                                        <select class="form-control" name="provinsi_id">
-                                            @foreach ($provinsis as $provinsi)
-                                                <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @endif
 
 
                             </div>
@@ -127,6 +130,19 @@
             <!-- /.row -->
         </div><!-- /.container-fluid -->
 
+        <script src="{{ asset('') }}assets/plugins/select2/js/select2.full.min.js"></script>
+        <script>
+            $(function() {
+                //Initialize Select2 Elements
+                $('.select2').select2()
 
+                //Initialize Select2 Elements
+                $('.select2bs4').select2({
+                    theme: 'bootstrap4'
+                })
+            })
 
-    @endsection
+        </script>
+
+    </section>
+@endsection

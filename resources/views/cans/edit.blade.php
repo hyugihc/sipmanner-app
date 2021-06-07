@@ -47,7 +47,8 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('cans.update', $can->id) }}" method="POST" id="quickForm">
+                        <form action="{{ route('cans.update', $can->id) }}" method="POST" id="quickForm"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -77,7 +78,8 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">File SK</label>
                                     <a href="{{ route('cans.download', $can) }}"> file SK </a>
-                                    <input type="file" name="file_sk" value="" class="form-control" placeholder="">
+                                    <input accept=".pdf" type="file" name="file_sk" value="{{ $can->file_sk }}"
+                                        class="form-control" placeholder="">
                                 </div>
 
 
@@ -100,8 +102,8 @@
                                         <tbody>
                                             @foreach ($can->change_leaders as $user)
                                                 <tr>
-                                                    <td><input type="checkbox" name="change_leaders[]" value="{{ $user->id }}"
-                                                            checked disabled></td>
+                                                    <td><input type="checkbox" name="change_leaders[]"
+                                                            value="{{ $user->id }}" checked disabled></td>
                                                     <td>{{ $user->nip_lama }}</td>
                                                     <td>{{ $user->name }}</td>
                                                     <td>{{ $user->email }}</td>
@@ -110,8 +112,8 @@
                                             @endforeach
                                             @foreach ($can->change_champions as $user)
                                                 <tr>
-                                                    <td><input type="checkbox" name="change_champions[]" value="{{ $user->id }}"
-                                                            checked disabled></td>
+                                                    <td><input type="checkbox" name="change_champions[]"
+                                                            value="{{ $user->id }}" checked disabled></td>
                                                     <td>{{ $user->nip_lama }}</td>
                                                     <td>{{ $user->name }}</td>
                                                     <td>{{ $user->email }}</td>
@@ -120,8 +122,8 @@
                                             @endforeach
                                             @foreach ($can->change_agents as $ca)
                                                 <tr>
-                                                    <td><input type="checkbox" name="change_agents[]" value="{{ $ca->id }}"
-                                                            checked></td>
+                                                    <td><input type="checkbox" name="change_agents[]"
+                                                            value="{{ $ca->id }}" checked></td>
                                                     <td>{{ $ca->nip_lama }}</td>
                                                     <td>{{ $ca->name }}</td>
                                                     <td>{{ $ca->email }}</td>

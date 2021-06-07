@@ -28,7 +28,11 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/summernote/summernote-bs4.min.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    <script src="{{ asset('') }}assets/plugins/jquery/jquery.min.js"></script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+     --}}
 
 </head>
 
@@ -62,8 +66,8 @@
     </div>
     <!-- ./wrapper -->
 
-    <!-- jQuery -->
-    <script src="{{ asset('') }}assets/plugins/jquery/jquery.min.js"></script>
+    {{-- <!-- jQuery -->
+    <script src="{{ asset('') }}assets/plugins/jquery/jquery.min.js"></script> --}}
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('') }}assets/plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->

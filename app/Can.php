@@ -9,7 +9,7 @@ class Can extends Model
 {
     //
     protected $fillable = [
-        'nomor_sk', 'tanggal_sk', 'perihal_sk', 'file_sk', 'provinsi_id', 'alasan', 'tahun_sk'
+        'nomor_sk', 'tanggal_sk', 'perihal_sk', 'provinsi_id', 'alasan', 'tahun_sk'
     ];
 
     // public function users()
@@ -31,10 +31,6 @@ class Can extends Model
     {
         return $this->belongsToMany(User::class)->wherePivot('role_id', 4);
     }
-
-
-
-
 
     public function provinsi()
     {

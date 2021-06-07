@@ -40,16 +40,17 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('cans', CanController::class);
     Route::get('cans/{can}/download', 'CanController@downloadFileSk')->name('cans.download');
-    Route::put('cans/{can}/approval', 'CanController@approval')->name('cans.approval');
+    Route::put('cans/{can}/approve', 'CanController@approve')->name('cans.approve');
 
-    Route::resource('program_intervensis', ProgramIntervensiController::class);
-    Route::resource('progress_programs', ProgressProgramController::class);
+    // Route::resource('program_intervensis', ProgramIntervensiController::class);
+    // Route::resource('progress_programs', ProgressProgramController::class);
 
     Route::resource('programs', ProgramController::class);
     Route::resource('progress', ProgressController::class);
 
     Route::resource('intervensi_nasionals', IntervensiNasionalController::class);
     Route::resource('intervensi_khususes', IntervensiKhususController::class);
+    Route::put('intervensi_khususes/{intervensiKhusus}/approve', 'IntervensiKhususController@approve')->name('intervensi_khususes.approve');
 
 
     // Route::resource('progress_intervensi_nasionals', ProgressIntervensiNasionalController::class);
