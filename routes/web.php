@@ -81,6 +81,10 @@ Route::group(['middleware' => 'auth'], function () {
         return view('faq');
     })->name('faq');
 
+    
+    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+    
+
     // Route::get('pi_index', 'ProgressProgramController@pi_index')->name('pi_index');
     // Route::get('ppiindex/{program_intervensi}', 'ProgressProgramController@ppi_index')->name('ppi_index');
 });

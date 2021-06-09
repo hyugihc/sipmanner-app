@@ -63,7 +63,6 @@ class CanController extends Controller
             'tanggal_sk' => 'required',
             'perihal_sk' => 'required',
             'file_sk' => 'required|mimes:pdf|max:3000',
-            'change_agents' => 'required',
         ]);
 
 
@@ -80,13 +79,12 @@ class CanController extends Controller
         $can->save();
 
 
-        foreach ($request->change_agents as $change_agent) {
-            $can->change_agents()->attach($change_agent, ['role_id' => 4]);
-        }
 
-        // foreach ($request->users as $user) {
-        //     $can->users()->attach($user, ['role_id' => 4]);
+        //sementara comment
+        // foreach ($request->change_agents as $change_agent) {
+        //     $can->change_agents()->attach($change_agent, ['role_id' => 4]);
         // }
+
 
         $change_leaders = User::where('role_id', 2)->where('provinsi_id', Auth::user()->provinsi_id)->get();
         $change_champions = User::where('role_id', 3)->where('provinsi_id', Auth::user()->provinsi_id)->get();
@@ -145,7 +143,6 @@ class CanController extends Controller
             'tanggal_sk' => 'required',
             'perihal_sk' => 'required',
             'file_sk' => 'nullable|max:3000|mimes:pdf',
-            'change_agents' => 'required',
         ]);
 
 
@@ -166,13 +163,13 @@ class CanController extends Controller
             Auth::user()->provinsi_id;
         $can->status_sk  = ($request->has('draft')) ? 0 : 1;
 
-
-        $can->change_agents()->detach();
-        if ($request->change_agents != null) {
-            foreach ($request->change_agents as $change_agent) {
-                $can->change_agents()->attach($change_agent, ['role_id' => 4]);
-            }
-        }
+        //sementara comment
+        // $can->change_agents()->detach();
+        // if ($request->change_agents != null) {
+        //     foreach ($request->change_agents as $change_agent) {
+        //         $can->change_agents()->attach($change_agent, ['role_id' => 4]);
+        //     }
+        // }
 
         $can->save();
 
