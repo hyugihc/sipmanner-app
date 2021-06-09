@@ -17,10 +17,10 @@
                 </div><!-- /.col -->
 
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                    {{-- <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">Home</li>
                         <li class="breadcrumb-item active">Cans</li>
-                    </ol>
+                    </ol> --}}
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -40,7 +40,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Cans</h3>
+                        <h3 class="card-title">Data</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -94,7 +94,7 @@
                                                     <dd> {{ $can->alasan }}</dd>
                                                 @break
                                                 @case(4)
-                                                <dd>Sudah Disetujui<b>&nbsp;(Tidak Aktif)</b></dd>
+                                                    <dd>Sudah Disetujui<b>&nbsp;(Tidak Aktif)</b></dd>
                                                 @break
 
                                                 @default
@@ -120,7 +120,7 @@
                                                 @endcan
 
                                                 @can('delete', $can)
-                                                    <button type="submit"
+                                                    <button type="submit" onclick="return confirm('Are you sure?')"
                                                         class="btn btn-block btn-danger btn-xs">Delete</button>
                                                 @endcan
 
@@ -141,6 +141,6 @@
             </div>
         </div>
 
+    </section>
 
-
-    @endsection
+@endsection

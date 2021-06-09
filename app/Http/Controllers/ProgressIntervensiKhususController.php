@@ -7,6 +7,8 @@ use App\IntervensiKhusus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Storage;
+
 class ProgressIntervensiKhususController extends Controller
 {
 
@@ -54,7 +56,34 @@ class ProgressIntervensiKhususController extends Controller
         //
         Auth::user()->cannot('create', ProgressIntervensiKhusus::class) ?  abort(403) : true;
 
+        $request->validate([
+            'uraian_program' => 'required|max:50',
+            'bulan' => 'required',
+            'presentase_program' => 'required',
+            'upload_dokumentasi' => 'nullable|mimes:pdf|max:2000',
+            'upload_bukti_dukung' => 'nullable|mimes:pdf|max:2000',
+            'keterangan' => 'nullable',
+        ]);
+
         $progressIntervensiKhusus = ProgressIntervensiKhusus::create($request->all());
+
+        if ($request->upload_dokumentasi != null) {
+            $progressIntervensiKhusus->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
+                'piks',
+                'pindok_' . $intervensiKhusus->nama . '_' .
+                    $request->user()->provinsi_id . '_' . $progressIntervensiKhusus->id . '.pdf'
+            );
+        }
+
+        if ($request->upload_bukti_dukung != null) {
+            $progressIntervensiKhusus->upload_bukti_dukung = $request->file('upload_bukti_dukung')->storeAs(
+                'piks',
+                'pinduk_' . $intervensiKhusus->nama . '_' .
+                    $request->user()->provinsi_id . '_' . $progressIntervensiKhusus->id . '.pdf'
+            );
+        }
+
+
         $progressIntervensiKhusus->save();
 
 
@@ -102,7 +131,39 @@ class ProgressIntervensiKhususController extends Controller
         //
         Auth::user()->cannot('update', $progressIntervensiKhusus) ?  abort(403) : true;
 
+        $request->validate([
+            'uraian_program' => 'required|max:50',
+            'bulan' => 'required',
+            'presentase_program' => 'required',
+            'upload_dokumentasi' => 'nullable|mimes:pdf|max:2000',
+            'upload_bukti_dukung' => 'nullable|mimes:pdf|max:2000',
+            'keterangan' => 'nullable',
+        ]);
+
         $progressIntervensiKhusus->update($request->all());
+
+        if ($request->upload_dokumentasi != null) {
+            if ($progressIntervensiKhusus->upload_dokumentasi != null) {
+                Storage::delete($progressIntervensiKhusus->upload_dokumentasi);
+            }
+            $progressIntervensiKhusus->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
+                'piks',
+                'pindok_' . $intervensiKhusus->nama . '_' .
+                    $request->user()->provinsi_id . '_' . $progressIntervensiKhusus->id . '.pdf'
+            );
+        }
+
+        if ($request->upload_bukti_dukung != null) {
+            if ($progressIntervensiKhusus->upload_bukti_dukung == null) {
+                Storage::delete($progressIntervensiKhusus->upload_bukti_dukung);
+            }
+            $progressIntervensiKhusus->upload_bukti_dukung = $request->file('upload_bukti_dukung')->storeAs(
+                'piks',
+                'pinduk_' . $intervensiKhusus->nama . '_' .
+                    $request->user()->provinsi_id . '_' . $progressIntervensiKhusus->id . '.pdf'
+            );
+        }
+        $progressIntervensiKhusus->save();
 
         return redirect()->route('progress_intervensi_khususes.index', $intervensiKhusus)
             ->with('success', 'Progress Program updated successfully');
@@ -122,5 +183,22 @@ class ProgressIntervensiKhususController extends Controller
         $progressIntervensiKhusus->delete();
         return redirect()->route('progress_intervensi_khususes.index', $intervensiKhusus)
             ->with('success', 'Progress program intervensi khusus deleted successfully');
+    }
+
+    public function downloadDok(ProgressIntervensiKhusus $progressIntervensiKhusus)
+    {
+        try {
+            return Storage::disk('local')->download($progressIntervensiKhusus->upload_dokumentasi);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+    public function downloadDuk(ProgressIntervensiKhusus $progressIntervensiKhusus)
+    {
+        try {
+            return Storage::disk('local')->download($progressIntervensiKhusus->upload_bukti_dukung);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

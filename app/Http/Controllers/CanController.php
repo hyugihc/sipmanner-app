@@ -101,7 +101,7 @@ class CanController extends Controller
         //  $can->users()->syncWithPivotValues($request->users, ['role_id' => 4]);
 
 
-        $message = ($can->status_sk == 0) ? 'Can drafted successfully.' : 'Can submitted successfully.';
+        $message = ($can->status_sk == 0) ? 'Data berhasil disimpan menjadi draft' : 'Data berhasil disubmit ke Change Leader';
 
         return redirect()->route('cans.index')
             ->with('success', $message);
@@ -152,7 +152,7 @@ class CanController extends Controller
         $can->update($request->all());
 
         if ($request->file_sk != null) {
-            //Storage::delete($can->file_sk);
+            Storage::delete($can->file_sk);
             $can->file_sk = $request->file('file_sk')->storeAs(
                 'cans',
                 'sk_' . $can->tahun_sk . '_' .
@@ -176,7 +176,7 @@ class CanController extends Controller
 
         $can->save();
 
-        $message = ($can->status_sk == 0) ? 'Can drafted successfully.' : 'Can submitted successfully.';
+        $message = ($can->status_sk == 0) ? 'Data berhasil disimpan menjadi draft' : 'Data berhasil disubmit ke Change Leader';
 
         return redirect()->route('cans.index')
             ->with('success', $message);
@@ -190,9 +190,6 @@ class CanController extends Controller
     }
 
 
-
-
-
     /**
      * Remove the specified resource from storage.
      *
@@ -204,7 +201,7 @@ class CanController extends Controller
         $can->delete();
 
         return redirect()->route('cans.index')
-            ->with('success', 'Can deleted successfully');
+            ->with('success', 'Data berhasil dihapus');
     }
 
     public function downloadFileSk(Can $can)
@@ -231,6 +228,6 @@ class CanController extends Controller
         $can->save();
 
         return redirect()->route('cans.index')
-            ->with('success', 'Can Approval successfully');
+            ->with('success', 'Approval berhasil disimpan');
     }
 }

@@ -14,10 +14,10 @@
                     <h1 class="m-0">Create</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                    {{-- <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Dashboard v1</li>
-                    </ol>
+                    </ol> --}}
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -33,7 +33,7 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
+                            <h3 class="card-title">Program Intervensi Nasional</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -42,12 +42,12 @@
 
                             <div class="card-body">
 
-                                <div class="form-group">
-                                    <label>Jenis Program Intervensi</label>
+                                {{-- <div class="form-group">
+                                    <label>Jenis Program </label>
                                     <select id="jenispi" class="form-control" name="jenis">
-                                        <option selected>Nasional</option>
+                                        <option selected>Program Intervensi Nasional</option>
                                     </select>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group">
                                     <label>Nama</label>
@@ -72,7 +72,7 @@
                                 <div class="form-group">
                                     <label>Nilai Pia</label>
                                     <div class="select2-purple">
-                                        <select class="select2" multiple="multiple" data-placeholder="Pilih nilai Pia"
+                                        <select class="select2" multiple="multiple" data-placeholder=""
                                             data-dropdown-css-class="select2-purple" style="width: 100%;" name="pias[]">
                                             @foreach ($pias as $pia)
                                                 <option value="{{ $pia->id }}">{{ $pia->nama }}</option>
@@ -88,7 +88,7 @@
 
                                 <div class="form-group">
                                     <label>Volume Kegiatan Setahun</label>
-                                    <input type="text" name="volume" class="form-control" placeholder="">
+                                    <input type="number"  name="volume" class="form-control" placeholder="" min="1" max="100">
                                 </div>
 
                                 @error('volume')

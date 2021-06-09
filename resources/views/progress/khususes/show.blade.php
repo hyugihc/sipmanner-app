@@ -31,7 +31,8 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">{{$intervensiKhusus->nama}}<small> &nbsp;progress program</small></h3>
+                            <h3 class="card-title">{{ $intervensiKhusus->nama }}
+                            </h3>
                         </div>
                         <!-- /.card-header -->
 
@@ -45,9 +46,20 @@
                                 <dt>Presentase Program</dt>
                                 <dd> {{ $progressIntervensiKhusus->presentase_program }} </dd>
                                 <dt>Upload Dokumentasi</dt>
-                                <dd> {{ $progressIntervensiKhusus->upload_dokumentasi }} </dd>
+                                @if ($progressIntervensiKhusus->upload_dokumentasi != null)
+                                    <dd> <a href="{{ route('piks.download.dok', $progressIntervensiKhusus) }}">
+                                            Dokumentasi</a>
+                                    @else
+                                    <dd>Belum ada dokumentasi yang di upload</dd>
+                                @endif
                                 <dt>Upload Bukti Dukung</dt>
-                                <dd> {{ $progressIntervensiKhusus->upload_bukti_dukung }} </dd>
+                                @if ($progressIntervensiKhusus->upload_bukti_dukung != null)
+                                    <dd> <a href="{{ route('piks.download.duk', $progressIntervensiKhusus) }}"> Bukti
+                                            Dukung</a>
+                                    @else
+                                    <dd>Belum ada bukti dukung yang di upload</dd>
+                                @endif
+                                </dd>
                                 <dt>Keterangan</dt>
                                 <dd> {{ $progressIntervensiKhusus->keterangan }} </dd>
 

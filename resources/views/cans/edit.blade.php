@@ -9,13 +9,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard</h1>
+                    {{-- <h1 class="m-0">Dashboard</h1> --}}
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                    {{-- <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Dashboard v1</li>
-                    </ol>
+                    </ol> --}}
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -43,7 +43,7 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
+                            <h3 class="card-title">SK Nomor : {{ $can->nomor_sk }} </h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -76,7 +76,7 @@
                                         class="form-control" placeholder="">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">File SK</label>
+                                    <label>File SK</label>
                                     <a href="{{ route('cans.download', $can) }}"> file SK </a>
                                     <input accept=".pdf" type="file" name="file_sk" value="{{ $can->file_sk }}"
                                         class="form-control" placeholder="">
@@ -139,8 +139,9 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <input type="submit" name="draft" value="Save as Draft">
-                                <input type="submit" name="submit" value="Submit">
+                                <input type="submit" class="btn btn-primary " name="draft" value="Save as Draft">
+  
+                                <input type="submit" class="btn btn-primary " name="submit" value="Submit">
                             </div>
                         </form>
                     </div>

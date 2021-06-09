@@ -31,7 +31,8 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">{{ $intervensiNasional->nama }}   <small>  &nbsp; progress program</small></h3>
+                            <h3 class="card-title">{{ $intervensiNasional->nama }}
+                            </h3>
                         </div>
                         <!-- /.card-header -->
 
@@ -41,13 +42,63 @@
                                 <dt>Uraian</dt>
                                 <dd>{{ $progressIntervensiNasional->uraian_program }}</dd>
                                 <dt>Bulan</dt>
-                                <dd>{{ $progressIntervensiNasional->bulan }}</dd>
+                                @switch($progressIntervensiNasional->bulan)
+                                    @case(1)
+                                        Januari
+                                    @break
+                                    @case(2)
+                                        Februari
+                                    @break
+                                    @case(3)
+                                        Maret
+                                    @break
+                                    @case(4)
+                                        April
+                                    @break
+                                    @case(5)
+                                        Mei
+                                    @break
+                                    @case(6)
+                                        Juni
+                                    @break
+                                    @case(7)
+                                        Juli
+                                    @break
+                                    @case(8)
+                                        Agustus
+                                    @break
+                                    @case(9)
+                                        September
+                                    @break
+                                    @case(10)
+                                        Oktober
+                                    @break
+                                    @case(11)
+                                        November
+                                    @break
+                                    @case(12)
+                                        Desember
+                                    @break
+
+                                    @default
+
+                                @endswitch
                                 <dt>Presentase Program</dt>
                                 <dd> {{ $progressIntervensiNasional->presentase_program }} </dd>
-                                <dt>Upload Dokumentasi</dt>
-                                <dd> {{ $progressIntervensiNasional->upload_dokumentasi }} </dd>
-                                <dt>Upload Bukti Dukung</dt>
-                                <dd> {{ $progressIntervensiNasional->upload_bukti_dukung }} </dd>
+                                <dt>Dokumentasi</dt>
+                                @if ($progressIntervensiNasional->upload_dokumentasi != null)
+                                    <dd> <a href="{{ route('pins.download.dok', $progressIntervensiNasional) }}">
+                                            Arsip Dokumentasi</a>
+                                    @else
+                                    <dd>Belum ada dokumentasi yang di upload</dd>
+                                @endif
+                                <dt>Bukti Dukung</dt>
+                                @if ($progressIntervensiNasional->upload_bukti_dukung != null)
+                                    <dd> <a href="{{ route('pins.download.duk', $progressIntervensiNasional) }}"> Arsip Bukti
+                                            Dukung</a>
+                                    @else
+                                    <dd>Belum ada bukti dukung yang di upload</dd>
+                                @endif
                                 <dt>Keterangan</dt>
                                 <dd> {{ $progressIntervensiNasional->keterangan }} </dd>
 

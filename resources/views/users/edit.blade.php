@@ -80,7 +80,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Wilayah</label>
+                                <label>Unit Organisasi</label>
                                 <select class="form-control" name="provinsi_id">
                                     @foreach ($provinsis as $provinsi)
                                         <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>

@@ -75,7 +75,9 @@
                             <thead>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>Uraian Kegiatan</th>
+                                    <th>Nilai Pia</th>
+                                    <th>Output</th>
+                                    <th>Outcome</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -83,7 +85,13 @@
                                 @foreach ($intervensiNasionals as $program_intervensi)
                                     <tr>
                                         <td>{{ $program_intervensi->nama }}</td>
-                                        <td>{{ $program_intervensi->uraian_kegiatan }}</td>
+                                        <td>
+                                            @foreach ($program_intervensi->pias as $pia)
+                                                <small class="badge badge-success"> {{ $pia->nama }}</small>
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $program_intervensi->output }}</td>
+                                        <td>{{ $program_intervensi->outcome }}</td>
                                         <td>
 
                                             <form
@@ -104,7 +112,7 @@
                                                 @endcan
 
                                                 @can('delete', $program_intervensi)
-                                                    <button type="submit"
+                                                    <button type="submit" onclick="return confirm('Are you sure?')"
                                                         class="btn btn-block btn-danger btn-xs">Delete</button>
                                                 @endcan
 
@@ -167,7 +175,10 @@
                             <thead>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>Uraian Kegiatan</th>
+                                    <th>Nilai Pia</th>
+                                    <th>Output</th>
+                                    <th>Outcome</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -175,7 +186,34 @@
                                 @foreach ($intervensiKhususes as $program_intervensi)
                                     <tr>
                                         <td>{{ $program_intervensi->nama }}</td>
-                                        <td>{{ $program_intervensi->uraian_kegiatan }}</td>
+                                        <td>
+                                            @foreach ($program_intervensi->pias as $pia)
+                                                <small class="badge badge-success"> {{ $pia->nama }}</small>
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $program_intervensi->output }}</td>
+                                        <td>{{ $program_intervensi->outcome }}</td>
+                                        <td>
+                                            @switch($program_intervensi->status)
+                                                @case(0)
+                                                    <dd>Draft</dd>
+                                                @break
+                                                @case(1)
+                                                    <dd>Belum Disetujui</dd>
+                                                @break
+                                                @case(2)
+                                                    <dd>Sudah Disetujui</dd>
+                                                @break
+                                                @case(3)
+                                                    <dd>Tidak Disetujui</dd>
+                                                    <dd> {{ $program_intervensi->alasan }}</dd>
+                                                @break
+
+                                                @default
+
+                                            @endswitch
+
+                                        </td>
                                         <td>
 
                                             <form
@@ -196,6 +234,7 @@
 
                                                 @can('delete', $program_intervensi)
                                                     <button type="submit"
+                                                        onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"
                                                         class="btn btn-block btn-danger btn-xs">Delete</button>
                                                 @endcan
 

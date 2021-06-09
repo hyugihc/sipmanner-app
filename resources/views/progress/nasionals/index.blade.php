@@ -70,21 +70,66 @@
                                 @foreach ($progressPrograms as $progress_program)
                                     <tr>
                                         <td>{{ $progress_program->uraian_program }}</td>
-                                        <td>{{ $progress_program->bulan }}</td>
+                                        <td>
+                                            @switch($progress_program->bulan)
+                                                @case(1)
+                                                    Januari
+                                                @break
+                                                @case(2)
+                                                    Februari
+                                                @break
+                                                @case(3)
+                                                    Maret
+                                                @break
+                                                @case(4)
+                                                    April
+                                                @break
+                                                @case(5)
+                                                    Mei
+                                                @break
+                                                @case(6)
+                                                    Juni
+                                                @break
+                                                @case(7)
+                                                    Juli
+                                                @break
+                                                @case(8)
+                                                    Agustus
+                                                @break
+                                                @case(9)
+                                                    September
+                                                @break
+                                                @case(10)
+                                                    Oktober
+                                                @break
+                                                @case(11)
+                                                    November
+                                                @break
+                                                @case(12)
+                                                    Desember
+                                                @break
+
+                                                @default
+
+                                            @endswitch
+
+
+                                        </td>
                                         <td>
 
                                             <form
-                                                action="{{ route('progress_intervensi_nasionals.destroy', [$intervensiNasional,$progress_program]) }}"
+                                                action="{{ route('progress_intervensi_nasionals.destroy', [$intervensiNasional, $progress_program]) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a class="btn btn-block btn-primary btn-xs"
-                                                    href="{{ route('progress_intervensi_nasionals.show', [$intervensiNasional,$progress_program]) }}">Show</a>
+                                                    href="{{ route('progress_intervensi_nasionals.show', [$intervensiNasional, $progress_program]) }}">Show</a>
 
                                                 <a class="btn btn-block btn-warning btn-xs"
-                                                    href="{{ route('progress_intervensi_nasionals.edit', [$intervensiNasional,$progress_program]) }}">Edit</a>
+                                                    href="{{ route('progress_intervensi_nasionals.edit', [$intervensiNasional, $progress_program]) }}">Edit</a>
 
                                                 <button type="submit"
+                                                    onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"
                                                     class="btn btn-block btn-danger btn-xs">Delete</button>
                                             </form>
                                         </td>

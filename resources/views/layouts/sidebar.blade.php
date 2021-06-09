@@ -1,5 +1,5 @@
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-primary elevation-4 ">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
         <img src="{{ asset('') }}assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
@@ -8,7 +8,7 @@
     </a>
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar ">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
@@ -58,7 +58,7 @@
                             <i class="nav-icon fas fa-chart-pie"></i>
                             <p>
                                 Data
-                                <span class="badge badge-info right">2</span>
+                                {{-- <span class="badge badge-info right">2</span> --}}
                             </p>
                         </a>
                     </li>
@@ -66,33 +66,13 @@
 
                 <li class="nav-header">Program</li>
 
-                {{-- @can('viewAny', App\ProgramIntervensi::class)
-                    <li class="nav-item">
-                        <a href="{{ route('program_intervensis.index') }}" class="nav-link">
-                            <i class="nav-icon fas fa-file"></i>
-                            <p>
-                                Rencana
-                            </p>
-                        </a>
-                    </li>
-                @endcan
 
-                @can('viewAny', App\ProgressProgram::class)
-                    <li class="nav-item">
-                        <a href="{{ route('pi_index') }}" class="nav-link">
-                            <i class="nav-icon far fa-calendar-alt"></i>
-                            <p>
-                                Progress
-                            </p>
-                        </a>
-                    </li>
-                @endcan --}}
 
                 <li class="nav-item">
                     <a href="{{ route('programs.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-file"></i>
                         <p>
-                            Rencana 
+                            Rencana
                         </p>
                     </a>
                 </li>
@@ -107,14 +87,30 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('pi_index') }}" class="nav-link">
+                    <a href="{{ route('faq') }}" class="nav-link">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
                             Laporan
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('faq') }}" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Sharing
+                        </p>
+                    </a>
+                </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('faq') }}" class="nav-link">
+                        <i class="nav-icon fas fa-search"></i>
+                        <p>
+                            FAQ
+                        </p>
+                    </a>
+                </li>
 
 
             </ul>

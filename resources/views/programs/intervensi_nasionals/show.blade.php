@@ -10,11 +10,11 @@
                     {{-- <h1 class="m-0">Dashboard</h1> --}}
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                    {{-- <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Program Intervensi Nasional</li>
                         <li class="breadcrumb-item active">{{ $intervensiNasional->nama }}</li>
-                    </ol>
+                    </ol> --}}
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -31,7 +31,7 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">{{ $intervensiNasional->nama }} <small>program intervensi</small></h3>
+                            <h3 class="card-title">{{ $intervensiNasional->nama }} </h3>
                         </div>
                         <!-- /.card-header -->
 
@@ -40,7 +40,7 @@
                             <dl>
                                 <dt> Jenis</dt>
                                 <dd>Program Intervensi Nasional</dd>
-                                <dt>Nama Program Intervensi</dt>
+                                <dt>Nama Program</dt>
                                 <dd>{{ $intervensiNasional->nama }}</dd>
                                 <dt>Uraian Kegiatan</dt>
                                 <dd>{{ $intervensiNasional->uraian_kegiatan }}</dd>

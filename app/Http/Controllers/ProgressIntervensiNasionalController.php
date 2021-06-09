@@ -6,6 +6,7 @@ use App\ProgressIntervensiNasional;
 use Illuminate\Http\Request;
 use App\IntervensiNasional;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class ProgressIntervensiNasionalController extends Controller
@@ -50,8 +51,34 @@ class ProgressIntervensiNasionalController extends Controller
         //
         Auth::user()->cannot('create', ProgressIntervensiNasional::class) ?  abort(403) : true;
 
+        $request->validate([
+            'uraian_program' => 'required|max:50',
+            'bulan' => 'required',
+            'presentase_program' => 'required',
+            'upload_dokumentasi' => 'nullable|mimes:pdf|max:2000',
+            'upload_bukti_dukung' => 'nullable|mimes:pdf|max:2000',
+            'keterangan' => 'nullable',
+        ]);
+
         $progressIntervensiNasional = ProgressIntervensiNasional::create($request->all());
         $progressIntervensiNasional->provinsi_id = Auth::user()->provinsi_id;
+
+        if ($request->upload_dokumentasi != null) {
+            $progressIntervensiNasional->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
+                'pins',
+                'pindok_' . $intervensiNasional->id . '_' .
+                    $request->user()->provinsi_id . '_' . $progressIntervensiNasional->id . '.pdf'
+            );
+        }
+
+        if ($request->upload_bukti_dukung != null) {
+            $progressIntervensiNasional->upload_bukti_dukung = $request->file('upload_bukti_dukung')->storeAs(
+                'pins',
+                'pinduk_' . $intervensiNasional->id . '_' .
+                    $request->user()->provinsi_id . '_' . $progressIntervensiNasional->id . '.pdf'
+            );
+        }
+
         $progressIntervensiNasional->save();
 
 
@@ -99,7 +126,39 @@ class ProgressIntervensiNasionalController extends Controller
         //
         Auth::user()->cannot('update', $progressIntervensiNasional) ?  abort(403) : true;
 
+        $request->validate([
+            'uraian_program' => 'required|max:50',
+            'bulan' => 'required',
+            'presentase_program' => 'required',
+            'upload_dokumentasi' => 'nullable|mimes:pdf|max:2000',
+            'upload_bukti_dukung' => 'nullable|mimes:pdf|max:2000',
+            'keterangan' => 'nullable',
+        ]);
+
         $progressIntervensiNasional->update($request->all());
+
+        if ($request->upload_dokumentasi != null) {
+            if ($progressIntervensiNasional->upload_dokumentasi != null) {
+                Storage::delete($progressIntervensiNasional->upload_dokumentasi);
+            }
+            $progressIntervensiNasional->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
+                'pins',
+                'pindok_' . $intervensiNasional->id . '_' .
+                    $request->user()->provinsi_id . '_' . $progressIntervensiNasional->id . '.pdf'
+            );
+        }
+
+        if ($request->upload_bukti_dukung != null) {
+            if ($progressIntervensiNasional->upload_bukti_dukung != null) {
+                Storage::delete($progressIntervensiNasional->upload_bukti_dukung);
+            }
+            $progressIntervensiNasional->upload_bukti_dukung = $request->file('upload_bukti_dukung')->storeAs(
+                'pins',
+                'pinduk_' . $intervensiNasional->id . '_' .
+                    $request->user()->provinsi_id . '_' . $progressIntervensiNasional->id . '.pdf'
+            );
+        }
+        $progressIntervensiNasional->save();
 
         return redirect()->route('progress_intervensi_nasionals.index', $intervensiNasional)
             ->with('success', 'Progress Program updated successfully');
@@ -119,5 +178,22 @@ class ProgressIntervensiNasionalController extends Controller
         $progressIntervensiNasional->delete();
         return redirect()->route('progress_intervensi_nasionals.index', $intervensiNasional)
             ->with('success', 'Progress program intervensi nasional deleted successfully');
+    }
+
+    public function downloadDok(ProgressIntervensiNasional $progressIntervensiNasional)
+    {
+        try {
+            return Storage::disk('local')->download($progressIntervensiNasional->upload_dokumentasi);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+    public function downloadDuk(ProgressIntervensiNasional $progressIntervensiNasional)
+    {
+        try {
+            return Storage::disk('local')->download($progressIntervensiNasional->upload_bukti_dukung);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

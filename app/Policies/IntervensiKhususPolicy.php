@@ -54,7 +54,7 @@ class IntervensiKhususPolicy
     public function create(User $user)
     {
         //
-        if ($user->role_id == 2) return true; //cl
+        //if ($user->role_id == 2) return true; //cl
         if ($user->role_id == 3) return true; //cc
         return false;
     }
@@ -70,7 +70,7 @@ class IntervensiKhususPolicy
     {
         //
         if ($intervensiKhusus->status == 2) return false;
-        if ($user->role_id == 3 or $user->role_id == 2) {
+        if ($user->role_id == 3 ) {
             return  $user->provinsi_id == $intervensiKhusus->provinsi_id;
         }
         return false;
@@ -87,7 +87,7 @@ class IntervensiKhususPolicy
     {
         //
         if ($intervensiKhusus->status == 2) return false;
-        if ($user->role_id == 3 or $user->role_id == 2) {
+        if ($user->role_id == 3 ) {
             return  $user->provinsi_id == $intervensiKhusus->provinsi_id;
         }
         return false;

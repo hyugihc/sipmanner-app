@@ -62,7 +62,7 @@
                             <thead>
                                 <tr>
                                     <th>Uraian Kegiatan</th>
-                                    <th>Bulan</th>
+                                    <th>Tanggal</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -84,7 +84,8 @@
                                                 <a class="btn btn-block btn-warning btn-xs"
                                                     href="{{ route('progress_intervensi_khususes.edit', [$intervensiKhusus,$progress_program]) }}">Edit</a>
 
-                                                <button type="submit"
+                                                <button type="submit" 
+                                                onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"
                                                     class="btn btn-block btn-danger btn-xs">Delete</button>
                                             </form>
                                         </td>

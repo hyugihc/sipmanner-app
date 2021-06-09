@@ -14,10 +14,10 @@
                     <h1 class="m-0">Edit</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                    {{-- <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Dashboard v1</li>
-                    </ol>
+                    </ol> --}}
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -33,7 +33,7 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
+                            <h3 class="card-title">{{ $intervensiNasional->nama }}</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -44,12 +44,7 @@
 
                             <div class="card-body">
 
-                                <div class="form-group">
-                                    <label>Jenis Program Intervensi</label>
-                                    <select class="form-control" name="jenis">
-                                        <option selected disabled>Nasional</option>
-                                    </select>
-                                </div>
+
 
                                 <div class="form-group">
                                     <label>Nama</label>
@@ -60,14 +55,14 @@
                                     <label>Uraian Kegiatan</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control"
                                         placeholder="">{{ $intervensiNasional->uraian_kegiatan }}
-                                                                                                                                                                                                                </textarea>
+                                                                                                                                                                                                                    </textarea>
                                 </div>
 
 
                                 <div class="form-group">
                                     <label>Volume Kegiatan Setahun</label>
-                                    <input type="text" name="volume" class="form-control" placeholder=""
-                                        value="{{ $intervensiNasional->volume }}">
+                                    <input type="number" name="volume" class="form-control" placeholder=""
+                                        value="{{ $intervensiNasional->volume }}" min="1" max="100">
                                 </div>
 
 
@@ -107,7 +102,7 @@
                                     <label>Keterangan</label>
                                     <textarea type="text" name="keterangan" class="form-control"
                                         placeholder="">{{ $intervensiNasional->keterangan }}
-                                                                                                                                                      </textarea>
+                                                                                                                                                          </textarea>
                                 </div>
 
 

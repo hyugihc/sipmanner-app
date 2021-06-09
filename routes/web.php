@@ -42,9 +42,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('cans/{can}/download', 'CanController@downloadFileSk')->name('cans.download');
     Route::put('cans/{can}/approve', 'CanController@approve')->name('cans.approve');
 
-    // Route::resource('program_intervensis', ProgramIntervensiController::class);
-    // Route::resource('progress_programs', ProgressProgramController::class);
-
     Route::resource('programs', ProgramController::class);
     Route::resource('progress', ProgressController::class);
 
@@ -62,6 +59,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('progress_intervensi_nasionals/{intervensiNasional}/{progressIntervensiNasional}', 'ProgressIntervensiNasionalController@destroy')->name('progress_intervensi_nasionals.destroy');
     Route::get('progress_intervensi_nasionals/{intervensiNasional}/{progressIntervensiNasional}', 'ProgressIntervensiNasionalController@show')->name('progress_intervensi_nasionals.show');
 
+    Route::get('pins/{progressIntervensiNasional}/downloaddok', 'ProgressIntervensiNasionalController@downloadDok')->name('pins.download.dok');
+    Route::get('pins/{progressIntervensiNasional}/downloadduk', 'ProgressIntervensiNasionalController@downloadDuk')->name('pins.download.duk');
+
+
     // Route::resource('progress_intervensi_khususes', ProgressIntervensiKhususController::class);
     Route::get('progress_intervensi_khususes/{intervensiKhusus}', 'ProgressIntervensiKhususController@index')->name('progress_intervensi_khususes.index');
     Route::get('progress_intervensi_khususes/{intervensiKhusus}/create', 'ProgressIntervensiKhususController@create')->name('progress_intervensi_khususes.create');
@@ -71,11 +72,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('progress_intervensi_khususes/{intervensiKhusus}/{progressIntervensiKhusus}', 'ProgressIntervensiKhususController@destroy')->name('progress_intervensi_khususes.destroy');
     Route::get('progress_intervensi_khususes/{intervensiKhusus}/{progressIntervensiKhusus}', 'ProgressIntervensiKhususController@show')->name('progress_intervensi_khususes.show');
 
+    Route::get('piks/{progressIntervensiKhusus}/downloaddok', 'ProgressIntervensiKhususController@downloadDok')->name('piks.download.dok');
+    Route::get('piks/{progressIntervensiKhusus}/downloadduk', 'ProgressIntervensiKhususController@downloadDuk')->name('piks.download.duk');
 
+    Route::resource('articles', ArticleController::class);
 
+    Route::get('faq', function () {
+        return view('faq');
+    })->name('faq');
 
-    Route::get('pi_index', 'ProgressProgramController@pi_index')->name('pi_index');
-    Route::get('ppiindex/{program_intervensi}', 'ProgressProgramController@ppi_index')->name('ppi_index');
+    // Route::get('pi_index', 'ProgressProgramController@pi_index')->name('pi_index');
+    // Route::get('ppiindex/{program_intervensi}', 'ProgressProgramController@ppi_index')->name('ppi_index');
 });
 
 // Route::get('/', function () {
