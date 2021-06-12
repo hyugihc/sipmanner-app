@@ -61,7 +61,7 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>Uraian Kegiatan</th>
+                                    <th>Penjelasan Progress</th>
                                     <th>Tanggal</th>
                                     <th>Action</th>
                                 </tr>
@@ -74,18 +74,18 @@
                                         <td>
 
                                             <form
-                                                action="{{ route('progress_intervensi_khususes.destroy', [$intervensiKhusus,$progress_program]) }}"
+                                                action="{{ route('progress_intervensi_khususes.destroy', [$intervensiKhusus, $progress_program]) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a class="btn btn-block btn-primary btn-xs"
-                                                    href="{{ route('progress_intervensi_khususes.show', [$intervensiKhusus,$progress_program]) }}">Show</a>
+                                                    href="{{ route('progress_intervensi_khususes.show', [$intervensiKhusus, $progress_program]) }}">Show</a>
 
                                                 <a class="btn btn-block btn-warning btn-xs"
-                                                    href="{{ route('progress_intervensi_khususes.edit', [$intervensiKhusus,$progress_program]) }}">Edit</a>
+                                                    href="{{ route('progress_intervensi_khususes.edit', [$intervensiKhusus, $progress_program]) }}">Edit</a>
 
-                                                <button type="submit" 
-                                                onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"
+                                                <button type="submit"
+                                                    onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"
                                                     class="btn btn-block btn-danger btn-xs">Delete</button>
                                             </form>
                                         </td>

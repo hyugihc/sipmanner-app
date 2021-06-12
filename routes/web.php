@@ -76,14 +76,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('piks/{progressIntervensiKhusus}/downloadduk', 'ProgressIntervensiKhususController@downloadDuk')->name('piks.download.duk');
 
     Route::resource('articles', ArticleController::class);
+    Route::get('articles/{article}/download', 'ArticleController@download')->name('articles.download');
 
     Route::get('faq', function () {
         return view('faq');
     })->name('faq');
 
-    
+
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
-    
+
 
     // Route::get('pi_index', 'ProgressProgramController@pi_index')->name('pi_index');
     // Route::get('ppiindex/{program_intervensi}', 'ProgressProgramController@ppi_index')->name('ppi_index');

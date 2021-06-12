@@ -51,7 +51,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Uraian Kegiatan</label>
+                                    <label>Penjelasan Progress</label>
                                     <input type="text" name="uraian_program" class="form-control" placeholder=""
                                         value="{{ $progressIntervensiNasional->uraian_program }}">
                                 </div>
@@ -84,7 +84,7 @@
                                 @enderror
 
                                 <div class="form-group">
-                                    <label>Presentase Program</label>
+                                    <label>Persentase Capaian Program</label>
                                     <input type="number" name="presentase_program" class="form-control" placeholder=""
                                         value="{{ $progressIntervensiNasional->presentase_program }}" min="1" max="100">
                                 </div>

@@ -54,11 +54,10 @@ class IntervensiNasionalController extends Controller
 
         $request->validate([
             'nama' => 'required|min:3|max:50',
-            'uraian_kegiatan' => 'required|max:50',
+            'uraian_kegiatan' => 'required|max:500',
             'volume' => 'required',
             'output' => 'required',
             'outcome' => 'required',
-            'keterangan' => 'required',
             'pias' => 'required',
         ]);
 
@@ -97,9 +96,9 @@ class IntervensiNasionalController extends Controller
     {
         //
         Auth::user()->cannot('update', $intervensiNasional) ?  abort(403) : true;
-
         $pias = Pia::all();
-        return view('programs.intervensi_nasionals.edit', compact('intervensiNasional', 'pias'));
+        $idPia = $intervensiNasional->pias->pluck('id');
+        return view('programs.intervensi_nasionals.edit', compact('intervensiNasional', 'pias', 'idPia'));
     }
 
     /**
@@ -144,7 +143,7 @@ class IntervensiNasionalController extends Controller
         Auth::user()->cannot('delete', $intervensiNasional) ?  abort(403) : true;
 
         $intervensiNasional->delete();
-        
+
         return redirect()->route('programs.index')
             ->with('success', 'Program Intervensi Nasional deleted successfully');
     }

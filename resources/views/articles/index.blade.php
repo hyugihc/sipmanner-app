@@ -39,9 +39,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header p-2">
+                    {{-- <div class="card-header p-2">
                         <h3>Article</h3>
-                    </div><!-- /.card-header -->
+                    </div> --}}
+                    <!-- /.card-header -->
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="active tab-pane" id="activity">
@@ -54,11 +55,12 @@
                                             <img class="img-circle img-bordered-sm"
                                                 src="{{ asset('') }}assets/dist/img/user1-128x128.jpg" alt="user image">
                                             <span class="username">
-                                                <a href="{{ route('articles.show', $article) }}">{{ $article->title }}</a>
+                                                <a
+                                                    href="{{ route('articles.show', $article) }}">{{ $article->title }}</a>
                                                 <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
                                             </span>
                                             {{-- {{ $article->user->name}} --}}
-                                            <span class="description">{{ $article->created_at}}</span>
+                                            <span class="description">{{ $article->created_at }}</span>
                                         </div>
                                         <!-- /.user-block -->
                                         <p>
@@ -73,7 +75,8 @@
                                             <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i>
                                                 Like</a>
                                             <span class="float-right">
-                                                <a href="{{ route('articles.edit', $article) }}" class="link-black text-sm">
+                                                <a href="{{ route('articles.edit', $article) }}"
+                                                    class="link-black text-sm">
                                                     <i class="far  mr-1"></i> edit
                                                 </a>
                                             </span>

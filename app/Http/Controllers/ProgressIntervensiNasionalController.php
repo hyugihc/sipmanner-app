@@ -52,7 +52,7 @@ class ProgressIntervensiNasionalController extends Controller
         Auth::user()->cannot('create', ProgressIntervensiNasional::class) ?  abort(403) : true;
 
         $request->validate([
-            'uraian_program' => 'required|max:50',
+            'uraian_program' => 'required|max:500',
             'bulan' => 'required',
             'presentase_program' => 'required',
             'upload_dokumentasi' => 'nullable|mimes:pdf|max:2000',

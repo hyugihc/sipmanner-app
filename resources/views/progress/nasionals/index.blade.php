@@ -61,7 +61,7 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>Uraian Kegiatan</th>
+                                    <th>Penjelasan Progres</th>
                                     <th>Bulan</th>
                                     <th>Action</th>
                                 </tr>

@@ -155,4 +155,13 @@ class ArticleController extends Controller
         return redirect()->route('articles.index')
             ->with('success', 'Data berhasil dihapus');
     }
+
+    public function download(Article $article)
+    {
+        try {
+            return Storage::disk('local')->download($article->file_content);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }

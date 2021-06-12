@@ -48,7 +48,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Uraian Kegiatan</label>
+                                    <label>Penjelasan Progres</label>
                                     <input type="text" name="uraian_program" class="form-control" placeholder="">
                                 </div>
 
@@ -81,8 +81,9 @@
 
 
                                 <div class="form-group">
-                                    <label>Presentase Program</label>
-                                    <input type="number" name="presentase_program" class="form-control" placeholder="" min="1" max="100">
+                                    <label>Persentase Capaian Program</label>
+                                    <input type="number" name="presentase_program" class="form-control" placeholder=""
+                                        min="1" max="100">
                                 </div>
 
                                 @error('presentase_program')
@@ -91,8 +92,8 @@
 
                                 <div class="form-group">
                                     <label>Upload Dokumentasi</label>
-                                    <input type="file" accept=".pdf" name="upload_dokumentasi"
-                                        class="form-control" placeholder="">
+                                    <input type="file" accept=".pdf" name="upload_dokumentasi" class="form-control"
+                                        placeholder="">
                                 </div>
 
                                 @error('upload_dokumentasi')

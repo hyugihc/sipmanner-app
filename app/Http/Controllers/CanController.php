@@ -80,10 +80,10 @@ class CanController extends Controller
 
 
 
-        //sementara comment
-        // foreach ($request->change_agents as $change_agent) {
-        //     $can->change_agents()->attach($change_agent, ['role_id' => 4]);
-        // }
+
+        foreach ($request->change_agents as $change_agent) {
+            $can->change_agents()->attach($change_agent, ['role_id' => 4]);
+        }
 
 
         $change_leaders = User::where('role_id', 2)->where('provinsi_id', Auth::user()->provinsi_id)->get();
@@ -163,13 +163,13 @@ class CanController extends Controller
             Auth::user()->provinsi_id;
         $can->status_sk  = ($request->has('draft')) ? 0 : 1;
 
-        //sementara comment
-        // $can->change_agents()->detach();
-        // if ($request->change_agents != null) {
-        //     foreach ($request->change_agents as $change_agent) {
-        //         $can->change_agents()->attach($change_agent, ['role_id' => 4]);
-        //     }
-        // }
+
+        $can->change_agents()->detach();
+        if ($request->change_agents != null) {
+            foreach ($request->change_agents as $change_agent) {
+                $can->change_agents()->attach($change_agent, ['role_id' => 4]);
+            }
+        }
 
         $can->save();
 
@@ -215,11 +215,14 @@ class CanController extends Controller
     {
         Auth::user()->cannot('approve', $can) ?  abort(403) : true;
 
-        $oldCan = Can::where('provinsi_id', $can->provinsi_id)->where('status_sk', '2')->first();
-        if ($oldCan != null) {
-            $oldCan->status_sk = 4;
-            $oldCan->save();
+        if ($request->status_sk == 3) {
+            $oldCan = Can::where('provinsi_id', $can->provinsi_id)->where('status_sk', '2')->first();
+            if ($oldCan != null) {
+                $oldCan->status_sk = 4;
+                $oldCan->save();
+            }
         }
+
         $can->status_sk = $request->status_sk;
         $can->alasan = $request->alasan;
         $can->save();

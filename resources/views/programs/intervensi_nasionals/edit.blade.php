@@ -55,7 +55,7 @@
                                     <label>Uraian Kegiatan</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control"
                                         placeholder="">{{ $intervensiNasional->uraian_kegiatan }}
-                                                                                                                                                                                                                    </textarea>
+                                                                                                                                                                                                                                                                                                    </textarea>
                                 </div>
 
 
@@ -67,19 +67,15 @@
 
 
                                 <div class="form-group">
-                                    <label>Nilai Pia</label>
+                                    <label>Nilai PIA</label>
                                     <div class="select2-purple">
-                                        <select class="select2" multiple="multiple" data-placeholder="Pilih nilai Pia"
+                                        <select class="select2" multiple="multiple" data-placeholder="Pilih nilai PIA"
                                             data-dropdown-css-class="select2-purple" style="width: 100%;" name="pias[]">
                                             @foreach ($pias as $pia)
-                                                @foreach ($intervensiNasional->pias as $piaselected)
-                                                    @if ($piaselected->id == $pia->id)
-                                                        <option value="{{ $pia->id }}" selected>{{ $pia->nama }}
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $pia->id }}">{{ $pia->nama }}</option>
-                                                    @endif
-                                                @endforeach
+                                                <option value="{{ $pia->id }}"
+                                                    {{ $idPia->contains($pia->id) ? 'selected' : '' }}>
+                                                    {{ $pia->nama }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -102,7 +98,7 @@
                                     <label>Keterangan</label>
                                     <textarea type="text" name="keterangan" class="form-control"
                                         placeholder="">{{ $intervensiNasional->keterangan }}
-                                                                                                                                                          </textarea>
+                                                                                                                                                                                                                                          </textarea>
                                 </div>
 
 
