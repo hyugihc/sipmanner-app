@@ -87,7 +87,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('faq') }}" class="nav-link">
+                    <a href="{{ route('reports.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
                             Laporan

@@ -78,12 +78,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('articles', ArticleController::class);
     Route::get('articles/{article}/download', 'ArticleController@download')->name('articles.download');
 
+
+
+
     Route::get('faq', function () {
         return view('faq');
     })->name('faq');
 
 
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+    Route::resource('reports',ReportController::class);
 
 
     // Route::get('pi_index', 'ProgressProgramController@pi_index')->name('pi_index');

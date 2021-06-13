@@ -30,6 +30,7 @@ class ProgramController extends Controller
         return view('programs.index', compact('intervensiKhususes', 'intervensiNasionals'));
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
