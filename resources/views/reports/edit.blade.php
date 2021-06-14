@@ -36,16 +36,16 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('reports.update', $report) }}">
+                        <form action="{{ route('reports.update', $report) }}" method="POST">
                             @csrf
-                            @method('PUT')
+                            @method('put')
 
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Pendahuluan</label>
                                     <textarea class="form-control" name="bab_i" id="" cols="10" rows="10">
                                {{ $report->bab_i }} 
-                                                                                     </textarea>
+                                      </textarea>
                                 </div>
 
                                 @error('bab_i')
@@ -55,7 +55,8 @@
                                 <div class="form-group">
                                     <label>Latar Belakang</label>
                                     <textarea class="form-control" name="bab_ii" id="" cols="30" rows="10">
-                {{ $report->bab_ii }}                                                                    </textarea>
+                                  {{ $report->bab_ii }}   
+                                    </textarea>
                                 </div>
 
                                 @error('bab_ii')
@@ -68,7 +69,64 @@
                             {{ $report->bab_iii }}
                                                                                     </textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label>Program Intervensi Nasional </label>
+                                    <div class="card-body table-responsive p-0">
+                                        <table class="table table-hover text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nama</th>
+                                                    <th>Volume</th>
+                                                    <th>Output</th>
+                                                    <th>Outcome</th>
 
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($intervensiNasionalProvinsis as $pi)
+                                                    <tr>
+                                                        <td>{{ $pi->intervensiNasional->nama }}</td>
+                                                        <td>{{ $pi->intervensiNasional->volume }}</td>
+                                                        <td>{{ $pi->intervensiNasional->output }}</td>
+                                                        <td>{{$pi->intervensiNasional->outcome}} </td>
+                                                       
+
+                
+                                                    </tr>
+                                                @endforeach
+                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Program Intervensi Khusus </label>
+                                    <div class="card-body table-responsive p-0">
+                                        <table class="table table-hover text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nama</th>
+                                                    <th>Volume</th>
+                                                    <th>Output</th>
+                                                    <th>Outcome</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($intervensiKhususes as $pi)
+                                                    <tr>
+                                                        <td>{{ $pi->nama }}</td>
+                                                        <td>{{ $pi->volume }}</td>
+                                                        <td>{{ $pi->output }}</td>
+                                                        <td>{{$pi->outcome}} </td>
+                
+                                                    </tr>
+                                                @endforeach
+                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                                 
 
                                 @error('bab_iii')
@@ -133,7 +191,8 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <input type="submit" class="btn btn-primary" name=" draft" value="Save as Draft">
+                                <input type="submit" class="btn btn-primary" name=" submit" value="Submit">
                             </div>
                         </form>
                     </div>
@@ -148,7 +207,38 @@
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
+        <div class="modal fade" id="modal-lg">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Large Modal</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
 
+                  <p>One fine body&hellip;</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
 
+          <script>
+              $(document).on("click", "#launch-modal", function () {
+                    var pi = $(this).data('id');
+                    $(".modal-body #bookId").val( pi );
+                    // As pointed out in comments, 
+                    // it is unnecessary to have to manually call the modal.
+                    // $('#addBookDialog').modal('show');
+                });
+          </script>
+    </section>
 
-    @endsection
+@endsection

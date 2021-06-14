@@ -75,7 +75,7 @@
                                         @if ($reportSm1->user_id != null)
                                             {{ $reportSm1->user->name }}
                                         @else
-                                             -   
+                                            -
                                         @endif
                                     </td>
                                     <td>
@@ -97,8 +97,14 @@
                                         @endswitch
                                     </td>
                                     <td>
-                                        <a class="btn btn-block btn-primary btn-xs"
-                                            href="{{ route('reports.show', $reportSm1) }}">Show</a>
+                                        @can('view', $reportSm1)
+                                            <a class="btn btn-block btn-primary btn-xs"
+                                                href="{{ route('reports.show', $reportSm1) }}">Show</a>
+                                        @endcan
+                                        @can('update', $reportSm1)
+                                            <a class="btn btn-block btn-warning btn-xs"
+                                                href="{{ route('reports.edit', $reportSm1) }}">Edit</a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 <tr>
@@ -109,7 +115,7 @@
                                         @if ($reportSm2->user_id != null)
                                             {{ $reportSm2->user->name }}
                                         @else
-                                             -   
+                                            -
                                         @endif
                                     </td>
                                     <td>
@@ -131,8 +137,14 @@
                                         @endswitch
                                     </td>
                                     <td>
-                                        <a class="btn btn-block btn-primary btn-xs"
-                                            href="{{ route('reports.show', $reportSm2) }}">Show</a>
+                                        @can('view', $reportSm2)
+                                            <a class="btn btn-block btn-primary btn-xs"
+                                                href="{{ route('reports.show', $reportSm2) }}">Show</a>
+                                        @endcan
+                                        @can('update', $reportSm2)
+                                            <a class="btn btn-block btn-warning btn-xs"
+                                                href="{{ route('reports.edit', $reportSm2) }}">Edit</a>
+                                        @endcan
                                     </td>
                                 </tr>
 

@@ -67,6 +67,7 @@ class IntervensiKhususController extends Controller
         $intervensi = IntervensiKhusus::create($request->all());
         $intervensi->provinsi_id = ($request->user()->role_id == 1)  ? $request->provinsi_id :
             $request->user()->provinsi_id;
+        $intervensi->tahun = date("Y");
         $intervensi->pias()->attach($request->pias);
         $intervensi->status  = ($request->has('draft')) ? 0 : 1;
         $intervensi->save();

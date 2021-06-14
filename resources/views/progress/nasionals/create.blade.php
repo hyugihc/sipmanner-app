@@ -39,14 +39,6 @@
 
                             <div class="card-body">
 
-                                <div class="form-group" hidden>
-                                    <label>Program Intervensi</label>
-                                    <select class="form-control" name="intervensi_nasional_id">
-                                        <option value="{{ $intervensiNasional->id }}" selected>
-                                            {{ $intervensiNasional->nama }}</option>
-                                    </select>
-                                </div>
-
                                 <div class="form-group">
                                     <label>Penjelasan Progres</label>
                                     <input type="text" name="uraian_program" class="form-control" placeholder="">

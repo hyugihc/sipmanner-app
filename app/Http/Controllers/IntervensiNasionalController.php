@@ -63,6 +63,7 @@ class IntervensiNasionalController extends Controller
 
 
         $intervensiNasional = IntervensiNasional::create($request->all());
+        $intervensiNasional->tahun = date("Y");
         $intervensiNasional->pias()->attach($request->pias);
         $intervensiNasional->status = 1;
         $intervensiNasional->save();

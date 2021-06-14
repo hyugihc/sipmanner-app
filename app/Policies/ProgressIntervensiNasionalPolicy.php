@@ -39,7 +39,7 @@ class ProgressIntervensiNasionalPolicy
         if ($user->role_id == 1) return true;
         if ($user->role_id == 5) return true;
         if ($user->role_id == 3 or $user->role_id == 2) {
-            return  $user->provinsi_id == $progressIntervensiNasional->provinsi_id;
+            return  $user->provinsi_id == $progressIntervensiNasional->intervensiNasionalProvinsi->provinsi_id;
         }
         return false;
     }
@@ -69,7 +69,7 @@ class ProgressIntervensiNasionalPolicy
     {
         //
         if ($user->role_id == 3) {
-            return  $user->provinsi_id == $progressIntervensiNasional->provinsi_id;
+            return  $user->provinsi_id == $progressIntervensiNasional->intervensiNasionalProvinsi->provinsi_id;
         }
         return false;
     }
@@ -84,8 +84,8 @@ class ProgressIntervensiNasionalPolicy
     public function delete(User $user, ProgressIntervensiNasional $progressIntervensiNasional)
     {
         //
-        if ($user->role_id == 3 ) {
-            return  $user->provinsi_id == $progressIntervensiNasional->provinsi_id;
+        if ($user->role_id == 3) {
+            return  $user->provinsi_id == $progressIntervensiNasional->intervensiNasionalProvinsi->provinsi_id;
         }
         return false;
     }

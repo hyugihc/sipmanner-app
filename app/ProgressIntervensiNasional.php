@@ -1,7 +1,8 @@
 <?php
 
 namespace App;
-use App\IntervensiNasional;
+
+use App\IntervensiNasionalProvinsi;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,11 +15,11 @@ class ProgressIntervensiNasional extends Model
      * @var array
      */
     protected $fillable = [
-        'intervensi_nasional_id', 'uraian_program', 'bulan', 'presentase_program', 'upload_dokumentasi', 'upload_bukti_dukung', 'keterangan'
+        'uraian_program', 'bulan', 'presentase_program', 'upload_dokumentasi', 'upload_bukti_dukung', 'keterangan'
     ];
 
-    public function intervensi_nasional()
+    public function intervensiNasionalProvinsi()
     {
-        return $this->belongsTo(IntervensiNasional::class);
+        return $this->belongsTo(IntervensiNasionalProvinsi::class);
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\ProgressIntervensiNasional;
 use Illuminate\Http\Request;
 use App\IntervensiNasional;
-
+use App\IntervensiNasionalProvinsi;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,8 +21,15 @@ class ProgressIntervensiNasionalController extends Controller
         //
         Auth::user()->cannot('viewAny', ProgressIntervensiNasional::class) ?  abort(403) : true;
 
-        $progressPrograms = (Auth::user()->role_id == 1) ?
-            $intervensiNasional->progress_intervensi_nasionals()->paginate(5) : $intervensiNasional->progress_intervensi_nasionals()->where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
+        $intervensiNasionalProvinsi = IntervensiNasionalProvinsi::where('provinsi_id', Auth::user()->provinsi_id)->where('intervensi_nasional_id', $intervensiNasional->id)->first();
+        if ($intervensiNasionalProvinsi == null) {
+            $intervensiNasionalProvinsi =  new IntervensiNasionalProvinsi();
+            $intervensiNasionalProvinsi->provinsi_id = Auth::user()->provinsi_id;
+            $intervensiNasionalProvinsi->intervensi_nasional_id = $intervensiNasional->id;
+            $intervensiNasionalProvinsi->save();
+        }
+
+        $progressPrograms = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $intervensiNasionalProvinsi->id)->paginate(5);
 
         return view('progress.nasionals.index', compact('intervensiNasional', 'progressPrograms'));
     }
@@ -36,6 +43,7 @@ class ProgressIntervensiNasionalController extends Controller
     {
         //
         Auth::user()->cannot('create', ProgressIntervensiNasional::class) ?  abort(403) : true;
+
 
         return view('progress.nasionals.create', compact('intervensiNasional'));
     }
@@ -60,8 +68,11 @@ class ProgressIntervensiNasionalController extends Controller
             'keterangan' => 'nullable',
         ]);
 
+
+        $intervensiNasionalProvinsi = IntervensiNasionalProvinsi::where('provinsi_id', Auth::user()->provinsi_id)->where('intervensi_nasional_id', $intervensiNasional->id)->first();
+
         $progressIntervensiNasional = ProgressIntervensiNasional::create($request->all());
-        $progressIntervensiNasional->provinsi_id = Auth::user()->provinsi_id;
+        $progressIntervensiNasional->intervensi_nasional_provinsi_id = $intervensiNasionalProvinsi->id;
 
         if ($request->upload_dokumentasi != null) {
             $progressIntervensiNasional->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
@@ -80,7 +91,6 @@ class ProgressIntervensiNasionalController extends Controller
         }
 
         $progressIntervensiNasional->save();
-
 
         return redirect()->route('progress_intervensi_nasionals.index', $intervensiNasional)
             ->with('success', 'Progress Programs created successfully.');

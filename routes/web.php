@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('progress', ProgressController::class);
 
     Route::resource('intervensi_nasionals', IntervensiNasionalController::class);
+    Route::resource('intervensi_nasional_provinsis', IntervensiNasionalProvinsiController::class);
     Route::resource('intervensi_khususes', IntervensiKhususController::class);
     Route::put('intervensi_khususes/{intervensiKhusus}/approve', 'IntervensiKhususController@approve')->name('intervensi_khususes.approve');
 
@@ -87,7 +88,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
-    Route::resource('reports',ReportController::class);
+    Route::resource('reports', ReportController::class);
+    Route::put('reports/{report}/approve', 'ReportController@approve')->name('reports.approve');
+    
 
 
     // Route::get('pi_index', 'ProgressProgramController@pi_index')->name('pi_index');
