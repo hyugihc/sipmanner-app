@@ -29,7 +29,7 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title"> {{$intervensiKhusus->nama}} </h3>
+                            <h3 class="card-title"> {{ $intervensiKhusus->nama }} </h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -48,7 +48,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Uraian Kegiatan</label>
+                                    <label>Penjelasan progress</label>
                                     <input type="text" name="uraian_program" class="form-control" placeholder="">
                                 </div>
                                 @error('uraian_program')
@@ -68,7 +68,7 @@
 
 
                                 <div class="form-group">
-                                    <label>Presentase Program</label>
+                                    <label>Presentase Capaian Program</label>
                                     <input type="number" name="presentase_program" class="form-control" placeholder=""
                                         min="1" max="100">
                                 </div>
@@ -94,7 +94,7 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                                 <div class="form-group">
-                                    <label>Keterangan</label>
+                                    <label>kendala dan keterangan lain</label>
                                     <input type="text" name="keterangan" class="form-control" placeholder="">
                                 </div>
                                 @error('keterangan')

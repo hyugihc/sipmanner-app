@@ -54,7 +54,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Program Intervensi Nasionals</h3>
+                        <h3 class="card-title">Program Intervensi Nasional</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -77,7 +77,6 @@
                                     <th>Nama</th>
                                     <th>Nilai Pia</th>
                                     <th>Output</th>
-                                    <th>Outcome</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -91,7 +90,6 @@
                                             @endforeach
                                         </td>
                                         <td>{{ $program_intervensi->output }}</td>
-                                        <td>{{ $program_intervensi->outcome }}</td>
                                         <td>
 
                                             <form
@@ -154,7 +152,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Program Intervensi Khususes</h3>
+                        <h3 class="card-title">Program Intervensi Khusus</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -177,7 +175,6 @@
                                     <th>Nama</th>
                                     <th>Nilai Pia</th>
                                     <th>Output</th>
-                                    <th>Outcome</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -192,7 +189,6 @@
                                             @endforeach
                                         </td>
                                         <td>{{ $program_intervensi->output }}</td>
-                                        <td>{{ $program_intervensi->outcome }}</td>
                                         <td>
                                             @switch($program_intervensi->status)
                                                 @case(0)

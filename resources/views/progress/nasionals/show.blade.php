@@ -39,7 +39,7 @@
 
                         <div class="card-body">
                             <dl>
-                                <dt>Uraian</dt>
+                                <dt>Penjelasan progress</dt>
                                 <dd>{{ $progressIntervensiNasional->uraian_program }}</dd>
                                 <dt>Bulan</dt>
                                 @switch($progressIntervensiNasional->bulan)
@@ -83,7 +83,7 @@
                                     @default
 
                                 @endswitch
-                                <dt>Presentase Program</dt>
+                                <dt>Presentase Capaian Program</dt>
                                 <dd> {{ $progressIntervensiNasional->presentase_program }} </dd>
                                 <dt>Dokumentasi</dt>
                                 @if ($progressIntervensiNasional->upload_dokumentasi != null)
@@ -94,12 +94,13 @@
                                 @endif
                                 <dt>Bukti Dukung</dt>
                                 @if ($progressIntervensiNasional->upload_bukti_dukung != null)
-                                    <dd> <a href="{{ route('pins.download.duk', $progressIntervensiNasional) }}"> Arsip Bukti
+                                    <dd> <a href="{{ route('pins.download.duk', $progressIntervensiNasional) }}"> Arsip
+                                            Bukti
                                             Dukung</a>
                                     @else
                                     <dd>Belum ada bukti dukung yang di upload</dd>
                                 @endif
-                                <dt>Keterangan</dt>
+                                <dt>kendala dan keterangan lain</dt>
                                 <dd> {{ $progressIntervensiNasional->keterangan }} </dd>
 
 

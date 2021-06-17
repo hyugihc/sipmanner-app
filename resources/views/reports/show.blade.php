@@ -154,9 +154,9 @@
 
                                     @if ($report->status == 2)
                                         <div class="card-footer">
-                                            <div class="col-md-2 float-right" >
+                                            <div class="col-md-2 float-right">
                                                 <a class="btn btn-block btn-primary btn-xs"
-                                                    href="{{ route('reports.show', $report) }}">Print</a>
+                                                    href="{{ route('reports.print', $report) }}">Print</a>
                                             </div>
                                         </div>
                                     @endif

@@ -18,9 +18,15 @@ class ProgressController extends Controller
     {
         //
         $intervensiNasionals = IntervensiNasional::paginate(5);
-        $intervensiKhususes = (Auth::user()->role_id == 1) ?
-            IntervensiKhusus::paginate(5) : IntervensiKhusus::where('provinsi_id', Auth::user()->provinsi_id)->where('status', 2)->paginate(5);
 
+        $user = Auth::user();
+        if ($user->role_id == 1) {
+            $intervensiKhususes = IntervensiKhusus::where('status', 2)->paginate(5);
+        } elseif ($user->role_id  == 2) {
+            $intervensiKhususes = IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('status', 2)->paginate(5);
+        } elseif ($user->role_id  == 3) {
+            $intervensiKhususes = IntervensiKhusus::where('user_id', $user->id)->where('provinsi_id', $user->provinsi_id)->where('status', 2)->paginate(5);
+        }
 
         return view('progress.index', compact('intervensiNasionals', 'intervensiKhususes'));
     }

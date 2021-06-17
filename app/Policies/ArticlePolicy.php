@@ -71,7 +71,6 @@ class ArticlePolicy
         //
 
         return $user->id == $article->user_id;
-
     }
 
     /**
@@ -84,10 +83,9 @@ class ArticlePolicy
     public function delete(User $user, Article $article)
     {
         //
-        
+
         if ($user->role_id == 1) return true; //adminTS
         return $user->id == $article->user_id;
-        
     }
 
     /**
@@ -112,5 +110,10 @@ class ArticlePolicy
     public function forceDelete(User $user, Article $article)
     {
         //
+    }
+
+    public function approve(User $user,  Article $article)
+    {
+        if ($user->role_id == 1) return true; //adminTS
     }
 }

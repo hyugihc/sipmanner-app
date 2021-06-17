@@ -35,13 +35,14 @@
             <div class="col-md-12">
 
                 <!-- form start -->
-                <form action="{{ route('articles.update', $article) }}" method="POST" id="quickForm" enctype="multipart/form-data">
-                    @csrf 
-                   
+                <form action="{{ route('articles.update', $article) }}" method="POST" id="quickForm"
+                    enctype="multipart/form-data">
+                    @csrf
+
                     @method('PUT')
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">Edit {{$article->title}}</h3>
+                            <h3 class="card-title">Edit {{ $article->title }}</h3>
                         </div>
                         <!-- /.card-header -->
                         @foreach ($errors->all() as $error)
@@ -58,8 +59,8 @@
                             <div class="form-group">
                                 <label for="isi">Isi Berita</label>
                                 <textarea name="content" id="compose-textarea" class="form-control" style="height: 300px">
-                                    {{$article->content}}
-                                                                        </textarea>
+                                        {{ $article->content }}
+                                                                            </textarea>
                             </div>
                             <div class="form-group">
                                 <div class="btn btn-default btn-file">
@@ -72,8 +73,8 @@
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <div class="float-right">
-                                <button name="draft" type="button" class="btn btn-default"><i class="fas fa-pencil-alt"></i>
-                                    Draft</button>
+                                {{-- <button name="draft" type="button" class="btn btn-default"><i class="fas fa-pencil-alt"></i>
+                                    Draft</button> --}}
                                 <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-envelope"></i>
                                     Send</button>
                             </div>

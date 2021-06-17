@@ -39,10 +39,15 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('intervensi_khususes.store') }}" method="POST" >
+                        <form action="{{ route('intervensi_khususes.store') }}" method="POST">
                             @csrf
 
                             <div class="card-body">
+
+
+                                <div class="form-group">
+                                    <span>Semua Isian bertanda * (bintang) wajib di isi</span>
+                                </div>
 
                                 <div class="form-group" hidden>
                                     <label>Jenis Program</label>
@@ -52,8 +57,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Nama</label>
-                                    <input type="text" name="nama" class="form-control" placeholder="">
+                                    <label>Nama Program*</label>
+                                    <input type="text" name="nama" class="form-control" placeholder=""
+                                        value="{{ old('nama') }}">
                                 </div>
 
                                 @error('nama')
@@ -61,9 +67,10 @@
                                 @enderror
 
                                 <div class="form-group">
-                                    <label>Uraian Kegiatan</label>
-                                    <textarea type="text" name="uraian_kegiatan" class="form-control" placeholder="">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </textarea>
+                                    <label>Uraian Kegiatan*</label>
+                                    <textarea type="text" name="uraian_kegiatan" class="form-control" placeholder=""
+                                        value="{{ old('uraian_kegiatan') }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </textarea>
                                 </div>
 
                                 @error('uraian_kegiatan')
@@ -72,7 +79,7 @@
 
 
                                 <div class="form-group">
-                                    <label>Nilai Pia</label>
+                                    <label>Nilai Pia*</label>
                                     <div class="select2-purple">
                                         <select class="select2" multiple="multiple" data-placeholder="Pilih nilai Pia"
                                             data-dropdown-css-class="select2-purple" style="width: 100%;" name="pias[]">
@@ -88,8 +95,9 @@
                                 @enderror
 
                                 <div class="form-group">
-                                    <label>Volume Kegiatan Setahun</label>
-                                    <input type="number" name="volume" class="form-control" placeholder="" min="1" max="100">
+                                    <label>Volume Kegiatan Setahun*</label>
+                                    <input type="number" name="volume" class="form-control" placeholder="" min="1" max="100"
+                                        value="{{ old('volume') }}">
                                 </div>
 
                                 @error('volume')
@@ -97,8 +105,9 @@
                                 @enderror
 
                                 <div class="form-group">
-                                    <label>Output</label>
-                                    <input type="text" name="output" class="form-control" placeholder="">
+                                    <label>Output*</label>
+                                    <input type="text" name="output" class="form-control" placeholder=""
+                                        value="{{ old('output') }}">
                                 </div>
 
                                 @error('output')
@@ -106,8 +115,9 @@
                                 @enderror
 
                                 <div class="form-group">
-                                    <label>Outcome</label>
-                                    <input type="text" name="outcome" class="form-control" placeholder="">
+                                    <label>Outcome*</label>
+                                    <textarea type="text" name="outcome" class="form-control" placeholder=""
+                                        value="{{ old('outcome') }}"></textarea>
                                 </div>
 
                                 @error('outcome')
@@ -117,7 +127,8 @@
 
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <textarea type="text" name="keterangan" class="form-control" placeholder=""></textarea>
+                                    <textarea type="text" name="keterangan" class="form-control" placeholder=""
+                                        value="{{ old('keterangan') }}"></textarea>
                                     </textarea>
                                 </div>
 
@@ -170,6 +181,7 @@
                     theme: 'bootstrap4'
                 })
             })
+
         </script>
 
 

@@ -56,8 +56,6 @@
                                 <dd> {{ $intervensiNasional->outcome }} </dd>
                                 <dt>keterangan</dt>
                                 <dd> {{ $intervensiNasional->keterangan }} </dd>
-                                <dt>keterangan</dt>
-                                <dd> {{ $intervensiNasional->status }} </dd>
 
 
                             </dl>

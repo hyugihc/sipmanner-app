@@ -77,7 +77,6 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->nip_lama = $request->nip_lama;
-        $user->provinsi_id = $request->provinsi_id;
         $user->role_id = $request->role_id;
         $user->save();
 
@@ -112,7 +111,7 @@ class UserController extends Controller
 
     public function getuser_by_niplama($nip_lama)
     {
-        $user = User::where('nip_lama', $nip_lama)->first();
+        $user = User::where('nip_lama', '3400' . $nip_lama)->first();
         return new UserResource($user);
     }
 }

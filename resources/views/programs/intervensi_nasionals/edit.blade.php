@@ -44,30 +44,45 @@
 
                             <div class="card-body">
 
+                                <div class="form-group">
+                                    <span>Semua Isian bertanda * (bintang) wajib di isi</span>
+                                </div>
 
 
                                 <div class="form-group">
-                                    <label>Nama</label>
+                                    <label>Nama*</label>
                                     <input type="text" name="nama" class="form-control" placeholder=""
                                         value="{{ $intervensiNasional->nama }}">
                                 </div>
+
+                                @error('nama')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
                                 <div class="form-group">
-                                    <label>Uraian Kegiatan</label>
+                                    <label>Uraian Kegiatan*</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control"
-                                        placeholder="">{{ $intervensiNasional->uraian_kegiatan }}
-                                                                                                                                                                                                                                                                                                    </textarea>
+                                        placeholder="">{{ $intervensiNasional->uraian_kegiatan }}                                                                                                                                                                                                                                                                   </textarea>
                                 </div>
 
+                                @error('uraian_kegiatan')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
 
                                 <div class="form-group">
-                                    <label>Volume Kegiatan Setahun</label>
+                                    <label>Volume Kegiatan Setahun*</label>
                                     <input type="number" name="volume" class="form-control" placeholder=""
                                         value="{{ $intervensiNasional->volume }}" min="1" max="100">
                                 </div>
 
+                                @error('volume')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
 
                                 <div class="form-group">
-                                    <label>Nilai PIA</label>
+                                    <label>Nilai PIA*</label>
                                     <div class="select2-purple">
                                         <select class="select2" multiple="multiple" data-placeholder="Pilih nilai PIA"
                                             data-dropdown-css-class="select2-purple" style="width: 100%;" name="pias[]">
@@ -81,26 +96,43 @@
                                     </div>
                                 </div>
 
+                                @error('pias')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
                                 <div class="form-group">
-                                    <label>Output</label>
+                                    <label>Output*</label>
                                     <input type="text" name="output" class="form-control" placeholder=""
                                         value="{{ $intervensiNasional->output }}">
                                 </div>
 
+                                @error('output')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
                                 <div class="form-group">
-                                    <label>Outcome</label>
-                                    <input type="text" name="outcome" class="form-control" placeholder=""
-                                        value="{{ $intervensiNasional->outcome }}">
+                                    <label>Outcome*</label>
+
+                                    <textarea type="text" name="outcome" class="form-control" placeholder=""
+                                        value="{{ $intervensiNasional->outcome }}"></textarea>
+                                    </textarea>
                                 </div>
+
+                                @error('outcome')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
 
 
                                 <div class="form-group">
                                     <label>Keterangan</label>
                                     <textarea type="text" name="keterangan" class="form-control"
                                         placeholder="">{{ $intervensiNasional->keterangan }}
-                                                                                                                                                                                                                                          </textarea>
+                                                                                                                                                                                                                                                                  </textarea>
                                 </div>
 
+                                @error('keterangan')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
 
                             </div>
                             <!-- /.card-body -->

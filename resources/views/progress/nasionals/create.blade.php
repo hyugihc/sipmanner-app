@@ -102,7 +102,7 @@
                                 @enderror
 
                                 <div class="form-group">
-                                    <label>Keterangan</label>
+                                    <label>kendala dan keterangan lain</label>
                                     <input type="text" name="keterangan" class="form-control" placeholder="">
                                 </div>
                                 @error('keterangan')

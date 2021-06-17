@@ -187,7 +187,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Cari pegawai berdasarkan NIP lama</label>
+                        <label for="exampleInputEmail1">Masukan 5 digit NIP lama</label>
                         <input class="form-control" type='text' id='p_input' name='search' placeholder='Enter nip lama'>
                     </div>
 

@@ -42,15 +42,12 @@
 
                             <div class="card-body">
 
-                                {{-- <div class="form-group">
-                                    <label>Jenis Program </label>
-                                    <select id="jenispi" class="form-control" name="jenis">
-                                        <option selected>Program Intervensi Nasional</option>
-                                    </select>
-                                </div> --}}
+                                <div class="form-group">
+                                    <span>Semua Isian bertanda * (bintang) wajib di isi</span>
+                                </div>
 
                                 <div class="form-group">
-                                    <label>Nama</label>
+                                    <label>Nama*</label>
                                     <input type="text" name="nama" class="form-control" placeholder=""
                                         value="{{ old('nama') }}">
                                 </div>
@@ -60,10 +57,10 @@
                                 @enderror
 
                                 <div class="form-group">
-                                    <label>Uraian Kegiatan</label>
+                                    <label>Uraian Kegiatan*</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control" placeholder=""
                                         value="{{ old('uraian_kegiatan') }}">
-                                                                                                                                                                                                                                                                                                                                                                                                                                        </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    </textarea>
                                 </div>
 
                                 @error('uraian_kegiatan')
@@ -72,7 +69,7 @@
 
 
                                 <div class="form-group">
-                                    <label>Nilai Pia</label>
+                                    <label>Nilai Pia*</label>
                                     <div class="select2-purple">
                                         <select class="select2" multiple="multiple" data-placeholder=""
                                             data-dropdown-css-class="select2-purple" style="width: 100%;" name="pias[]">
@@ -89,7 +86,7 @@
 
 
                                 <div class="form-group">
-                                    <label>Volume Kegiatan Setahun</label>
+                                    <label>Volume Kegiatan Setahun*</label>
                                     <input type="number" name="volume" class="form-control" placeholder="" min="1" max="100"
                                         value="{{ old('volume') }}">
                                 </div>
@@ -99,7 +96,7 @@
                                 @enderror
 
                                 <div class="form-group">
-                                    <label>Output</label>
+                                    <label>Output*</label>
                                     <input type="text" name="output" class="form-control" placeholder=""
                                         value="{{ old('output') }}">
                                 </div>
@@ -109,9 +106,10 @@
                                 @enderror
 
                                 <div class="form-group">
-                                    <label>Outcome</label>
-                                    <input type="text" name="outcome" class="form-control" placeholder=""
+                                    <label>Outcome*</label>
+                                    <textarea type="text" name="outcome" class="form-control" placeholder=""
                                         value="{{ old('outcome') }}">
+                                                </textarea>
                                 </div>
 
                                 @error('outcome')

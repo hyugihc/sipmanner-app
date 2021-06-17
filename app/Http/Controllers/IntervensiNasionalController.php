@@ -53,7 +53,7 @@ class IntervensiNasionalController extends Controller
         Auth::user()->cannot('create', IntervensiNasional::class) ?  abort(403) : true;
 
         $request->validate([
-            'nama' => 'required|min:3|max:50',
+            'nama' => 'required|min:3|max:500',
             'uraian_kegiatan' => 'required|max:500',
             'volume' => 'required',
             'output' => 'required',
@@ -116,11 +116,10 @@ class IntervensiNasionalController extends Controller
 
         $request->validate([
             'nama' => 'required|min:3|max:50',
-            'uraian_kegiatan' => 'required|max:50',
+            'uraian_kegiatan' => 'required|max:500',
             'volume' => 'required',
             'output' => 'required',
             'outcome' => 'required',
-            'keterangan' => 'required',
             'pias' => 'required',
         ]);
 

@@ -39,11 +39,11 @@
 
                         <div class="card-body">
                             <dl>
-                                <dt>Uraian</dt>
+                                <dt>Penjelasan progress</dt>
                                 <dd>{{ $progressIntervensiKhusus->uraian_program }}</dd>
                                 <dt>Bulan</dt>
                                 <dd>{{ $progressIntervensiKhusus->bulan }}</dd>
-                                <dt>Presentase Program</dt>
+                                <dt>Presentase Capaian Program</dt>
                                 <dd> {{ $progressIntervensiKhusus->presentase_program }} </dd>
                                 <dt>Upload Dokumentasi</dt>
                                 @if ($progressIntervensiKhusus->upload_dokumentasi != null)
@@ -60,7 +60,7 @@
                                     <dd>Belum ada bukti dukung yang di upload</dd>
                                 @endif
                                 </dd>
-                                <dt>Keterangan</dt>
+                                <dt>kendala dan keterangan lain</dt>
                                 <dd> {{ $progressIntervensiKhusus->keterangan }} </dd>
 
 

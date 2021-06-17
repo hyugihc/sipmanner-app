@@ -61,8 +61,6 @@
                                     <dd> {{ $intervensiKhusus->outcome }} </dd>
                                     <dt>keterangan</dt>
                                     <dd> {{ $intervensiKhusus->keterangan }} </dd>
-                                    <dt>keterangan</dt>
-                                    <dd> {{ $intervensiKhusus->status }} </dd>
                                     <dt>Unit Kerja</dt>
                                     <dd> {{ $intervensiKhusus->provinsi['nama'] }} </dd>
                                     <dt>Status</dt>

@@ -46,69 +46,62 @@
                             <div class="card-body">
 
                                 <div class="form-group">
-                                    <label>Jenis Program Intervensi</label>
-                                    <select class="form-control" name="jenis">
-                                        <option selected disabled>Khusus</option>
-                                    </select>
+                                    <span>Semua Isian bertanda * (bintang) wajib di isi</span>
                                 </div>
 
+
                                 <div class="form-group">
-                                    <label>Nama</label>
+                                    <label>Nama Program*</label>
                                     <input type="text" name="nama" class="form-control" placeholder=""
                                         value="{{ $intervensiKhusus->nama }}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Uraian Kegiatan</label>
+                                    <label>Uraian Kegiatan*</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control"
                                         placeholder="">{{ $intervensiKhusus->uraian_kegiatan }}
-                                                                                                                                                                                                                                                                    </textarea>
+                                                                                                                                                                                                                                                                                                    </textarea>
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label>Volume Kegiatan Setahun</label>
+                                    <label>Volume Kegiatan Setahun*</label>
                                     <input type="text" name="volume" class="form-control" placeholder=""
                                         value="{{ $intervensiKhusus->volume }}">
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label>Nilai Pia</label>
+                                    <label>Nilai PIA*</label>
                                     <div class="select2-purple">
-                                        <select class="select2" multiple="multiple" data-placeholder="Pilih nilai Pia"
+                                        <select class="select2" multiple="multiple" data-placeholder="Pilih nilai PIA"
                                             data-dropdown-css-class="select2-purple" style="width: 100%;" name="pias[]">
                                             @foreach ($pias as $pia)
-                                                @foreach ($intervensiKhusus->pias as $piaselected)
-                                                    @if ($piaselected->id == $pia->id)
-                                                        <option value="{{ $pia->id }}" selected>{{ $pia->nama }}
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $pia->id }}">{{ $pia->nama }}</option>
-                                                    @endif
-                                                @endforeach
+                                                <option value="{{ $pia->id }}"
+                                                    {{ $idPia->contains($pia->id) ? 'selected' : '' }}>
+                                                    {{ $pia->nama }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Output</label>
+                                    <label>Output*</label>
                                     <input type="text" name="output" class="form-control" placeholder=""
                                         value="{{ $intervensiKhusus->output }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Outcome</label>
-                                    <input type="text" name="outcome" class="form-control" placeholder=""
-                                        value="{{ $intervensiKhusus->outcome }}">
+                                    <label>Outcome*</label>
+                                    <textarea type="text" name="outcome" class="form-control" placeholder="">{{ $intervensiKhusus->outcome }}
+                                            </textarea>
                                 </div>
 
 
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <textarea type="text" name="keterangan" class="form-control"
-                                        placeholder="">{{ $intervensiKhusus->keterangan }}
-                                                                                                                                                                                                          </textarea>
+                                    <textarea type="text" name="keterangan" class="form-control" placeholder="">{{ $intervensiKhusus->keterangan }}
+                                                                                   </textarea>
                                 </div>
 
                                 @if (Auth::User()->role_id == 1)

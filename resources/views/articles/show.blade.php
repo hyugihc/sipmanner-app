@@ -68,29 +68,61 @@
                         </div>
                         <!-- /.card-footer -->
                         <div class="card-footer">
-                            {{-- <div class="float-right">
-                          <button type="button" class="btn btn-default"><i class="fas fa-reply"></i> Reply</button>
-                          <button type="button" class="btn btn-default"><i class="fas fa-share"></i> Forward</button>
-                        </div> --}}
-                            <form action="{{ route('articles.destroy', $article) }}" method="POST">
+                            <form action="{{ route('articles.approve', $article) }}" method="POST" id="quickForm">
                                 @csrf
-                                @method('DELETE')
-                                @can('delete', $article)
-                                    <div class="col-md-2">
-                                        <button type="submit" onclick="return confirm('Are you sure?')"
-                                            class="btn btn-block btn-danger btn-xs">Delete</button>
+                                @method('PUT')
+                                @can('approve', $article)
+                                    <div class="form-group">
+                                        <label>Tindakan</label>
+                                        <select id="selectA" class="form-control" name="status">
+                                            <option value="2">Setuju</option>
+                                            <option value="3">Tidak Setuju</option>
+                                        </select>
                                     </div>
+
+                                    <div class="form-group" id="divtextarea">
+                                        <label>Alasan</label>
+                                        <textarea type="text" name="alasan" value="{{ $article->alasan }}"
+                                            class="form-control" placeholder=""></textarea>
+                                    </div>
+
+
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+
                                 @endcan
 
                             </form>
                         </div>
-                        <!-- /.card-footer -->
                     </div>
-                    <!-- /.card -->
+                    <!-- /.card-footer -->
                 </div>
+                <!-- /.card -->
             </div>
-            <!-- /.row -->
+        </div>
+        <!-- /.row -->
         </div><!-- /.container-fluid -->
+
+        <script>
+            $(document).ready(function() {
+                var textarea = $('#divtextarea');
+                textarea.hide();
+            });
+
+            $('#selectA').on('change', function() {
+                var textarea = $('#divtextarea');
+                var select = $(this).val();
+
+                textarea.hide();
+
+                if (select == '3') {
+                    textarea.show();
+                }
+                if (select == '2') {
+                    textarea.hide();
+                }
+            });
+
+        </script>
     </section>
 
 

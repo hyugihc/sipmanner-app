@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Pia;
 use App\ProgressIntervensiKhusus;
 use App\Provinsi;
+use App\User;
 
 class IntervensiKhusus extends Model
 {
@@ -33,5 +34,10 @@ class IntervensiKhusus extends Model
     public function provinsi()
     {
         return $this->belongsTo(Provinsi::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

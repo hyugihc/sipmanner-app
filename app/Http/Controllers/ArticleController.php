@@ -19,9 +19,11 @@ class ArticleController extends Controller
     {
         //
 
-        $articles = Article::paginate(5);
+        $submittedArticles = Article::where('status',  '!=', 2)->paginate(5);
 
-        return view('articles.index', compact('articles'));
+        $articles = Article::where('status', 2)->paginate(5);
+
+        return view('articles.index', compact('articles', 'submittedArticles'));
     }
 
     /**
@@ -114,6 +116,8 @@ class ArticleController extends Controller
     {
         //
 
+        Auth::user()->cannot('update', $article) ?  abort(403) : true;
+
         $request->validate([
             'title' => 'required|min:3|max:50',
             'content' => 'required',
@@ -163,5 +167,17 @@ class ArticleController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    public function approve(Request $request, Article $article)
+    {
+        Auth::user()->cannot('approve', $article) ?  abort(403) : true;
+
+        $article->alasan = $request->alasan;
+        $article->status = $request->status;
+        $article->save();
+
+        return redirect()->route('articles.index')
+            ->with('success', 'Approval berhasil disimpan');
     }
 }

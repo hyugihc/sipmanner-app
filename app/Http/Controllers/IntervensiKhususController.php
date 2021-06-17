@@ -55,11 +55,10 @@ class IntervensiKhususController extends Controller
 
         $request->validate([
             'nama' => 'required|min:3|max:50',
-            'uraian_kegiatan' => 'required|max:50',
+            'uraian_kegiatan' => 'required|max:500',
             'volume' => 'required',
             'output' => 'required',
             'outcome' => 'required',
-            'keterangan' => 'required',
             'pias' => 'required',
         ]);
 
@@ -68,6 +67,7 @@ class IntervensiKhususController extends Controller
         $intervensi->provinsi_id = ($request->user()->role_id == 1)  ? $request->provinsi_id :
             $request->user()->provinsi_id;
         $intervensi->tahun = date("Y");
+        $intervensi->user_id = Auth::user()->id;
         $intervensi->pias()->attach($request->pias);
         $intervensi->status  = ($request->has('draft')) ? 0 : 1;
         $intervensi->save();
@@ -102,9 +102,12 @@ class IntervensiKhususController extends Controller
         //     
         Auth::user()->cannot('update', $intervensiKhusus) ?  abort(403) : true;
 
+
+        $idPia = $intervensiKhusus->pias->pluck('id');
+
         $pias = Pia::all();
         $provinsis = Provinsi::all();
-        return view('programs.intervensi_khususes.edit', compact('intervensiKhusus', 'pias', 'provinsis'));
+        return view('programs.intervensi_khususes.edit', compact('intervensiKhusus', 'pias', 'provinsis', 'idPia'));
     }
 
     /**
@@ -121,11 +124,10 @@ class IntervensiKhususController extends Controller
 
         $request->validate([
             'nama' => 'required|min:3|max:50',
-            'uraian_kegiatan' => 'required|max:50',
+            'uraian_kegiatan' => 'required|max:500',
             'volume' => 'required',
             'output' => 'required',
             'outcome' => 'required',
-            'keterangan' => 'required',
             'pias' => 'required',
         ]);
 
@@ -135,6 +137,8 @@ class IntervensiKhususController extends Controller
         $intervensiKhusus->status  = ($request->has('draft')) ? 0 : 1;
         $intervensiKhusus->pias()->sync($request->pias);
         $intervensiKhusus->save();
+
+
 
         $message = ($intervensiKhusus->status == 0) ? 'Program Intervensi Khusus drafted successfully.' : 'Program Intervensi Khusus submitted successfully.';
         return redirect()->route('programs.index')

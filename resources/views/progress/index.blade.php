@@ -56,7 +56,7 @@
                             <thead>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>Uraian Kegiatan</th>
+                                    <th>Nilai Pia</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -64,7 +64,11 @@
                                 @foreach ($intervensiNasionals as $intervensiNasional)
                                     <tr>
                                         <td>{{ $intervensiNasional->nama }}</td>
-                                        <td>{{ $intervensiNasional->uraian_kegiatan }}</td>
+                                        <td>
+                                            @foreach ($intervensiNasional->pias as $pia)
+                                                <small class="badge badge-success"> {{ $pia->nama }}</small>
+                                            @endforeach
+                                        </td>
                                         <td>
                                             <a class="btn btn-block btn-primary btn-xs"
                                                 href="{{ route('progress_intervensi_nasionals.index', $intervensiNasional) }}">Show
@@ -110,7 +114,7 @@
                             <thead>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>Uraian Kegiatan</th>
+                                    <th>Nilai Pia</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -118,7 +122,11 @@
                                 @foreach ($intervensiKhususes as $intervensiKhusus)
                                     <tr>
                                         <td>{{ $intervensiKhusus->nama }}</td>
-                                        <td>{{ $intervensiKhusus->uraian_kegiatan }}</td>
+                                        <td>
+                                            @foreach ($intervensiKhusus->pias as $pia)
+                                                <small class="badge badge-success"> {{ $pia->nama }}</small>
+                                            @endforeach
+                                        </td>
                                         <td>
                                             <a class="btn btn-block btn-primary btn-xs"
                                                 href="{{ route('progress_intervensi_khususes.index', $intervensiKhusus) }}">Show

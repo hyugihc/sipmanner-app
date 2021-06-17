@@ -23,8 +23,6 @@ Route::post('register', 'AuthController@register');
 
 Route::group(['middleware' => 'auth'], function () {
 
-
-
     Route::get('logout', 'AuthController@logout')->name('logout');
     Route::get('getUser/{nipLama}', 'UserController@getUser');
     Route::get('getuser_by_niplama/{nip_lama}', 'UserController@getuser_by_niplama');
@@ -79,6 +77,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('articles', ArticleController::class);
     Route::get('articles/{article}/download', 'ArticleController@download')->name('articles.download');
 
+    Route::put('articles/{article}/approve', 'ArticleController@approve')->name('articles.approve');
+
 
 
 
@@ -90,7 +90,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
     Route::resource('reports', ReportController::class);
     Route::put('reports/{report}/approve', 'ReportController@approve')->name('reports.approve');
-    
+
+    Route::get('reports/{report}/print', 'ReportController@print')->name('reports.print');
+
 
 
     // Route::get('pi_index', 'ProgressProgramController@pi_index')->name('pi_index');

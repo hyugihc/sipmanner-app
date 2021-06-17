@@ -139,4 +139,16 @@ class ReportController extends Controller
         return redirect()->route('reports.index')
             ->with('success', 'Approval berhasil disimpan');
     }
+
+    public function print(Request $request, Report $report)
+    {
+
+        $intervensiNasionals = IntervensiNasional::where('tahun', date("Y"))->get();
+        $intervensiNasionalKeys = $intervensiNasionals->modelKeys();
+        $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('provinsi_id', Auth::user()->provinsi_id)->whereIn('intervensi_nasional_id', $intervensiNasionalKeys)->get();
+
+        $intervensiKhususes = IntervensiKhusus::where('provinsi_id', Auth::user()->provinsi_id)->where('tahun', date("Y"))->where('status', 2)->get();
+
+        return view('reports.print', compact('report', 'intervensiNasionalProvinsis', 'intervensiKhususes'));
+    }
 }
