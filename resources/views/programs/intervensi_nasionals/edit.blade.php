@@ -50,7 +50,7 @@
 
 
                                 <div class="form-group">
-                                    <label>Nama*</label>
+                                    <label>Nama Program*</label>
                                     <input type="text" name="nama" class="form-control" placeholder=""
                                         value="{{ $intervensiNasional->nama }}">
                                 </div>
@@ -127,7 +127,7 @@
                                     <label>Keterangan</label>
                                     <textarea type="text" name="keterangan" class="form-control"
                                         placeholder="">{{ $intervensiNasional->keterangan }}
-                                                                                                                                                                                                                                                                  </textarea>
+                                                                                                                                                                                                                                                                      </textarea>
                                 </div>
 
                                 @error('keterangan')

@@ -77,6 +77,7 @@
                                     <th>Nama</th>
                                     <th>Nilai Pia</th>
                                     <th>Output</th>
+                                    <th>Outcome</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -89,7 +90,16 @@
                                                 <small class="badge badge-success"> {{ $pia->nama }}</small>
                                             @endforeach
                                         </td>
-                                        <td>{{ $program_intervensi->output }}</td>
+                                        <td>
+                                            @php
+                                                echo Str::substr($program_intervensi->output, 0, 40);
+                                            @endphp
+                                        </td>
+                                        <td>
+                                            @php
+                                                echo Str::substr($program_intervensi->outcome, 0, 30) . '...';
+                                            @endphp
+                                        </td>
                                         <td>
 
                                             <form
@@ -175,6 +185,7 @@
                                     <th>Nama</th>
                                     <th>Nilai Pia</th>
                                     <th>Output</th>
+                                    <th>Outcome</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -188,7 +199,17 @@
                                                 <small class="badge badge-success"> {{ $pia->nama }}</small>
                                             @endforeach
                                         </td>
-                                        <td>{{ $program_intervensi->output }}</td>
+                                        <td>
+                                            @php
+                                                echo Str::substr($program_intervensi->output, 0, 40);
+                                            @endphp
+                                        </td>
+                                        <td>
+                                            @php
+                                                echo Str::substr($program_intervensi->outcome, 0, 30) . '....';
+                                            @endphp
+
+                                        </td>
                                         <td>
                                             @switch($program_intervensi->status)
                                                 @case(0)

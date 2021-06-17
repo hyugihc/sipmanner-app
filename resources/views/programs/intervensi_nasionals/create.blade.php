@@ -47,7 +47,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Nama*</label>
+                                    <label>Nama Program*</label>
                                     <input type="text" name="nama" class="form-control" placeholder=""
                                         value="{{ old('nama') }}">
                                 </div>
@@ -60,7 +60,7 @@
                                     <label>Uraian Kegiatan*</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control" placeholder=""
                                         value="{{ old('uraian_kegiatan') }}">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        </textarea>
                                 </div>
 
                                 @error('uraian_kegiatan')
@@ -109,7 +109,7 @@
                                     <label>Outcome*</label>
                                     <textarea type="text" name="outcome" class="form-control" placeholder=""
                                         value="{{ old('outcome') }}">
-                                                </textarea>
+                                                    </textarea>
                                 </div>
 
                                 @error('outcome')

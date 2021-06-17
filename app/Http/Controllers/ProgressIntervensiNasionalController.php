@@ -63,8 +63,8 @@ class ProgressIntervensiNasionalController extends Controller
             'uraian_program' => 'required|max:500',
             'bulan' => 'required',
             'presentase_program' => 'required',
-            'upload_dokumentasi' => 'nullable|mimes:pdf|max:2000',
-            'upload_bukti_dukung' => 'nullable|mimes:pdf|max:2000',
+            'upload_dokumentasi' => 'required|mimes:pdf|max:2000',
+            'upload_bukti_dukung' => 'required|mimes:pdf|max:2000',
             'keterangan' => 'nullable',
         ]);
 
@@ -140,8 +140,8 @@ class ProgressIntervensiNasionalController extends Controller
             'uraian_program' => 'required|max:50',
             'bulan' => 'required',
             'presentase_program' => 'required',
-            'upload_dokumentasi' => 'nullable|mimes:pdf|max:2000',
-            'upload_bukti_dukung' => 'nullable|mimes:pdf|max:2000',
+            'upload_dokumentasi' => 'required|mimes:pdf|max:2000',
+            'upload_bukti_dukung' => 'required|mimes:pdf|max:2000',
             'keterangan' => 'nullable',
         ]);
 
