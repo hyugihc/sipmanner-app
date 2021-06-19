@@ -59,8 +59,7 @@
                                 <div class="form-group">
                                     <label>Uraian Kegiatan*</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control" placeholder=""
-                                        value="{{ old('uraian_kegiatan') }}">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        </textarea>
+                                        value="{{ old('uraian_kegiatan') }}"></textarea>
                                 </div>
 
                                 @error('uraian_kegiatan')
@@ -108,8 +107,7 @@
                                 <div class="form-group">
                                     <label>Outcome*</label>
                                     <textarea type="text" name="outcome" class="form-control" placeholder=""
-                                        value="{{ old('outcome') }}">
-                                                    </textarea>
+                                        value="{{ old('outcome') }}"></textarea>
                                 </div>
 
                                 @error('outcome')

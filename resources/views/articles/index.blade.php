@@ -123,9 +123,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    {{-- <div class="card-header p-2">
-                        <h3>Article</h3>
-                    </div> --}}
+
+                    @if (auth()->user()->role_id == 1)
+                        <div class="card-header p-2">
+                            <h6>Sudah Disetujui</h6>
+                        </div>
+                    @endif
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="tab-content">

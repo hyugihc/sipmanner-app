@@ -71,9 +71,10 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Nama</th>
                                     <th>Nilai Pia</th>
                                     <th>Output</th>
@@ -82,8 +83,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $i = 1;
+                                @endphp
                                 @foreach ($intervensiNasionals as $program_intervensi)
                                     <tr>
+                                        <td>{{ $i }}</td>
                                         <td>{{ $program_intervensi->nama }}</td>
                                         <td>
                                             @foreach ($program_intervensi->pias as $pia)
@@ -91,14 +96,12 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            @php
-                                                echo Str::substr($program_intervensi->output, 0, 40);
-                                            @endphp
+                                            {{ $program_intervensi->output }}
+
                                         </td>
                                         <td>
-                                            @php
-                                                echo Str::substr($program_intervensi->outcome, 0, 30) . '...';
-                                            @endphp
+                                            {{ $program_intervensi->outcome }}
+
                                         </td>
                                         <td>
 
@@ -130,11 +133,13 @@
                                         </td>
 
                                     </tr>
+                                    @php
+                                        $i++;
+                                    @endphp
                                 @endforeach
 
                             </tbody>
                         </table>
-                        {{ $intervensiNasionals->links() }}
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -179,9 +184,13 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
+                                    <th>No</th>
+                                    @if (Auth::user()->role_id == 1)
+                                        <th>Provinsi</th>
+                                    @endif
                                     <th>Nama</th>
                                     <th>Nilai Pia</th>
                                     <th>Output</th>
@@ -191,8 +200,16 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $i = 1;
+                                @endphp
                                 @foreach ($intervensiKhususes as $program_intervensi)
                                     <tr>
+
+                                        <td>{{ $i }}</td>
+                                        @if (Auth::user()->role_id == 1)
+                                            <td>{{ $program_intervensi->provinsi->nama }}</td>
+                                        @endif
                                         <td>{{ $program_intervensi->nama }}</td>
                                         <td>
                                             @foreach ($program_intervensi->pias as $pia)
@@ -200,15 +217,10 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            @php
-                                                echo Str::substr($program_intervensi->output, 0, 40);
-                                            @endphp
+                                            {{ $program_intervensi->output }}
                                         </td>
                                         <td>
-                                            @php
-                                                echo Str::substr($program_intervensi->outcome, 0, 30) . '....';
-                                            @endphp
-
+                                            {{ $program_intervensi->outcome }}
                                         </td>
                                         <td>
                                             @switch($program_intervensi->status)
@@ -260,11 +272,13 @@
                                         </td>
 
                                     </tr>
+                                    @php
+                                        $i++;
+                                    @endphp
                                 @endforeach
 
                             </tbody>
                         </table>
-                        {{ $intervensiKhususes->links() }}
                     </div>
                     <!-- /.card-body -->
                 </div>

@@ -70,6 +70,26 @@ class DashboardController extends Controller
         $piCount = $pinCount + $pikCount;
 
 
+
+        //progress Intervensi Nasional
+        $pinMaxs = array();
+        foreach ($intervensiNasionalProvinsiKeys as $inpk => $value) {
+            $pinMax = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $value)->orderByDesc('bulan')->first();
+            if ($pinMax != null) {
+                $pinMaxs[] = $pinMax;
+            }
+        }
+
+        //Progress Intervensi Khusus
+        $pikMaxs = array();
+        foreach ($intervensiKhususKeys as $ikk => $value) {
+            $pikMax = ProgressIntervensiKhusus::where('intervensi_khusus_id', $value)->orderByDesc('bulan')->first();
+            if ($pikMax != null) {
+                $pikMaxs[] = $pikMax;
+            }
+        }
+
+
         $data = [
 
             'ikDraft'  => $ikDraft,
@@ -93,9 +113,10 @@ class DashboardController extends Controller
             'piCount' => $piCount
 
         ];
+        if (Auth::user()->role_id == 1) {
+            return view('dashboardadmin');
+        }
 
-
-
-        return view('dashboard', compact('data'));
+        return view('dashboard', compact('data', 'pinMaxs', 'pikMaxs'));
     }
 }

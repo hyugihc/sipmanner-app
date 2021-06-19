@@ -17,6 +17,7 @@
             </div>
             <div class="info">
                 <a href="/logout" class="d-block">{{ Auth::user()->name }}</a>
+                <span style="color: #c2c7d0">{{ Auth::user()->role->name }}</span>
             </div>
         </div>
 
@@ -86,14 +87,16 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('reports.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>
-                            Laporan
-                        </p>
-                    </a>
-                </li>
+                @can('viewAny', App\Report::class)
+                    <li class="nav-item">
+                        <a href="{{ route('reports.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-book"></i>
+                            <p>
+                                Laporan
+                            </p>
+                        </a>
+                    </li>
+                @endcan
                 <li class="nav-item">
                     <a href="{{ route('articles.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>

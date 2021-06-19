@@ -58,8 +58,7 @@
                                 <div class="form-group">
                                     <label>Uraian Kegiatan*</label>
                                     <textarea type="text" name="uraian_kegiatan" class="form-control"
-                                        placeholder="">{{ $intervensiKhusus->uraian_kegiatan }}
-                                                                                                                                                                                                                                                                                                    </textarea>
+                                        placeholder="">{{ $intervensiKhusus->uraian_kegiatan }}</textarea>
                                 </div>
 
 
@@ -93,15 +92,13 @@
 
                                 <div class="form-group">
                                     <label>Outcome*</label>
-                                    <textarea type="text" name="outcome" class="form-control" placeholder="">{{ $intervensiKhusus->outcome }}
-                                            </textarea>
+                                    <textarea type="text" name="outcome" class="form-control" placeholder="">{{ $intervensiKhusus->outcome }}</textarea>
                                 </div>
 
 
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <textarea type="text" name="keterangan" class="form-control" placeholder="">{{ $intervensiKhusus->keterangan }}
-                                                                                   </textarea>
+                                    <textarea type="text" name="keterangan" class="form-control" placeholder="">{{ $intervensiKhusus->keterangan }}</textarea>
                                 </div>
 
                                 @if (Auth::User()->role_id == 1)

@@ -228,6 +228,96 @@
                     </div>
                     <!-- /.card -->
 
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Progress Intervensi Nasional</h3>
+
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body p-0">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>Task</th>
+                                        <th>Progress</th>
+                                        <th style="width: 40px">Label</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @foreach ($pinMaxs as $pinMax)
+                                        <tr>
+                                            <td>{{ $i }}</td>
+                                            <td>{{ $pinMax->intervensiNasionalProvinsi->intervensiNasional->nama }}</td>
+                                            <td>
+                                                <div class="progress progress-xs">
+                                                    <div class="progress-bar bg-primary"
+                                                        style="width: {{ $pinMax->presentase_program }}%"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-primary">{{ $pinMax->presentase_program }}%</span>
+                                            </td>
+                                        </tr>
+                                        @php
+                                            $i++;
+                                        @endphp
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Progress Intervensi Khusus</h3>
+
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body p-0">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>Task</th>
+                                        <th>Progress</th>
+                                        <th style="width: 40px">Label</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @foreach ($pikMaxs as $pikMax)
+                                        <tr>
+                                            <td>{{ $i }}</td>
+                                            <td>{{ $pikMax->intervensi_Khusus->nama }}</td>
+                                            <td>
+                                                <div class="progress progress-xs">
+                                                    <div class="progress-bar bg-primary"
+                                                        style="width: {{ $pikMax->presentase_program }}%"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-primary">{{ $pikMax->presentase_program }}%</span>
+                                            </td>
+                                        </tr>
+                                        @php
+                                            $i++;
+                                        @endphp
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
                 </section>
 
             </div>

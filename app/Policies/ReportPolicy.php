@@ -19,10 +19,10 @@ class ReportPolicy
     public function viewAny(User $user)
     {
         //
-        if ($user->role_id == 1) return true; //adminTS
+      //  if ($user->role_id == 1) return true; //adminTS
         if ($user->role_id == 2) return true; //cl
         if ($user->role_id == 3) return true; //cc
-        if ($user->role_id == 5) return true; //tl
+        //if ($user->role_id == 5) return true; //tl
         return false;
     }
 

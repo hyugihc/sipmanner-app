@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/logout', 'AuthController@logout')->name('logout');
     Route::get('/getUser/{nipLama}', 'UserController@getUser');
-    Route::get('/getuser_by_niplama/{nip_lama}', 'UserController@getuser_by_niplama');
+    Route::get('/getuser_by_niplama/{nip_lama}', 'UserController@getuser_by_niplama')->name('get_user_byniplama');
 
     Route::get('/users', 'UserController@index')->name('users.index');
     Route::get('/users/create', 'UserController@create')->name('users.create');
@@ -89,20 +89,26 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/reports/{report}/print', 'ReportController@print')->name('reports.print');
 });
 
-Route::get('/cache', function () {
-    $exitCode = Artisan::call('cache:clear');
-    return view('dd', compact('exitCode'));
-    // return what you want
-});
-
-Route::get('/config', function () {
-    $exitCode = Artisan::call('config:clear');
-    return view('dd', compact('exitCode'));
-    // return what you want
-});
-
-Route::get('/route', function () {
+//Clear route cache:
+Route::get('/route-clear', function() {
     $exitCode = Artisan::call('route:clear');
-    return view('dd', compact('exitCode'));
-    // return what you want
+    return 'Routes cache cleared';
+});
+
+//Clear config cache:
+Route::get('/config-cache', function() {
+    $exitCode = Artisan::call('config:cache');
+    return 'Config cache cleared';
+}); 
+
+// Clear application cache:
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    return 'Application cache cleared';
+});
+
+// Clear view cache:
+Route::get('/view-clear', function() {
+    $exitCode = Artisan::call('view:clear');
+    return 'View cache cleared';
 });

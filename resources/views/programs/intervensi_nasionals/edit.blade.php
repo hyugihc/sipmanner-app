@@ -113,8 +113,8 @@
                                 <div class="form-group">
                                     <label>Outcome*</label>
 
-                                    <textarea type="text" name="outcome" class="form-control" placeholder=""
-                                        value="{{ $intervensiNasional->outcome }}"></textarea>
+                                    <textarea type="text" name="outcome" class="form-control"
+                                        placeholder="">{{ $intervensiNasional->outcome }}</textarea>
                                     </textarea>
                                 </div>
 
@@ -126,8 +126,7 @@
                                 <div class="form-group">
                                     <label>Keterangan</label>
                                     <textarea type="text" name="keterangan" class="form-control"
-                                        placeholder="">{{ $intervensiNasional->keterangan }}
-                                                                                                                                                                                                                                                                      </textarea>
+                                        placeholder="">{{ $intervensiNasional->keterangan }}</textarea>
                                 </div>
 
                                 @error('keterangan')

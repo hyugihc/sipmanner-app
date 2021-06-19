@@ -220,8 +220,10 @@
 
 
         function cariPegawai(id) {
+            var urlx = '{{ route('get_user_byniplama', ':id') }}';
+            urlx = urlx.replace(':id', id);
             $.ajax({
-                url: '/getuser_by_niplama/' + id,
+                url: urlx,
                 type: 'get',
                 dataType: 'json',
                 success: function(response) {
