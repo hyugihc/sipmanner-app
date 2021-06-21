@@ -72,9 +72,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/piks/{progressIntervensiKhusus}/downloaddok', 'ProgressIntervensiKhususController@downloadDok')->name('piks.download.dok');
     Route::get('/piks/{progressIntervensiKhusus}/downloadduk', 'ProgressIntervensiKhususController@downloadDuk')->name('piks.download.duk');
 
+
+    Route::put('/pins/{progressIntervensiNasional}/approve', 'ProgressIntervensiNasionalController@approve')->name('pins.approve');
+    Route::put('/piks/{progressIntervensiKhusus}/approve', 'ProgressIntervensiKhususController@approve')->name('piks.approve');
+
     Route::resource('articles', ArticleController::class);
     Route::get('/articles/{article}/download', 'ArticleController@download')->name('articles.download');
-
     Route::put('/articles/{article}/approve', 'ArticleController@approve')->name('articles.approve');
 
 
@@ -90,25 +93,25 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 //Clear route cache:
-Route::get('/route-clear', function() {
+Route::get('/route-clear', function () {
     $exitCode = Artisan::call('route:clear');
     return 'Routes cache cleared';
 });
 
 //Clear config cache:
-Route::get('/config-cache', function() {
+Route::get('/config-cache', function () {
     $exitCode = Artisan::call('config:cache');
     return 'Config cache cleared';
-}); 
+});
 
 // Clear application cache:
-Route::get('/clear-cache', function() {
+Route::get('/clear-cache', function () {
     $exitCode = Artisan::call('cache:clear');
     return 'Application cache cleared';
 });
 
 // Clear view cache:
-Route::get('/view-clear', function() {
+Route::get('/view-clear', function () {
     $exitCode = Artisan::call('view:clear');
     return 'View cache cleared';
 });

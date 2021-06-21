@@ -57,7 +57,7 @@ class ProgressIntervensiKhususController extends Controller
         Auth::user()->cannot('create', ProgressIntervensiKhusus::class) ?  abort(403) : true;
 
         $request->validate([
-            'uraian_program' => 'required|max:50',
+            'uraian_program' => 'required|max:500',
             'bulan' => 'required',
             'presentase_program' => 'required',
             'upload_dokumentasi' => 'nullable|mimes:pdf|max:2000',
@@ -84,6 +84,7 @@ class ProgressIntervensiKhususController extends Controller
         }
 
 
+        $progressIntervensiKhusus->status = 1;
         $progressIntervensiKhusus->save();
 
 
@@ -132,7 +133,7 @@ class ProgressIntervensiKhususController extends Controller
         Auth::user()->cannot('update', $progressIntervensiKhusus) ?  abort(403) : true;
 
         $request->validate([
-            'uraian_program' => 'required|max:50',
+            'uraian_program' => 'required|max:500',
             'bulan' => 'required',
             'presentase_program' => 'required',
             'upload_dokumentasi' => 'nullable|mimes:pdf|max:2000',
@@ -163,6 +164,7 @@ class ProgressIntervensiKhususController extends Controller
                     $request->user()->provinsi_id . '_' . $progressIntervensiKhusus->id . '.pdf'
             );
         }
+        $progressIntervensiKhusus->status = 1;
         $progressIntervensiKhusus->save();
 
         return redirect()->route('progress_intervensi_khususes.index', $intervensiKhusus)
@@ -200,5 +202,16 @@ class ProgressIntervensiKhususController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    public function approve(Request $request, ProgressIntervensiKhusus $progressIntervensiKhusus)
+    {
+        Auth::user()->cannot('approve', $progressIntervensiKhusus) ?  abort(403) : true;
+        $progressIntervensiKhusus->status = $request->status;
+        $progressIntervensiKhusus->alasan = $request->alasan;
+        $progressIntervensiKhusus->save();
+
+        return redirect()->route('progress.index')
+            ->with('success', 'Approval is successfully assigned');
     }
 }

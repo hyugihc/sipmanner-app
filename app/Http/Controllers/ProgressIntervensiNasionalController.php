@@ -44,7 +44,6 @@ class ProgressIntervensiNasionalController extends Controller
         //
         Auth::user()->cannot('create', ProgressIntervensiNasional::class) ?  abort(403) : true;
 
-
         return view('progress.nasionals.create', compact('intervensiNasional'));
     }
 
@@ -89,7 +88,7 @@ class ProgressIntervensiNasionalController extends Controller
                     $request->user()->provinsi_id . '_' . $progressIntervensiNasional->id . '.pdf'
             );
         }
-
+        $progressIntervensiNasional->status = 1;
         $progressIntervensiNasional->save();
 
         return redirect()->route('progress_intervensi_nasionals.index', $intervensiNasional)
@@ -137,7 +136,7 @@ class ProgressIntervensiNasionalController extends Controller
         Auth::user()->cannot('update', $progressIntervensiNasional) ?  abort(403) : true;
 
         $request->validate([
-            'uraian_program' => 'required|max:50',
+            'uraian_program' => 'required|max:500',
             'bulan' => 'required',
             'presentase_program' => 'required',
             'upload_dokumentasi' => 'required|mimes:pdf|max:2000',
@@ -168,6 +167,9 @@ class ProgressIntervensiNasionalController extends Controller
                     $request->user()->provinsi_id . '_' . $progressIntervensiNasional->id . '.pdf'
             );
         }
+
+        
+        $progressIntervensiNasional->status = 1;
         $progressIntervensiNasional->save();
 
         return redirect()->route('progress_intervensi_nasionals.index', $intervensiNasional)
@@ -205,5 +207,16 @@ class ProgressIntervensiNasionalController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    public function approve(Request $request, ProgressIntervensiNasional $progressIntervensiNasional)
+    {
+        Auth::user()->cannot('approve', $progressIntervensiNasional) ?  abort(403) : true;
+        $progressIntervensiNasional->status = $request->status;
+        $progressIntervensiNasional->alasan = $request->alasan;
+        $progressIntervensiNasional->save();
+
+        return redirect()->route('progress.index')
+            ->with('success', 'Approval is successfully assigned');
     }
 }

@@ -66,7 +66,7 @@ class ProgressIntervensiKhususPolicy
     public function update(User $user, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
-        if ($user->role_id == 3) {
+        if ($user->role_id == 3 and $progressIntervensiKhusus->status == 3) {
             return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
         }
         return false;
@@ -82,7 +82,7 @@ class ProgressIntervensiKhususPolicy
     public function delete(User $user, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
-        if ($user->role_id == 3) {
+        if ($user->role_id == 3 and $progressIntervensiKhusus->status == 3) {
             return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
         }
         return false;
@@ -110,5 +110,13 @@ class ProgressIntervensiKhususPolicy
     public function forceDelete(User $user, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
+    }
+
+    public function approve(User $user, ProgressIntervensiKhusus $progressIntervensiKhusus)
+    {
+        if ($user->role_id == 2 and $progressIntervensiKhusus->status != 2) {
+            return $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus->provinsi_id;
+        }
+        return false;
     }
 }

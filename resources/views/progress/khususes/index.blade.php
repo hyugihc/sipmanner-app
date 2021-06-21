@@ -58,11 +58,12 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Penjelasan Progress</th>
                                     <th>Tanggal</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -72,7 +73,22 @@
                                         <td>{{ $progress_program->uraian_program }}</td>
                                         <td>{{ $progress_program->bulan }}</td>
                                         <td>
+                                            @switch($progress_program->status)
+                                                @case(1)
+                                                    Submitted
+                                                @break
+                                                @case(2)
+                                                    Approved
+                                                @break
+                                                @case(3)
+                                                    Rejected
+                                                @break
+                                                @default
 
+                                            @endswitch
+
+                                        </td>
+                                        <td>
                                             <form
                                                 action="{{ route('progress_intervensi_khususes.destroy', [$intervensiKhusus, $progress_program]) }}"
                                                 method="POST">
@@ -81,12 +97,16 @@
                                                 <a class="btn btn-block btn-primary btn-xs"
                                                     href="{{ route('progress_intervensi_khususes.show', [$intervensiKhusus, $progress_program]) }}">Show</a>
 
-                                                <a class="btn btn-block btn-warning btn-xs"
-                                                    href="{{ route('progress_intervensi_khususes.edit', [$intervensiKhusus, $progress_program]) }}">Edit</a>
+                                                @can('update', $progress_program)
+                                                    <a class="btn btn-block btn-warning btn-xs"
+                                                        href="{{ route('progress_intervensi_khususes.edit', [$intervensiKhusus, $progress_program]) }}">Edit</a>
 
-                                                <button type="submit"
-                                                    onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"
-                                                    class="btn btn-block btn-danger btn-xs">Delete</button>
+                                                @endcan
+                                                @can('delete', $progress_program)
+                                                    <button type="submit"
+                                                        onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"
+                                                        class="btn btn-block btn-danger btn-xs">Delete</button>
+                                                @endcan
                                             </form>
                                         </td>
 

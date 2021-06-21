@@ -65,8 +65,8 @@ class DashboardController extends Controller
         $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('provinsi_id', Auth::user()->provinsi_id)->get();
         $intervensiNasionalProvinsiKeys =  $intervensiNasionalProvinsis->modelKeys();
         $pinCount =   $intervensiNasionalProvinsiKeys != 0 ?
-            ProgressIntervensiNasional::whereIn('intervensi_nasional_provinsi_id', $intervensiNasionalProvinsiKeys)->count() : 0;
-        $pikCount = $intervensiKhususKeys != 0 ? ProgressIntervensiKhusus::whereIn('intervensi_khusus_id', $intervensiKhususKeys)->count() : 0;
+            ProgressIntervensiNasional::whereIn('intervensi_nasional_provinsi_id', $intervensiNasionalProvinsiKeys)->where('status', 2)->count() : 0;
+        $pikCount = $intervensiKhususKeys != 0 ? ProgressIntervensiKhusus::whereIn('intervensi_khusus_id', $intervensiKhususKeys)->where('status', 2)->count() : 0;
         $piCount = $pinCount + $pikCount;
 
 
@@ -74,7 +74,7 @@ class DashboardController extends Controller
         //progress Intervensi Nasional
         $pinMaxs = array();
         foreach ($intervensiNasionalProvinsiKeys as $inpk => $value) {
-            $pinMax = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $value)->orderByDesc('bulan')->first();
+            $pinMax = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $value)->where('status', 2)->orderByDesc('bulan')->first();
             if ($pinMax != null) {
                 $pinMaxs[] = $pinMax;
             }
@@ -83,7 +83,7 @@ class DashboardController extends Controller
         //Progress Intervensi Khusus
         $pikMaxs = array();
         foreach ($intervensiKhususKeys as $ikk => $value) {
-            $pikMax = ProgressIntervensiKhusus::where('intervensi_khusus_id', $value)->orderByDesc('bulan')->first();
+            $pikMax = ProgressIntervensiKhusus::where('intervensi_khusus_id', $value)->where('status', 2)->orderByDesc('bulan')->first();
             if ($pikMax != null) {
                 $pikMaxs[] = $pikMax;
             }

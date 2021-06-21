@@ -102,7 +102,46 @@
                                 @endif
                                 <dt>kendala dan keterangan lain</dt>
                                 <dd> {{ $progressIntervensiNasional->keterangan }} </dd>
+                                <dt>Status</dt>
+                                @switch($progressIntervensiNasional->status)
+                                    @case(1)
+                                        <dl> Submitted</dl>
+                                    @break
+                                    @case(2)
+                                        <dl> Approved</dl>
+                                    @break
+                                    @case(3)
+                                        <dl> Rejected</dl>
+                                        <dl> {{ $progressIntervensiNasional->alasan }}</dl>
+                                    @break
+                                    @default
+                                @endswitch
 
+                                <!-- form start -->
+                                <form action="{{ route('pins.approve', $progressIntervensiNasional) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+
+                                    @can('approve', $progressIntervensiNasional)
+                                        <div class="form-group">
+                                            <label>Tindakan</label>
+                                            <select id="selectA" class="form-control" name="status">
+                                                <option value="2">Setuju</option>
+                                                <option value="3">Tidak Setuju</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group" id="divtextarea">
+                                            <label>Alasan</label>
+                                            <textarea type="text" name="alasan"
+                                                value="{{ $progressIntervensiNasional->alasan }}" class="form-control"
+                                                placeholder=""></textarea>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    @endcan
+                                </form>
 
                             </dl>
 
@@ -133,14 +172,13 @@
 
             textarea.hide();
 
-            if (select == '2') {
+            if (select == '3') {
                 textarea.show();
             }
-            if (select == '1') {
+            if (select == '2') {
                 textarea.hide();
             }
         });
-
     </script>
 
 @endsection

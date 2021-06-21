@@ -62,8 +62,48 @@
                                 </dd>
                                 <dt>kendala dan keterangan lain</dt>
                                 <dd> {{ $progressIntervensiKhusus->keterangan }} </dd>
+                                <dt>Status</dt>
+                                @switch($progressIntervensiKhusus->status)
+                                    @case(1)
+                                        <dl> Submitted</dl>
+                                    @break
+                                    @case(2)
+                                        <dl> Approved</dl>
+                                    @break
+                                    @case(3)
+                                        <dl> Rejected</dl>
+                                        <dl> {{ $progressIntervensiKhusus->alasan }}</dl>
+                                    @break
+                                    @default
+                                @endswitch
 
 
+                                <!-- form start -->
+                                <form action="{{ route('piks.approve', $progressIntervensiKhusus) }}" method="POST"
+                                    id="quickForm">
+                                    @csrf
+                                    @method('PUT')
+
+                                    @can('approve', $progressIntervensiKhusus)
+                                        <div class="form-group">
+                                            <label>Tindakan</label>
+                                            <select id="selectA" class="form-control" name="status">
+                                                <option value="2">Setuju</option>
+                                                <option value="3">Tidak Setuju</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group" id="divtextarea">
+                                            <label>Alasan</label>
+                                            <textarea type="text" name="alasan"
+                                                value="{{ $progressIntervensiKhusus->alasan }}" class="form-control"
+                                                placeholder=""></textarea>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    @endcan
+                                </form>
                             </dl>
 
 
@@ -93,14 +133,13 @@
 
             textarea.hide();
 
-            if (select == '2') {
+            if (select == '3') {
                 textarea.show();
             }
-            if (select == '1') {
+            if (select == '2') {
                 textarea.hide();
             }
         });
-
     </script>
 
 @endsection
