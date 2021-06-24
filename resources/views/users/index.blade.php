@@ -10,15 +10,6 @@
                 <div class="col-sm-2">
                     <a class="btn btn-block btn-primary btn-sm" href="{{ route('users.create') }}">Create</a>
                 </div><!-- /.col -->
-                <div class="col-sm-4">
-
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Users</li>
-                    </ol>
-                </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>

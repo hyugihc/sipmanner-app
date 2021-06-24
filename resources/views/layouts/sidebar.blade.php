@@ -33,7 +33,7 @@
 
 
                 <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link">
+                    <a href="{{ route('dashboard') }}" class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -44,7 +44,7 @@
 
                 @can('viewAny', App\User::class)
                     <li class="nav-item ">
-                        <a href="{{ route('users.index') }}" class="nav-link">
+                        <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
                             <i class="nav-icon far fa-plus-square"></i>
                             <p>
                                 User
@@ -55,7 +55,7 @@
 
                 @can('viewAny', App\Can::class)
                     <li class="nav-item">
-                        <a href="{{ route('cans.index') }}" class="nav-link">
+                        <a href="{{ route('cans.index') }}" class="nav-link {{ Request::is('cans*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-chart-pie"></i>
                             <p>
                                 Data
@@ -70,7 +70,7 @@
 
 
                 <li class="nav-item">
-                    <a href="{{ route('programs.index') }}" class="nav-link">
+                    <a href="{{ route('programs.index') }}" class="nav-link {{ Request::is('programs*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-file"></i>
                         <p>
                             Rencana
@@ -79,7 +79,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('progress.index') }}" class="nav-link">
+                    <a href="{{ route('progress.index') }}" class="nav-link {{ Request::is('progress*') ? 'active' : '' }}">
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>
                             Progres
@@ -89,7 +89,7 @@
 
                 @can('viewAny', App\Report::class)
                     <li class="nav-item">
-                        <a href="{{ route('reports.index') }}" class="nav-link">
+                        <a href="{{ route('reports.index') }}" class="nav-link {{ Request::is('reports*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
                                 Laporan
@@ -98,7 +98,7 @@
                     </li>
                 @endcan
                 <li class="nav-item">
-                    <a href="{{ route('articles.index') }}" class="nav-link">
+                    <a href="{{ route('articles.index') }}" class="nav-link {{ Request::is('articles*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
                             Sharing
@@ -107,7 +107,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('faq') }}" class="nav-link">
+                    <a href="{{ route('faq') }}" class="nav-link {{ Request::is('faq*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-search"></i>
                         <p>
                             FAQ
