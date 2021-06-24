@@ -13,15 +13,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
-
     public function cans()
     {
         return $this->belongsToMany(Can::class);
@@ -35,6 +26,11 @@ class User extends Authenticatable
     public function provinsi()
     {
         return $this->belongsTo(Provinsi::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role->id == 1;
     }
 
 

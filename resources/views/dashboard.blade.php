@@ -375,44 +375,6 @@
             }
         </script>
 
-        <script type="text/javascript">
-            // Load google charts
-            google.charts.load('current', {
-                'packages': ['corechart']
-            });
-            google.charts.setOnLoadCallback(drawChart);
-
-            // Draw the chart and set the chart values
-            function drawChart() {
-
-                var data = google.visualization.arrayToDataTable([
-                    ['Intervensi Khusus', 'status'],
-
-                    @php
-                    
-                    echo "['Draft', " . $data['ikDraft'] . '],';
-                    
-                    echo "['Submit', " . $data['ikSubmit'] . '],';
-                    
-                    echo "['Disetujui', " . $data['ikApproved'] . '],';
-                    
-                    echo "['Ditolak', " . $data['ikRejected'] . '],';
-                    
-                    @endphp
-                ]);
-
-                // Optional; add a title and set the width and height of the chart
-                var options = {
-                    'width': 550,
-                    'height': 400
-                };
-
-                // Display the chart inside the <div> element with id="piechart"
-                var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
-                chart.draw(data, options);
-            }
-        </script>
-
 
     </section>
     <!-- /.content -->

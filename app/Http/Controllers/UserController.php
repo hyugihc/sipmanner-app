@@ -96,19 +96,19 @@ class UserController extends Controller
 
 
 
-    public function getUser($nipLama)
-    {
+    // public function getUser($nipLama)
+    // {
 
 
-        $user = User::select('*')->where('nip_lama', $nipLama)->get();
-        //  return new UserResource($user);
+    //     $user = User::select('*')->where('nip_lama', $nipLama)->get();
+    //     //  return new UserResource($user);
 
-        //Fetch all records
-        $userData['data'] = $user;
+    //     //Fetch all records
+    //     $userData['data'] = $user;
 
-        echo json_encode($userData);
-        exit;
-    }
+    //     echo json_encode($userData);
+    //     exit;
+    // }
 
     public function getuser_by_niplama($nip_lama)
     {

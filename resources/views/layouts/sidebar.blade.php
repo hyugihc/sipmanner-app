@@ -43,7 +43,7 @@
 
 
                 @can('viewAny', App\User::class)
-                    <li class="nav-item">
+                    <li class="nav-item ">
                         <a href="{{ route('users.index') }}" class="nav-link">
                             <i class="nav-icon far fa-plus-square"></i>
                             <p>
@@ -105,6 +105,73 @@
                         </p>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('faq') }}" class="nav-link">
+                        <i class="nav-icon fas fa-search"></i>
+                        <p>
+                            FAQ
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('faq') }}" class="nav-link">
+                        <i class="nav-icon fas fa-search"></i>
+                        <p>
+                            FAQ
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('faq') }}" class="nav-link">
+                        <i class="nav-icon fas fa-search"></i>
+                        <p>
+                            FAQ
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('faq') }}" class="nav-link">
+                        <i class="nav-icon fas fa-search"></i>
+                        <p>
+                            FAQ
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="{{ route('faq') }}" class="nav-link">
+                        <i class="nav-icon fas fa-search"></i>
+                        <p>
+                            FAQ
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="{{ route('faq') }}" class="nav-link">
+                        <i class="nav-icon fas fa-search"></i>
+                        <p>
+                            FAQ
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="{{ route('faq') }}" class="nav-link">
+                        <i class="nav-icon fas fa-search"></i>
+                        <p>
+                            FAQ
+                        </p>
+                    </a>
+                </li>
+
 
                 <li class="nav-item">
                     <a href="{{ route('faq') }}" class="nav-link">

@@ -20,8 +20,7 @@ class UserPolicy
     public function viewAny(User $user)
     {
         //
-        
-        return $user->role_id == 1 ? Response::allow()
+        return $user->isAdmin() ? Response::allow()
             : Response::deny('You do not have permission to view any user');
     }
 
@@ -35,7 +34,10 @@ class UserPolicy
     public function view(User $user, User $model)
     {
         //
-        return $user->role_id == 1 ?  true : $user->id == $model->id;
+        if ($user->isAdmin())
+            return Response::allow();
+        return ($user->id == $model->id) ? Response::allow()
+            : Response::deny('You do not have permission to view user');
     }
 
     /**
@@ -47,7 +49,8 @@ class UserPolicy
     public function create(User $user)
     {
         //
-        return $user->role_id == 1 ?  true : false;
+        return $user->isAdmin()  ? Response::allow()
+            : Response::deny('You do not have permission to create user');
     }
 
     /**
@@ -60,7 +63,8 @@ class UserPolicy
     public function update(User $user, User $model)
     {
         //
-        return $user->role_id == 1 ?  true : $user->id == $model->id;
+        return $user->isAdmin() ?  Response::allow()
+            : Response::deny('You do not have permission to update user');
     }
 
     /**
@@ -73,7 +77,8 @@ class UserPolicy
     public function delete(User $user, User $model)
     {
         //
-        return $user->role_id == 1 ?  true : false;
+        return $user->isAdmin() ? Response::allow()
+            : Response::deny('You do not have permission to update user');
     }
 
     /**
@@ -86,7 +91,6 @@ class UserPolicy
     public function restore(User $user, User $model)
     {
         //
-        return $user->role_id == 1 ?  true : false;
     }
 
     /**
@@ -99,6 +103,5 @@ class UserPolicy
     public function forceDelete(User $user, User $model)
     {
         //
-        return $user->role_id == 1 ?  true : false;
     }
 }
