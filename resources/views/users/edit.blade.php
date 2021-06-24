@@ -78,19 +78,21 @@
                                     <label>Role</label>
                                     <select class="form-control" name="role_id">
                                         @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                            <option value="{{ $role->id }}" @if ($role->id == $user->role_id) selected="selected" @endif>
+                                                {{ $role->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
-                                {{-- <div class="form-group">
-                                <label>Unit Organisasi</label>
-                                <select class="form-control" name="provinsi_id">
-                                    @foreach ($provinsis as $provinsi)
-                                        <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div> --}}
+                                <div class="form-group">
+                                    <label>Unit Organisasi</label>
+                                    <select class="form-control" name="provinsi_id">
+                                        @foreach ($provinsis as $provinsi)
+                                            <option value="{{ $provinsi->id }}" @if ($provinsi->id == $user->provinsi_id) selected="selected" @endif>
+                                                {{ $provinsi->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
                             </div>
                             <!-- /.card-body -->

@@ -16,7 +16,7 @@
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="/logout" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="{{ route('users.show', Auth::user()) }}" class="d-block">{{ Auth::user()->name }}</a>
                 <span style="color: #c2c7d0">{{ Auth::user()->role->name }}</span>
             </div>
         </div>

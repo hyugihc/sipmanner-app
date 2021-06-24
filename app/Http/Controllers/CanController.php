@@ -75,6 +75,7 @@ class CanController extends Controller
         Auth::user()->role_id == 1 ?
             $can->provinsi_id = $request->provinsi_id :
             $can->provinsi_id = Auth::user()->provinsi_id;
+        $can->user_id= $request->user()->id;    
         $can->status_sk  = ($request->has('draft')) ? 0 : 1;
         $can->save();
 
@@ -195,6 +196,10 @@ class CanController extends Controller
      */
     public function destroy(Can $can)
     {
+        $can->change_champions()->detach();
+        $can->change_leaders()->detach();
+        $can->change_agents()->detach();
+
         $can->delete();
 
         return redirect()->route('cans.index')

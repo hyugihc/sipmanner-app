@@ -77,7 +77,12 @@
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>{{ $data['piCount'] }}</h3>
+                            @if (Auth::user()->role_id != 1)
+                                <h3>{{ $data['piCount'] }}</h3>
+                            @else
+                                <h3> <i
+                                    class="fas fa-arrow-circle-right"></i></h3>
+                            @endif
 
                             <p>Progress Program</p>
                         </div>
@@ -118,207 +123,212 @@
                 </section>
                 <!-- /.Left col -->
 
-                <section class="col-lg-6 connectedSortable">
+                @if (Auth::user()->role_id != 1)
+                    <section class="col-lg-6 connectedSortable">
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Laporan Semesteran</h3>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Laporan Semesteran</h3>
 
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body p-0">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>Task</th>
-                                        <th>Progress</th>
-                                        <th style="width: 40px">Label</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td>Laporan Semester 1</td>
-                                        <td>
-                                            <div class="progress progress-xs">
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10px">#</th>
+                                            <th>Task</th>
+                                            <th>Progress</th>
+                                            <th style="width: 40px">Label</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1.</td>
+                                            <td>Laporan Semester 1</td>
+                                            <td>
+                                                <div class="progress progress-xs">
+                                                    @switch($data['reportSm1Status'])
+                                                        @case(0)
+                                                            <div class="progress-bar bg-primary" style="width: 0%"></div>
+                                                        @break
+                                                        @case(1)
+                                                            <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                                        @break
+                                                        @case(2)
+                                                            <div class="progress-bar bg-success" style="width: 100%"></div>
+                                                        @break
+                                                        @case(3)
+                                                            <div class="progress-bar-danger" style="width: 100%"></div>
+                                                        @break
+                                                        @default
+
+                                                    @endswitch
+                                                </div>
+                                            </td>
+                                            <td>
                                                 @switch($data['reportSm1Status'])
                                                     @case(0)
-                                                        <div class="progress-bar bg-primary" style="width: 0%"></div>
+                                                        <span class="badge bg-primary">Draft</span>
                                                     @break
                                                     @case(1)
-                                                        <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                                        <span class="badge bg-warning">Submit</span>
                                                     @break
                                                     @case(2)
-                                                        <div class="progress-bar bg-success" style="width: 100%"></div>
+                                                        <span class="badge bg-success">Approved</span>
                                                     @break
                                                     @case(3)
-                                                        <div class="progress-bar-danger" style="width: 100%"></div>
+                                                        <span class="badge bg-danger">Rejected</span>
                                                     @break
                                                     @default
 
                                                 @endswitch
-                                            </div>
-                                        </td>
-                                        <td>
-                                            @switch($data['reportSm1Status'])
-                                                @case(0)
-                                                    <span class="badge bg-primary">Draft</span>
-                                                @break
-                                                @case(1)
-                                                    <span class="badge bg-warning">Submit</span>
-                                                @break
-                                                @case(2)
-                                                    <span class="badge bg-success">Approved</span>
-                                                @break
-                                                @case(3)
-                                                    <span class="badge bg-danger">Rejected</span>
-                                                @break
-                                                @default
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2.</td>
+                                            <td>Laporan Semester 2</td>
+                                            <td>
+                                                <div class="progress progress-xs">
+                                                    @switch($data['reportSm2Status'])
+                                                        @case(0)
+                                                            <div class="progress-bar bg-primary" style="width: 0%"></div>
+                                                        @break
+                                                        @case(1)
+                                                            <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                                        @break
+                                                        @case(2)
+                                                            <div class="progress-bar bg-success" style="width: 100%"></div>
+                                                        @break
+                                                        @case(3)
+                                                            <div class="progress-bar-danger" style="width: 100%"></div>
+                                                        @break
+                                                        @default
 
-                                            @endswitch
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2.</td>
-                                        <td>Laporan Semester 2</td>
-                                        <td>
-                                            <div class="progress progress-xs">
+                                                    @endswitch
+                                                </div>
+                                            </td>
+                                            <td>
                                                 @switch($data['reportSm2Status'])
                                                     @case(0)
-                                                        <div class="progress-bar bg-primary" style="width: 0%"></div>
+                                                        <span class="badge bg-primary">Draft</span>
                                                     @break
                                                     @case(1)
-                                                        <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                                        <span class="badge bg-warning">Submit</span>
                                                     @break
                                                     @case(2)
-                                                        <div class="progress-bar bg-success" style="width: 100%"></div>
+                                                        <span class="badge bg-success">Approved</span>
                                                     @break
                                                     @case(3)
-                                                        <div class="progress-bar-danger" style="width: 100%"></div>
+                                                        <span class="badge bg-danger">Rejected</span>
                                                     @break
                                                     @default
 
                                                 @endswitch
-                                            </div>
-                                        </td>
-                                        <td>
-                                            @switch($data['reportSm2Status'])
-                                                @case(0)
-                                                    <span class="badge bg-primary">Draft</span>
-                                                @break
-                                                @case(1)
-                                                    <span class="badge bg-warning">Submit</span>
-                                                @break
-                                                @case(2)
-                                                    <span class="badge bg-success">Approved</span>
-                                                @break
-                                                @case(3)
-                                                    <span class="badge bg-danger">Rejected</span>
-                                                @break
-                                                @default
-
-                                            @endswitch
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Progress Intervensi Nasional</h3>
-
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body p-0">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>Task</th>
-                                        <th>Progress</th>
-                                        <th style="width: 40px">Label</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php
-                                        $i = 1;
-                                    @endphp
-                                    @foreach ($pinMaxs as $pinMax)
-                                        <tr>
-                                            <td>{{ $i }}</td>
-                                            <td>{{ $pinMax->intervensiNasionalProvinsi->intervensiNasional->nama }}</td>
-                                            <td>
-                                                <div class="progress progress-xs">
-                                                    <div class="progress-bar bg-primary"
-                                                        style="width: {{ $pinMax->presentase_program }}%"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="badge bg-primary">{{ $pinMax->presentase_program }}%</span>
                                             </td>
                                         </tr>
-                                        @php
-                                            $i++;
-                                        @endphp
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
+                        <!-- /.card -->
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Progress Intervensi Khusus</h3>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Progress Intervensi Nasional</h3>
 
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body p-0">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>Task</th>
-                                        <th>Progress</th>
-                                        <th style="width: 40px">Label</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php
-                                        $i = 1;
-                                    @endphp
-                                    @foreach ($pikMaxs as $pikMax)
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                <table class="table">
+                                    <thead>
                                         <tr>
-                                            <td>{{ $i }}</td>
-                                            <td>{{ $pikMax->intervensi_Khusus->nama }}</td>
-                                            <td>
-                                                <div class="progress progress-xs">
-                                                    <div class="progress-bar bg-primary"
-                                                        style="width: {{ $pikMax->presentase_program }}%"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="badge bg-primary">{{ $pikMax->presentase_program }}%</span>
-                                            </td>
+                                            <th style="width: 10px">#</th>
+                                            <th>Task</th>
+                                            <th>Progress</th>
+                                            <th style="width: 40px">Label</th>
                                         </tr>
+                                    </thead>
+                                    <tbody>
                                         @php
-                                            $i++;
+                                            $i = 1;
                                         @endphp
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                        @foreach ($pinMaxs as $pinMax)
+                                            <tr>
+                                                <td>{{ $i }}</td>
+                                                <td>{{ $pinMax->intervensiNasionalProvinsi->intervensiNasional->nama }}
+                                                </td>
+                                                <td>
+                                                    <div class="progress progress-xs">
+                                                        <div class="progress-bar bg-primary"
+                                                            style="width: {{ $pinMax->presentase_program }}%"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span
+                                                        class="badge bg-primary">{{ $pinMax->presentase_program }}%</span>
+                                                </td>
+                                            </tr>
+                                            @php
+                                                $i++;
+                                            @endphp
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
+                        <!-- /.card -->
 
-                </section>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Progress Intervensi Khusus</h3>
+
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10px">#</th>
+                                            <th>Task</th>
+                                            <th>Progress</th>
+                                            <th style="width: 40px">Label</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $i = 1;
+                                        @endphp
+                                        @foreach ($pikMaxs as $pikMax)
+                                            <tr>
+                                                <td>{{ $i }}</td>
+                                                <td>{{ $pikMax->intervensi_Khusus->nama }}</td>
+                                                <td>
+                                                    <div class="progress progress-xs">
+                                                        <div class="progress-bar bg-primary"
+                                                            style="width: {{ $pikMax->presentase_program }}%"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span
+                                                        class="badge bg-primary">{{ $pikMax->presentase_program }}%</span>
+                                                </td>
+                                            </tr>
+                                            @php
+                                                $i++;
+                                            @endphp
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+                    </section>
+                @endif
 
             </div>
             <!-- /.row (main row) -->
@@ -363,7 +373,6 @@
                 var chart = new google.visualization.PieChart(document.getElementById('piechart'));
                 chart.draw(data, options);
             }
-
         </script>
 
         <script type="text/javascript">
@@ -402,7 +411,6 @@
                 var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
                 chart.draw(data, options);
             }
-
         </script>
 
 

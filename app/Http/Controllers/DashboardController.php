@@ -26,50 +26,79 @@ class DashboardController extends Controller
     public function index()
     {
 
-        //Tabel Intervensi Khusus
-        $ikDraft = IntervensiKhusus::where('provinsi_id', Auth::user()->provinsi_id)->where('tahun',  date("Y"))->where('status', 0)->count();
-        $ikSubmit = IntervensiKhusus::where('provinsi_id', Auth::user()->provinsi_id)->where('tahun',  date("Y"))->where('status', 1)->count();
-        $ikApproved = IntervensiKhusus::where('provinsi_id', Auth::user()->provinsi_id)->where('tahun',  date("Y"))->where('status', 2)->count();
-        $ikRejected = IntervensiKhusus::where('provinsi_id', Auth::user()->provinsi_id)->where('tahun',  date("Y"))->where('status', 3)->count();
+        $user = Auth::user();
+        $currentYear = date("Y");
 
 
-        //Tabel Report
-        $reportSm1 = Report::where('provinsi_id', Auth::user()->provinsi_id)->where('tahun',  date("Y"))->where('semester', 1)->first();
-        $reportSm2 = Report::where('provinsi_id', Auth::user()->provinsi_id)->where('tahun',  date("Y"))->where('semester', 2)->first();
-        $reportSm1Status =  $reportSm1 != null ?  $reportSm1->status : 0;
-        $reportSm2Status =  $reportSm2 != null ?  $reportSm2->status : 0;
+        //==================================Pie Chart===================================================
 
+        // Progres Intervensi Khusus by CC
+
+        $intervensiKhususesByUser = ($user->role_id == 1) ?  IntervensiKhusus::where('tahun',  $currentYear)->get()
+            : IntervensiKhusus::where('user_id', $user->id)->where('provinsi_id', $user->provinsi_id)->where('tahun',  $currentYear)->get();
+        $ikDraft = $intervensiKhususesByUser->where('status', 0)->count();
+        $ikSubmit = $intervensiKhususesByUser->where('status', 1)->count();
+        $ikApproved = $intervensiKhususesByUser->where('status', 2)->count();
+        $ikRejected = $intervensiKhususesByUser->where('status', 3)->count();
+
+        //===================================Small Box==================================================
 
         //Jumlah Can
-        $latestCan = Can::where('provinsi_id', Auth::user()->provinsi_id)->latest("updated_at")->first();
-        if ($latestCan != null) {
-            $canId = $latestCan->id;
-            $canCount = DB::table('can_user')->where('can_id', $canId)->count();
+        //$latestCan = Can::where('provinsi_id', $user->provinsi_id)->latest("updated_at")->first();
+        if ($user->role_id == 1) {
+            $cans = Can::where('status_sk', 2)->where('tahun_sk', date("Y"))->get();
+            if ($cans != null) {
+                $canCount = 0;
+                foreach ($cans as $can) {
+                    $count = DB::table('can_user')->where('can_id', $can->id)->count();
+                    $canCount = $canCount + $count;
+                }
+            } else {
+                $canCount = 0;
+            }
         } else {
-            $canCount = 0;
+            $latestCan = Can::where('provinsi_id', $user->provinsi_id)->where('status_sk', 2)->where('tahun_sk', date("Y"))->first();
+            if ($latestCan != null) {
+                $canId = $latestCan->id;
+                $canCount = DB::table('can_user')->where('can_id', $canId)->count();
+            } else {
+                $canCount = 0;
+            }
         }
 
+
         //Jumlah Intervensi Nasional
-        $inCount = IntervensiNasional::where('tahun', date("Y"))->count();
+        $inCount = IntervensiNasional::where('tahun', $currentYear)->count();
 
         //Jumlah Intervensi Khusus
-        $intervensiKhususes = IntervensiKhusus::where('provinsi_id', Auth::user()->provinsi_id)->where('tahun', date("Y"))->where('status', 2)->get();
-        $intervensiKhususKeys = $intervensiKhususes->modelKeys();
-        $ikCount = IntervensiKhusus::where('provinsi_id', Auth::user()->provinsi_id)->where('tahun', date("Y"))->where('status', 2)->count();
-
+        $ikCount = ($user->role_id == 1) ? IntervensiKhusus::where('tahun', $currentYear)->where('status', 2)->count()
+            : IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('tahun', $currentYear)->where('status', 2)->count();
 
         //Jumlah Progress
-        $intervensiNasionals = IntervensiNasional::where('tahun', date("Y"))->get();
+        //progress Intervensi Nasional
+        $intervensiNasionals = IntervensiNasional::where('tahun', $currentYear)->get();
         $intervensiNasionalKeys = $intervensiNasionals->modelKeys();
         $intervensiNasionalYearProvinsis = IntervensiNasionalProvinsi::whereIn('intervensi_nasional_id', $intervensiNasionalKeys)->get();
-        $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('provinsi_id', Auth::user()->provinsi_id)->get();
+        $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('provinsi_id', $user->provinsi_id)->get();
         $intervensiNasionalProvinsiKeys =  $intervensiNasionalProvinsis->modelKeys();
         $pinCount =   $intervensiNasionalProvinsiKeys != 0 ?
             ProgressIntervensiNasional::whereIn('intervensi_nasional_provinsi_id', $intervensiNasionalProvinsiKeys)->where('status', 2)->count() : 0;
+
+        //progress Intervensi Khusus
+        $intervensiKhususes = IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('tahun', $currentYear)->where('status', 2)->get();
+        $intervensiKhususKeys = $intervensiKhususes->modelKeys();
         $pikCount = $intervensiKhususKeys != 0 ? ProgressIntervensiKhusus::whereIn('intervensi_khusus_id', $intervensiKhususKeys)->where('status', 2)->count() : 0;
+
+        //progress Intervensi Nasional +progress Intervensi Khusus
         $piCount = $pinCount + $pikCount;
 
+        //====================================Tabel Progress=================================================
 
+        //Tabel progress Report
+        $reportSm1 = Report::where('provinsi_id', $user->provinsi_id)->where('tahun',  $currentYear)->where('semester', 1)->first();
+        $reportSm2 = Report::where('provinsi_id', $user->provinsi_id)->where('tahun',  $currentYear)->where('semester', 2)->first();
+        $reportSm1Status =  $reportSm1 != null ?  $reportSm1->status : 0;
+        $reportSm2Status =  $reportSm2 != null ?  $reportSm2->status : 0;
 
         //progress Intervensi Nasional
         $pinMaxs = array();
@@ -113,9 +142,9 @@ class DashboardController extends Controller
             'piCount' => $piCount
 
         ];
-        if (Auth::user()->role_id == 1) {
-            return view('dashboardadmin');
-        }
+        // if ($user->role_id == 1) {
+        //     return view('dashboardadmin');
+        // }
 
         return view('dashboard', compact('data', 'pinMaxs', 'pikMaxs'));
     }

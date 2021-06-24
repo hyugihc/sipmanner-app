@@ -78,6 +78,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->nip_lama = $request->nip_lama;
         $user->role_id = $request->role_id;
+        $user->provinsi_id = $request->provinsi_id;
         $user->save();
 
 

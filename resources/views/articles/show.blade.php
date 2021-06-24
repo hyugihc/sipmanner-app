@@ -53,12 +53,12 @@
                                     <span class="mailbox-attachment-icon"><i class="far fa-file-pdf"></i></span>
 
                                     <div class="mailbox-attachment-info">
-                                        <a href="{{ route('cans.download', $article) }}"
+                                        <a href="{{ route('articles.download', $article) }}"
                                             class="mailbox-attachment-name"><i class="fas fa-paperclip"></i>
                                             {{ $article->file_content }} </a>
                                         <span class="mailbox-attachment-size clearfix mt-1">
                                             <span>1,245 KB</span>
-                                            <a href="{{ route('cans.download', $article) }}"
+                                            <a href="{{ route('articles.download', $article) }}"
                                                 class="btn btn-default btn-sm float-right"><i
                                                     class="fas fa-cloud-download-alt"></i></a>
                                         </span>
@@ -121,7 +121,6 @@
                     textarea.hide();
                 }
             });
-
         </script>
     </section>
 

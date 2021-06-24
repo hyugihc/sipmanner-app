@@ -61,12 +61,12 @@
                                 <label for="isi">Isi Berita</label>
                                 <textarea name="content" id="compose-textarea" class="form-control" style="height: 300px">
 
-                                                                </textarea>
+                                                                    </textarea>
                             </div>
                             <div class="form-group">
                                 <div class="btn btn-default btn-file">
                                     <i class="fas fa-paperclip"></i> Attachment
-                                    <input type="file" name="file_content">
+                                    <input type="file" accept=".pdf" name="file_content">
                                 </div>
                                 <p class="help-block">Max. 2MB</p>
                             </div>
@@ -96,7 +96,6 @@
                 //Add text editor
                 $('#compose-textarea').summernote()
             })
-
         </script>
 
     </section>
