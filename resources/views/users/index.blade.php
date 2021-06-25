@@ -2,6 +2,8 @@
 
 @section('content')
 
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
 
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -17,12 +19,6 @@
 
     <!-- Main content -->
     <section class="content">
-
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success">
-                <p>{{ $message }}</p>
-            </div>
-        @endif
 
         <div class="row">
             <div class="col-12">
@@ -76,8 +72,8 @@
                                                 <a class="btn btn-block btn-warning btn-xs"
                                                     href="{{ route('users.edit', $user) }}">Edit</a>
 
-                                                <button type="submit"
-                                                    class="btn btn-block btn-danger btn-xs">Delete</button>
+                                                <button type="submit" class="btn btn-block btn-danger btn-xs"
+                                                    onclick="return confirm('Are you sure?')">Delete</button>
                                             </form>
                                         </td>
 
@@ -94,6 +90,45 @@
             </div>
         </div>
 
+        <!-- Toastr -->
+        <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>
 
+        <script>
+            @if (Session::has('success'))
+                toastr.options =
+                {
+                "closeButton" : true,
+                "progressBar" : false
+                }
+                toastr.success("{{ Session::get('success') }}");
+            @endif
 
-    @endsection
+            @if (Session::has('error'))
+                // toastr.options =
+                // {
+                // "closeButton" : true,
+                // "progressBar" : false
+                // }
+                // toastr.error("{{ session('error') }}");
+                // @endif
+
+            @if (Session::has('info'))
+                // toastr.options =
+                // {
+                // "closeButton" : true,
+                // "progressBar" : false
+                // }
+                // toastr.info("{{ session('info') }}");
+                // @endif
+
+            @if (Session::has('warning'))
+                // toastr.options =
+                // {
+                // "closeButton" : true,
+                // "progressBar" : false
+                // }
+                // toastr.warning("{{ session('warning') }}");
+                // @endif
+        </script>
+    </section>
+@endsection

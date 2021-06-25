@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
 use Illuminate\Http\Request;
 use App\User;
 use App\Provinsi;
 use App\Role;
-use Illuminate\Support\Facades\Auth;
-use Redirect, Response;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UserResource;
 
@@ -31,7 +30,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with(['role', 'provinsi'])->paginate(5);
+        $users = User::paginate(5);
         return view('users.index', compact('users'));
     }
 
@@ -48,8 +47,9 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
+
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
@@ -58,7 +58,6 @@ class UserController extends Controller
         $user->provinsi_id = $request->provinsi_id;
         $user->role_id = $request->role_id;
         $user->save();
-
 
         return redirect()->route('users.index')->with('success', 'user created successfully.');
     }
@@ -73,15 +72,18 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+
+        $request->validate([
+            'name' => 'required|min:4',
+            'role_id' => 'required',
+            'provinsi_id' => 'required',
+        ]);
+
         $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->nip_lama = $request->nip_lama;
+        $user->password = ($request->password == null) ? true : Hash::make($request->password);
         $user->role_id = $request->role_id;
         $user->provinsi_id = $request->provinsi_id;
         $user->save();
-
-
 
         return redirect()->route('users.index')
             ->with('success', 'User updated successfully');

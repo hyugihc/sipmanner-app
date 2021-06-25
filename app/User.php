@@ -13,11 +13,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    public function cans()
-    {
-        return $this->belongsToMany(Can::class);
-    }
-
     public function role()
     {
         return $this->belongsTo(Role::class);

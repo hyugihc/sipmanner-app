@@ -44,31 +44,30 @@
                                 <div class="form-group">
                                     <label>Nama</label>
                                     <input type="text" name="name" class="form-control" placeholder=""
-                                        value="{{ $user->name }}">
+                                        value="{{ old('name', $user->name) }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
                                     <input type="text" name="email" class="form-control" placeholder=""
-                                        value="{{ $user->email }}">
+                                        value="{{ old('email', $user->email) }}" disabled>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Password</label>
-                                    <input type="password" name="password" class="form-control" placeholder=""
-                                        value=":******">
+                                    <label>Password <small>kosongkan jika tidak berubah</small></label>
+                                    <input type="password" name="password" class="form-control" placeholder="">
                                 </div>
 
                                 <div class="form-group">
                                     <label>NIP Lama</label>
                                     <input type="text" name="nip_lama" class="form-control" placeholder=""
-                                        value="{{ $user->nip_lama }}">
+                                        value="{{ old('email', $user->nip_lama) }}" disabled>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Role</label>
                                     <select class="form-control" name="role_id">
                                         @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}" @if ($role->id == $user->role_id) selected="selected" @endif>
+                                            <option value="{{ $role->id }}" @if ($role->id == old('role_id', $user->role_id)) selected="selected" @endif>
                                                 {{ $role->name }}</option>
                                         @endforeach
                                     </select>
@@ -78,7 +77,7 @@
                                     <label>Unit Organisasi</label>
                                     <select class="form-control" name="provinsi_id">
                                         @foreach ($provinsis as $provinsi)
-                                            <option value="{{ $provinsi->id }}" @if ($provinsi->id == $user->provinsi_id) selected="selected" @endif>
+                                            <option value="{{ $provinsi->id }}" @if ($provinsi->id == old('role_id', $user->provinsi_id)) selected="selected" @endif>
                                                 {{ $provinsi->nama }}</option>
                                         @endforeach
                                     </select>

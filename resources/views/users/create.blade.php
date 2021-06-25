@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            
+
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
@@ -22,35 +22,54 @@
                             <h3 class="card-title">Create a User</h3>
                         </div>
                         <!-- /.card-header -->
+
                         <!-- form start -->
                         <form action="{{ route('users.store') }}" method="POST" id="quickForm">
                             @csrf
 
                             <div class="card-body">
+
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" name="name" class="form-control" placeholder="">
+                                    <input type="text" name="name" class="form-control  @error('name') is-invalid @enderror"
+                                        required data-error-msg="Nama wajib di isi" value="{{ old('name') }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="text" name="email" class="form-control" placeholder="">
+                                    <input type="email" name="email" class="form-control @error('email')
+                                                    is-invalid @enderror" value="{{ old('email') }}" required
+                                        data-error-msg="Email Tidak Valid">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input type="password" name="password" class="form-control" placeholder="">
+                                    <input type="password" name="password" class="form-control"
+                                        value="{{ old('password') }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>NIP Lama</label>
-                                    <input type="text" name="nip_lama" class="form-control" placeholder="">
+                                    <input type="number" name="nip_lama"
+                                        class="form-control  @error('nip_lama') is-invalid @enderror"
+                                        value="{{ old('nip_lama') }}" required data-error-msg="NIP lama wajib di isi">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Role</label>
                                     <select class="form-control" name="role_id">
                                         @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                            <option value="{{ $role->id }}" @if ($role->id == old('role_id')) selected="selected" @endif>
+                                                {{ $role->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -59,7 +78,8 @@
                                     <label>Unit Organisasi</label>
                                     <select class="form-control" name="provinsi_id">
                                         @foreach ($provinsis as $provinsi)
-                                            <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
+                                            <option value="{{ $provinsi->id }}" @if ($role->id == old('provinsi_id')) selected="selected" @endif>
+                                                {{ $provinsi->nama }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -83,135 +103,29 @@
             <!-- /.row -->
         </div><!-- /.container-fluid -->
 
-        <script type="text/javascript">
-
-
-
-        </script>
-
-        {{-- tambah dan hapus data --}}
-
-        <script type="text/javascript">
-            $(document).ready(function() {
-                jQuery(document).delegate('a.add-record', 'click', function(e) {
-                    e.preventDefault();
-                    var content = jQuery('#user_table tr'),
-                        size = jQuery('#tbl_posts >tbody >tr').length + 1,
-                        element = null,
-                        element = content.clone();
-                    element.attr('id', 'rec-' + size);
-                    element.find('.delete-record').attr('data-id', size);
-                    element.appendTo('#tbl_posts_body');
-                    element.find('.sn').html(size);
-
-
-
-                });
-                jQuery(document).delegate('a.delete-record', 'click', function(e) {
-                    e.preventDefault();
-                    var didConfirm = confirm("Are you sure You want to delete");
-                    if (didConfirm == true) {
-                        var id = jQuery(this).attr('data-id');
-                        var targetDiv = jQuery(this).attr('targetDiv');
-                        jQuery('#rec-' + id).remove();
-                        removeUserOptions(jQuery(this).attr('data-uid'));
-                        //regnerate index number on table
-                        // $('#tbl_posts_body tr').each(function(index) {
-                        //     $(this).find('span.sn').html(index + 1);
-                        // });
-
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
-            });
-
-        </script>
-
-        {{-- cari data --}}
-
-        <script type='text/javascript'>
-            $(document).ready(function() {
-                // Search by userid
-                $('#but_search').click(function() {
-                    var id = Number($('#search').val().trim());
-
-                    if (id > 0) {
-                        fetchRecords(id);
-                    }
-
-                });
-
-            });
-
-            function fetchRecords(id) {
-                $.ajax({
-                    url: 'getUser/' + id,
-                    type: 'get',
-                    dataType: 'json',
-                    success: function(response) {
-
-                        var len = 0;
-                        $('#userTable tbody').empty(); // Empty <tbody>
-                        if (response['data'] != null) {
-                            len = response['data'].length;
+        <script src="js/validate-bootstrap/validate-bootstrap.jquery.min.js"></script>
+        <script>
+            $(function() {
+                $('form').validator({
+                    validHandlers: {
+                        '.customhandler': function(input) {
+                            //may do some formatting before validating
+                            input.val(input.val().toUpperCase());
+                            //return true if valid
+                            return input.val() === 'JQUERY' ? true : false;
                         }
-
-                        if (len > 0) {
-                            for (var i = 0; i < len; i++) {
-                                var id = response['data'][i].id;
-                                var name = response['data'][i].name;
-                                var email = response['data'][i].email;
-                                var nipLama = response['data'][i].nip_lama;
-
-                                var tr_str = "<tr>" +
-                                    "<td align='center'>" + nipLama + "</td>" +
-                                    "<td align='center'>" + name + "</td>" +
-                                    "<td align='center'> <a  id = 'tabel_atas' value='" + id +
-                                    "' class='btn btn-xs delete-record' data-uid= '" + id +
-                                    "' data-id=" +
-                                    id +
-                                    " hidden> delete</a >" + email + "</td>" +
-                                    "</tr>";
-
-                                $("#userTable tbody").append(tr_str);
-
-                            }
-                        } else {
-                            var tr_str = "<tr>" +
-                                "<td align='center' colspan='4'>No record found.</td>" +
-                                "</tr>";
-
-                            $("#userTable tbody").append(tr_str);
-                        }
-
                     }
                 });
-            }
 
-            function addUserOptions(id) {
-                $("#selectedUser").append('<option value="' + id + '" selected>' + id + '</option>');
-            }
+                $('form').submit(function(e) {
+                    e.preventDefault();
 
-            function removeUserOptions(id) {
-                $("#selectedUser option[value='" + id + "']").remove();
-            }
-
-            $(document).ready(function() {
-                $("#add-row").click(function() {
-                    var id = jQuery("#tabel_atas").attr('data-id');
-                    addUserOptions(id);
-                });
-            });
-
-            // $(document).ready(function() {
-            //     $("#add-row").click(function() {
-            //         var id = jQuery("#tabel_atas").attr('data-id');
-            //         addUserOptions(id);
-            //     });
-            // });
-
+                    if ($('form').validator('check') < 1) {
+                        alert('Hurray, your information will be saved!');
+                    }
+                })
+            })
         </script>
 
-    @endsection
+    </section>
+@endsection

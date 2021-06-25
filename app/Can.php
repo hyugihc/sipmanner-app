@@ -8,6 +8,13 @@ use App\User;
 class Can extends Model
 {
     //
+
+    const STATUS_DRAFT    = 0;
+    const STATUS_SUBMIT   = 1;
+    const STATUS_APPROVE  = 2;
+    const STATUS_DECLINE  = 3;
+    const STATUS_INACTIVE = 4;
+
     protected $fillable = [
         'nomor_sk', 'tanggal_sk', 'perihal_sk', 'provinsi_id', 'alasan', 'tahun_sk'
     ];
