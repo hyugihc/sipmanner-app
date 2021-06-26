@@ -52,7 +52,7 @@
                                 <div class="form-group">
                                     <label>Tahun SK</label>
                                     <select name="tahun_sk" class="form-control">
-                                        <option id="year" value="2021"></option>
+                                        <option id="year"></option>
                                     </select>
                                 </div>
 
@@ -146,6 +146,9 @@
                                     </table>
                                 </div>
 
+
+
+
                                 @error('change_agents')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -189,7 +192,7 @@
                         <input class="form-control" type='text' id='p_input' name='search' placeholder='Enter nip lama'>
                     </div>
 
-                    <input type='button' value='Search' id='sp_button'> <br /> <br />
+                    <input type='button' value='Search' id='sp_button'> <br><br>
 
                     <table class="table table-bordered" id='userTable'>
                         <thead>
@@ -216,6 +219,16 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+            $('#p_input').keypress(function(e) {
+                var key = e.which;
+                if (key == 13) // the enter key code
+                {
+                    $('#sp_button').click();
+                    return false;
+                }
+            });
+        });
+        $(document).ready(function() {
             var year = new Date().getFullYear();
             $("#year").append('<option value=' + year + '>' + year + '</option>');
         });
@@ -226,6 +239,7 @@
                     cariPegawai(id);
                 }
             });
+
         });
         var tr_str;
 
@@ -266,13 +280,11 @@
             $('#add_pegawai').click(function() {
                 $('#userTable tbody').empty();
                 $('#example1 tbody').prepend(tr_str);
+                $('#p_input').val('');
+                $('#p_input').focus();
             });
         });
     </script>
-
-
-
-
 
 
 @endsection

@@ -199,8 +199,7 @@
                         <input class="form-control" type='text' id='p_input' name='search' placeholder='Enter nip lama'>
                     </div>
 
-                    <input type='button' value='Search' id='sp_button'> <br /> <br />
-
+                    <input  type='button' value='Search' id='sp_button'><br><br>
                     <table class="table table-bordered" id='userTable'>
                         <thead>
                             <tr>
@@ -231,6 +230,16 @@
 
     <script>
         $(document).ready(function() {
+            $('#p_input').keypress(function(e) {
+                var key = e.which;
+                if (key == 13) // the enter key code
+                {
+                    $('#sp_button').click();
+                    return false;
+                }
+            });
+        });
+        $(document).ready(function() {
             $('#sp_button').click(function() {
                 var id = Number($('#p_input').val().trim());
                 if (id > 0) {
@@ -239,10 +248,7 @@
             });
 
         });
-
-
         var tr_str;
-
 
         function cariPegawai(id) {
             var urlx = '{{ route('get_user_byniplama', ':id') }}';
@@ -286,7 +292,8 @@
             $('#add_pegawai').click(function() {
                 $('#userTable tbody').empty();
                 $('#example1 tbody').prepend(tr_str);
-
+                $('#p_input').val('');
+                $('#p_input').focus();
             });
 
         });
