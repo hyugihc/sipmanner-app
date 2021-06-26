@@ -6,14 +6,7 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    {{-- <h1 class="m-0">Cans Create</h1> --}}
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    {{-- <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Cans</li>
-                    </ol> --}}
+                <div class="col-sm-12">
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -23,15 +16,6 @@
 
     <!-- Main content -->
     <section class="content">
-        {{-- @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif --}}
 
         <div class="container-fluid">
             <div class="row">
@@ -44,7 +28,8 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('cans.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('cans.store') }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
 
                             <div class="card-body">
@@ -64,7 +49,6 @@
                                     <label>Nomor SK</label>
                                     <input type="text" name="nomor_sk" class="form-control" value="{{ old('nomor_sk') }}">
                                 </div>
-
                                 @error('nomor_sk')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -74,7 +58,6 @@
                                     <input type="date" name="tanggal_sk" class="form-control"
                                         value="{{ old('tanggal_sk') }}">
                                 </div>
-
                                 @error('tanggal_sk')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -97,14 +80,16 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
 
-                                <div class="form-group">
-                                    <label>Jumlah Change Agents</label>
-                                    <input type="number" name="jumlah_can" class="form-control"
-                                        value="{{ old('jumlah_can') }}">
-                                </div>
-                                @error('jumlah_can')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
+                                @if (Auth::User()->role_id == 1)
+                                    <div class="form-group">
+                                        <label>Provinsis</label>
+                                        <select class="form-control" name="provinsi_id">
+                                            @foreach ($provinsis as $provinsi)
+                                                <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
 
                                 <div class="form-group">
                                     <label>Change Network</label>
@@ -124,16 +109,16 @@
                                         </thead>
                                         <tbody>
 
-                                            @foreach ($changeLeaders as $cl)
+                                            @foreach ($change_leaders as $change_leader)
                                                 <tr>
                                                     <td>(✓)</td>
-                                                    <td>{{ $cl->nip_lama }}</td>
-                                                    <td>{{ $cl->name }}</td>
-                                                    <td>{{ $cl->email }}</td>
+                                                    <td>{{ $change_leader->nip_lama }}</td>
+                                                    <td>{{ $change_leader->name }}</td>
+                                                    <td>{{ $change_leader->email }}</td>
                                                     <td>Change Leader</td>
                                                 </tr>
                                             @endforeach
-                                            @foreach ($changeChampions as $cc)
+                                            @foreach ($change_champions as $cc)
                                                 <tr>
                                                     <td>(✓)</td>
                                                     <td>{{ $cc->nip_lama }}</td>
@@ -142,6 +127,8 @@
                                                     <td>Change Champions</td>
                                                 </tr>
                                             @endforeach
+
+
                                         </tbody>
                                     </table>
                                 </div>

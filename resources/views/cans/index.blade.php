@@ -2,6 +2,9 @@
 
 @section('content')
 
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
+
 
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -30,11 +33,6 @@
     <!-- Main content -->
     <section class="content">
 
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success">
-                <p>{{ $message }}</p>
-            </div>
-        @endif
 
         <div class="row">
             <div class="col-12">
@@ -140,6 +138,20 @@
                 <!-- /.card -->
             </div>
         </div>
+
+        <!-- Toastr -->
+        <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>
+
+        <script>
+            @if (Session::has('success'))
+                toastr.options =
+                {
+                "closeButton" : true,
+                "progressBar" : false
+                }
+                toastr.success("{{ Session::get('success') }}");
+            @endif
+        </script>
 
     </section>
 

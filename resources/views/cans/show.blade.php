@@ -48,16 +48,18 @@
                                     <dd>{{ $can->perihal_sk }}</dd>
                                     <dt>File SK</dt>
                                     <dd> <a href="{{ route('cans.download', $can) }}"> File SK</a></dd>
+                                    <dt>Jumlah Change Agent Network</dt>
+                                    <dd>{{ $can->jumlah_can }}</dd>
                                     <dt>Change Leader</dt>
-                                    @foreach ($can->change_leaders as $user)
+                                    @foreach ($can->changeLeaders as $user)
                                         <dd> {{ $user->name }} </dd>
                                     @endforeach
                                     <dt>Change Champions</dt>
-                                    @foreach ($can->change_champions as $user)
+                                    @foreach ($can->changeChampions as $user)
                                         <dd> {{ $user->name }} </dd>
                                     @endforeach
                                     <dt>Change Agents</dt>
-                                    @foreach ($can->change_agents as $user)
+                                    @foreach ($can->changeAgents as $user)
                                         <dd> {{ $user->name }} </dd>
                                     @endforeach
 
@@ -141,7 +143,6 @@
                 textarea.hide();
             }
         });
-
     </script>
 
 @endsection

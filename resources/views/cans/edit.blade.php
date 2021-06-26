@@ -25,7 +25,7 @@
     <!-- Main content -->
     <section class="content">
 
-        @if ($errors->any())
+        {{-- @if ($errors->any())
             <div class="alert alert-danger">
                 <strong>Whoops!</strong> There were some problems with your input.<br><br>
                 <ul>
@@ -34,7 +34,7 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+        @endif --}}
 
         <div class="container-fluid">
             <div class="row">
@@ -56,31 +56,53 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tahun SK</label>
-                                    <input type="number" name="tahun_sk" value="{{ $can->tahun_sk }}" class="form-control"
-                                        placeholder="">
+                                    <input type="number" name="tahun_sk" value="{{ old('tahun_sk', $can->tahun_sk) }}"
+                                        class="form-control" placeholder="">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nomor SK</label>
-                                    <input type="text" name="nomor_sk" value="{{ $can->nomor_sk }}" class="form-control"
-                                        placeholder="">
+                                    <input type="text" name="nomor_sk" value="{{ old('nomor_sk', $can->nomor_sk) }}"
+                                        class="form-control" placeholder="">
                                 </div>
+                                @error('nomor_sk')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tanggal SK</label>
-                                    <input type="date" name="tanggal_sk" value="{{ $can->tanggal_sk }}"
+                                    <input type="date" name="tanggal_sk" value="{{ old('tanggal_sk', $can->tanggal_sk) }}"
                                         class="form-control" placeholder="">
                                 </div>
+                                @error('tanggal_sk')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Perihal SK</label>
-                                    <input type="text" name="perihal_sk" value="{{ $can->perihal_sk }}"
+                                    <input type="text" name="perihal_sk" value="{{ old('perihal_sk', $can->perihal_sk) }}"
                                         class="form-control" placeholder="">
                                 </div>
+                                @error('perihal_sk')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group">
                                     <label>File SK</label>
                                     <a href="{{ route('cans.download', $can) }}"> file SK </a>
-                                    <input accept=".pdf" type="file" name="file_sk" value="{{ $can->file_sk }}"
-                                        class="form-control" placeholder="">
+                                    <input accept=".pdf" type="file" name="file_sk"
+                                        value="{{ old('file_sk', $can->file_sk) }}" class="form-control" placeholder="">
                                 </div>
+                                @error('file_sk')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
+
+                                <div class="form-group">
+                                    <label>Jumlah Change Agents</label>
+                                    <input type="number" name="jumlah_can" class="form-control"
+                                        value="{{ old('jumlah_can', $can->jumlah_can) }}">
+                                </div>
+                                @error('jumlah_can')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
 
 
                                 <div class="form-group">
@@ -100,7 +122,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($can->change_leaders as $user)
+                                            @foreach ($can->changeLeaders as $user)
                                                 <tr>
                                                     <td><input type="checkbox" name="change_leaders[]"
                                                             value="{{ $user->id }}" checked disabled></td>
@@ -110,7 +132,7 @@
                                                     <td>Change Leader</td>
                                                 </tr>
                                             @endforeach
-                                            @foreach ($can->change_champions as $user)
+                                            @foreach ($can->changeChampions as $user)
                                                 <tr>
                                                     <td><input type="checkbox" name="change_champions[]"
                                                             value="{{ $user->id }}" checked disabled></td>
@@ -120,7 +142,7 @@
                                                     <td>Change Champions</td>
                                                 </tr>
                                             @endforeach
-                                            @foreach ($can->change_agents as $ca)
+                                            @foreach ($can->changeAgents as $ca)
                                                 <tr>
                                                     <td><input type="checkbox" name="change_agents[]"
                                                             value="{{ $ca->id }}" checked></td>
@@ -133,6 +155,9 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                @error('change_agents')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
 
 
 
@@ -265,7 +290,6 @@
             });
 
         });
-
     </script>
 
 
