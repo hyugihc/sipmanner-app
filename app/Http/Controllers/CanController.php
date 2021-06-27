@@ -61,6 +61,7 @@ class CanController extends Controller
      */
     public function store(StoreCanRequest $request)
     {
+
         //create can
         $can = Can::create($request->all());
         $can->tahun_sk = date("Y");
@@ -118,7 +119,6 @@ class CanController extends Controller
      */
     public function update(StoreCanRequest $request, Can $can)
     {
-
         //update can
         $can->update($request->all());
         $can->status_sk  = ($request->has('draft')) ? 0 : 1;

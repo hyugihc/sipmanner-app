@@ -119,6 +119,7 @@
                                                 <th>Nama</th>
                                                 <th>Email</th>
                                                 <th>Role</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -130,6 +131,7 @@
                                                     <td>{{ $user->name }}</td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>Change Leader</td>
+                                                    <td>-</td>
                                                 </tr>
                                             @endforeach
                                             @foreach ($can->changeChampions as $user)
@@ -140,26 +142,57 @@
                                                     <td>{{ $user->name }}</td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>Change Champions</td>
+                                                    <td>-</td>
                                                 </tr>
                                             @endforeach
-                                            @foreach ($can->changeAgents as $ca)
-                                                <tr>
-                                                    <td><input type="checkbox" name="change_agents[]"
-                                                            value="{{ $ca->id }}" checked></td>
-                                                    <td>{{ $ca->nip_lama }}</td>
-                                                    <td>{{ $ca->name }}</td>
-                                                    <td>{{ $ca->email }}</td>
-                                                    <td>Change Agent</td>
-                                                </tr>
-                                            @endforeach
+
+
+                                            @if (old('change_agents') != null)
+                                                @php
+                                                    $i = 0;
+                                                @endphp
+                                                @foreach (old('change_agents') as $can)
+                                                    <tr id="row{{ old('change_agents')[$i] }}">
+                                                        <td>(✓)<input hidden name='change_agents[]'
+                                                                value='{{ old('change_agents')[$i] }}' checked></td>
+                                                        <td>{{ old('ca_nip')[$i] }} <input name='ca_nip[]'
+                                                                value='{{ old('ca_nip')[$i] }}' hidden> </td>
+                                                        <td>{{ old('ca_name')[$i] }} <input name='ca_name[]'
+                                                                value='{{ old('ca_name')[$i] }}' hidden></td>
+                                                        <td>{{ old('ca_email')[$i] }} <input name='ca_email[]'
+                                                                value='{{ old('ca_email')[$i] }}' hidden></td>
+                                                        <td>Change Agent</td>
+                                                        <td><button type='button' name='remove'
+                                                                id='{{ old('change_agents')[$i] }}'
+                                                                class='btn btn-danger btn_remove'>delete</button></td>
+                                                        @php
+                                                            $i++;
+                                                        @endphp
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                @foreach ($can->changeAgents as $ca)
+                                                    <tr id="row{{ $ca->id }}">
+                                                        <td>(✓)<input hidden name="change_agents[]"
+                                                                value="{{ $ca->id }}" checked></td>
+                                                        <td>{{ $ca->nip_lama }} <input name='ca_nip[]'
+                                                                value='{{ $ca->nip_lama }}' hidden></td>
+                                                        <td>{{ $ca->name }}<input name='ca_name[]'
+                                                                value='{{ $ca->name }}' hidden></td>
+                                                        <td>{{ $ca->email }}<input name='ca_email[]'
+                                                                value='{{ $ca->email }}' hidden></td>
+                                                        <td>Change Agent</td>
+                                                        <td><button type='button' name='remove' id='{{ $ca->id }}'
+                                                                class='btn btn-danger btn_remove'>delete</button></td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
                                 @error('change_agents')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
-
-
 
                             </div>
                             <!-- /.card-body -->
@@ -183,121 +216,7 @@
         </div><!-- /.container-fluid -->
     </section>
 
-    <!-- .modal -->
-    <div class="modal fade" id="modal-default">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Cari Pegawai</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Masukan 5 digit NIP lama</label>
-                        <input class="form-control" type='text' id='p_input' name='search' placeholder='Enter nip lama'>
-                    </div>
-
-                    <input  type='button' value='Search' id='sp_button'><br><br>
-                    <table class="table table-bordered" id='userTable'>
-                        <thead>
-                            <tr>
-
-                                <th>Nip Lama</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                            </tr>
-                        </thead>
-                        <tbody id="user_table"></tbody>
-
-                    </table>
-
-                    <br />
-
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="add_pegawai">Tambah Pegawai</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-
-    <!-- /.modal -->
-
-    <script>
-        $(document).ready(function() {
-            $('#p_input').keypress(function(e) {
-                var key = e.which;
-                if (key == 13) // the enter key code
-                {
-                    $('#sp_button').click();
-                    return false;
-                }
-            });
-        });
-        $(document).ready(function() {
-            $('#sp_button').click(function() {
-                var id = Number($('#p_input').val().trim());
-                if (id > 0) {
-                    cariPegawai(id);
-                }
-            });
-
-        });
-        var tr_str;
-
-        function cariPegawai(id) {
-            var urlx = '{{ route('get_user_byniplama', ':id') }}';
-            urlx = urlx.replace(':id', id);
-            $.ajax({
-                url: urlx,
-                type: 'get',
-                dataType: 'json',
-                success: function(response) {
-                    var len = 0;
-                    $('#userTable tbody').empty(); // Empty <tbody>
-                    if (response['data'] != null) {
-                        var id = response['data'].id;
-                        var name = response['data'].name;
-                        var email = response['data'].email;
-                        var nip_lama = response['data'].nip_lama;
-                        //alert(name);
-                        tr_str = "<tr><td ><input type = 'checkbox' name = 'change_agents[]' value = '" +
-                            id + "'  checked > </td>" +
-                            "<td>" + nip_lama + "</td>" +
-                            "<td>" + name + "</td>" +
-                            "<td>" + email + "</td>" +
-                            "<td>" + "Change Agent" + "</td>" +
-                            "</tr>";
-                        var tr_str2 = "<tr>" +
-                            "<td>" + nip_lama + "</td>" +
-                            "<td>" + name + "</td>" +
-                            "<td>" + email + "</td>" +
-                            "</tr>";
-                        $("#userTable tbody").append(tr_str2);
-                    }
-                }
-            });
-
-
-
-        }
-        //end cari pegawai
-
-        $(document).ready(function() {
-            $('#add_pegawai').click(function() {
-                $('#userTable tbody').empty();
-                $('#example1 tbody').prepend(tr_str);
-                $('#p_input').val('');
-                $('#p_input').focus();
-            });
-
-        });
-    </script>
+    @include('cans.search')
 
 
 

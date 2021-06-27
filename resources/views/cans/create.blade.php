@@ -120,6 +120,7 @@
                                                 <th>Nama</th>
                                                 <th>Email</th>
                                                 <th>Role</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -131,6 +132,7 @@
                                                     <td>{{ $cl->name }}</td>
                                                     <td>{{ $cl->email }}</td>
                                                     <td>Change Leader</td>
+                                                    <td>-</td>
                                                 </tr>
                                             @endforeach
                                             @foreach ($changeChampions as $cc)
@@ -140,14 +142,37 @@
                                                     <td>{{ $cc->name }}</td>
                                                     <td>{{ $cc->email }}</td>
                                                     <td>Change Champions</td>
+                                                    <td>-</td>
                                                 </tr>
                                             @endforeach
+
+                                            @if (old('change_agents') != null)
+                                                @php
+                                                    $i = 0;
+                                                @endphp
+                                                @foreach (old('change_agents') as $can)
+                                                    <tr id="row{{ old('change_agents')[$i] }}">
+                                                        <td>(✓)<input hidden name='change_agents[]'
+                                                                value='{{ old('change_agents')[$i] }}' checked></td>
+                                                        <td>{{ old('ca_nip')[$i] }} <input name='ca_nip[]'
+                                                                value='{{ old('ca_nip')[$i] }}' hidden> </td>
+                                                        <td>{{ old('ca_name')[$i] }} <input name='ca_name[]'
+                                                                value='{{ old('ca_name')[$i] }}' hidden></td>
+                                                        <td>{{ old('ca_email')[$i] }} <input name='ca_email[]'
+                                                                value='{{ old('ca_email')[$i] }}' hidden></td>
+                                                        <td>Change Agent</td>
+                                                        <td><button type='button' name='remove'
+                                                                id='{{ old('change_agents')[$i] }}'
+                                                                class='btn btn-danger btn_remove'>delete</button></td>
+                                                        @php
+                                                            $i++;
+                                                        @endphp
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
-
-
-
 
                                 @error('change_agents')
                                     <div class="alert alert-danger">{{ $message }}</div>
@@ -217,6 +242,7 @@
 
     <!-- /.modal -->
 
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#p_input').keypress(function(e) {
@@ -241,6 +267,11 @@
             });
 
         });
+
+        $(document).on('click', '.btn_remove', function() {
+            var button_id = $(this).attr("id");
+            $('#row' + button_id + '').remove();
+        });
         var tr_str;
 
         function cariPegawai(id) {
@@ -259,12 +290,18 @@
                         var email = response['data'].email;
                         var nip_lama = response['data'].nip_lama;
                         //alert(name);
-                        tr_str = "<tr><td ><input type = 'checkbox' name = 'change_agents[]' value = '" +
-                            id + "'  checked > </td>" +
-                            "<td>" + nip_lama + "</td>" +
-                            "<td>" + name + "</td>" +
-                            "<td>" + email + "</td>" +
-                            "<td>" + "Change Agent" + "</td>" +
+                        tr_str = "<tr id='row" + id +
+                            "' ><td >(✓)<input hidden name = 'change_agents[]' value = '" +
+                            id + "'></td>" +
+                            "<td>" + nip_lama + "<input hidden name='ca_nip[]' value ='" + nip_lama + "'>" +
+                            "</td>" +
+                            "<td>" + name + "<input hidden name='ca_name[]' value = '" + name + "'  >" +
+                            "</td>" +
+                            "<td>" + email + "<input hidden name='ca_email[]' value = '" + email + "'  >" +
+                            "</td>" +
+                            "<td> Change Agents </td>" +
+                            "<td>" + "<button type='button' name='remove' id='" + id +
+                            "' class='btn btn-danger btn_remove'>delete</button>" + "</td>" +
                             "</tr>";
                         var tr_str2 = "<tr>" +
                             "<td>" + nip_lama + "</td>" +
