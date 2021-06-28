@@ -115,6 +115,6 @@ class UserController extends Controller
     public function getuser_by_niplama($nip_lama)
     {
         $user = User::where('nip_lama', '3400' . $nip_lama)->first();
-        return new UserResource($user);
+        return $user != null ? new UserResource($user) : "pegawai tidak ditemukan";
     }
 }

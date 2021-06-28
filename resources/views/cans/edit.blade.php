@@ -114,7 +114,7 @@
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Cek (✓)</th>
+                                                <th>No</th>
                                                 <th>Nip Lama</th>
                                                 <th>Nama</th>
                                                 <th>Email</th>
@@ -125,8 +125,7 @@
                                         <tbody>
                                             @foreach ($can->changeLeaders as $user)
                                                 <tr>
-                                                    <td><input type="checkbox" name="change_leaders[]"
-                                                            value="{{ $user->id }}" checked disabled></td>
+                                                    <td class="id"></td>
                                                     <td>{{ $user->nip_lama }}</td>
                                                     <td>{{ $user->name }}</td>
                                                     <td>{{ $user->email }}</td>
@@ -136,8 +135,7 @@
                                             @endforeach
                                             @foreach ($can->changeChampions as $user)
                                                 <tr>
-                                                    <td><input type="checkbox" name="change_champions[]"
-                                                            value="{{ $user->id }}" checked disabled></td>
+                                                    <td class="id"></td>
                                                     <td>{{ $user->nip_lama }}</td>
                                                     <td>{{ $user->name }}</td>
                                                     <td>{{ $user->email }}</td>
@@ -152,16 +150,16 @@
                                                     $i = 0;
                                                 @endphp
                                                 @foreach (old('change_agents') as $can)
-                                                    <tr id="row{{ old('change_agents')[$i] }}">
-                                                        <td>(✓)<input hidden name='change_agents[]'
-                                                                value='{{ old('change_agents')[$i] }}' checked></td>
+                                                    <tr >
+                                                        <td class="id"></td>
                                                         <td>{{ old('ca_nip')[$i] }} <input name='ca_nip[]'
                                                                 value='{{ old('ca_nip')[$i] }}' hidden> </td>
                                                         <td>{{ old('ca_name')[$i] }} <input name='ca_name[]'
                                                                 value='{{ old('ca_name')[$i] }}' hidden></td>
                                                         <td>{{ old('ca_email')[$i] }} <input name='ca_email[]'
                                                                 value='{{ old('ca_email')[$i] }}' hidden></td>
-                                                        <td>Change Agent</td>
+                                                        <td>Change Agent<input hidden name='change_agents[]'
+                                                                value='{{ old('change_agents')[$i] }}'></td>
                                                         <td><button type='button' name='remove'
                                                                 id='{{ old('change_agents')[$i] }}'
                                                                 class='btn btn-danger btn_remove'>delete</button></td>
@@ -172,16 +170,16 @@
                                                 @endforeach
                                             @else
                                                 @foreach ($can->changeAgents as $ca)
-                                                    <tr id="row{{ $ca->id }}">
-                                                        <td>(✓)<input hidden name="change_agents[]"
-                                                                value="{{ $ca->id }}" checked></td>
+                                                    <tr >
+                                                        <td class="id"></td>
                                                         <td>{{ $ca->nip_lama }} <input name='ca_nip[]'
                                                                 value='{{ $ca->nip_lama }}' hidden></td>
                                                         <td>{{ $ca->name }}<input name='ca_name[]'
                                                                 value='{{ $ca->name }}' hidden></td>
                                                         <td>{{ $ca->email }}<input name='ca_email[]'
                                                                 value='{{ $ca->email }}' hidden></td>
-                                                        <td>Change Agent</td>
+                                                        <td>Change Agent<input hidden name="change_agents[]"
+                                                                value="{{ $ca->id }}"></td>
                                                         <td><button type='button' name='remove' id='{{ $ca->id }}'
                                                                 class='btn btn-danger btn_remove'>delete</button></td>
                                                     </tr>

@@ -41,10 +41,17 @@
 
 
   <script type="text/javascript">
+      /* function for dynamic numbering */
+      function updateRowOrder() {
+          $('td.id').each(function(i) {
+              $(this).text(i + 1);
+          });
+      }
       $(document).ready(function() {
           $('#p_input').keypress(function(e) {
               var key = e.which;
-              if (key == 13) // the enter key code
+              if (key == 13)
+              // the enter key code
               {
                   $('#sp_button').click();
                   return false;
@@ -54,6 +61,7 @@
       $(document).ready(function() {
           var year = new Date().getFullYear();
           $("#year").append('<option value=' + year + '>' + year + '</option>');
+          updateRowOrder();
       });
       $(document).ready(function() {
           $('#sp_button').click(function() {
@@ -66,8 +74,13 @@
       });
 
       $(document).on('click', '.btn_remove', function() {
-          var button_id = $(this).attr("id");
-          $('#row' + button_id + '').remove();
+          //   var button_id = $(this).attr("id");
+          //   $('#row' + button_id + '').remove();
+          //   updateRowOrder();
+          /* Just remove the tr on the click of a mouse */
+          $(this).closest("tr").remove();
+          /* Update Numbering */
+          updateRowOrder();
       });
       var tr_str;
 
@@ -87,16 +100,15 @@
                       var email = response['data'].email;
                       var nip_lama = response['data'].nip_lama;
                       //alert(name);
-                      tr_str = "<tr id='row" + id +
-                          "' ><td >(✓)<input hidden name = 'change_agents[]' value = '" +
-                          id + "'></td>" +
+                      tr_str = "<tr><td class='id'></td>" +
                           "<td>" + nip_lama + "<input hidden name='ca_nip[]' value ='" + nip_lama + "'>" +
                           "</td>" +
                           "<td>" + name + "<input hidden name='ca_name[]' value = '" + name + "'  >" +
                           "</td>" +
                           "<td>" + email + "<input hidden name='ca_email[]' value = '" + email + "'  >" +
                           "</td>" +
-                          "<td> Change Agents </td>" +
+                          "<td> Change Agents <input hidden name = 'change_agents[]' value = '" +
+                          id + "'> </td>" +
                           "<td>" + "<button type='button' name='remove' id='" + id +
                           "' class='btn btn-danger btn_remove'>delete</button>" + "</td>" +
                           "</tr>";
@@ -113,9 +125,10 @@
       $(document).ready(function() {
           $('#add_pegawai').click(function() {
               $('#userTable tbody').empty();
-              $('#example1 tbody').prepend(tr_str);
+              $('#example1 tbody').append(tr_str);
               $('#p_input').val('');
               $('#p_input').focus();
+              updateRowOrder();
           });
       });
   </script>
