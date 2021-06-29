@@ -50,7 +50,7 @@ class StoreCanRequest extends FormRequest
     public function messages()
     {
         return [
-            'changeAgents.required'  => 'Minimal 1 orang untuk ditambahkan'
+            'change_agents.required'  => 'Minimal 1 orang untuk ditambahkan'
         ];
     }
 }
