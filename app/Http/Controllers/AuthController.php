@@ -19,7 +19,7 @@ class AuthController extends Controller
             //Login Success
             return redirect()->route('dashboard');
         }
-        return view('login');
+        return view('xlogin');
     }
 
     public function login(Request $request)
@@ -56,13 +56,13 @@ class AuthController extends Controller
 
             //Login Fail
             Session::flash('error', 'Email atau password salah');
-            return redirect()->route('login');
+            return redirect()->route('xlogin');
         }
     }
 
     public function showFormRegister()
     {
-        return view('register');
+        return view('xregister');
     }
 
     public function register(Request $request)
@@ -99,16 +99,16 @@ class AuthController extends Controller
 
         if ($simpan) {
             Session::flash('success', 'Register berhasil! Silahkan login untuk mengakses data');
-            return redirect()->route('login');
+            return redirect()->route('xlogin');
         } else {
             Session::flash('errors', ['' => 'Register gagal! Silahkan ulangi beberapa saat lagi']);
-            return redirect()->route('register');
+            return redirect()->route('xregister');
         }
     }
 
     public function logout()
     {
         Auth::logout(); // menghapus session yang aktif
-        return redirect()->route('login');
+        return redirect()->route('xlogin');
     }
 }

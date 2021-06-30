@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,15 +17,23 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', 'AuthController@showFormLogin')->name('login');
-Route::get('/login', 'AuthController@showFormLogin')->name('login');
-Route::post('/login', 'AuthController@login');
-Route::get('/register', 'AuthController@showFormRegister')->name('register');
-Route::post('/register', 'AuthController@register');
+
+
+// =========================<Backdoor>================================
+
+Route::get('/xlogin', 'AuthController@showFormLogin')->name('xlogin');
+Route::post('/xlogin', 'AuthController@login');
+Route::get('/xregister', 'AuthController@showFormRegister')->name('xregister');
+Route::post('/xregister', 'AuthController@register');
+Route::get('/xlogout', 'AuthController@logout')->name('xlogout');
+
+// =========================</Backdoor>================================
+
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/logout', 'AuthController@logout')->name('logout');
     Route::get('/getUser/{nipLama}', 'UserController@getUser');
     Route::get('/getuser_by_niplama/{nip_lama}', 'UserController@getuser_by_niplama')->name('get_user_byniplama');
 
@@ -115,3 +124,12 @@ Route::get('/view-clear', function () {
     $exitCode = Artisan::call('view:clear');
     return 'View cache cleared';
 });
+
+// Route::get('/', function () {
+//     return view('login');
+// });
+
+Auth::routes();
+
+
+Route::get('/home', 'HomeController@index')->name('home');
