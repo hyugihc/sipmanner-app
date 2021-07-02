@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/getUser/{nipLama}', 'UserController@getUser');
     Route::get('/getuser_by_niplama/{nip_lama}', 'UserController@getuser_by_niplama')->name('get_user_byniplama');
+    Route::get('/getuser_by_niplama_sso/{nip_lama}', 'UserController@getuser_by_niplama_sso')->name('get_user_byniplama_sso');
 
     Route::get('/users', 'UserController@index')->name('users.index');
     Route::get('/users/create', 'UserController@create')->name('users.create');
@@ -100,6 +101,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/reports/{report}/approve', 'ReportController@approve')->name('reports.approve');
     Route::get('/reports/{report}/print', 'ReportController@print')->name('reports.print');
 });
+
+
 
 //Clear route cache:
 Route::get('/route-clear', function () {

@@ -66,7 +66,7 @@ class LoginController extends Controller
             $request->session()->forget('oauth2state');
             exit('Invalid state');
         } else {
-           
+
 
             try {
                 $token = $provider->getAccessToken('authorization_code', [
@@ -79,6 +79,23 @@ class LoginController extends Controller
             try {
 
                 $user = $provider->getResourceOwner($token);
+
+                // echo "Nama : ".$user->getName();
+                // echo "E-Mail : ". $user->getEmail();
+                // echo "Username : ". $user->getUsername();
+                // echo "NIP : ". $user->getNip();
+                // echo "NIP Baru : ". $user->getNipBaru();
+                // echo "Kode Organisasi : ". $user->getKodeOrganisasi();
+                // echo "Kode Provinsi : ". $user->getKodeProvinsi();
+                // echo "Kode Kabupaten : ". $user->getKodeKabupaten();
+                // echo "Alamat Kantor : ". $user->getAlamatKantor();
+                // echo "Provinsi : ". $user->getProvinsi();
+                // echo "Kabupaten : ". $user->getKabupaten();
+                // echo "Golongan : ". $user->getGolongan();
+                // echo "Jabatan : ". $user->getJabatan();
+                // echo "Foto : ". $user->getUrlFoto();
+                // echo "Eselon : ". $user->getEselon();
+
                 $email = $user->getEmail();
                 $id = User::where('email', $email)->first();
                 if (!empty($id)) {
@@ -92,7 +109,7 @@ class LoginController extends Controller
                     $email = $user->getEmail();
                     $name = $user->getName();
                     $url_logout = $provider->getLogoutUrl();
-                    return view('403', compact('name','email'));
+                    return view('403', compact('name', 'email'));
                 }
 
                 // Login dengan menggunakan id pengguna dari record di database aplikasi

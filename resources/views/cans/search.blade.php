@@ -16,6 +16,13 @@
 
                   <input type='button' value='Search' id='sp_button'> <br><br>
 
+                  {{-- <button class="btn btn-primary" type="button" disabled>
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      Loading...
+                  </button> --}}
+
+                  {{-- <br><br> --}}
+
                   <table class="table table-bordered" id='userTable'>
                       <thead>
                           <tr>
@@ -85,13 +92,14 @@
       var tr_str;
 
       function cariPegawai(id) {
-          var urlx = '{{ route('get_user_byniplama', ':id') }}';
+          var urlx = '{{ route('get_user_byniplama_sso', ':id') }}';
           urlx = urlx.replace(':id', id);
           $.ajax({
               url: urlx,
               type: 'get',
               dataType: 'json',
               success: function(response) {
+                  // console.log("response succes");
                   var len = 0;
                   $('#userTable tbody').empty(); // Empty <tbody>
                   if (response['data'] != null) {
@@ -99,7 +107,6 @@
                       var name = response['data'].name;
                       var email = response['data'].email;
                       var nip_lama = response['data'].nip_lama;
-                      //alert(name);
                       tr_str = "<tr><td class='id'></td>" +
                           "<td>" + nip_lama + "<input hidden name='ca_nip[]' value ='" + nip_lama + "'>" +
                           "</td>" +
@@ -116,6 +123,18 @@
                           "<td>" + nip_lama + "</td>" +
                           "<td>" + name + "</td>" +
                           "<td>" + email + "</td>" +
+                          "</tr>";
+                      $("#userTable tbody").append(tr_str2);
+                  }
+              },
+              error: function(response) {
+                  console.log("response error");
+                  try {
+                      data = JSON.parse(response);
+                  } catch (e) {
+                      $('#userTable tbody').empty();
+                      var tr_str2 = "<tr>" +
+                          "<td>User tidak ditemukan </td>" +
                           "</tr>";
                       $("#userTable tbody").append(tr_str2);
                   }
