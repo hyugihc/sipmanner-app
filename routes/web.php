@@ -21,16 +21,16 @@ use Illuminate\Support\Facades\Route;
 
 // =========================<Backdoor>================================
 
-Route::get('/xlogin', 'AuthController@showFormLogin')->name('xlogin');
-Route::post('/xlogin', 'AuthController@login');
-Route::get('/xregister', 'AuthController@showFormRegister')->name('xregister');
-Route::post('/xregister', 'AuthController@register');
-Route::get('/xlogout', 'AuthController@logout')->name('xlogout');
+Route::get('/login', 'AuthController@showFormLogin')->name('login');
+Route::post('/login', 'AuthController@login');
 
 // =========================</Backdoor>================================
 
-Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
-Auth::routes();
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('sso.login');
+Route::post('logout', [
+    'as' => 'logout',
+    'uses' => 'Auth\LoginController@logout'
+]);
 
 Route::group(['middleware' => 'auth'], function () {
 
@@ -132,7 +132,6 @@ Route::get('/view-clear', function () {
 //     return view('login');
 // });
 
-Auth::routes();
 
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -19,7 +19,7 @@ class AuthController extends Controller
             //Login Success
             return redirect()->route('dashboard');
         }
-        return view('xlogin');
+        return view('auth.login');
     }
 
     public function login(Request $request)

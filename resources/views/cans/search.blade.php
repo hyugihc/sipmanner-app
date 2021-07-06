@@ -11,10 +11,13 @@
               <div class="modal-body">
                   <div class="form-group">
                       <label>Masukan 5 digit NIP lama</label>
-                      <input class="form-control" type='text' id='p_input' name='search' placeholder='Enter nip lama'>
+                      <input class="form-control" type='number' id='p_input' name='search' placeholder='Enter nip lama'>
                   </div>
 
-                  <input type='button' value='Search' id='sp_button'> <br><br>
+                  <button class="btn btn-primary" type='button' value='Search' id='sp_button'>
+                      Search
+
+                  </button><br><br>
 
                   {{-- <button class="btn btn-primary" type="button" disabled>
                       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -36,7 +39,7 @@
               </div>
               <div class="modal-footer justify-content-between">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" id="add_pegawai">Tambah Pegawai</button>
+                  <button type="button" class="btn btn-primary" id="add_pegawai" disabled>Tambah Pegawai</button>
               </div>
           </div>
           <!-- /.modal-content -->
@@ -74,6 +77,9 @@
           $('#sp_button').click(function() {
               var id = Number($('#p_input').val().trim());
               if (id > 0) {
+                  var loadingText =
+                      "<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Loading...";
+                  $("#sp_button").html(loadingText);
                   cariPegawai(id);
               }
           });
@@ -125,6 +131,9 @@
                           "<td>" + email + "</td>" +
                           "</tr>";
                       $("#userTable tbody").append(tr_str2);
+                      $("#sp_button").html("Search");
+                      $('#add_pegawai').prop('disabled', false);
+                      $('#add_pegawai').focus();
                   }
               },
               error: function(response) {
@@ -134,9 +143,10 @@
                   } catch (e) {
                       $('#userTable tbody').empty();
                       var tr_str2 = "<tr>" +
-                          "<td>User tidak ditemukan </td>" +
+                          "<td>Pegawai tidak ditemukan </td>" +
                           "</tr>";
                       $("#userTable tbody").append(tr_str2);
+                      $("#sp_button").html("Search");
                   }
               }
           });
@@ -145,9 +155,16 @@
           $('#add_pegawai').click(function() {
               $('#userTable tbody').empty();
               $('#example1 tbody').append(tr_str);
+              var tr_str4 = "<tr>" +
+                  "<td>pegawai ditambahkan </td>" +
+                  "</tr>";
+              $("#userTable tbody").append(tr_str4);
               $('#p_input').val('');
               $('#p_input').focus();
               updateRowOrder();
+              $(this).prop('disabled', true);
           });
+
+
       });
   </script>

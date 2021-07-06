@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use SebastianBergmann\Environment\Console;
 
 class CanController extends Controller
 {
@@ -192,4 +193,6 @@ class CanController extends Controller
         return redirect()->route('cans.index')
             ->with('success', 'Approval berhasil disimpan');
     }
+
+
 }

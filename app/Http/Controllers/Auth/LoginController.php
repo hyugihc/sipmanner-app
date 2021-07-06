@@ -43,6 +43,8 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+
+
     public function showLoginForm(Request $request)
     {
         $provider = new Keycloak([
@@ -53,21 +55,18 @@ class LoginController extends Controller
             'redirectUri'           => env('KEYCLOAK_REDIRECT_URI'),
         ]);
 
-        if (!isset($_GET['code'])) {
 
+        if (!isset($_GET['code'])) {
             // Untuk mendapatkan authorization code
             $authUrl = $provider->getAuthorizationUrl();
             $request->session()->put('oauth2state', $provider->getState());
             header('Location: ' . $authUrl);
             exit;
-
             // Mengecek state yang disimpan saat ini untuk memitigasi serangan CSRF
         } elseif (empty($_GET['state'])) {
             $request->session()->forget('oauth2state');
             exit('Invalid state');
         } else {
-
-
             try {
                 $token = $provider->getAccessToken('authorization_code', [
                     'code' => $_GET['code']
@@ -96,6 +95,7 @@ class LoginController extends Controller
                 // echo "Foto : ". $user->getUrlFoto();
                 // echo "Eselon : ". $user->getEselon();
 
+               
                 $email = $user->getEmail();
                 $id = User::where('email', $email)->first();
                 if (!empty($id)) {
@@ -114,7 +114,10 @@ class LoginController extends Controller
 
                 // Login dengan menggunakan id pengguna dari record di database aplikasi
                 if (Auth::loginUsingId($id)) {
-                    return redirect()->intended('/');
+                    $loggedinUser = User::find($id);
+                    $loggedinUser->avatar = $user->getUrlFoto();
+                    $loggedinUser->save();
+                    return redirect()->route('dashboard');
                 } else {
                     return redirect('/');
                 }
@@ -145,6 +148,7 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect($url_logout);
+        //return redirect()->route('login');
 
         // if ($response = $this->loggedOut($request)) {
         //     return $response;

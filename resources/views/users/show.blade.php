@@ -29,7 +29,7 @@
                 <div class="card-body box-profile">
                     <div class="text-center">
                         <img class="profile-user-img img-fluid img-circle"
-                            src="{{ asset('') }}assets/dist/img/user4-128x128.jpg" alt="User profile picture">
+                            src="{{Auth::user()->avatar}}" alt="User profile picture">
                     </div>
 
                     <h3 class="profile-username text-center">{{ $user->name }}</h3>
@@ -48,12 +48,7 @@
                     </li>
                 </ul> --}}
 
-                    <a href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                        class="btn btn-danger btn-block"><b>Log Out</b></a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
-                    </form>
+              
                 </div>
                 <!-- /.card-body -->
             </div>
