@@ -43,19 +43,19 @@
                                 <dt>Nama Program</dt>
                                 <dd>{{ $intervensiNasional->nama }}</dd>
                                 <dt>Uraian Kegiatan</dt>
-                                <dd>{{ $intervensiNasional->uraian_kegiatan }}</dd>
+                                <dd style="white-space: pre-wrap;">{{ $intervensiNasional->uraian_kegiatan }}</dd>
                                 <dt>Volume Kegiatan setahun</dt>
                                 <dd>{{ $intervensiNasional->volume }}</dd>
                                 <dt>Nilai Pia</dt>
                                 @foreach ($intervensiNasional->pias as $pia)
-                                    <dd>{{ $pia->nama }}</dd>
+                                    <small class="badge badge-success"> {{ $pia->nama }}</small>
                                 @endforeach
                                 <dt>Output</dt>
-                                <dd> {{ $intervensiNasional->output }} </dd>
+                                <dd style="white-space: pre-wrap;">{{ $intervensiNasional->output }} </dd>
                                 <dt>Outcome</dt>
-                                <dd> {{ $intervensiNasional->outcome }} </dd>
+                                <dd style="white-space: pre-wrap;">{{ $intervensiNasional->outcome }} </dd>
                                 <dt>keterangan</dt>
-                                <dd> {{ $intervensiNasional->keterangan }} </dd>
+                                <dd style="white-space: pre-wrap;"> {{ $intervensiNasional->keterangan }} </dd>
 
 
                             </dl>
@@ -94,7 +94,6 @@
                 textarea.hide();
             }
         });
-
     </script>
 
 @endsection

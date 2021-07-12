@@ -36,7 +36,7 @@ class IntervensiKhususPolicy
     public function view(User $user, IntervensiKhusus $intervensiKhusus)
     {
         //
-        
+
         if ($user->role_id == 1) return true;
         if ($user->role_id == 5) return true;
         if ($user->role_id == 3 or $user->role_id == 2) {
@@ -69,8 +69,8 @@ class IntervensiKhususPolicy
     public function update(User $user, IntervensiKhusus $intervensiKhusus)
     {
         //
-        if ($intervensiKhusus->status == 2) return false;
-        if ($user->role_id == 3 ) {
+        if ($intervensiKhusus->status == 2 or $intervensiKhusus->status == 1) return false;
+        if ($user->role_id == 3) {
             return  $user->provinsi_id == $intervensiKhusus->provinsi_id;
         }
         return false;
@@ -86,8 +86,8 @@ class IntervensiKhususPolicy
     public function delete(User $user, IntervensiKhusus $intervensiKhusus)
     {
         //
-        if ($intervensiKhusus->status == 2) return false;
-        if ($user->role_id == 3 ) {
+        if ($intervensiKhusus->status == 2 or $intervensiKhusus->status == 1) return false;
+        if ($user->role_id == 3) {
             return  $user->provinsi_id == $intervensiKhusus->provinsi_id;
         }
         return false;

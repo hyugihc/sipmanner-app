@@ -27,39 +27,31 @@ Route::post('/login', 'AuthController@login');
 // =========================</Backdoor>================================
 
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('sso.login');
-Route::post('logout', [
+Route::post('/logout', [
     'as' => 'logout',
     'uses' => 'Auth\LoginController@logout'
 ]);
 
 Route::group(['middleware' => 'auth'], function () {
 
+    Route::resource('users', UserController::class);
     Route::get('/getUser/{nipLama}', 'UserController@getUser');
-    Route::get('/getuser_by_niplama/{nip_lama}', 'UserController@getuser_by_niplama')->name('get_user_byniplama');
     Route::get('/getuser_by_niplama_sso/{nip_lama}', 'UserController@getuser_by_niplama_sso')->name('get_user_byniplama_sso');
-
-    Route::get('/users', 'UserController@index')->name('users.index');
-    Route::get('/users/create', 'UserController@create')->name('users.create');
-    Route::post('/users', 'UserController@store')->name('users.store');
-    Route::get('/users/{user}/edit', 'UserController@edit')->name('users.edit');
-    Route::put('/users/{user}', 'UserController@update')->name('users.update');
-    Route::delete('/users/{user}', 'UserController@destroy')->name('users.destroy');
-    Route::get('/users/{user}', 'UserController@show')->name('users.show');
 
 
     Route::resource('cans', CanController::class);
     Route::get('/cans/{can}/download', 'CanController@downloadFileSk')->name('cans.download');
     Route::put('/cans/{can}/approve', 'CanController@approve')->name('cans.approve');
 
-    Route::resource('programs', ProgramController::class);
-    Route::resource('progress', ProgressController::class);
+    Route::get('/programs', 'ProgramController@index')->name('programs.index');
+    Route::get('/progress', 'ProgressController@index')->name('progress.index');
 
-    Route::resource('intervensi_nasionals', IntervensiNasionalController::class);
-    Route::resource('intervensi_nasional_provinsis', IntervensiNasionalProvinsiController::class);
-    Route::resource('intervensi_khususes', IntervensiKhususController::class);
-    Route::put('/intervensi_khususes/{intervensiKhusus}/approve', 'IntervensiKhususController@approve')->name('intervensi_khususes.approve');
+    Route::resource('intervensi-nasionals', IntervensiNasionalController::class);
+    Route::resource('intervensi-khususes', IntervensiKhususController::class);
+    Route::put('/intervensi-khususes/{intervensiKhusus}/approve', 'IntervensiKhususController@approve')->name('intervensi-khususes.approve');
 
-
+   // Route::resource('progress-intervensi-nasionals', ProgressIntervensiNasionalController::class);
+   
     Route::get('/progress_intervensi_nasionals/{intervensiNasional}', 'ProgressIntervensiNasionalController@index')->name('progress_intervensi_nasionals.index');
     Route::get('/progress_intervensi_nasionals/{intervensiNasional}/create', 'ProgressIntervensiNasionalController@create')->name('progress_intervensi_nasionals.create');
     Route::post('/progress_intervensi_nasionals/{intervensiNasional}', 'ProgressIntervensiNasionalController@store')->name('progress_intervensi_nasionals.store');

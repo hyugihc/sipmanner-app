@@ -98,7 +98,7 @@
                                 @enderror
 
                                 <div class="form-group">
-                                    <label>Jumlah Change Agents</label>
+                                    <label>Jumlah Change Agent Network <small>(Termasuk Change Leader & Change Champions)</small></label>
                                     <input type="number" name="jumlah_can" class="form-control"
                                         value="{{ old('jumlah_can') }}">
                                 </div>
@@ -152,15 +152,15 @@
                                                 @endphp
                                                 @foreach (old('change_agents') as $can)
                                                     <tr>
-                                                        <td class="id"><input hidden name='change_agents[]'
-                                                                value='{{ old('change_agents')[$i] }}' checked></td>
+                                                        <td class="id"></td>
                                                         <td>{{ old('ca_nip')[$i] }} <input name='ca_nip[]'
                                                                 value='{{ old('ca_nip')[$i] }}' hidden> </td>
                                                         <td>{{ old('ca_name')[$i] }} <input name='ca_name[]'
                                                                 value='{{ old('ca_name')[$i] }}' hidden></td>
                                                         <td>{{ old('ca_email')[$i] }} <input name='ca_email[]'
                                                                 value='{{ old('ca_email')[$i] }}' hidden></td>
-                                                        <td>Change Agent</td>
+                                                        <td>Change Agent<input hidden name='change_agents[]'
+                                                                value='{{ old('change_agents')[$i] }}'></td>
                                                         <td><button type='button' name='remove'
                                                                 id='{{ old('change_agents')[$i] }}'
                                                                 class='btn btn-danger btn_remove'>delete</button></td>

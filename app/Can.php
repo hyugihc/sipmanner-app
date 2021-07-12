@@ -14,10 +14,7 @@ class Can extends Model
     const STATUS_APPROVE  = 2;
     const STATUS_DECLINE  = 3;
     const STATUS_INACTIVE = 4;
-    const CHANGE_LEADER = 2;
-    const CHANGE_CHAMPION = 3;
-    const CHANGE_AGENT = 4;
-    const TOP_LEADER = 5;
+ 
 
     protected $fillable = [
         'nomor_sk', 'tanggal_sk', 'perihal_sk', 'jumlah_can'
@@ -44,27 +41,41 @@ class Can extends Model
     }
 
 
-    public static function attachChangeAgents(Can $can, $userArray)
+    public function attachChangeAgents($userArray)
     {
         foreach ($userArray as $user) {
-            $can->changeAgents()->attach($user, ['role_id' => Can::CHANGE_AGENT]);
+            $this->changeAgents()->attach($user, ['role_id' => Role::CHANGE_AGENT]);
         }
-        return $can;
     }
 
-    public static function attachChangeChampions(Can $can, $userArray)
+    public function syncChangeAgents($userArray)
     {
-        foreach ($userArray as $user) {
-            $can->changeChampions()->attach($user, ['role_id' => Can::CHANGE_CHAMPION]);
-        }
-        return $can;
+        $this->detachChangeAgents();
+        $this->attachChangeAgents($userArray);
     }
 
-    public static function attachChangeLeaders(Can $can, $userArray)
+    public function detachChangeAgents()
+    {
+        $this->changeAgents()->detach();
+    }
+
+
+    public function attachChangeChampions( $userArray)
     {
         foreach ($userArray as $user) {
-            $can->changeLeaders()->attach($user, ['role_id' => Can::CHANGE_LEADER]);
+            $this->changeChampions()->attach($user, ['role_id' => Role::CHANGE_CHAMPION]);
         }
-        return $can;
+    }
+
+    public function attachChangeLeaders( $userArray)
+    {
+        foreach ($userArray as $user) {
+            $this->changeLeaders()->attach($user, ['role_id' => Role::CHANGE_LEADER]);
+        }
+    }
+
+    public function getNameFileSK()
+    {
+        return 'sk_' . $this->tahun_sk . '_' . $this->provinsi->kode_provinsi . '_' . $this->id . '.pdf';
     }
 }

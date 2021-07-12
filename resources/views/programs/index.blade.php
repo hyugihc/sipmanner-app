@@ -40,7 +40,7 @@
                     <div class="col-sm-2">
                         @can('create', App\IntervensiNasional::class)
                             <a class="btn btn-block btn-primary btn-xs"
-                                href="{{ route('intervensi_nasionals.create') }}">Create</a>
+                                href="{{ route('intervensi-nasionals.create') }}">Create</a>
                         @endcan
                     </div><!-- /.col -->
                     <div class="col-sm-10">
@@ -54,7 +54,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Program Intervensi Nasional</h3>
+                        <h3 class="card-title">Program Intervensi Nasional Tahun {{ date('Y') }}</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -106,20 +106,20 @@
                                         <td>
 
                                             <form
-                                                action="{{ route('intervensi_nasionals.destroy', $program_intervensi) }}"
+                                                action="{{ route('intervensi-nasionals.destroy', $program_intervensi) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
 
                                                 @can('view', $program_intervensi)
                                                     <a class="btn btn-block btn-primary btn-xs"
-                                                        href="{{ route('intervensi_nasionals.show', $program_intervensi) }}">Show</a>
+                                                        href="{{ route('intervensi-nasionals.show', $program_intervensi) }}">Show</a>
                                                 @endcan
 
 
                                                 @can('update', $program_intervensi)
                                                     <a class="btn btn-block btn-warning btn-xs"
-                                                        href="{{ route('intervensi_nasionals.edit', $program_intervensi) }}">Edit</a>
+                                                        href="{{ route('intervensi-nasionals.edit', $program_intervensi) }}">Edit</a>
                                                 @endcan
 
                                                 @can('delete', $program_intervensi)
@@ -153,7 +153,7 @@
                     <div class="col-sm-2">
                         @can('create', App\IntervensiKhusus::class)
                             <a class="btn btn-block btn-primary btn-xs"
-                                href="{{ route('intervensi_khususes.create') }}">Create</a>
+                                href="{{ route('intervensi-khususes.create') }}">Create</a>
                         @endcan
                     </div><!-- /.col -->
                     <div class="col-sm-10">
@@ -167,7 +167,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Program Intervensi Khusus</h3>
+                        <h3 class="card-title">Program Intervensi Khusus Tahun {{ date('Y') }}</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -246,19 +246,19 @@
                                         <td>
 
                                             <form
-                                                action="{{ route('intervensi_khususes.destroy', $program_intervensi) }}"
+                                                action="{{ route('intervensi-khususes.destroy', $program_intervensi) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
 
                                                 @can('view', $program_intervensi)
                                                     <a class="btn btn-block btn-primary btn-xs"
-                                                        href="{{ route('intervensi_khususes.show', $program_intervensi) }}">Show</a>
+                                                        href="{{ route('intervensi-khususes.show', $program_intervensi) }}">Show</a>
                                                 @endcan
 
                                                 @can('update', $program_intervensi)
                                                     <a class="btn btn-block btn-warning btn-xs"
-                                                        href="{{ route('intervensi_khususes.edit', $program_intervensi) }}">Edit</a>
+                                                        href="{{ route('intervensi-khususes.edit', $program_intervensi) }}">Edit</a>
                                                 @endcan
 
                                                 @can('delete', $program_intervensi)

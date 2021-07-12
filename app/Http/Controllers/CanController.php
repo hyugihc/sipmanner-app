@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Can;
 use App\Http\Requests\StoreCanRequest;
-use App\Provinsi;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use SebastianBergmann\Environment\Console;
 
 class CanController extends Controller
 {
@@ -24,8 +21,6 @@ class CanController extends Controller
         $this->authorizeResource(Can::class, 'can');
     }
 
-
-
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +28,10 @@ class CanController extends Controller
      */
     public function index()
     {
-        $cans = (Auth::user()->role_id == 1 or Auth::user()->role_id == 5) ?
+        $user = Auth::user();
+        $cans = ($user->isAdmin() or $user->isTopLeader()) ?
             Can::orderBy('status_sk')->paginate(5) :
-            Can::orderBy('status_sk')->where('provinsi_id', Auth::user()->provinsi_id)->paginate(5);
+            Can::orderBy('status_sk')->where('provinsi_id', $user->provinsi_id)->paginate(5);
         return view('cans.index', compact('cans'));
     }
 
@@ -62,25 +58,22 @@ class CanController extends Controller
      */
     public function store(StoreCanRequest $request)
     {
+        $user = $request->user();
+        $changeLeaders = User::where('role_id', 2)->where('provinsi_id', $user->provinsi_id)->get();
+        $changeChampions = User::where('role_id', 3)->where('provinsi_id', $user->provinsi_id)->get();
 
         //create can
         $can = Can::create($request->all());
         $can->tahun_sk = date("Y");
-        $can->user_id = $request->user()->id;
-        $can->provinsi_id = $request->user()->provinsi_id;
+        $can->user_id = $user->id;
+        $can->provinsi_id = $user->provinsi_id;
         $can->status_sk  = ($request->has('draft')) ? 0 : 1;
-        $can->file_sk = $request->file('file_sk')->storeAs(
-            'cans',
-            'sk_' . $request->tahun_sk . '_' .
-                $request->user()->provinsi->kode_provinsi . '_' . $can->id . '.pdf'
-        );
+        $can->file_sk =   $request->file('file_sk')->storeAs('cans', $can->getNameFileSK());
 
-        //can_user
-        $changeLeaders = User::where('role_id', 2)->where('provinsi_id', Auth::user()->provinsi_id)->get();
-        $changeChampions = User::where('role_id', 3)->where('provinsi_id', Auth::user()->provinsi_id)->get();
-        Can::attachChangeAgents($can, $request->change_agents);
-        Can::attachChangeChampions($can, $changeChampions);
-        Can::attachChangeLeaders($can, $changeLeaders);
+        if ($request->has('change_agents'))
+            $can->attachChangeAgents($request->change_agents);
+        $can->attachChangeChampions($changeChampions);
+        $can->attachChangeLeaders($changeLeaders);
         $can->save();
 
         $message = ($can->status_sk == 0) ? 'Data berhasil disimpan menjadi draft' : 'Data berhasil disubmit ke Change Leader';
@@ -120,33 +113,20 @@ class CanController extends Controller
      */
     public function update(StoreCanRequest $request, Can $can)
     {
-        //update can
+        //
         $can->update($request->all());
         $can->status_sk  = ($request->has('draft')) ? 0 : 1;
-        if ($request->file_sk != null) {
+        if ($request->has('file_sk')) {
             Storage::delete($can->file_sk);
-            $can->file_sk = $request->file('file_sk')->storeAs(
-                'cans',
-                'sk_' . $can->tahun_sk . '_' .
-                    $request->user()->provinsi->kode_provinsi . '_' . $can->id . '.pdf'
-            );
+            $can->file_sk = $request->file('file_sk')->storeAs('cans', $can->getNameFileSK());
         }
-
-        //attach_can
-        $can->changeAgents()->detach();
-        Can::attachChangeAgents($can, $request->change_agents);
+        if ($request->has('change_agents'))
+            $can->syncChangeAgents($request->change_agents);
         $can->save();
 
         $message = ($can->status_sk == 0) ? 'Data berhasil disimpan menjadi draft' : 'Data berhasil disubmit ke Change Leader';
         return redirect()->route('cans.index')
             ->with('success', $message);
-    }
-
-    private function mapChangeAgents($change_agents)
-    {
-        return collect($change_agents)->map(function ($i) {
-            return ['amount' => $i];
-        });
     }
 
 
@@ -193,6 +173,4 @@ class CanController extends Controller
         return redirect()->route('cans.index')
             ->with('success', 'Approval berhasil disimpan');
     }
-
-
 }

@@ -100,7 +100,7 @@
                                             @endswitch
 
                                         </td>
-                                        @if (Auth::user()->role_id == 1)
+                                        @if (Auth::user()->isAdmin() or Auth::user()->isTopLeader() )
                                             <td>{{ $can->provinsi['nama'] }}</td>
                                         @endif
                                         <td>

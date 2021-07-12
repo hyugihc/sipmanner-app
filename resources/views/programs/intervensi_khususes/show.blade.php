@@ -10,11 +10,6 @@
                     {{-- <h1 class="m-0">Dashboard</h1> --}}
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Program Intervensi Khusus</li>
-                        <li class="breadcrumb-item active">{{ $intervensiKhusus->nama }}</li>
-                    </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -34,8 +29,7 @@
                             <h3 class="card-title">{{ $intervensiKhusus->nama }} </h3>
                         </div>
                         <!-- form start -->
-                        <form action="{{ route('intervensi_khususes.approve', $intervensiKhusus) }}" method="POST"
-                            id="quickForm">
+                        <form action="{{ route('intervensi-khususes.approve', $intervensiKhusus) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <!-- /.card-header -->
@@ -45,10 +39,12 @@
                                 <dl>
                                     <dt> Jenis</dt>
                                     <dd>Program Intervensi Khusus</dd>
+                                    <dt>Unit Kerja</dt>
+                                    <dd>{{ $intervensiKhusus->provinsi['nama'] }} </dd>
                                     <dt>Nama Program Intervensi</dt>
                                     <dd>{{ $intervensiKhusus->nama }}</dd>
                                     <dt>Uraian Kegiatan</dt>
-                                    <dd>{{ $intervensiKhusus->uraian_kegiatan }}</dd>
+                                    <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->uraian_kegiatan }}</dd>
                                     <dt>Volume Kegiatan setahun</dt>
                                     <dd>{{ $intervensiKhusus->volume }}</dd>
                                     <dt>Nilai Pia</dt>
@@ -56,13 +52,12 @@
                                         <dd>{{ $pia->nama }}</dd>
                                     @endforeach
                                     <dt>Output</dt>
-                                    <dd> {{ $intervensiKhusus->output }} </dd>
+                                    <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->output }} </dd>
                                     <dt>Outcome</dt>
-                                    <dd> {{ $intervensiKhusus->outcome }} </dd>
+                                    <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->outcome }} </dd>
                                     <dt>keterangan</dt>
-                                    <dd> {{ $intervensiKhusus->keterangan }} </dd>
-                                    <dt>Unit Kerja</dt>
-                                    <dd> {{ $intervensiKhusus->provinsi['nama'] }} </dd>
+                                    <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->keterangan }} </dd>
+
                                     <dt>Status</dt>
                                     @switch($intervensiKhusus->status)
                                         @case(0)
@@ -77,7 +72,7 @@
                                         @case(3)
                                             <dd>Tidak Disetujui</dd>
                                             <dt>Alasan</dt>
-                                            <dd>{{ $intervensiKhusus->alasan }}</dd>
+                                            <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->alasan }}</dd>
                                         @break
                                         @default
                                             <dd>Tidak ada yang sesuai</dd>
@@ -138,7 +133,6 @@
                 textarea.hide();
             }
         });
-
     </script>
 
 @endsection

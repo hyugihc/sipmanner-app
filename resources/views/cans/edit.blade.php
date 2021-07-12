@@ -96,7 +96,7 @@
 
 
                                 <div class="form-group">
-                                    <label>Jumlah Change Agents</label>
+                                    <label>Jumlah Change Agent Network <small>(Termasuk Change Leader & Change Champions)</small></label>
                                     <input type="number" name="jumlah_can" class="form-control"
                                         value="{{ old('jumlah_can', $can->jumlah_can) }}">
                                 </div>

@@ -28,6 +28,23 @@ class User extends Authenticatable
         return $this->role->id == 1;
     }
 
+    public function isChangeChampion()
+    {
+        return $this->role->id == 3;
+    }
+
+    public function isChangeLeader()
+    {
+        return $this->role->id == 2;
+    }
+
+    public function isTopLeader()
+    {
+        return $this->role->id == 5;
+    }
+
+
+
 
     /**
      * The attributes that should be hidden for arrays.

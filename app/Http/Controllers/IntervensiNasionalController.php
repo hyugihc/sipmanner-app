@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreIntervensiNasionalRequest;
 use App\IntervensiNasional;
 use App\Pia;
 use App\Provinsi;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class IntervensiNasionalController extends Controller
 {
-
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(IntervensiNasional::class, 'intervensi_nasional');
+    }
 
     /**
      * Display a listing of the resource.
@@ -20,9 +27,7 @@ class IntervensiNasionalController extends Controller
     public function index()
     {
         //
-        Auth::user()->cannot('viewAny', IntervensiNasional::class) ?  abort(403) : true;
-
-        $intervensiNasionals = IntervensiNasional::paginate(5);
+        $intervensiNasionals = IntervensiNasional::get();
         return view('programs.intervensi_nasionals.index', compact('intervensiNasionals'));
     }
 
@@ -34,11 +39,8 @@ class IntervensiNasionalController extends Controller
     public function create()
     {
         //
-        Auth::user()->cannot('create', IntervensiNasional::class) ?  abort(403) : true;
-
         $pias = Pia::all();
-        $provinsis = Provinsi::all();
-        return view('programs.intervensi_nasionals.create', compact('pias', 'provinsis'));
+        return view('programs.intervensi_nasionals.edit-add', compact('pias'));
     }
 
     /**
@@ -47,27 +49,13 @@ class IntervensiNasionalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreIntervensiNasionalRequest $request)
     {
         //
-        Auth::user()->cannot('create', IntervensiNasional::class) ?  abort(403) : true;
-
-        $request->validate([
-            'nama' => 'required|min:3|max:500',
-            'uraian_kegiatan' => 'required|max:500',
-            'volume' => 'required',
-            'output' => 'required',
-            'outcome' => 'required',
-            'pias' => 'required',
-        ]);
-
-
         $intervensiNasional = IntervensiNasional::create($request->all());
         $intervensiNasional->tahun = date("Y");
         $intervensiNasional->pias()->attach($request->pias);
-        $intervensiNasional->status = 1;
         $intervensiNasional->save();
-
 
         return redirect()->route('programs.index')
             ->with('success', 'Program Intervensi Nasional created successfully.');
@@ -82,8 +70,6 @@ class IntervensiNasionalController extends Controller
     public function show(IntervensiNasional $intervensiNasional)
     {
         //
-        Auth::user()->cannot('view', $intervensiNasional) ?  abort(403) : true;
-
         return view('programs.intervensi_nasionals.show', compact('intervensiNasional'));
     }
 
@@ -96,10 +82,9 @@ class IntervensiNasionalController extends Controller
     public function edit(IntervensiNasional $intervensiNasional)
     {
         //
-        Auth::user()->cannot('update', $intervensiNasional) ?  abort(403) : true;
         $pias = Pia::all();
         $idPia = $intervensiNasional->pias->pluck('id');
-        return view('programs.intervensi_nasionals.edit', compact('intervensiNasional', 'pias', 'idPia'));
+        return view('programs.intervensi_nasionals.edit-add', compact('intervensiNasional', 'pias', 'idPia'));
     }
 
     /**
@@ -109,20 +94,9 @@ class IntervensiNasionalController extends Controller
      * @param  \App\IntervensiNasional  $intervensiNasional
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, IntervensiNasional $intervensiNasional)
+    public function update(StoreIntervensiNasionalRequest $request, IntervensiNasional $intervensiNasional)
     {
         //
-        Auth::user()->cannot('update', $intervensiNasional) ?  abort(403) : true;
-
-        $request->validate([
-            'nama' => 'required|min:3|max:50',
-            'uraian_kegiatan' => 'required|max:500',
-            'volume' => 'required',
-            'output' => 'required',
-            'outcome' => 'required',
-            'pias' => 'required',
-        ]);
-
         $intervensiNasional->update($request->all());
         $intervensiNasional->pias()->sync($request->pias);
         $intervensiNasional->save();
@@ -140,8 +114,7 @@ class IntervensiNasionalController extends Controller
     public function destroy(IntervensiNasional $intervensiNasional)
     {
         //
-        Auth::user()->cannot('delete', $intervensiNasional) ?  abort(403) : true;
-
+        $intervensiNasional->pias()->detach();
         $intervensiNasional->delete();
 
         return redirect()->route('programs.index')
