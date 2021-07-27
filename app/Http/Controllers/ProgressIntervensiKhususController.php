@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProgressIntKhusRequest;
 use App\ProgressIntervensiKhusus;
 use App\IntervensiKhusus;
 use Illuminate\Http\Request;
@@ -20,16 +21,12 @@ class ProgressIntervensiKhususController extends Controller
      */
     public function index(IntervensiKhusus $intervensiKhusus)
     {
-        //
-        Auth::user()->cannot('viewAny', ProgressIntervensiKhusus::class) ?  abort(403) : true;
+        if (Auth::user()->provinsi_id != $intervensiKhusus->provinsi_id) abort(403);
 
         $progressPrograms = $intervensiKhusus->progress_intervensi_khususes()->paginate(5);
 
         return view('progress.khususes.index', compact('intervensiKhusus', 'progressPrograms'));
     }
-
-
-
 
 
     /**
@@ -39,10 +36,9 @@ class ProgressIntervensiKhususController extends Controller
      */
     public function create(IntervensiKhusus $intervensiKhusus)
     {
-        //
-        Auth::user()->cannot('create', ProgressIntervensiKhusus::class) ?  abort(403) : true;
+        if (Auth::user()->provinsi_id != $intervensiKhusus->provinsi_id) abort(403);
 
-        return view('progress.khususes.create', compact('intervensiKhusus'));
+        return view('progress.khususes.edit-add', compact('intervensiKhusus'));
     }
 
     /**
@@ -51,21 +47,12 @@ class ProgressIntervensiKhususController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, IntervensiKhusus $intervensiKhusus)
+    public function store(IntervensiKhusus $intervensiKhusus, StoreProgressIntKhusRequest $request)
     {
-        //
-        Auth::user()->cannot('create', ProgressIntervensiKhusus::class) ?  abort(403) : true;
-
-        $request->validate([
-            'uraian_program' => 'required|max:500',
-            'bulan' => 'required',
-            'presentase_program' => 'required',
-            'upload_dokumentasi' => 'nullable|mimes:pdf|max:2000',
-            'upload_bukti_dukung' => 'nullable|mimes:pdf|max:2000',
-            'keterangan' => 'nullable',
-        ]);
-
+        if (Auth::user()->provinsi_id != $intervensiKhusus->provinsi_id) abort(403);
+        
         $progressIntervensiKhusus = ProgressIntervensiKhusus::create($request->all());
+        $progressIntervensiKhusus->intervensi_khusus_id = $intervensiKhusus->id;
 
         if ($request->upload_dokumentasi != null) {
             $progressIntervensiKhusus->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
@@ -83,12 +70,10 @@ class ProgressIntervensiKhususController extends Controller
             );
         }
 
-
         $progressIntervensiKhusus->status = 1;
         $progressIntervensiKhusus->save();
 
-
-        return redirect()->route('progress_intervensi_khususes.index', $intervensiKhusus)
+        return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
             ->with('success', 'Progress Programs created successfully.');
     }
 
@@ -101,7 +86,7 @@ class ProgressIntervensiKhususController extends Controller
     public function show(IntervensiKhusus $intervensiKhusus, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
-        Auth::user()->cannot('view', $progressIntervensiKhusus) ?  abort(403) : true;
+        Auth::user()->cannot('view',  $progressIntervensiKhusus) ?  abort(403) : true;
 
         return view('progress.khususes.show', compact('intervensiKhusus', 'progressIntervensiKhusus'));
     }
@@ -115,9 +100,9 @@ class ProgressIntervensiKhususController extends Controller
     public function edit(IntervensiKhusus $intervensiKhusus, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
-        Auth::user()->cannot('update', $progressIntervensiKhusus) ?  abort(403) : true;
+        Auth::user()->cannot('update',  $progressIntervensiKhusus) ?  abort(403) : true;
 
-        return view('progress.khususes.edit', compact('intervensiKhusus', 'progressIntervensiKhusus'));
+        return view('progress.khususes.edit-add', compact('intervensiKhusus', 'progressIntervensiKhusus'));
     }
 
     /**
@@ -127,19 +112,10 @@ class ProgressIntervensiKhususController extends Controller
      * @param  \App\ProgressIntervensiKhusus  $progressIntervensiKhusus
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, IntervensiKhusus $intervensiKhusus, ProgressIntervensiKhusus $progressIntervensiKhusus)
+    public function update(IntervensiKhusus $intervensiKhusus, StoreProgressIntKhusRequest $request,  ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
-        Auth::user()->cannot('update', $progressIntervensiKhusus) ?  abort(403) : true;
-
-        $request->validate([
-            'uraian_program' => 'required|max:500',
-            'bulan' => 'required',
-            'presentase_program' => 'required',
-            'upload_dokumentasi' => 'nullable|mimes:pdf|max:2000',
-            'upload_bukti_dukung' => 'nullable|mimes:pdf|max:2000',
-            'keterangan' => 'nullable',
-        ]);
+        Auth::user()->cannot('update',  $progressIntervensiKhusus) ?  abort(403) : true;
 
         $progressIntervensiKhusus->update($request->all());
 
@@ -167,8 +143,10 @@ class ProgressIntervensiKhususController extends Controller
         $progressIntervensiKhusus->status = 1;
         $progressIntervensiKhusus->save();
 
-        return redirect()->route('progress_intervensi_khususes.index', $intervensiKhusus)
-            ->with('success', 'Progress Program updated successfully');
+        $message = ($progressIntervensiKhusus->status == 0) ? 'Data berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
+
+        return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
+            ->with('success', $message);
     }
 
     /**
@@ -180,10 +158,10 @@ class ProgressIntervensiKhususController extends Controller
     public function destroy(IntervensiKhusus $intervensiKhusus, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
-        Auth::user()->cannot('delete', $progressIntervensiKhusus) ?  abort(403) : true;
+        Auth::user()->cannot('delete',  $progressIntervensiKhusus) ?  abort(403) : true;
 
         $progressIntervensiKhusus->delete();
-        return redirect()->route('progress_intervensi_khususes.index', $intervensiKhusus)
+        return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
             ->with('success', 'Progress program intervensi khusus deleted successfully');
     }
 
@@ -211,7 +189,9 @@ class ProgressIntervensiKhususController extends Controller
         $progressIntervensiKhusus->alasan = $request->alasan;
         $progressIntervensiKhusus->save();
 
-        return redirect()->route('progress.index')
+        $intervensiKhusus = IntervensiKhusus::findOrFail($progressIntervensiKhusus->intervensi_khusus_id);
+
+        return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
             ->with('success', 'Approval is successfully assigned');
     }
 }

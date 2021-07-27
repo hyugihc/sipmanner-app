@@ -2,6 +2,8 @@
 
 @section('content')
 
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
 
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -85,7 +87,7 @@
                                         </td>
                                         <td>
                                             <a class="btn btn-block btn-primary btn-xs"
-                                                href="{{ route('progress_intervensi_nasionals.index', $intervensiNasional) }}">Show
+                                                href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional) }}">Show
                                                 Progress</a>
 
                                         </td>
@@ -166,7 +168,7 @@
                                         </td>
                                         <td>
                                             <a class="btn btn-block btn-primary btn-xs"
-                                                href="{{ route('progress_intervensi_khususes.index', $intervensiKhusus) }}">Show
+                                                href="{{ route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus) }}">Show
                                                 Progress</a>
 
                                         </td>
@@ -186,6 +188,17 @@
             </div>
         </div>
 
+        <!-- Toastr -->
+        <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>
 
-
-    @endsection
+        <script>
+            @if (Session::has('success'))
+                toastr.options = {
+                "closeButton": true,
+                "progressBar": false
+                }
+                toastr.success("{{ Session::get('success') }}");
+            @endif
+        </script>
+    </section>
+@endsection

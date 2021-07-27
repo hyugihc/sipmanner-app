@@ -2,6 +2,9 @@
 
 @section('content')
 
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
+
 
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -9,7 +12,7 @@
             <div class="row mb-2">
                 <div class="col-sm-2">
                     <a class="btn btn-block btn-primary btn-sm"
-                        href="{{ route('progress_intervensi_khususes.create', $intervensiKhusus) }}">Create</a>
+                        href="{{ route('intervensi-khususes.progress-intervensi-khususes.create', $intervensiKhusus) }}">Create</a>
                 </div><!-- /.col -->
 
                 <div class="col-sm-4">
@@ -17,11 +20,11 @@
                 </div><!-- /.col -->
 
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                    {{-- <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Progress Program</li>
                         <li class="breadcrumb-item active">{{ $intervensiKhusus->nama }}</li>
-                    </ol>
+                    </ol> --}}
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -31,11 +34,11 @@
     <!-- Main content -->
     <section class="content">
 
-        @if ($message = Session::get('success'))
+        {{-- @if ($message = Session::get('success'))
             <div class="alert alert-success">
                 <p>{{ $message }}</p>
             </div>
-        @endif
+        @endif --}}
 
         <div class="row">
             <div class="col-12">
@@ -84,22 +87,21 @@
                                                     Rejected
                                                 @break
                                                 @default
-
                                             @endswitch
 
                                         </td>
                                         <td>
                                             <form
-                                                action="{{ route('progress_intervensi_khususes.destroy', [$intervensiKhusus, $progress_program]) }}"
+                                                action="{{ route('intervensi-khususes.progress-intervensi-khususes.destroy', [$intervensiKhusus, $progress_program]) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a class="btn btn-block btn-primary btn-xs"
-                                                    href="{{ route('progress_intervensi_khususes.show', [$intervensiKhusus, $progress_program]) }}">Show</a>
+                                                    href="{{ route('intervensi-khususes.progress-intervensi-khususes.show', [$intervensiKhusus, $progress_program]) }}">Show</a>
 
                                                 @can('update', $progress_program)
                                                     <a class="btn btn-block btn-warning btn-xs"
-                                                        href="{{ route('progress_intervensi_khususes.edit', [$intervensiKhusus, $progress_program]) }}">Edit</a>
+                                                        href="{{ route('intervensi-khususes.progress-intervensi-khususes.edit', [$intervensiKhusus, $progress_program]) }}">Edit</a>
 
                                                 @endcan
                                                 @can('delete', $progress_program)
@@ -123,6 +125,19 @@
             </div>
         </div>
 
+        <!-- Toastr -->
+        <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>
 
+        <script>
+            @if (Session::has('success'))
+                toastr.options = {
+                "closeButton": true,
+                "progressBar": false
+                }
+                toastr.success("{{ Session::get('success') }}");
+            @endif
+        </script>
 
-    @endsection
+    </section>
+
+@endsection

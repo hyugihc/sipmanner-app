@@ -79,8 +79,7 @@
 
 
                                 <!-- form start -->
-                                <form action="{{ route('piks.approve', $progressIntervensiKhusus) }}" method="POST"
-                                    id="quickForm">
+                                <form action="{{ route('piks.approve', $progressIntervensiKhusus) }}" method="POST">
                                     @csrf
                                     @method('PUT')
 

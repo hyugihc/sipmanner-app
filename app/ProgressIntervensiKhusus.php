@@ -14,7 +14,7 @@ class ProgressIntervensiKhusus extends Model
      * @var array
      */
     protected $fillable = [
-        'intervensi_khusus_id', 'uraian_program', 'bulan', 'presentase_program', 'upload_dokumentasi', 'upload_bukti_dukung', 'keterangan'
+        'uraian_program', 'bulan', 'presentase_program', 'upload_dokumentasi', 'upload_bukti_dukung', 'keterangan'
     ];
 
     public function intervensi_khusus()

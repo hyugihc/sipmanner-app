@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\IntervensiKhusus;
 use App\ProgressIntervensiKhusus;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -16,13 +17,15 @@ class ProgressIntervensiKhususPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user, IntervensiKhusus $intervensiKhusus)
     {
         //
-        if ($user->role_id == 1) return true; //adminTS
-        if ($user->role_id == 2) return true; //cl
-        if ($user->role_id == 3) return true; //cc
-        if ($user->role_id == 5) return true; //tl
+        if ($intervensiKhusus->provinsi_id = $user->provinsi_id) {
+            if ($user->role_id == 1) return true; //adminTS
+            if ($user->role_id == 2) return true; //cl
+            if ($user->role_id == 3) return true; //cc
+            if ($user->role_id == 5) return true; //tl
+        }
         return false;
     }
 
@@ -49,10 +52,12 @@ class ProgressIntervensiKhususPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, IntervensiKhusus $intervensiKhusus)
     {
         //
-        if ($user->role_id == 3) return true; //cc
+        if ($intervensiKhusus->provinsi_id = $user->provinsi_id) {
+            if ($user->role_id == 3) return true; //cc
+        }
         return false;
     }
 
@@ -69,6 +74,7 @@ class ProgressIntervensiKhususPolicy
         if ($user->role_id == 3 and $progressIntervensiKhusus->status == 3) {
             return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
         }
+
         return false;
     }
 
@@ -82,9 +88,11 @@ class ProgressIntervensiKhususPolicy
     public function delete(User $user, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
+
         if ($user->role_id == 3 and $progressIntervensiKhusus->status == 3) {
             return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
         }
+
         return false;
     }
 
