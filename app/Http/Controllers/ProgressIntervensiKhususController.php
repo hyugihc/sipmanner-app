@@ -21,9 +21,16 @@ class ProgressIntervensiKhususController extends Controller
      */
     public function index(IntervensiKhusus $intervensiKhusus)
     {
-        if (Auth::user()->provinsi_id != $intervensiKhusus->provinsi_id) abort(403);
+        $user = Auth::user();
+        if ($user->provinsi_id != $intervensiKhusus->provinsi_id) abort(403);
 
-        $progressPrograms = $intervensiKhusus->progress_intervensi_khususes()->paginate(5);
+        if ($user->isChangeLeader() or $user->isTopLeader()) {
+            $progressPrograms = $intervensiKhusus->progress_intervensi_khususes()->where("status", "!=", 0)->get();
+        }
+
+        if ($user->isChangeChampion() or $user->isAdmin()) {
+            $progressPrograms = $intervensiKhusus->progress_intervensi_khususes()->get();
+        }
 
         return view('progress.khususes.index', compact('intervensiKhusus', 'progressPrograms'));
     }
@@ -36,7 +43,8 @@ class ProgressIntervensiKhususController extends Controller
      */
     public function create(IntervensiKhusus $intervensiKhusus)
     {
-        if (Auth::user()->provinsi_id != $intervensiKhusus->provinsi_id) abort(403);
+        $user = Auth::user();
+        if ($user->provinsi_id != $intervensiKhusus->provinsi_id and !$user->isChangeChampion()) abort(403);
 
         return view('progress.khususes.edit-add', compact('intervensiKhusus'));
     }
@@ -49,32 +57,31 @@ class ProgressIntervensiKhususController extends Controller
      */
     public function store(IntervensiKhusus $intervensiKhusus, StoreProgressIntKhusRequest $request)
     {
-        if (Auth::user()->provinsi_id != $intervensiKhusus->provinsi_id) abort(403);
-        
+        $user = Auth::user();
+        if ($user->provinsi_id != $intervensiKhusus->provinsi_id and !$user->isChangeChampion()) abort(403);
+
         $progressIntervensiKhusus = ProgressIntervensiKhusus::create($request->all());
         $progressIntervensiKhusus->intervensi_khusus_id = $intervensiKhusus->id;
+        $progressIntervensiKhusus->status = ($request->has('draft')) ? 0 : 1;
 
-        if ($request->upload_dokumentasi != null) {
+        if ($request->has("upload_dokumentasi")) {
             $progressIntervensiKhusus->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
                 'piks',
-                'pindok_' . $intervensiKhusus->nama . '_' .
-                    $request->user()->provinsi_id . '_' . $progressIntervensiKhusus->id . '.pdf'
+                $progressIntervensiKhusus->getNamaFileDokumentasi()
             );
         }
 
-        if ($request->upload_bukti_dukung != null) {
+        if ($request->has("upload_bukti_dukung")) {
             $progressIntervensiKhusus->upload_bukti_dukung = $request->file('upload_bukti_dukung')->storeAs(
                 'piks',
-                'pinduk_' . $intervensiKhusus->nama . '_' .
-                    $request->user()->provinsi_id . '_' . $progressIntervensiKhusus->id . '.pdf'
+                $progressIntervensiKhusus->getNamaFileBuktiDukung()
             );
         }
-
-        $progressIntervensiKhusus->status = 1;
         $progressIntervensiKhusus->save();
 
+        $message = ($progressIntervensiKhusus->status == 0) ? 'Progress berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
         return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
-            ->with('success', 'Progress Programs created successfully.');
+            ->with('success', $message);
     }
 
     /**
@@ -118,33 +125,30 @@ class ProgressIntervensiKhususController extends Controller
         Auth::user()->cannot('update',  $progressIntervensiKhusus) ?  abort(403) : true;
 
         $progressIntervensiKhusus->update($request->all());
+        $progressIntervensiKhusus->status = ($request->has('draft')) ? 0 : 1;
 
-        if ($request->upload_dokumentasi != null) {
+        if ($request->has("upload_dokumentasi")) {
             if ($progressIntervensiKhusus->upload_dokumentasi != null) {
                 Storage::delete($progressIntervensiKhusus->upload_dokumentasi);
             }
             $progressIntervensiKhusus->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
                 'piks',
-                'pindok_' . $intervensiKhusus->nama . '_' .
-                    $request->user()->provinsi_id . '_' . $progressIntervensiKhusus->id . '.pdf'
+                $progressIntervensiKhusus->getNamaFileDokumentasi()
             );
         }
 
-        if ($request->upload_bukti_dukung != null) {
+        if ($request->has("upload_bukti_dukung")) {
             if ($progressIntervensiKhusus->upload_bukti_dukung == null) {
                 Storage::delete($progressIntervensiKhusus->upload_bukti_dukung);
             }
             $progressIntervensiKhusus->upload_bukti_dukung = $request->file('upload_bukti_dukung')->storeAs(
                 'piks',
-                'pinduk_' . $intervensiKhusus->nama . '_' .
-                    $request->user()->provinsi_id . '_' . $progressIntervensiKhusus->id . '.pdf'
+                $progressIntervensiKhusus->getNamaFileBuktiDukung()
             );
         }
-        $progressIntervensiKhusus->status = 1;
         $progressIntervensiKhusus->save();
 
-        $message = ($progressIntervensiKhusus->status == 0) ? 'Data berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
-
+        $message = ($progressIntervensiKhusus->status == 0) ? 'Progress berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
         return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
             ->with('success', $message);
     }
@@ -159,10 +163,17 @@ class ProgressIntervensiKhususController extends Controller
     {
         //
         Auth::user()->cannot('delete',  $progressIntervensiKhusus) ?  abort(403) : true;
-
+        if ($progressIntervensiKhusus->upload_dokumentasi != null) {
+            Storage::delete($progressIntervensiKhusus->upload_dokumentasi);
+        }
+        if ($progressIntervensiKhusus->upload_bukti_dukung == null) {
+            Storage::delete($progressIntervensiKhusus->upload_bukti_dukung);
+        }
         $progressIntervensiKhusus->delete();
+
+        $message = "Progres Program berhasil dihapus";
         return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
-            ->with('success', 'Progress program intervensi khusus deleted successfully');
+            ->with('success', $message);
     }
 
     public function downloadDok(ProgressIntervensiKhusus $progressIntervensiKhusus)
@@ -185,13 +196,14 @@ class ProgressIntervensiKhususController extends Controller
     public function approve(Request $request, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         Auth::user()->cannot('approve', $progressIntervensiKhusus) ?  abort(403) : true;
+
         $progressIntervensiKhusus->status = $request->status;
         $progressIntervensiKhusus->alasan = $request->alasan;
         $progressIntervensiKhusus->save();
 
         $intervensiKhusus = IntervensiKhusus::findOrFail($progressIntervensiKhusus->intervensi_khusus_id);
-
+        $message = ($progressIntervensiKhusus->status == 2) ? 'Progres program berhasil disetujui' : 'Progres program berhasil untuk tidak disetujui';
         return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
-            ->with('success', 'Approval is successfully assigned');
+            ->with('success', $message);
     }
 }

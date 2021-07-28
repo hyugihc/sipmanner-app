@@ -3,6 +3,10 @@
 @section('content')
 
 
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
+
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -15,10 +19,10 @@
                 </div><!-- /.col -->
 
                 <div class="col-sm-6">
-                    {{-- <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Home</li>
-                        <li class="breadcrumb-item active">Cans</li>
-                    </ol> --}}
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item active">Laporan</li>
+                    </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -27,12 +31,6 @@
 
     <!-- Main content -->
     <section class="content">
-
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success">
-                <p>{{ $message }}</p>
-            </div>
-        @endif
 
         <div class="row">
             <div class="col-12">
@@ -68,84 +66,104 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{ $reportSm1->tahun }}</td>
-                                    <td>{{ $reportSm1->semester }}</td>
-                                    <td>{{ $reportSm1->updated_at }}</td>
-                                    <td>
-                                        @if ($reportSm1->user_id != null)
-                                            {{ $reportSm1->user->name }}
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @switch($reportSm1->status)
-                                            @case(0)
-                                                draft
-                                            @break
-                                            @case(1)
-                                                submitted
-                                            @break
-                                            @case(2)
-                                                approved
-                                            @break
-                                            @case(3)
-                                                rejected
-                                            @break
-                                            @default
+                                    @if (Auth::user()->isChangeLeader() and ($reportSm1->status == 0 or $reportSm1->status == 3))
+                                        <td>{{ $reportSm1->tahun }}</td>
+                                        <td>{{ $reportSm1->semester }}</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>Belum tersedia</td>
+                                        <td>-</td>
+                                    @else
+                                        <td>{{ $reportSm1->tahun }}</td>
+                                        <td>{{ $reportSm1->semester }}</td>
+                                        <td>{{ $reportSm1->updated_at }}</td>
+                                        <td>
+                                            @if ($reportSm1->user_id != null)
+                                                {{ $reportSm1->user->name }}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @switch($reportSm1->status)
+                                                @case(0)
+                                                    draft
+                                                @break
+                                                @case(1)
+                                                    submitted
+                                                @break
+                                                @case(2)
+                                                    approved
+                                                @break
+                                                @case(3)
+                                                    rejected
+                                                @break
+                                                @default
 
-                                        @endswitch
-                                    </td>
-                                    <td>
-                                        @can('view', $reportSm1)
-                                            <a class="btn btn-block btn-primary btn-xs"
-                                                href="{{ route('reports.show', $reportSm1) }}">Show</a>
-                                        @endcan
-                                        @can('update', $reportSm1)
-                                            <a class="btn btn-block btn-warning btn-xs"
-                                                href="{{ route('reports.edit', $reportSm1) }}">Edit</a>
-                                        @endcan
-                                    </td>
+                                            @endswitch
+                                        </td>
+                                        <td>
+                                            @can('view', $reportSm1)
+                                                <a class="btn btn-block btn-primary btn-xs"
+                                                    href="{{ route('reports.show', $reportSm1) }}">Show</a>
+                                            @endcan
+                                            @can('update', $reportSm1)
+                                                <a class="btn btn-block btn-warning btn-xs"
+                                                    href="{{ route('reports.edit', $reportSm1) }}">Edit</a>
+                                            @endcan
+                                        </td>
+
+                                    @endif
+
                                 </tr>
                                 <tr>
-                                    <td>{{ $reportSm2->tahun }}</td>
-                                    <td>{{ $reportSm2->semester }}</td>
-                                    <td>{{ $reportSm2->updated_at }}</td>
-                                    <td>
-                                        @if ($reportSm2->user_id != null)
-                                            {{ $reportSm2->user->name }}
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @switch($reportSm2->status)
-                                            @case(0)
-                                                draft
-                                            @break
-                                            @case(1)
-                                                submitted
-                                            @break
-                                            @case(2)
-                                                approved
-                                            @break
-                                            @case(3)
-                                                rejected
-                                            @break
-                                            @default
+                                    @if (Auth::user()->isChangeLeader() and ($reportSm2->status == 0 or $reportSm2->status == 3))
+                                        <td>{{ $reportSm2->tahun }}</td>
+                                        <td>{{ $reportSm2->semester }}</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>Belum tersedia</td>
+                                        <td>-</td>
+                                    @else
+                                        <td>{{ $reportSm2->tahun }}</td>
+                                        <td>{{ $reportSm2->semester }}</td>
+                                        <td>{{ $reportSm2->updated_at }}</td>
+                                        <td>
+                                            @if ($reportSm2->user_id != null)
+                                                {{ $reportSm2->user->name }}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @switch($reportSm2->status)
+                                                @case(0)
+                                                    draft
+                                                @break
+                                                @case(1)
+                                                    submitted
+                                                @break
+                                                @case(2)
+                                                    approved
+                                                @break
+                                                @case(3)
+                                                    rejected
+                                                @break
+                                                @default
 
-                                        @endswitch
-                                    </td>
-                                    <td>
-                                        @can('view', $reportSm2)
-                                            <a class="btn btn-block btn-primary btn-xs"
-                                                href="{{ route('reports.show', $reportSm2) }}">Show</a>
-                                        @endcan
-                                        @can('update', $reportSm2)
-                                            <a class="btn btn-block btn-warning btn-xs"
-                                                href="{{ route('reports.edit', $reportSm2) }}">Edit</a>
-                                        @endcan
-                                    </td>
+                                            @endswitch
+                                        </td>
+                                        <td>
+                                            @can('view', $reportSm2)
+                                                <a class="btn btn-block btn-primary btn-xs"
+                                                    href="{{ route('reports.show', $reportSm2) }}">Show</a>
+                                            @endcan
+                                            @can('update', $reportSm2)
+                                                <a class="btn btn-block btn-warning btn-xs"
+                                                    href="{{ route('reports.edit', $reportSm2) }}">Edit</a>
+                                            @endcan
+                                        </td>
+                                    @endif
                                 </tr>
 
                             </tbody>
@@ -157,6 +175,18 @@
             </div>
         </div>
 
+        <!-- Toastr -->
+        <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>
+
+        <script>
+            @if (Session::has('success'))
+                toastr.options = {
+                "closeButton": true,
+                "progressBar": false
+                }
+                toastr.success("{{ Session::get('success') }}");
+            @endif
+        </script>
 
 
     </section>

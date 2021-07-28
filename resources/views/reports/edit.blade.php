@@ -7,13 +7,14 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Edit</h1>
+
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Report</li>
-                        <li class="breadcrumb-item active">{{ $report->tahun }}</li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('reports.index') }}">Laporan</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('reports.index') }}">{{ $report->tahun }}</a></li>
+                        <li class="breadcrumb-item active">Semester {{ $report->semester }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -30,7 +31,7 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Laporan Tahun {{ $report->tahun }} &nbsp; Semester
+                            <h3 class="card-title">Edit Laporan Tahun {{ $report->tahun }} Semester
                                 {{ $report->semester }}
                             </h3>
                         </div>
@@ -42,40 +43,42 @@
 
                             <div class="card-body">
 
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
 
 
                                 <div class="form-group">
-                                    <label>Pendahuluan</label>
+                                    <label>BAB I. Pendahuluan</label>
                                     <textarea class="form-control" name="bab_i" id="" cols="10" rows="10"
                                         placeholder="Pada bagian ini, dijelaskan tujuan program perubahan secara umum. Dijelaskan pula bahwa kegiatan perubahan ini merupakan bagian dari program reformasi birokrasi di unit kerja yang dimulai dari pilar manajemen perubahan sebagai inisiator dan integrator pilar-pilar reformasi birokrasi lainnya. Kemudian dalam pelaksanaannya, dijelaskan secara ringkas bahwa program perubahan ini melibatkan area perubahan lainnya (seperti pelayanan publik, akuntabilitas, pengawasan, SDM, tatalaksana), sehingga dokumen ini dapat dijadikan sebagai bukti dukung pelaksanaan RB unit kerja yang terintegrasi yang tidak hanya menjawab sisi manajemen perubahan saja, namun juga pilar lainnya. Pada akhir bagian ini, dijelaskan harapan yang ingin dicapai dari kegiatan ini (terutama dalam rangka peningkatan kinerja dan kualitas pelayanan publik)">{{ $report->bab_i }}</textarea>
                                 </div>
 
-                                @error('bab_i')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-
                                 <div class="form-group">
-                                    <label>Latar Belakang</label>
+                                    <label>BAB II. Latar Belakang</label>
                                     <textarea class="form-control" name="bab_ii" id="" cols="30" rows="10"
                                         placeholder="Program perubahan ini dilatarbelakangi oleh aspek yang dinilai perlu dan menjadi prioritas utama dalam menjawab kebutuhan untuk meningkatkan kinerja organisasi unit kerja dalam berbagai hal (terutama kualitas pelayanan publik).">{{ $report->bab_ii }}</textarea>
                                 </div>
 
-                                @error('bab_ii')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-
                                 <div class="form-group">
-                                    <label>Program</label>
+                                    <label>BAB III. Program</label>
                                     <textarea class="form-control" name="bab_iii" id="" cols="30" rows="10"
                                         placeholder="Program seharusnya terbentuk untuk menjawab kebutuhan, mengatasi permasalahan, atau sebagai upaya meningkatkan kinerja unit kerja. Program perubahan yang meningkatkan kualitas pelayanan publik unit kerja akan memperoleh poin penilaian yang lebih besar dalam penilaian RB Keterangan :     Khusus item Pelaksanaan : dalam bagian ini dijelaskan pelaksanaan program secara rinci dimulai dari proses perencanaan (termasuk penyusunan timeline kegiatan atau roadmap bila ada, dan melibatkan stakeholder internal dan eksternal/masyarakat/pengguna data), implementasi, dan upaya monitoring dan evaluasi yang berkala. Dijelaskan pula dalam melaksanakan program ini melibat aspek pilar perubahan apa saja atau bagaimana peran pilar-pilar RB lainya dalam menyukseskan program perubahan ini.">{{ $report->bab_iii }}</textarea>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Program Intervensi Nasional </label>
-                                    <div class="card-body table-responsive p-0">
-                                        <table class="table table-hover text-nowrap">
+                                    <label>A. Program Intervensi Nasional </label>
+                                    <div class="card-body table-bordered table-condensed table-responsive p-0">
+                                        <table class="table table-hover">
                                             <thead>
                                                 <tr>
+                                                    <th>No</th>
                                                     <th>Nama</th>
                                                     <th>Volume</th>
                                                     <th>Output</th>
@@ -83,44 +86,56 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @php
+                                                    $i = 1;
+                                                @endphp
                                                 @foreach ($intervensiNasionalProvinsis as $pi)
                                                     <tr>
+                                                        <td>{{ $i }}</td>
                                                         <td>{{ $pi->intervensiNasional->nama }}</td>
                                                         <td>{{ $pi->intervensiNasional->volume }}</td>
                                                         <td>{{ $pi->intervensiNasional->output }}</td>
                                                         <td>{{ $pi->intervensiNasional->outcome }} </td>
-
-
-
                                                     </tr>
+                                                    @php
+                                                        $i++;
+                                                    @endphp
                                                 @endforeach
 
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
+
+
                                 <div class="form-group">
-                                    <label>Program Intervensi Khusus </label>
-                                    <div class="card-body table-responsive p-0">
-                                        <table class="table table-hover text-nowrap">
+                                    <label>B. Program Intervensi Khusus </label>
+                                    <div class="card-body table-bordered table-condensed table-responsive p-0">
+                                        <table class="table table-hover">
                                             <thead>
                                                 <tr>
+                                                    <th>No</th>
                                                     <th>Nama</th>
                                                     <th>Volume</th>
                                                     <th>Output</th>
                                                     <th>Outcome</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @php
+                                                    $i = 1;
+                                                @endphp
                                                 @foreach ($intervensiKhususes as $pi)
                                                     <tr>
+                                                        <td>{{ $i }}</td>
                                                         <td>{{ $pi->nama }}</td>
                                                         <td>{{ $pi->volume }}</td>
                                                         <td>{{ $pi->output }}</td>
                                                         <td>{{ $pi->outcome }} </td>
-
                                                     </tr>
+                                                    @php
+                                                        $i++;
+                                                    @endphp
                                                 @endforeach
 
                                             </tbody>
@@ -128,62 +143,35 @@
                                     </div>
                                 </div>
 
-
-                                @error('bab_iii')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-
                                 <div class="form-group">
-                                    <label>Perubahan yang Konkret</label>
+                                    <label>BAB IV. Perubahan yang Konkret</label>
                                     <textarea class="form-control" name="bab_iv" id="" cols="30" rows="10"
                                         placeholder="Program yg dibangun harus berdasarkan permasalahan yang ada di unit kerja, sehingga dengan adanya program akan jelas menyelesaikan masalah yang ada, dan tentunya akan meningkatkan nilai budaya kinerja">{{ $report->bab_iv }}</textarea>
                                 </div>
 
-                                @error('bab_iv')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-
                                 <div class="form-group">
-                                    <label>Komitmen Pimpinan</label>
+                                    <label>BAB V. Komitmen Pimpinan</label>
                                     <textarea class="form-control" name="bab_v" id="" cols="30" rows="10"
                                         placeholder="Komitmen pimpinan adalah kunci utama dalam memimpin perubahan, menyukseskan program reformasi birokrasi unit kerja/instansi, perbaikan kualitas pelayanan publik dan perbaikan kinerja dalam berbagai aspek teknis dan non teknis. Komitmen pimpinan dimulai dari upaya shared vision kepada jajarannya sehingga semua pegawai di unit kerja mempunyai sense dan visi yang sama dalam berorganisasi, dan sebagai langkah dasar dalam menciptakan budaya kerja organisasi yang kuat. Dalam konteks laporan ini, pada bagian ini ditunjukkan bahwa program perubahan ini mendapat dukungan penuh dari pimpinan dan sebagai upaya mencapai visi pimpinan unit kerja untuk menyelesaikan permasalahan unit kerja dan meningkatkan kinerja. Komitmen ini dapat berupa keterlibatan langsung pimpinan dalam perencanaan, implementasi, atau monitoring dan evaluasi program perubahan ini; dapat pula berupa dukungan pimpinan dalam berbagai kesempatan untuk menginternalisasi kegiatan ini, atau bentuk lainnya.">{{ $report->bab_v }}</textarea>
                                 </div>
 
-                                @error('bab_v')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-
                                 <div class="form-group">
-                                    <label>Kesimpulan</label>
+                                    <label>BAB VI. Kesimpulan</label>
                                     <textarea class="form-control" name="bab_vi" id="" cols="30" rows="10"
                                         placeholder="Dijelaskan secara umum apakah program ini telah menjawab kebutuhan yang menjadi dasar penciptaan program ini (menyelesaikan permasalahan, peningkatan pelayanan publik, atau peningkatan kinerja unit kerja) atau sesuai dengan harapan pada bagian pendahuluan. Bila telah sesuai, dijelaskan bahwa hal ini menjadi perubahan yang nyata (konkret) di unit  kerja">{{ $report->bab_iv }}</textarea>
                                 </div>
 
-                                @error('bab_vi')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-
                                 <div class="form-group">
-                                    <label>Penutup</label>
+                                    <label>BAB VII. Penutup</label>
                                     <textarea class="form-control" name="bab_vii" id="" cols="30" rows="10"
                                         placeholder="Berisi penutup secara umum, namun juga diulas rencana kedepan terkait program kegiatan ini, apakah tetap dilanjutkan, ditindaklanjuti dengan program/kegiatan lanjutan,dimodifikasi, atau ditingkatkan menjadi kegiatan yang lebih besar.">{{ $report->bab_vii }}</textarea>
                                 </div>
-
-                                @error('bab_vii')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
 
                                 <div class="form-group">
                                     <label>Lampiran</label><br>
                                     <span>Berisi foto-foto/dokumentasi lain terkait kegiatan Manajemen Perubahan (Catatan :
                                         Jumlah halaman termasuk lampiran maksimal 20 halaman)</span>
                                 </div>
-
-                                @error('bab_viii')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-
-
 
                             </div>
                             <!-- /.card-body -->
@@ -235,7 +223,6 @@
                 // it is unnecessary to have to manually call the modal.
                 // $('#addBookDialog').modal('show');
             });
-
         </script>
     </section>
 

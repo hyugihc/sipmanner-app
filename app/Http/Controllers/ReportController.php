@@ -12,14 +12,6 @@ use Illuminate\Support\Facades\Auth;
 class ReportController extends Controller
 {
 
-    private $bab_i = '';
-    private $bab_ii = '';
-    private $bab_iii = '';
-    private $bab_iv = '';
-    private $bab_v = '';
-    private $bab_vi = '';
-    private $bab_vii = '';
-    private $bab_viii = '';
     /**
      * Display a listing of the resource.
      *
@@ -27,13 +19,15 @@ class ReportController extends Controller
      */
     public function index()
     {
+
+        $user = Auth::user();
         $reportSm1 = Report::firstOrCreate(
-            ['tahun' => date("Y"), 'semester' => '1', 'provinsi_id' => Auth::user()->provinsi_id],
-            ['status' => '0',  'bab_i' => $this->bab_i, 'bab_ii' => $this->bab_ii, 'bab_iii' => $this->bab_iii, 'bab_iv' => $this->bab_iv, 'bab_v' => $this->bab_v, 'bab_vi' => $this->bab_vi, 'bab_vii' => $this->bab_vii, 'bab_viii' => $this->bab_viii]
+            ['tahun' => date("Y"), 'semester' => '1', 'provinsi_id' => $user->provinsi_id],
+            ['status' => '0']
         );
         $reportSm2 = Report::firstOrCreate(
-            ['tahun' => date("Y"), 'semester' => '2', 'provinsi_id' => Auth::user()->provinsi_id],
-            ['status' => '0',  'bab_i' => $this->bab_i, 'bab_ii' => $this->bab_ii, 'bab_iii' => $this->bab_iii, 'bab_iv' => $this->bab_iv, 'bab_v' => $this->bab_v, 'bab_vi' => $this->bab_vi, 'bab_vii' => $this->bab_vii, 'bab_viii' => $this->bab_viii]
+            ['tahun' => date("Y"), 'semester' => '2', 'provinsi_id' => $user->provinsi_id],
+            ['status' => '0']
         );
 
         return view('reports.index', compact('reportSm1',  'reportSm2'));

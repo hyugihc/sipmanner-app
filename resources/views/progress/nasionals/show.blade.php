@@ -11,9 +11,12 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Progress Program</li>
-                        <li class="breadcrumb-item active">{{ $intervensiNasional->nama }}</li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"> Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('progress.index') }}">Progres</a></li>
+                        <li class="breadcrumb-item"><a
+                                href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional) }}">{{ $intervensiNasional->nama }}</a>
+                        </li>
+                        <li class="breadcrumb-item active">{{ $progressIntervensiNasional->bulan }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->

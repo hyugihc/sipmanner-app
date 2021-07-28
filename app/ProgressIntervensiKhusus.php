@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+
 use App\IntervensiKhusus;
 
 use Illuminate\Database\Eloquent\Model;
@@ -22,4 +23,13 @@ class ProgressIntervensiKhusus extends Model
         return $this->belongsTo(IntervensiKhusus::class);
     }
 
+    public function getNamaFileDokumentasi()
+    {
+        return 'pikdok_' . $this->intervensi_khusus->provinsi->nama . '_' . $this->intervensi_khusus->nama . '_' . $this->id . '.pdf';
+    }
+
+    public function getNamaFileBuktiDukung()
+    {
+        return 'pikduk_' . $this->intervensi_khusus->provinsi->nama . '_' . $this->intervensi_khusus->nama . '_' . $this->id . '.pdf';
+    }
 }

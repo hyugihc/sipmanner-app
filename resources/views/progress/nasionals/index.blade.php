@@ -13,17 +13,12 @@
                     <a class="btn btn-block btn-primary btn-sm"
                         href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.create', $intervensiNasional) }}">Create</a>
                 </div><!-- /.col -->
-
-                <div class="col-sm-4">
-
-                </div><!-- /.col -->
-
-                <div class="col-sm-6">
-                    {{-- <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Progress Program</li>
+                <div class="col-sm-10">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"> Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('progress.index') }}">Progres</a></li>
                         <li class="breadcrumb-item active">{{ $intervensiNasional->nama }}</li>
-                    </ol> --}}
+                    </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -37,7 +32,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">{{ $intervensiNasional->nama }}</h3>
+                        <h3 class="card-title">Progres {{ $intervensiNasional->nama }}</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -57,6 +52,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Penjelasan Progres</th>
                                     <th>Bulan</th>
                                     <th>Status</th>
@@ -64,8 +60,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $i = 1;
+                                @endphp
                                 @foreach ($progressPrograms as $progress_program)
                                     <tr>
+                                        <td>{{ $i }}</td>
                                         <td>{{ $progress_program->uraian_program }}</td>
                                         <td>
                                             @switch($progress_program->bulan)
@@ -151,11 +151,13 @@
                                         </td>
 
                                     </tr>
+                                    @php
+                                        $i++;
+                                    @endphp
                                 @endforeach
 
                             </tbody>
                         </table>
-                        {{ $progressPrograms->links() }}
                     </div>
                     <!-- /.card-body -->
                 </div>

@@ -10,11 +10,18 @@
                     {{-- <h1 class="m-0">Edit</h1> --}}
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    {{-- <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Progress Program</li>
-                        <li class="breadcrumb-item active">{{ $intervensiNasional->nama }}</li>
-                    </ol> --}}
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"> Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('progress.index') }}">Progres</a></li>
+                        <li class="breadcrumb-item"><a
+                                href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional) }}">{{ $intervensiNasional->nama }}</a>
+                        </li>
+                        @if (isset($progressIntervensiNasional))
+                            <li class="breadcrumb-item active">{{ $progressIntervensiNasional->bulan }}</li>
+                        @else
+                            <li class="breadcrumb-item active">Create</li>
+                        @endif
+                    </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -30,7 +37,10 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">{{ $intervensiNasional->nama }}</h3>
+
+                            <h3 class="card-title">
+                                {{ isset($progressIntervensiNasional) ? 'Edit progres' . $intervensiNasional->nama : 'Create progres ' . $intervensiNasional->nama }}
+                            </h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -131,7 +141,9 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <input type="submit" class="btn btn-primary" name=" draft" value="Simpan sebagai draft">
+                            <input type="submit" class="btn btn-primary" name=" submit"
+                                value="{{ isset($progressIntervensiNasional) ? 'Simpan' : 'Submit' }}">
                         </div>
                         </form>
                     </div>
@@ -146,7 +158,7 @@
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
-        
+
     </section>
 
 

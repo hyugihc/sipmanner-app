@@ -20,17 +20,25 @@ class ProgressIntervensiNasionalController extends Controller
     public function index(IntervensiNasional $intervensiNasional)
     {
         //
-        Auth::user()->cannot('viewAny', ProgressIntervensiNasional::class) ?  abort(403) : true;
+        $user = Auth::user();
+        $user->cannot('viewAny', ProgressIntervensiNasional::class) ?  abort(403) : true;
 
-        $intervensiNasionalProvinsi = IntervensiNasionalProvinsi::where('provinsi_id', Auth::user()->provinsi_id)->where('intervensi_nasional_id', $intervensiNasional->id)->first();
+        $intervensiNasionalProvinsi = IntervensiNasionalProvinsi::where('provinsi_id', $user->provinsi_id)->where('intervensi_nasional_id', $intervensiNasional->id)->first();
         if ($intervensiNasionalProvinsi == null) {
             $intervensiNasionalProvinsi =  new IntervensiNasionalProvinsi();
-            $intervensiNasionalProvinsi->provinsi_id = Auth::user()->provinsi_id;
+            $intervensiNasionalProvinsi->provinsi_id = $user->provinsi_id;
             $intervensiNasionalProvinsi->intervensi_nasional_id = $intervensiNasional->id;
             $intervensiNasionalProvinsi->save();
         }
 
-        $progressPrograms = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $intervensiNasionalProvinsi->id)->paginate(5);
+        if ($user->isChangeLeader() or $user->isTopLeader()) {
+            $progressPrograms = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $intervensiNasionalProvinsi->id)->where("status", "!=", 0)->get();
+        }
+
+        if ($user->isChangeChampion() or $user->isAdmin()) {
+            $progressPrograms = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $intervensiNasionalProvinsi->id)->get();
+        }
+
 
         return view('progress.nasionals.index', compact('intervensiNasional', 'progressPrograms'));
     }
@@ -60,30 +68,26 @@ class ProgressIntervensiNasionalController extends Controller
         Auth::user()->cannot('create', ProgressIntervensiNasional::class) ?  abort(403) : true;
 
         $intervensiNasionalProvinsi = IntervensiNasionalProvinsi::where('provinsi_id', Auth::user()->provinsi_id)->where('intervensi_nasional_id', $intervensiNasional->id)->first();
-
         $progressIntervensiNasional = ProgressIntervensiNasional::create($request->all());
+        $progressIntervensiNasional->status = ($request->has('draft')) ? 0 : 1;
         $progressIntervensiNasional->intervensi_nasional_provinsi_id = $intervensiNasionalProvinsi->id;
-
-        if ($request->upload_dokumentasi != null) {
+        if ($request->has("upload_dokumentasi")) {
             $progressIntervensiNasional->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
                 'pins',
-                'pindok_' . $intervensiNasional->id . '_' .
-                    $request->user()->provinsi_id . '_' . $progressIntervensiNasional->id . '.pdf'
+                $progressIntervensiNasional->getNamaFileDokumentasi()
             );
         }
-
-        if ($request->upload_bukti_dukung != null) {
+        if ($request->has("upload_bukti_dukung")) {
             $progressIntervensiNasional->upload_bukti_dukung = $request->file('upload_bukti_dukung')->storeAs(
                 'pins',
-                'pinduk_' . $intervensiNasional->id . '_' .
-                    $request->user()->provinsi_id . '_' . $progressIntervensiNasional->id . '.pdf'
+                $progressIntervensiNasional->getNamaFileBuktiDukung()
             );
         }
-        $progressIntervensiNasional->status = 1;
         $progressIntervensiNasional->save();
 
+        $message = ($progressIntervensiNasional->status == 0) ? 'Progress berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
         return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
-            ->with('success', 'Progres program berhasil dibuat');
+            ->with('success', $message);
     }
 
     /**
@@ -127,35 +131,28 @@ class ProgressIntervensiNasionalController extends Controller
         Auth::user()->cannot('update', $progressIntervensiNasional) ?  abort(403) : true;
 
         $progressIntervensiNasional->update($request->all());
-
-        if ($request->upload_dokumentasi != null) {
+        $progressIntervensiNasional->status = ($request->has('draft')) ? 0 : 1;
+        if ($request->has("upload_dokumentasi")) {
             if ($progressIntervensiNasional->upload_dokumentasi != null) {
                 Storage::delete($progressIntervensiNasional->upload_dokumentasi);
             }
             $progressIntervensiNasional->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
                 'pins',
-                'pindok_' . $intervensiNasional->id . '_' .
-                    $request->user()->provinsi_id . '_' . $progressIntervensiNasional->id . '.pdf'
+                $progressIntervensiNasional->getNamaFileDokumentasi()
             );
         }
-
-        if ($request->upload_bukti_dukung != null) {
+        if ($request->has("upload_bukti_dukung")) {
             if ($progressIntervensiNasional->upload_bukti_dukung != null) {
                 Storage::delete($progressIntervensiNasional->upload_bukti_dukung);
             }
             $progressIntervensiNasional->upload_bukti_dukung = $request->file('upload_bukti_dukung')->storeAs(
                 'pins',
-                'pinduk_' . $intervensiNasional->id . '_' .
-                    $request->user()->provinsi_id . '_' . $progressIntervensiNasional->id . '.pdf'
+                $progressIntervensiNasional->getNamaFileBuktiDukung()
             );
         }
-
-
-        $progressIntervensiNasional->status = 1;
         $progressIntervensiNasional->save();
 
-        $message = ($progressIntervensiNasional->status == 0) ? 'Data berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
-
+        $message = ($progressIntervensiNasional->status == 0) ? 'Progress berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
         return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
             ->with('success', $message);
     }
@@ -171,9 +168,17 @@ class ProgressIntervensiNasionalController extends Controller
         //
         Auth::user()->cannot('delete', $progressIntervensiNasional) ?  abort(403) : true;
 
+        if ($progressIntervensiNasional->upload_dokumentasi != null) {
+            Storage::delete($progressIntervensiNasional->upload_dokumentasi);
+        }
+        if ($progressIntervensiNasional->upload_bukti_dukung != null) {
+            Storage::delete($progressIntervensiNasional->upload_bukti_dukung);
+        }
         $progressIntervensiNasional->delete();
+
+        $message = 'Progres program berhasil dihapus';
         return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
-            ->with('success', 'Progres program berhasil dihapus');
+            ->with('success', $message);
     }
 
     public function downloadDok(ProgressIntervensiNasional $progressIntervensiNasional)
@@ -200,7 +205,8 @@ class ProgressIntervensiNasionalController extends Controller
         $progressIntervensiNasional->alasan = $request->alasan;
         $progressIntervensiNasional->save();
 
+        $message = ($progressIntervensiNasional->status == 2) ? 'Progres program berhasil disetujui' : 'Progres program berhasil untuk tidak disetujui';
         return redirect()->route('progress.index')
-            ->with('success', 'Approval is successfully assigned');
+            ->with('success', $message);
     }
 }

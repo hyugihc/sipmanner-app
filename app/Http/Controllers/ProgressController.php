@@ -17,14 +17,14 @@ class ProgressController extends Controller
     public function index()
     {
         //
-        $intervensiNasionals = IntervensiNasional::get();
+        $intervensiNasionals = IntervensiNasional::where('status', 2)->get();
 
         $user = Auth::user();
-        if ($user->role_id == 1) {
+        if ($user->isAdmin()) {
             $intervensiKhususes = IntervensiKhusus::where('status', 2)->get();
-        } elseif ($user->role_id  == 2) {
+        } elseif ($user->isChangeLeader()) {
             $intervensiKhususes = IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('status', 2)->get();
-        } elseif ($user->role_id  == 3) {
+        } elseif ($user->isChangeChampion()) {
             $intervensiKhususes = IntervensiKhusus::where('user_id', $user->id)->where('provinsi_id', $user->provinsi_id)->where('status', 2)->get();
         }
 

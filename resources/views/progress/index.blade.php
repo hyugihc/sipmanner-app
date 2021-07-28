@@ -10,14 +10,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    {{-- <a class="btn btn-block btn-primary btn-sm"
-                        href="{{ route('intervensiKhususs.create') }}">Create</a> --}}
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    {{-- <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Progress Program</li>
-                    </ol> --}}
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"> Home</a></li>
+                        <li class="breadcrumb-item active">Progres</li>
+                    </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -26,12 +24,6 @@
 
     <!-- Main content -->
     <section class="content">
-
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success">
-                <p>{{ $message }}</p>
-            </div>
-        @endif
 
         <div class="row">
             <div class="col-12">
@@ -132,7 +124,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    @if (Auth::user()->role_id == 1)
+                                    @if (Auth::user()->isAdmin())
                                         <th>Satker</th>
                                     @endif
                                     <th>Nama</th>
@@ -149,7 +141,7 @@
                                 @foreach ($intervensiKhususes as $intervensiKhusus)
                                     <tr>
                                         <td>{{ $i }}</td>
-                                        @if (Auth::user()->role_id == 1)
+                                        @if (Auth::user()->isAdmin())
                                             <td>{{ $intervensiKhusus->provinsi->nama }}</td>
                                         @endif
                                         <td>{{ $intervensiKhusus->nama }}</td>
@@ -158,27 +150,22 @@
                                                 <small class="badge badge-success"> {{ $pia->nama }}</small>
                                             @endforeach
                                         </td>
-
                                         <td>
-                                            {{ $intervensiNasional->output }}
-
+                                            {{ $intervensiKhusus->output }}
                                         </td>
                                         <td>
-                                            {{ $intervensiNasional->outcome }}
+                                            {{ $intervensiKhusus->outcome }}
                                         </td>
                                         <td>
                                             <a class="btn btn-block btn-primary btn-xs"
                                                 href="{{ route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus) }}">Show
                                                 Progress</a>
-
                                         </td>
-
                                     </tr>
                                     @php
                                         $i++;
                                     @endphp
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>

@@ -7,13 +7,14 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    {{-- <h1 class="m-0">Cans Create</h1> --}}
+                   {{-- <h1 class="m-0"> Create</h1> --}}
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    {{-- <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Cans</li>
-                    </ol> --}}
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"> Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('cans.index') }}"> Data</a></li>
+                        <li class="breadcrumb-item active"> Create</a></li>
+                    </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -40,7 +41,7 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Form Data Change Network</h3>
+                            <h3 class="card-title">Form Data Change Agent Network</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -98,7 +99,8 @@
                                 @enderror
 
                                 <div class="form-group">
-                                    <label>Jumlah Change Agent Network <small>(Termasuk Change Leader & Change Champions)</small></label>
+                                    <label>Jumlah Change Agent Network <small>(Termasuk Change Leader & Change
+                                            Champions)</small></label>
                                     <input type="number" name="jumlah_can" class="form-control"
                                         value="{{ old('jumlah_can') }}">
                                 </div>

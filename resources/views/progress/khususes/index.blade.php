@@ -15,16 +15,12 @@
                         href="{{ route('intervensi-khususes.progress-intervensi-khususes.create', $intervensiKhusus) }}">Create</a>
                 </div><!-- /.col -->
 
-                <div class="col-sm-4">
-
-                </div><!-- /.col -->
-
-                <div class="col-sm-6">
-                    {{-- <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Progress Program</li>
+                <div class="col-sm-10">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"> Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('progress.index') }}">Progres</a></li>
                         <li class="breadcrumb-item active">{{ $intervensiKhusus->nama }}</li>
-                    </ol> --}}
+                    </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -34,17 +30,11 @@
     <!-- Main content -->
     <section class="content">
 
-        {{-- @if ($message = Session::get('success'))
-            <div class="alert alert-success">
-                <p>{{ $message }}</p>
-            </div>
-        @endif --}}
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">{{ $intervensiKhusus->nama }}</h3>
+                        <h3 class="card-title">Progress {{ $intervensiKhusus->nama }}</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -64,6 +54,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Penjelasan Progress</th>
                                     <th>Tanggal</th>
                                     <th>Status</th>
@@ -71,12 +62,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $i = 1;
+                                @endphp
                                 @foreach ($progressPrograms as $progress_program)
                                     <tr>
+                                        <td>{{ $i }}</td>
                                         <td>{{ $progress_program->uraian_program }}</td>
                                         <td>{{ $progress_program->bulan }}</td>
                                         <td>
                                             @switch($progress_program->status)
+                                                @case(0)
+                                                    Draft
+                                                @break
                                                 @case(1)
                                                     Submitted
                                                 @break
@@ -113,11 +111,13 @@
                                         </td>
 
                                     </tr>
+                                    @php
+                                        $i++;
+                                    @endphp
                                 @endforeach
 
                             </tbody>
                         </table>
-                        {{ $progressPrograms->links() }}
                     </div>
                     <!-- /.card-body -->
                 </div>

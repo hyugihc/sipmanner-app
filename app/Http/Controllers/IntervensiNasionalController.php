@@ -55,10 +55,13 @@ class IntervensiNasionalController extends Controller
         $intervensiNasional = IntervensiNasional::create($request->all());
         $intervensiNasional->tahun = date("Y");
         $intervensiNasional->pias()->attach($request->pias);
+        $intervensiNasional->status  = ($request->has('draft')) ? 0 : 2;
         $intervensiNasional->save();
 
+        $message = ($intervensiNasional->status == 0) ? 'Program Intervensi Nasional Berhasil disimpan menjadi Draft' : 'Program Intervensi Nasional berhasil di submit';
+
         return redirect()->route('programs.index')
-            ->with('success', 'Program Intervensi Nasional created successfully.');
+            ->with('success', $message);
     }
 
     /**
@@ -99,10 +102,13 @@ class IntervensiNasionalController extends Controller
         //
         $intervensiNasional->update($request->all());
         $intervensiNasional->pias()->sync($request->pias);
+        $intervensiNasional->status  = ($request->has('draft')) ? 0 : 2;
         $intervensiNasional->save();
 
+        $message = ($intervensiNasional->status == 0) ? 'Program Intervensi Nasional Berhasil disimpan menjadi Draft' : 'Program Intervensi Nasional berhasil di submit';
+
         return redirect()->route('programs.index')
-            ->with('success', 'Program Intervensi Nasional updated successfully');
+            ->with('success', $message);
     }
 
     /**
@@ -118,6 +124,6 @@ class IntervensiNasionalController extends Controller
         $intervensiNasional->delete();
 
         return redirect()->route('programs.index')
-            ->with('success', 'Program Intervensi Nasional deleted successfully');
+            ->with('success', 'Program Intervensi Nasional berhasil dihapus');
     }
 }

@@ -71,10 +71,12 @@ class ProgressIntervensiKhususPolicy
     public function update(User $user, ProgressIntervensiKhusus $progressIntervensiKhusus)
     {
         //
-        if ($user->role_id == 3 and $progressIntervensiKhusus->status == 3) {
-            return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
-        }
 
+        if ($user->role_id == 3) {
+            if ($progressIntervensiKhusus->status == 3 or $progressIntervensiKhusus->status == 0)
+                return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
+            return false;
+        }
         return false;
     }
 
@@ -89,10 +91,11 @@ class ProgressIntervensiKhususPolicy
     {
         //
 
-        if ($user->role_id == 3 and $progressIntervensiKhusus->status == 3) {
-            return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
+        if ($user->role_id == 3) {
+            if ($progressIntervensiKhusus->status == 3 or $progressIntervensiKhusus->status == 0)
+                return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
+            return false;
         }
-
         return false;
     }
 

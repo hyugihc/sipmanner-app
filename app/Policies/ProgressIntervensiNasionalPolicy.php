@@ -53,7 +53,6 @@ class ProgressIntervensiNasionalPolicy
     public function create(User $user)
     {
         //
-
         if ($user->role_id == 3) return true; //cc
         return false;
     }

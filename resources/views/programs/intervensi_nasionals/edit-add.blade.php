@@ -14,7 +14,15 @@
                     {{-- <h1 class="m-0">{{ isset($intervensiNasional) ? 'Edit' : 'Create' }}</h1> --}}
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"> Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('programs.index') }}"> Rencana</a></li>
+                        @if (isset($intervensiNasional))
+                            <li class="breadcrumb-item active">{{ $intervensiNasional->nama }}</li>
+                        @else
+                            <li class="breadcrumb-item active">Create</li>
+                        @endif
+                    </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -126,8 +134,9 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit"
-                                class="btn btn-primary">{{ isset($intervensiNasional) ? 'Simpan' : 'Submit' }}</button>
+                            <input type="submit" class="btn btn-primary" name=" draft" value="Simpan sebagai draft">
+                            <input type="submit" class="btn btn-primary" name=" submit"
+                                value="{{ isset($progressIntervensiKhusus) ? 'Simpan' : 'Submit' }}">
                         </div>
                         </form>
                     </div>

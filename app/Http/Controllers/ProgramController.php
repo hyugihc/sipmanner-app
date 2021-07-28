@@ -22,7 +22,8 @@ class ProgramController extends Controller
         $user = Auth::user();
         $currentYear = date("Y");
 
-        $intervensiNasionals = IntervensiNasional::where('tahun', $currentYear)->get();
+        $intervensiNasionals = IntervensiNasional::where('tahun', $currentYear)->where("status", 2)->get();
+        
         if ($user->isAdmin()) {
             $intervensiKhususes = IntervensiKhusus::where('tahun', $currentYear)->get();
         } elseif ($user->isChangeLeader()) {

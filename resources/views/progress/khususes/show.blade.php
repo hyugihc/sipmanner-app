@@ -11,9 +11,12 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Progress Program</li>
-                        <li class="breadcrumb-item active">{{ $intervensiKhusus->nama }}</li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"> Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('progress.index') }}">Progres</a></li>
+                        <li class="breadcrumb-item"><a
+                                href="{{ route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus) }}">{{ $intervensiKhusus->nama }}</a>
+                        </li>
+                        <li class="breadcrumb-item active">{{ $progressIntervensiKhusus->bulan }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -41,7 +44,7 @@
                             <dl>
                                 <dt>Penjelasan progress</dt>
                                 <dd>{{ $progressIntervensiKhusus->uraian_program }}</dd>
-                                <dt>Bulan</dt>
+                                <dt>Tanggal</dt>
                                 <dd>{{ $progressIntervensiKhusus->bulan }}</dd>
                                 <dt>Presentase Capaian Program</dt>
                                 <dd> {{ $progressIntervensiKhusus->presentase_program }} </dd>

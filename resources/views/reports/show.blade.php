@@ -11,9 +11,10 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Laporan</li>
-                        <li class="breadcrumb-item active">Tahun {{ $report->tahun }}</li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('reports.index') }}">Laporan</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('reports.index') }}">{{ $report->tahun }}</a></li>
+                        <li class="breadcrumb-item active">Semester {{ $report->semester }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -210,7 +211,6 @@
                 textarea.hide();
             }
         });
-
     </script>
 
 @endsection

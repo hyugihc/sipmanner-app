@@ -22,4 +22,14 @@ class ProgressIntervensiNasional extends Model
     {
         return $this->belongsTo(IntervensiNasionalProvinsi::class);
     }
+
+    public function getNamaFileDokumentasi()
+    {
+        return 'pindok_' . $this->intervensiNasionalProvinsi->provinsi->nama . '_' . $this->intervensiNasionalProvinsi->intervensiNasional->nama . '_' . $this->id . '.pdf';
+    }
+
+    public function getNamaFileBuktiDukung()
+    {
+        return 'pinduk_' . $this->intervensiNasionalProvinsi->provinsi->nama . '_' . $this->intervensiNasionalProvinsi->intervensiNasional->nama . '_' . $this->id . '.pdf';
+    }
 }

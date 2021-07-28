@@ -3,48 +3,27 @@
 @section('content')
 
 
-    <!-- Content Header (Page header) -->
-    {{-- <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-2">
-                    <a class="btn btn-block btn-primary btn-sm"
-                        href="{{ route('intervensi_nasionals.create') }}">Create</a>
-                </div><!-- /.col -->
-                <div class="col-sm-4">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
 
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Program Intervensi</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div> --}}
-    <!-- /.content-header -->
 
     <!-- Main content -->
     <section class="content">
-
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success">
-                <p>{{ $message }}</p>
-            </div>
-        @endif
 
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-2">
                         @can('create', App\IntervensiNasional::class)
-                            <a class="btn btn-block btn-primary btn-xs"
+                            <a class="btn btn-block btn-primary btn-sm"
                                 href="{{ route('intervensi-nasionals.create') }}">Create</a>
                         @endcan
                     </div><!-- /.col -->
                     <div class="col-sm-10">
-
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"> Home</a></li>
+                            <li class="breadcrumb-item active"> Rencana</li>
+                        </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -152,7 +131,7 @@
                 <div class="row mb-2">
                     <div class="col-sm-2">
                         @can('create', App\IntervensiKhusus::class)
-                            <a class="btn btn-block btn-primary btn-xs"
+                            <a class="btn btn-block btn-primary btn-sm"
                                 href="{{ route('intervensi-khususes.create') }}">Create</a>
                         @endcan
                     </div><!-- /.col -->
@@ -286,6 +265,20 @@
             </div>
         </div>
 
+        <!-- Toastr -->
+        <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>
 
+        <script>
+            @if (Session::has('success'))
+                toastr.options =
+                {
+                "closeButton" : true,
+                "progressBar" : false
+                }
+                toastr.success("{{ Session::get('success') }}");
+            @endif
+        </script>
 
-    @endsection
+    </section>
+
+@endsection

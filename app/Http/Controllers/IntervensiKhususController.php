@@ -63,7 +63,7 @@ class IntervensiKhususController extends Controller
         $intervensi->status  = ($request->has('draft')) ? 0 : 1;
         $intervensi->save();
 
-        $message = ($intervensi->status == 0) ? 'Program Intervensi Khusus drafted successfully.' : 'Program Intervensi Khusus submitted successfully.';
+        $message = ($intervensi->status == 0) ? 'Program Intervensi Khusus Berhasil disimpan  menjadi Draft' : 'Program Intervensi Khusus berhasil di submit ke Change Leader';
         return redirect()->route('programs.index')
             ->with('success', $message);
     }
@@ -111,7 +111,7 @@ class IntervensiKhususController extends Controller
         $intervensiKhusus->pias()->sync($request->pias);
         $intervensiKhusus->save();
 
-        $message = ($intervensiKhusus->status == 0) ? 'Program Intervensi Khusus drafted successfully.' : 'Program Intervensi Khusus submitted successfully.';
+        $message = ($intervensiKhusus->status == 0) ?'Program Intervensi Khusus Berhasil disimpan  menjadi Draft' : 'Program Intervensi Khusus berhasil di submit ke Change Leader';
         return redirect()->route('programs.index')
             ->with('success', $message);
     }
@@ -128,7 +128,7 @@ class IntervensiKhususController extends Controller
         $intervensiKhusus->pias()->detach();
         $intervensiKhusus->delete();
         return redirect()->route('programs.index')
-            ->with('success', 'Program Intervensi Khusus deleted successfully');
+            ->with('success', 'Program Intervensi Khusus berhasil dihapus');
     }
 
     public function approve(Request $request, IntervensiKhusus $intervensiKhusus)
@@ -138,7 +138,9 @@ class IntervensiKhususController extends Controller
         $intervensiKhusus->alasan = $request->alasan;
         $intervensiKhusus->save();
 
+        $message = ($intervensiKhusus->status == 2) ?'Program Intervensi Khusus Berhasil disetujui' : 'Program Intervensi Khusus berhasil untuk tidak disetujui';
+
         return redirect()->route('programs.index')
-            ->with('success', 'Approval is successfully assigned');
+            ->with('success', $message);
     }
 }

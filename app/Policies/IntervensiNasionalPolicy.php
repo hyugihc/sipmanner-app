@@ -19,10 +19,10 @@ class IntervensiNasionalPolicy
     public function viewAny(User $user)
     {
         //
-        if ($user->role_id == 1) return true; //adminTS
-        if ($user->role_id == 2) return true; //cl
-        if ($user->role_id == 3) return true; //cc
-        if ($user->role_id == 5) return true; //tl
+        if ($user->isAdmin()) return true; //adminTS
+        if ($user->isChangeLeader()) return true; //cl
+        if ($user->isChangeChampion()) return true; //cc
+        if ($user->isTopLeader()) return true; //tl
         return false;
     }
 
@@ -36,10 +36,13 @@ class IntervensiNasionalPolicy
     public function view(User $user, IntervensiNasional $intervensiNasional)
     {
         //
-        if ($user->role_id == 1) return true; //adminTS
-        if ($user->role_id == 2) return true; //cl
-        if ($user->role_id == 3) return true; //cc
-        if ($user->role_id == 5) return true; //tl
+
+        if ($user->isAdmin()) return true; //adminTS
+        if ($intervensiNasional->status == 2) {
+            if ($user->isChangeLeader()) return true; //cl
+            if ($user->isChangeChampion()) return true; //cc
+            if ($user->isTopLeader()) return true; //tl
+        }
         return false;
     }
 
@@ -52,7 +55,7 @@ class IntervensiNasionalPolicy
     public function create(User $user)
     {
         //
-        if ($user->role_id == 1) return true; //adminTS
+        if ($user->isAdmin()) return true; //adminTS
         return false;
     }
 
@@ -66,7 +69,7 @@ class IntervensiNasionalPolicy
     public function update(User $user, IntervensiNasional $intervensiNasional)
     {
         //
-        if ($user->role_id == 1) return true; //adminTS
+        if ($user->isAdmin()) return true; //adminTS
         return false;
     }
 
@@ -80,7 +83,7 @@ class IntervensiNasionalPolicy
     public function delete(User $user, IntervensiNasional $intervensiNasional)
     {
         //
-        if ($user->role_id == 1) return true; //adminTS
+        if ($user->isAdmin()) return true; //adminTS
         return false;
     }
 

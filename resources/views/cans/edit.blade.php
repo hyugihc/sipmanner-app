@@ -9,13 +9,14 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    {{-- <h1 class="m-0">Dashboard</h1> --}}
+                    {{-- <h1 class="m-0">Edit</h1> --}}
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    {{-- <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v1</li>
-                    </ol> --}}
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"> Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('cans.index') }}"> Data</a></li>
+                        <li class="breadcrumb-item active">{{ $can->nomor_sk }}</li>
+                    </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -78,8 +79,9 @@
                                 @enderror
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Perihal SK</label>
-                                    <input type="text" name="perihal_sk" value="{{ old('perihal_sk', $can->perihal_sk) }}"
-                                        class="form-control" placeholder="">
+                                    <input type="text" name="perihal_sk"
+                                        value="{{ old('perihal_sk', $can->perihal_sk) }}" class="form-control"
+                                        placeholder="">
                                 </div>
                                 @error('perihal_sk')
                                     <div class="alert alert-danger">{{ $message }}</div>
@@ -96,7 +98,8 @@
 
 
                                 <div class="form-group">
-                                    <label>Jumlah Change Agent Network <small>(Termasuk Change Leader & Change Champions)</small></label>
+                                    <label>Jumlah Change Agent Network <small>(Termasuk Change Leader & Change
+                                            Champions)</small></label>
                                     <input type="number" name="jumlah_can" class="form-control"
                                         value="{{ old('jumlah_can', $can->jumlah_can) }}">
                                 </div>
@@ -150,7 +153,7 @@
                                                     $i = 0;
                                                 @endphp
                                                 @foreach (old('change_agents') as $can)
-                                                    <tr >
+                                                    <tr>
                                                         <td class="id"></td>
                                                         <td>{{ old('ca_nip')[$i] }} <input name='ca_nip[]'
                                                                 value='{{ old('ca_nip')[$i] }}' hidden> </td>
@@ -170,7 +173,7 @@
                                                 @endforeach
                                             @else
                                                 @foreach ($can->changeAgents as $ca)
-                                                    <tr >
+                                                    <tr>
                                                         <td class="id"></td>
                                                         <td>{{ $ca->nip_lama }} <input name='ca_nip[]'
                                                                 value='{{ $ca->nip_lama }}' hidden></td>
