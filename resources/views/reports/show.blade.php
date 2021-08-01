@@ -57,29 +57,41 @@
                                         <dd>{{ $report->bab_iii }}</dd>
 
                                         <div class="form-group">
-                                            <label>Program Intervensi Nasional </label>
-                                            <div class="card-body table-responsive p-0">
-                                                <table class="table table-hover text-nowrap">
+                                            <label>A. Program Intervensi Nasional </label>
+                                            <div class="card-body table-bordered table-condensed table-responsive p-0">
+                                                <table class="table table-hover ">
                                                     <thead>
                                                         <tr>
+                                                            <th>No</th>
                                                             <th>Nama</th>
                                                             <th>Volume</th>
                                                             <th>Output</th>
                                                             <th>Outcome</th>
-
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($intervensiNasionalProvinsis as $pi)
+                                                        @php
+                                                            $i = 1;
+                                                        @endphp
+                                                        @foreach ($report->intervensiNasionalProvinsis as $pi)
                                                             <tr>
+                                                                <td><b>{{ $i }}</b></td>
                                                                 <td>{{ $pi->intervensiNasional->nama }}</td>
                                                                 <td>{{ $pi->intervensiNasional->volume }}</td>
                                                                 <td>{{ $pi->intervensiNasional->output }}</td>
                                                                 <td>{{ $pi->intervensiNasional->outcome }} </td>
-
-
-
                                                             </tr>
+                                                            <tr>
+                                                                <td>Kendala</td>
+                                                                <td colspan="4"> {{ $pi->pivot->kendala }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Solusi</td>
+                                                                <td colspan="4"> {{ $pi->pivot->solusi }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $i++;
+                                                            @endphp
                                                         @endforeach
 
                                                     </tbody>
@@ -87,29 +99,42 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label>Program Intervensi Khusus </label>
-                                            <div class="card-body table-responsive p-0">
-                                                <table class="table table-hover text-nowrap">
+                                            <label>B. Program Intervensi Khusus </label>
+                                            <div class="card-body table-bordered table-condensed table-responsive p-0">
+                                                <table class="table table-hover">
                                                     <thead>
                                                         <tr>
+                                                            <th>No</th>
                                                             <th>Nama</th>
                                                             <th>Volume</th>
                                                             <th>Output</th>
                                                             <th>Outcome</th>
-
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($intervensiKhususes as $pi)
+                                                        @php
+                                                            $i = 1;
+                                                        @endphp
+                                                        @foreach ($report->intervensiKhususes as $pi)
                                                             <tr>
+                                                                <td><b>{{ $i }}</b></td>
                                                                 <td>{{ $pi->nama }}</td>
                                                                 <td>{{ $pi->volume }}</td>
                                                                 <td>{{ $pi->output }}</td>
                                                                 <td>{{ $pi->outcome }} </td>
-
                                                             </tr>
+                                                            <tr>
+                                                                <td>Kendala</td>
+                                                                <td colspan="4"> {{ $pi->pivot->kendala }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Solusi</td>
+                                                                <td colspan="4"> {{ $pi->pivot->solusi }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $i++;
+                                                            @endphp
                                                         @endforeach
-
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -123,8 +148,6 @@
                                         <dd>{{ $report->bab_vi }} </dd>
                                         <dt>VII. Penutup</dt>
                                         <dd> {{ $report->bab_vii }} </dd>
-                                        <dt>Lampiran</dt>
-                                        <dd> {{ $report->bab_viii }} </dd>
                                         @if ($report->status == 3)
                                             <dt>Alasan Tidak Disetujui</dt>
                                             <dd>{{ $report->alasan }}</dd>
@@ -153,14 +176,22 @@
                                         </div>
                                     @endcan
 
-                                    @if ($report->status == 2)
-                                        <div class="card-footer">
-                                            <div class="col-md-2 float-right">
+
+                                    <div class="card-footer">
+                                        <div class="col-md-2 float-right">
+                                            @if ($report->lampiran != null)
+                                                <a class="btn btn-block btn-primary btn-xs"
+                                                    href="{{ route('reports.download-lampiran', $report) }}">Download
+                                                    lampiran</a>
+                                            @endif
+                                            @if ($report->status == 2)
                                                 <a class="btn btn-block btn-primary btn-xs"
                                                     href="{{ route('reports.print', $report) }}">Print</a>
-                                            </div>
+
+                                            @endif
                                         </div>
-                                    @endif
+                                    </div>
+
                                 </div>
                             </form>
                         </div>

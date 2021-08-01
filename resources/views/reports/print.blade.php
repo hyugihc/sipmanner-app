@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Invoice Print</title>
+    <title>Sipmanner | Print Laporan</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -40,7 +40,7 @@
         <section class="invoice">
             <!-- title row -->
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 ">
                     <h2 class="page-header">
                         <i class="fas fa-globe"></i> Laporan Tahun {{ $report->tahun }} Semester
                         {{ $report->semester }}
@@ -52,13 +52,10 @@
 
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Laporan Tahun {{ $report->tahun }} Semester
-                        {{ $report->semester }}
+                    <h3 class="card-title">Satker {{ $report->provinsi->nama }}
                     </h3>
                 </div>
                 <!-- /.card-header -->
-
-
                 <div>
                     <dl>
                         <dt>I. Pendahuluan</dt>
@@ -74,27 +71,42 @@
                         <dd>{{ $report->bab_iii }}</dd>
                         <br>
                         <div>
-                            <label>Program Intervensi Nasional </label>
+                            <label>A. Program Intervensi Nasional </label>
                             <br><br>
                             <div>
                                 <table>
                                     <thead>
                                         <tr>
+                                            <th>No</th>
                                             <th>Nama</th>
                                             <th>Volume</th>
                                             <th>Output</th>
                                             <th>Outcome</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($intervensiNasionalProvinsis as $pi)
+                                        @php
+                                            $i = 1;
+                                        @endphp
+                                        @foreach ($report->intervensiNasionalProvinsis as $pi)
                                             <tr>
+                                                <td><b>{{ $i }}</b></td>
                                                 <td>{{ $pi->intervensiNasional->nama }}</td>
                                                 <td>{{ $pi->intervensiNasional->volume }}</td>
                                                 <td>{{ $pi->intervensiNasional->output }}</td>
                                                 <td>{{ $pi->intervensiNasional->outcome }} </td>
                                             </tr>
+                                            <tr>
+                                                <td>Kendala</td>
+                                                <td colspan="4">{{ $pi->pivot->kendala }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Solusi</td>
+                                                <td colspan="4">{{ $pi->pivot->solusi }}</td>
+                                            </tr>
+                                            @php
+                                                $i++;
+                                            @endphp
                                         @endforeach
 
                                     </tbody>
@@ -103,28 +115,42 @@
                         </div>
                         <br>
                         <div>
-                            <label>Program Intervensi Khusus </label>
+                            <label>B. Program Intervensi Khusus </label>
                             <br><br>
                             <div>
                                 <table>
                                     <thead>
                                         <tr>
+                                            <th>No</th>
                                             <th>Nama</th>
                                             <th>Volume</th>
                                             <th>Output</th>
                                             <th>Outcome</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($intervensiKhususes as $pi)
+                                        @php
+                                            $i = 1;
+                                        @endphp
+                                        @foreach ($report->intervensiKhususes as $pi)
                                             <tr>
+                                                <td>{{ $i }}</td>
                                                 <td>{{ $pi->nama }}</td>
                                                 <td>{{ $pi->volume }}</td>
                                                 <td>{{ $pi->output }}</td>
                                                 <td>{{ $pi->outcome }} </td>
-
                                             </tr>
+                                            <tr>
+                                                <td>Kendala</td>
+                                                <td colspan="4">{{ $pi->pivot->kendala }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Solusi</td>
+                                                <td colspan="4">{{ $pi->pivot->solusi }}</td>
+                                            </tr>
+                                            @php
+                                                $i++;
+                                            @endphp
                                         @endforeach
 
                                     </tbody>
@@ -149,10 +175,10 @@
                         <br>
                         <dd> {{ $report->bab_vii }} </dd>
                         <br>
-                        <dt>Lampiran</dt>
+                        {{-- <dt>Lampiran</dt>
                         <br>
                         <dd> {{ $report->bab_viii }} </dd>
-                        <br>
+                        <br> --}}
                         @if ($report->status == 3)
                             <dt>Alasan Tidak Disetujui</dt>
                             <dd>{{ $report->alasan }}</dd>
@@ -172,7 +198,6 @@
     <!-- Page specific script -->
     <script>
         window.addEventListener("load", window.print());
-
     </script>
 </body>
 

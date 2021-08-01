@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
 
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -26,7 +28,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <!-- left column -->
+
                 <div class="col-md-12">
                     <!-- jquery validation -->
                     <div class="card card-primary">
@@ -37,7 +39,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('reports.update', $report) }}" method="POST">
+                        <form action="{{ route('reports.update', $report) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('put')
 
@@ -57,7 +59,7 @@
                                 <div class="form-group">
                                     <label>BAB I. Pendahuluan</label>
                                     <textarea class="form-control" name="bab_i" id="" cols="10" rows="10"
-                                        placeholder="Pada bagian ini, dijelaskan tujuan program perubahan secara umum. Dijelaskan pula bahwa kegiatan perubahan ini merupakan bagian dari program reformasi birokrasi di unit kerja yang dimulai dari pilar manajemen perubahan sebagai inisiator dan integrator pilar-pilar reformasi birokrasi lainnya. Kemudian dalam pelaksanaannya, dijelaskan secara ringkas bahwa program perubahan ini melibatkan area perubahan lainnya (seperti pelayanan publik, akuntabilitas, pengawasan, SDM, tatalaksana), sehingga dokumen ini dapat dijadikan sebagai bukti dukung pelaksanaan RB unit kerja yang terintegrasi yang tidak hanya menjawab sisi manajemen perubahan saja, namun juga pilar lainnya. Pada akhir bagian ini, dijelaskan harapan yang ingin dicapai dari kegiatan ini (terutama dalam rangka peningkatan kinerja dan kualitas pelayanan publik)">{{ $report->bab_i }}</textarea>
+                                        placeholder="Pada bagian ini, dijelaskan tujuan program perubahan secara umum. Dijelaskan pula bahwa kegiatan perubahan ini merupakan bagian dari program reformasi birokrasi di unit kerja yang dimulai dari pilar manajemen perubahan sebagai inisiator dan integrator pilar-pilar reformasi birokrasi lainnya. Kemudian dalam pelaksanaannya, dijelaskan secara ringkas bahwa program perubahan ini melibatkan area perubahan lainnya (seperti pelayanan publik, akuntabilitas, pengawasan, SDM, tatalaksana), sehingga dokumen ini dapat dijadikan sebagai bukti dukung pelaksanaan RB unit kerja yang terintegrasi yang tidak hanya menjawab sisi manajemen perubahan saja, namun juga pilar lainnya. Pada akhir bagian ini, dijelaskan harapan yang ingin dicapai dari kegiatan ini (terutama dalam rangka peningkatan kinerja dan kualitas pelayanan publik)">{{ old('bab_i', $report->bab_i) }}</textarea>
                                 </div>
 
                                 <div class="form-group">
@@ -88,14 +90,29 @@
                                             <tbody>
                                                 @php
                                                     $i = 1;
+                                                    //dd($report->intervensiNasionalProvinsis());
                                                 @endphp
-                                                @foreach ($intervensiNasionalProvinsis as $pi)
+                                                @foreach ($report->intervensiNasionalProvinsis as $pi)
                                                     <tr>
-                                                        <td>{{ $i }}</td>
+                                                        <td><b>{{ $i }}</b></td>
                                                         <td>{{ $pi->intervensiNasional->nama }}</td>
                                                         <td>{{ $pi->intervensiNasional->volume }}</td>
                                                         <td>{{ $pi->intervensiNasional->output }}</td>
                                                         <td>{{ $pi->intervensiNasional->outcome }} </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Kendala</td>
+                                                        <td colspan="4"><input
+                                                                name="intervensiNasional_kendala[{{ $pi->id }}]"
+                                                                class="form-control" type="text"
+                                                                value="{{ $pi->pivot->kendala }}"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Solusi</td>
+                                                        <td colspan="4"><input
+                                                                name="intervensiNasional_solusi[{{ $pi->id }}]"
+                                                                class="form-control" type="text"
+                                                                value="{{ $pi->pivot->solusi }}"></td>
                                                     </tr>
                                                     @php
                                                         $i++;
@@ -125,13 +142,27 @@
                                                 @php
                                                     $i = 1;
                                                 @endphp
-                                                @foreach ($intervensiKhususes as $pi)
+                                                @foreach ($report->intervensiKhususes as $pi)
                                                     <tr>
-                                                        <td>{{ $i }}</td>
+                                                        <td><b>{{ $i }}</b></td>
                                                         <td>{{ $pi->nama }}</td>
                                                         <td>{{ $pi->volume }}</td>
                                                         <td>{{ $pi->output }}</td>
                                                         <td>{{ $pi->outcome }} </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Kendala</td>
+                                                        <td colspan="4"><input
+                                                                name="intervensiKhusus_kendala[{{ $pi->id }}]"
+                                                                class="form-control" type="text"
+                                                                value="{{ $pi->pivot->kendala }}"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Solusi</td>
+                                                        <td colspan="4"><input
+                                                                name="intervensiKhusus_solusi[{{ $pi->id }}]"
+                                                                class="form-control" type="text"
+                                                                value="{{ $pi->pivot->solusi }}"></td>
                                                     </tr>
                                                     @php
                                                         $i++;
@@ -171,59 +202,142 @@
                                     <label>Lampiran</label><br>
                                     <span>Berisi foto-foto/dokumentasi lain terkait kegiatan Manajemen Perubahan (Catatan :
                                         Jumlah halaman termasuk lampiran maksimal 20 halaman)</span>
+                                    <br>
+                                    @if ($report->lampiran != null)
+                                        <div id="link-lampiran">
+                                            <span><a
+                                                    href="{{ route('reports.download-lampiran', $report) }}">Lampiran</a></span>
+                                            <div class="btn-group btn-group-sm">
+                                                {{-- <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a> --}}
+                                                {{-- <a id="lampiran-delete" href="#" class="btn btn-danger"><i
+                                                        class="fas fa-trash"></i></a> --}}
+                                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#modal-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    <div id="upload-lampiran">
+                                        <input accept=".pdf" type="file" name="lampiran" class="form-control">
+                                    </div>
+
                                 </div>
 
+                                <div class="form-group">
+                                    <label>Persetujuan </label>
+                                    @foreach ($report->changeChampions as $changeChampion)
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                name="changeChampions[{{ $changeChampion->id }}]" @if (Auth::User()->id != $changeChampion->id) disabled @endif @if ($changeChampion->pivot->status == 2) checked
+                                    @endif >
+                                    <label class="form-check-label">{{ $changeChampion->name }}</label>
+                                </div>
+                                @endforeach
                             </div>
-                            <!-- /.card-body -->
-                            <div class="card-footer">
-                                <input type="submit" class="btn btn-primary" name=" draft" value="Save as Draft">
-                                <input type="submit" class="btn btn-primary" name=" submit" value="Submit">
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /.card -->
-                </div>
-                <!--/.col (left) -->
-                <!-- right column -->
-                <div class="col-md-6">
 
+
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <input type="submit" class="btn btn-primary" name=" draft" value="Simpan">
+                        <input type="submit" class="btn btn-primary" name=" submit" value="Simpan & Submit">
+                    </div>
+                    </form>
                 </div>
-                <!--/.col (right) -->
+                <!-- /.card -->
             </div>
-            <!-- /.row -->
+
+
+        </div>
+        <!-- /.row -->
         </div><!-- /.container-fluid -->
-        <div class="modal fade" id="modal-lg">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Large Modal</h4>
+
+        <!-- .modal -->
+        <div class="modal fade" id="modal-danger">
+            <div class="modal-dialog">
+                <div class="modal-content bg-danger">
+                    {{-- <div class="modal-header">
+                        <h4 class="modal-title">A</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>
+                    </div> --}}
                     <div class="modal-body">
-
-                        <p>One fine body&hellip;</p>
+                        <i class="fas fa-trash"></i> Apakah anda yakin akan menghapus lampiran ini?&hellip;
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                    <div class="modal-footer justify-content-right">
+                        <button id="lampiran-delete" type="button" data-dismiss="modal"
+                            class="btn btn-outline-light">Ya</button>
+                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Tidak</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
         </div>
+        <!-- /.modal -->
+        <!-- Toastr -->
+        <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>
 
         <script>
-            $(document).on("click", "#launch-modal", function() {
-                var pi = $(this).data('id');
-                $(".modal-body #bookId").val(pi);
-                // As pointed out in comments, 
-                // it is unnecessary to have to manually call the modal.
-                // $('#addBookDialog').modal('show');
+            @if (Session::has('warning'))
+                toastr.options = {
+                "closeButton": true,
+                "progressBar": false
+                }
+                toastr.warning("{{ Session::get('warning') }}");
+            @endif
+            @if (Session::has('success'))
+                toastr.options = {
+                "closeButton": true,
+                "progressBar": false
+                }
+                toastr.success("{{ Session::get('success') }}");
+            @endif
+
+            $(document).ready(function() {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $('#lampiran-delete').click(function() {
+                    var urlx = '{{ route('reports.delete-lampiran', ':id') }}';
+                    urlx = urlx.replace(':id', @php echo $report->id;   @endphp);
+                    $.ajax({
+                        url: urlx,
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(response) {
+                            toastr.options = {
+                                "closeButton": true,
+                                "progressBar": false
+                            }
+                            toastr.success("Lampiran berhasil dihapus");
+                            $("#link-lampiran").hide();
+                            $("#upload-lampiran").show();
+                        },
+                        error: function(response) {
+                            toastr.warning("Lampiran tidak berhasil dihapus");
+                        }
+                    });
+                });
+                if (
+                    @php
+                    if ($report->lampiran != null) {
+                        echo true;
+                    }
+                    @endphp
+                ) {
+                    $("#link-lampiran").show();
+                    $("#upload-lampiran").hide();
+                }
             });
         </script>
+
+
     </section>
 
 @endsection

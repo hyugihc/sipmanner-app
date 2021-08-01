@@ -137,7 +137,7 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 10px">#</th>
-                                            <th>Task</th>
+                                            <th>Laporan</th>
                                             <th>Progress</th>
                                             <th style="width: 40px">Label</th>
                                         </tr>
@@ -245,7 +245,7 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 10px">#</th>
-                                            <th>Task</th>
+                                            <th>Intervensi Nasional</th>
                                             <th>Progress</th>
                                             <th style="width: 40px">Label</th>
                                         </tr>
@@ -292,7 +292,7 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 10px">#</th>
-                                            <th>Task</th>
+                                            <th>Intervensi Khusus</th>
                                             <th>Progress</th>
                                             <th style="width: 40px">Label</th>
                                         </tr>

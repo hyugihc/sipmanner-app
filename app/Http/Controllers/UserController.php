@@ -183,7 +183,7 @@ class UserController extends Controller
 
         $result = $json[0];
 
-        //dd($result);
+        // dd($result);
         $newUser = new User;
         $newUser->name = $result['attributes']['attribute-nama'][0];
         $newUser->email = $result['email'];
@@ -191,9 +191,24 @@ class UserController extends Controller
         $newUser->nip = $result['attributes']['attribute-nip'][0];
         $newUser->avatar = $result['attributes']['attribute-foto'][0];
         $newUser->kode_org = $result['attributes']['attribute-organisasi'][0];
+        if ($result['attributes']['attribute-provinsi'][0] == "Pusat") {
+            $kodeProv = substr($result['attributes']['attribute-organisasi'][0], 7, -3);
+            $newUser->provinsi_id = Provinsi::where('kode_provinsi', $kodeProv . "00")->first()->id;
+        } elseif ($result['attributes']['attribute-provinsi'][0] == "Dki Jakarta") {
+            $kodeProv = substr($result['attributes']['attribute-organisasi'][0], 0, -10);
+            $newUser->provinsi_id = Provinsi::where('kode_provinsi', "91" . $kodeProv)->first()->id;
+        } else {
+            $kodeProv = substr($result['attributes']['attribute-organisasi'][0], 0, -10);
+            $newUser->provinsi_id = Provinsi::where('kode_provinsi', "92" . $kodeProv)->first()->id;
+        }
+
         $newUser->password = Hash::make('password');
         $newUser->role_id = 6;
         $newUser->save();
+
+        //350200092840 jawa timur
+        //000000021420 yoga
+
 
         return new UserResource($newUser);
     }

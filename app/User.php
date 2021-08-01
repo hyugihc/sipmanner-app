@@ -11,6 +11,13 @@ use App\Role;
 
 class User extends Authenticatable
 {
+
+    public const ADMIN    = 1;
+    public const CHANGE_LEADER = 2;
+    public const CHANGE_CHAMPIONS    = 3;
+    public const CHANGE_AGENT = 4;
+    public const TOP_LEADER    = 5;
+
     use Notifiable;
 
     public function role()
@@ -42,6 +49,16 @@ class User extends Authenticatable
     {
         return $this->role->id == 5;
     }
+
+    public function setUserSatkerFromSSO($ssoOrg){
+        
+    }
+
+    // public function isActiveChangeAgent()
+    // {
+    //     $can = Can::where('provinsi_id', $this->provinsi_id)->where('status', 2)->where('tahun', date("y"))->first();
+    //     return $can->changeAgents->where("user_id", $this->id)->first();
+    // }
 
 
 

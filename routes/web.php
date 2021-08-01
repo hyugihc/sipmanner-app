@@ -73,13 +73,14 @@ Route::group(['middleware' => 'auth'], function () {
         return view('faq');
     })->name('faq');
 
-
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
     Route::resource('reports', ReportController::class);
     Route::put('/reports/{report}/approve', 'ReportController@approve')->name('reports.approve');
     Route::get('/reports/{report}/print', 'ReportController@print')->name('reports.print');
+    Route::get('/reports/{report}/download-lampiran', 'ReportController@downloadLampiran')->name('reports.download-lampiran');
+    Route::post('/reports/{report}/delete-lampiran', 'ReportController@deleteLampiran')->name('reports.delete-lampiran');
 });
-
 
 
 //Clear route cache:
@@ -105,11 +106,3 @@ Route::get('/view-clear', function () {
     $exitCode = Artisan::call('view:clear');
     return 'View cache cleared';
 });
-
-// Route::get('/', function () {
-//     return view('login');
-// });
-
-
-
-Route::get('/home', 'HomeController@index')->name('home');
