@@ -36,7 +36,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('users.update', $user->id) }}" method="POST" id="quickForm">
+                        <form action="{{ route('users.update', $user->id) }}" method="POST">
                             @csrf
                             @method('PUT')
 

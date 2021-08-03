@@ -173,4 +173,9 @@ class CanController extends Controller
         return redirect()->route('cans.index')
             ->with('success', 'Approval berhasil disimpan');
     }
+
+    public function recap()
+    {
+        return view('cans.recap');
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Resources\UserCollection;
 use Illuminate\Http\Request;
 use App\User;
 use App\Provinsi;
@@ -10,6 +11,7 @@ use App\Role;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UserResource;
 use Exception;
+use Symfony\Component\Process\Process;
 
 class UserController extends Controller
 {
@@ -31,7 +33,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(5);
+        $users = User::paginate(10);
         return view('users.index', compact('users'));
     }
 
@@ -118,6 +120,29 @@ class UserController extends Controller
         $user = User::where('nip_lama', '3400' . $nip_lama)->first();
         return $user != null ? new UserResource($user) : "pegawai tidak ditemukan";
     }
+
+    public function queryIndex($query)
+    {
+        $users = User::where('name', 'like', '%' . $query . '%')->orWhere('nip_lama', 'like', '%' . $query . '%')->orWhere('email', 'like', '%' . $query . '%')->paginate(10);
+        return view('users.index', compact('users', 'query'));
+    }
+
+    public function recap()
+    {
+        $provinsis = Provinsi::get();
+        // foreach ($provinsis as $provinsi) {
+        //     dd($provinsi->changeLeader->name);
+        //     # code...
+        // }
+        //$sb = Provinsi::find(59);
+        //dd($sb->changeLeader->name);
+
+
+        return view('users.recap', compact('provinsis'));
+    }
+
+
+
 
     public function getuser_by_niplama_sso($nip_lama)
     {

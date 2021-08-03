@@ -36,10 +36,11 @@ Route::post('/logout', [
 
 Route::group(['middleware' => 'auth'], function () {
 
+    Route::get('/users/recap', 'UserController@recap')->name("users.recap");
     Route::resource('users', UserController::class);
-    Route::get('/getUser/{nipLama}', 'UserController@getUser');
+    //Route::get('/getUser/{nipLama}', 'UserController@getUser');
     Route::get('/getuser_by_niplama_sso/{nip_lama}', 'UserController@getuser_by_niplama_sso')->name('get_user_byniplama_sso');
-
+    Route::get('/users/index/{query}', 'UserController@queryIndex')->name('users.index.query');
 
     Route::resource('cans', CanController::class);
     Route::get('/cans/{can}/download', 'CanController@downloadFileSk')->name('cans.download');

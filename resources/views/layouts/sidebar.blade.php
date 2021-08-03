@@ -41,17 +41,7 @@
                 </li>
 
 
-                @can('viewAny', App\User::class)
-                    <li class="nav-item ">
-                        <a href="{{ route('users.index') }}"
-                            class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
-                            <i class="nav-icon far fa-plus-square"></i>
-                            <p>
-                                User
-                            </p>
-                        </a>
-                    </li>
-                @endcan
+                <li class="nav-header">Change Agent Network</li>
 
                 @can('viewAny', App\Can::class)
                     <li class="nav-item">
@@ -63,11 +53,10 @@
                             </p>
                         </a>
                     </li>
+
                 @endcan
 
                 <li class="nav-header">Program</li>
-
-
 
                 <li class="nav-item">
                     <a href="{{ route('programs.index') }}"
@@ -119,6 +108,32 @@
                     </a>
                 </li>
 
+
+                @can('viewAny', App\User::class)
+
+                    <li class="nav-header">Manajemen User</li>
+
+                    <li class="nav-item ">
+                        <a href="{{ route('users.index') }}"
+                            class="nav-link {{ (Request::is('users*') and !Request::is('users/recap*')) ? 'active' : '' }}">
+                            <i class="nav-icon far fa-plus-square"></i>
+                            <p>
+                                User
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a href="{{ route('users.recap') }}"
+                            class="nav-link {{ Request::is('users/recap*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-table"></i>
+                            <p>
+                                Rekap User
+                            </p>
+                        </a>
+                    </li>
+
+                @endcan
 
 
 

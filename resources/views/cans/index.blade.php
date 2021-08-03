@@ -59,13 +59,13 @@
                             <thead>
                                 <tr>
                                     <th>Tahun SK</th>
+                                    @if (Auth::user()->isAdmin())
+                                        <th>Unit Kerja</th>
+                                    @endif
                                     <th>Nomor SK</th>
                                     <th>Tanggal SK</th>
-                                    <th>Perihal SK</th>
+                                    <th>Jumlah CAN</th>
                                     <th>Status</th>
-                                    @if (Auth::user()->role_id == 1)
-                                        <th>Provinsi</th>
-                                    @endif
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -73,36 +73,14 @@
                                 @foreach ($cans as $can)
                                     <tr>
                                         <td>{{ $can->tahun_sk }}</td>
-                                        <td>{{ $can->nomor_sk }}</td>
-                                        <td>{{ $can->tanggal_sk }}</td>
-                                        <td>{{ $can->perihal_sk }}</td>
-                                        <td>
-                                            @switch($can->status_sk)
-                                                @case(0)
-                                                    <dd>Draft</dd>
-                                                @break
-                                                @case(1)
-                                                    <dd>Belum Disetujui</dd>
-                                                @break
-                                                @case(2)
-                                                    <dd>Sudah Disetujui<b>&nbsp;(Aktif)</b></dd>
-                                                @break
-                                                @case(3)
-                                                    <dd>Tidak Disetujui</dd>
-                                                    <dd> {{ $can->alasan }}</dd>
-                                                @break
-                                                @case(4)
-                                                    <dd>Sudah Disetujui<b>&nbsp;(Tidak Aktif)</b></dd>
-                                                @break
-
-                                                @default
-
-                                            @endswitch
-
-                                        </td>
-                                        @if (Auth::user()->isAdmin() or Auth::user()->isTopLeader() )
+                                        @if (Auth::user()->isAdmin() or Auth::user()->isTopLeader())
                                             <td>{{ $can->provinsi['nama'] }}</td>
                                         @endif
+                                        <td>{{ $can->nomor_sk }}</td>
+                                        <td>{{ $can->tanggal_sk }}</td>
+                                        <td>{{ $can->changeAgents->count() }}</td>
+                                        <td>{{ $can->getCanStatus() }} </td>
+
                                         <td>
 
                                             <form action="{{ route('cans.destroy', $can->id) }}" method="POST">
