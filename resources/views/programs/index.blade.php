@@ -6,6 +6,17 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
 
+    <!-- Data Table -->
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="{{ asset('') }}assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#table_ins').DataTable();
+            $('#table_iks').DataTable();
+        });
+    </script>
+
 
     <!-- Main content -->
     <section class="content">
@@ -31,11 +42,11 @@
 
         <div class="row">
             <div class="col-12">
-                <div class="card">
+                <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Program Intervensi Nasional Tahun {{ date('Y') }}</h3>
 
-                        <div class="card-tools">
+                        {{-- <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control float-right"
                                     placeholder="Search">
@@ -46,11 +57,11 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover">
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover" id="table_ins">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -144,11 +155,11 @@
 
         <div class="row">
             <div class="col-12">
-                <div class="card">
+                <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Program Intervensi Khusus Tahun {{ date('Y') }}</h3>
 
-                        <div class="card-tools">
+                        {{-- <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control float-right"
                                     placeholder="Search">
@@ -159,16 +170,16 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover">
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover" id="table_iks">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    @if (Auth::user()->role_id == 1)
-                                        <th>Provinsi</th>
+                                    @if (Auth::user()->isAdmin())
+                                        <th>Satker</th>
                                     @endif
                                     <th>Nama</th>
                                     <th>Nilai Pia</th>

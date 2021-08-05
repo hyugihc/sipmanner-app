@@ -4,7 +4,10 @@
 
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
-
+    <!-- Data Table -->
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="{{ asset('') }}assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -36,11 +39,11 @@
 
         <div class="row">
             <div class="col-12">
-                <div class="card">
+                <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Data</h3>
 
-                        <div class="card-tools">
+                        {{-- <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control float-right"
                                     placeholder="Search">
@@ -51,11 +54,11 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover text-nowrap" id="table_cans">
                             <thead>
                                 <tr>
                                     <th>Tahun SK</th>
@@ -121,6 +124,9 @@
         <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>
 
         <script>
+            $(document).ready(function() {
+                $('#table_cans').DataTable();
+            });
             @if (Session::has('success'))
                 toastr.options =
                 {
