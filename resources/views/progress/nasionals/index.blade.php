@@ -114,6 +114,9 @@
                                         </td>
                                         <td>
                                             @switch($progress_program->status)
+                                                @case(0)
+                                                    Draft
+                                                @break
                                                 @case(1)
                                                     Submitted
                                                 @break

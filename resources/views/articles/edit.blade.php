@@ -3,6 +3,9 @@
 @section('content')
 
 
+    <!-- Summernote -->
+    <script src="{{ asset('') }}assets/plugins/summernote/summernote-bs4.min.js"></script>
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -59,8 +62,7 @@
                             <div class="form-group">
                                 <label for="isi">Isi Berita</label>
                                 <textarea name="content" id="compose-textarea" class="form-control" style="height: 300px">
-                                        {{ $article->content }}
-                                                                            </textarea>
+                                            {{ $article->content }}</textarea>
                             </div>
                             <div class="form-group">
                                 <div class="btn btn-default btn-file">
@@ -88,14 +90,11 @@
             </div>
         </div>
 
-        <!-- Summernote -->
-        <script src="{{ asset('') }}assets/plugins/summernote/summernote-bs4.min.js"></script>
         <script>
             $(function() {
                 //Add text editor
                 $('#compose-textarea').summernote()
             })
-
         </script>
 
     </section>

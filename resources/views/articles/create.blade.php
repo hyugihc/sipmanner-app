@@ -61,7 +61,7 @@
                                 <label for="isi">Isi Berita</label>
                                 <textarea name="content" id="compose-textarea" class="form-control" style="height: 300px">
 
-                                                                    </textarea>
+                                                                        </textarea>
                             </div>
                             <div class="form-group">
                                 <div class="btn btn-default btn-file">
