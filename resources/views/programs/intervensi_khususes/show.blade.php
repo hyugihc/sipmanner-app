@@ -50,14 +50,12 @@
                                     <dd>{{ $intervensiKhusus->nama }}</dd>
                                     <dt>Uraian Kegiatan</dt>
                                     <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->uraian_kegiatan }}</dd>
-                                    <dt>Volume Kegiatan setahun</dt>
-                                    <dd>{{ $intervensiKhusus->volume }}</dd>
-                                    <dt>Nilai Pia</dt>
-                                    @foreach ($intervensiKhusus->pias as $pia)
-                                        <dd>{{ $pia->nama }}</dd>
-                                    @endforeach
                                     <dt>Output</dt>
                                     <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->output }} </dd>
+                                    <dt>Timeline</dt>
+                                    <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->timeline }} </dd>
+                                    <dt>Ukuran Keberhasilan</dt>
+                                    <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->ukuran_keberhasilan }} </dd>
                                     <dt>Outcome</dt>
                                     <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->outcome }} </dd>
                                     <dt>keterangan</dt>

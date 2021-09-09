@@ -86,8 +86,10 @@
                                     @default
 
                                 @endswitch
-                                <dt>Presentase Capaian Program</dt>
-                                <dd> {{ $progressIntervensiNasional->presentase_program }} </dd>
+                                <dt>Realisasi Pelaksanaan Kegiatan</dt>
+                                <dd> {{ $progressIntervensiNasional->realisasi_pelaksanaan_kegiatan }} </dd>
+                                <dt>Realisasi Capaian Keberhasilan</dt>
+                                <dd> {{ $progressIntervensiNasional->realisasi_capaian_keberhasilan }} </dd>
                                 <dt>Dokumentasi</dt>
                                 @if ($progressIntervensiNasional->upload_dokumentasi != null)
                                     <dd> <a href="{{ route('pins.download.dok', $progressIntervensiNasional) }}">

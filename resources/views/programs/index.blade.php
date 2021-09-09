@@ -66,7 +66,6 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
-                                    <th>Nilai Pia</th>
                                     <th>Output</th>
                                     <th>Outcome</th>
                                     <th>Action</th>
@@ -80,11 +79,7 @@
                                     <tr>
                                         <td>{{ $i }}</td>
                                         <td>{{ $program_intervensi->nama }}</td>
-                                        <td>
-                                            @foreach ($program_intervensi->pias as $pia)
-                                                <small class="badge badge-success"> {{ $pia->nama }}</small>
-                                            @endforeach
-                                        </td>
+
                                         <td>
                                             {{ $program_intervensi->output }}
 
@@ -182,7 +177,6 @@
                                         <th>Satker</th>
                                     @endif
                                     <th>Nama</th>
-                                    <th>Nilai Pia</th>
                                     <th>Output</th>
                                     <th>Outcome</th>
                                     <th>Status</th>
@@ -195,17 +189,11 @@
                                 @endphp
                                 @foreach ($intervensiKhususes as $program_intervensi)
                                     <tr>
-
                                         <td>{{ $i }}</td>
                                         @if (Auth::user()->role_id == 1)
                                             <td>{{ $program_intervensi->provinsi->nama }}</td>
                                         @endif
                                         <td>{{ $program_intervensi->nama }}</td>
-                                        <td>
-                                            @foreach ($program_intervensi->pias as $pia)
-                                                <small class="badge badge-success"> {{ $pia->nama }}</small>
-                                            @endforeach
-                                        </td>
                                         <td>
                                             {{ $program_intervensi->output }}
                                         </td>

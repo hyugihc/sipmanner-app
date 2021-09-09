@@ -46,8 +46,10 @@
                                 <dd>{{ $progressIntervensiKhusus->uraian_program }}</dd>
                                 <dt>Tanggal</dt>
                                 <dd>{{ $progressIntervensiKhusus->bulan }}</dd>
-                                <dt>Presentase Capaian Program</dt>
-                                <dd> {{ $progressIntervensiKhusus->presentase_program }} </dd>
+                                <dt>Realisasi Pelaksanaan Kegiatan</dt>
+                                <dd> {{ $progressIntervensiKhusus->realisasi_pelaksanaan_kegiatan }} </dd>
+                                <dt>Realisasi Capaian Keberhasilan</dt>
+                                <dd> {{ $progressIntervensiKhusus->realisasi_capaian_keberhasilan }} </dd>
                                 <dt>Upload Dokumentasi</dt>
                                 @if ($progressIntervensiKhusus->upload_dokumentasi != null)
                                     <dd> <a href="{{ route('piks.download.dok', $progressIntervensiKhusus) }}">

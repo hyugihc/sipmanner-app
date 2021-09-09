@@ -66,6 +66,31 @@ class ReportController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createLaporan($tahun, $semester)
+    {
+        //jika sudah ada laporan kembalikan warning
+        $user = Auth::user();
+        if (Report::where('provinsi_id', $user->provinsi_id)->where('tahun', $tahun)->where('semester', $semester)->exist()) {
+            return redirect()->route('reports.index')
+                ->with('warning', "Laporan sudah ada");
+        }
+
+        //jika belum ada create laporan
+        $report = new Report();
+        $report->tahun = $tahun;
+        $report->semester = $semester;
+        $report->provinsi_id = $user->provinsi_id;
+
+        //kembali ke index
+        return redirect()->route('reports.index')
+            ->with('success', "Laporan berhasil dibuat");
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

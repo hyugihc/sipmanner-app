@@ -49,7 +49,6 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
-                                    <th>Nilai Pia</th>
                                     <th>Output</th>
                                     <th>Outcome</th>
                                     <th>Action</th>
@@ -63,11 +62,7 @@
                                     <tr>
                                         <td>{{ $i }}</td>
                                         <td>{{ $intervensiNasional->nama }}</td>
-                                        <td>
-                                            @foreach ($intervensiNasional->pias as $pia)
-                                                <small class="badge badge-success"> {{ $pia->nama }}</small>
-                                            @endforeach
-                                        </td>
+                                      
                                         <td>
                                             {{ $intervensiNasional->output }}
 
@@ -113,7 +108,6 @@
                                         <th>Satker</th>
                                     @endif
                                     <th>Nama</th>
-                                    <th>Nilai Pia</th>
                                     <th>Output</th>
                                     <th>Outcome</th>
                                     <th>Action</th>
@@ -130,11 +124,7 @@
                                             <td>{{ $intervensiKhusus->provinsi->nama }}</td>
                                         @endif
                                         <td>{{ $intervensiKhusus->nama }}</td>
-                                        <td>
-                                            @foreach ($intervensiKhusus->pias as $pia)
-                                                <small class="badge badge-success"> {{ $pia->nama }}</small>
-                                            @endforeach
-                                        </td>
+                                      
                                         <td>
                                             {{ $intervensiKhusus->output }}
                                         </td>

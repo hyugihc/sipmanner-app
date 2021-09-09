@@ -104,9 +104,16 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Persentase Capaian Program</label>
-                                <input type="number" name="presentase_program" class="form-control" placeholder=""
-                                    value="{{ old('presentase_program', isset($progressIntervensiNasional) ? $progressIntervensiNasional->presentase_program : '') }}"
+                                <label>Realisasi Pelaksanaan Kegiatan</label>
+                                <input type="number" name="realisasi_pelaksanaan_kegiatan" class="form-control" placeholder=""
+                                    value="{{ old('realisasi_pelaksanaan_kegiatan', isset($progressIntervensiNasional) ? $progressIntervensiNasional->realisasi_pelaksanaan_kegiatan : '') }}"
+                                    min="1" max="100">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Realisasi Capaian Keberhasilan</label>
+                                <input type="number" name="realisasi_capaian_keberhasilan" class="form-control" placeholder=""
+                                    value="{{ old('realisasi_capaian_keberhasilan', isset($progressIntervensiNasional) ? $progressIntervensiNasional->realisasi_capaian_keberhasilan : '') }}"
                                     min="1" max="100">
                             </div>
 

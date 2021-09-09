@@ -44,20 +44,16 @@
                                 <dd>{{ $intervensiNasional->nama }}</dd>
                                 <dt>Uraian Kegiatan</dt>
                                 <dd style="white-space: pre-wrap;">{{ $intervensiNasional->uraian_kegiatan }}</dd>
-                                <dt>Volume Kegiatan setahun</dt>
-                                <dd>{{ $intervensiNasional->volume }}</dd>
-                                <dt>Nilai Pia</dt>
-                                @foreach ($intervensiNasional->pias as $pia)
-                                    <small class="badge badge-success"> {{ $pia->nama }}</small>
-                                @endforeach
                                 <dt>Output</dt>
                                 <dd style="white-space: pre-wrap;">{{ $intervensiNasional->output }} </dd>
+                                <dt>Timeline</dt>
+                                <dd style="white-space: pre-wrap;">{{ $intervensiNasional->timeline }} </dd>
+                                <dt>Ukuran Keberhasilan</dt>
+                                <dd style="white-space: pre-wrap;">{{ $intervensiNasional->ukuran_keberhasilan }} </dd>
                                 <dt>Outcome</dt>
                                 <dd style="white-space: pre-wrap;">{{ $intervensiNasional->outcome }} </dd>
                                 <dt>keterangan</dt>
                                 <dd style="white-space: pre-wrap;"> {{ $intervensiNasional->keterangan }} </dd>
-
-
                             </dl>
 
 

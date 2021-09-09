@@ -42,8 +42,7 @@ class IntervensiKhususController extends Controller
     public function create()
     {
         //
-        $pias = Pia::all();
-        return view('programs.intervensi_khususes.edit-add', compact('pias'));
+        return view('programs.intervensi_khususes.edit-add');
     }
 
     /**
@@ -59,7 +58,6 @@ class IntervensiKhususController extends Controller
         $intervensi->provinsi_id = $request->user()->provinsi_id;
         $intervensi->tahun = date("Y");
         $intervensi->user_id = Auth::user()->id;
-        $intervensi->pias()->attach($request->pias);
         $intervensi->status  = ($request->has('draft')) ? 0 : 1;
         $intervensi->save();
 
@@ -89,10 +87,7 @@ class IntervensiKhususController extends Controller
     public function edit(IntervensiKhusus $intervensiKhusus)
     {
         //     
-
-        $idPia = $intervensiKhusus->pias->pluck('id');
-        $pias = Pia::all();
-        return view('programs.intervensi_khususes.edit-add', compact('intervensiKhusus', 'pias', 'idPia'));
+        return view('programs.intervensi_khususes.edit-add', compact('intervensiKhusus'));
     }
 
     /**
@@ -108,7 +103,6 @@ class IntervensiKhususController extends Controller
 
         $intervensiKhusus->update($request->all());
         $intervensiKhusus->status  = ($request->has('draft')) ? 0 : 1;
-        $intervensiKhusus->pias()->sync($request->pias);
         $intervensiKhusus->save();
 
         $message = ($intervensiKhusus->status == 0) ?'Program Intervensi Khusus Berhasil disimpan  menjadi Draft' : 'Program Intervensi Khusus berhasil di submit ke Change Leader';
@@ -125,7 +119,6 @@ class IntervensiKhususController extends Controller
     public function destroy(IntervensiKhusus $intervensiKhusus)
     {
         //
-        $intervensiKhusus->pias()->detach();
         $intervensiKhusus->delete();
         return redirect()->route('programs.index')
             ->with('success', 'Program Intervensi Khusus berhasil dihapus');

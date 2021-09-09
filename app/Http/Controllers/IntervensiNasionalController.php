@@ -39,8 +39,7 @@ class IntervensiNasionalController extends Controller
     public function create()
     {
         //
-        $pias = Pia::all();
-        return view('programs.intervensi_nasionals.edit-add', compact('pias'));
+        return view('programs.intervensi_nasionals.edit-add');
     }
 
     /**
@@ -54,7 +53,6 @@ class IntervensiNasionalController extends Controller
         //
         $intervensiNasional = IntervensiNasional::create($request->all());
         $intervensiNasional->tahun = date("Y");
-        $intervensiNasional->pias()->attach($request->pias);
         $intervensiNasional->status  = ($request->has('draft')) ? 0 : 2;
         $intervensiNasional->save();
 
@@ -85,9 +83,7 @@ class IntervensiNasionalController extends Controller
     public function edit(IntervensiNasional $intervensiNasional)
     {
         //
-        $pias = Pia::all();
-        $idPia = $intervensiNasional->pias->pluck('id');
-        return view('programs.intervensi_nasionals.edit-add', compact('intervensiNasional', 'pias', 'idPia'));
+        return view('programs.intervensi_nasionals.edit-add', compact('intervensiNasional'));
     }
 
     /**
@@ -101,7 +97,6 @@ class IntervensiNasionalController extends Controller
     {
         //
         $intervensiNasional->update($request->all());
-        $intervensiNasional->pias()->sync($request->pias);
         $intervensiNasional->status  = ($request->has('draft')) ? 0 : 2;
         $intervensiNasional->save();
 
@@ -120,7 +115,6 @@ class IntervensiNasionalController extends Controller
     public function destroy(IntervensiNasional $intervensiNasional)
     {
         //
-        $intervensiNasional->pias()->detach();
         $intervensiNasional->delete();
 
         return redirect()->route('programs.index')

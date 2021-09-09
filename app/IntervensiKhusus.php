@@ -18,13 +18,13 @@ class IntervensiKhusus extends Model
      * @var array
      */
     protected $fillable = [
-        'nama', 'uraian_kegiatan', 'volume', 'output', 'outcome', 'keterangan'
+        'nama', 'uraian_kegiatan',  'output', 'timeline', 'ukuran_keberhasilan', 'outcome', 'keterangan'
     ];
 
-    public function pias()
-    {
-        return $this->belongsToMany(Pia::class);
-    }
+    // public function pias()
+    // {
+    //     return $this->belongsToMany(Pia::class);
+    // }
 
     public function progress_intervensi_khususes()
     {
@@ -40,6 +40,4 @@ class IntervensiKhusus extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    
 }

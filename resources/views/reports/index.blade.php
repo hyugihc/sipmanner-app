@@ -13,7 +13,9 @@
             <div class="row mb-2">
 
                 <div class="col-sm-2">
-
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
+                        Create
+                    </button>
                 </div><!-- /.col -->
                 <div class="col-sm-4">
                 </div><!-- /.col -->
@@ -174,6 +176,36 @@
                 <!-- /.card -->
             </div>
         </div>
+
+        <div class="modal fade" id="modal-primary">
+            <div class="modal-dialog">
+                <div class="modal-content bg-primary">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Buat laporan</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Setiap semester setiap satuan kerja membuat laporan terkait rencana aksi yang dibuatnya</p>
+                    </div>
+                    <div class="modal-footer">
+                        {{-- <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button> --}}
+
+                        <a class="btn btn-outline-light"
+                            href="{{ route('reports.create.laporan', ['2021', '1']) }}">Semester
+                            1 tahun 2021</a>
+                        <a class="btn btn-outline-light"
+                            href="{{ route('reports.create.laporan', ['2021', '2']) }}">Semester
+                            2 tahun 2021</a>
+
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
 
         <!-- Toastr -->
         <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>

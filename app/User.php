@@ -50,8 +50,13 @@ class User extends Authenticatable
         return $this->role->id == 5;
     }
 
-    public function setUserSatkerFromSSO($ssoOrg){
-        
+    public function setUserSatkerFromSSO($ssoOrg)
+    {
+    }
+
+    public function getSatkerEs2()
+    {
+        return $this->provinsi_id;
     }
 
     // public function isActiveChangeAgent()

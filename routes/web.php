@@ -80,6 +80,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     Route::resource('reports', ReportController::class);
+    Route::get('/reports/{tahun}/{semester}/createLaporan', 'ReportController@createLaporan')->name('reports.create.laporan');
+
     Route::put('/reports/{report}/approve', 'ReportController@approve')->name('reports.approve');
     Route::get('/reports/{report}/print', 'ReportController@print')->name('reports.print');
     Route::get('/reports/{report}/download-lampiran', 'ReportController@downloadLampiran')->name('reports.download-lampiran');

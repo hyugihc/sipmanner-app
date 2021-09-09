@@ -15,7 +15,7 @@ class ProgressIntervensiNasional extends Model
      * @var array
      */
     protected $fillable = [
-        'uraian_program', 'bulan', 'presentase_program', 'upload_dokumentasi', 'upload_bukti_dukung', 'keterangan'
+        'uraian_program', 'bulan', 'realisasi_pelaksanaan_kegiatan','realisasi_capaian_keberhasilan', 'upload_dokumentasi', 'upload_bukti_dukung', 'keterangan'
     ];
 
     public function intervensiNasionalProvinsi()

@@ -78,33 +78,22 @@
                                     placeholder="">{{ old('uraian_kegiatan', isset($intervensiKhusus) ? $intervensiKhusus->uraian_kegiatan : '') }}</textarea>
                             </div>
 
-
-                            <div class="form-group">
-                                <label>Volume Kegiatan Setahun*</label>
-                                <input type="number" min="1" max="1000" name="volume" class="form-control" placeholder=""
-                                    value="{{ old('volume', isset($intervensiKhusus) ? $intervensiKhusus->volume : '') }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Nilai PIA*</label>
-                                <div class="select2-purple">
-                                    <select class="select2" multiple="multiple" data-placeholder="Pilih nilai PIA"
-                                        data-dropdown-css-class="select2-purple" style="width: 100%;" name="pias[]">
-                                        @foreach ($pias as $pia)
-                                            <option value="{{ $pia->id }}"
-                                                @isset($intervensiKhusus){{ $idPia->contains($pia->id) ? 'selected' : '' }}
-                                                @endisset>
-                                                {{ $pia->nama }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
                             <div class="form-group">
                                 <label>Output*</label>
                                 <textarea type="text" name="output" class="form-control"
                                     placeholder="">{{ old('output', isset($intervensiKhusus) ? $intervensiKhusus->output : '') }}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Timeline*</label>
+                                <textarea type="text" name="timeline" class="form-control"
+                                    placeholder="">{{ old('timeline', isset($intervensiKhusus) ? $intervensiKhusus->timeline : '') }}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Ukuran Keberhasilan*</label>
+                                <textarea type="text" name="ukuran_keberhasilan" class="form-control"
+                                    placeholder="">{{ old('ukuran_keberhasilan', isset($intervensiKhusus) ? $intervensiKhusus->ukuran_keberhasilan : '') }}</textarea>
                             </div>
 
                             <div class="form-group">
