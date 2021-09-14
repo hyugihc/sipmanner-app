@@ -56,6 +56,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('programs/intervensi-khususes', IntervensiKhususController::class);
     Route::put('/intervensi-khususes/{intervensiKhusus}/approve', 'IntervensiKhususController@approve')->name('intervensi-khususes.approve');
 
+    //Route::resource('programs/intervensi-nasionals-provinsi', IntervensiNasionalProvinsiController::class);
+    Route::get('/programs/intervensi-nasionals-provinsi/{intervensiNasionalProvinsi}', 'IntervensiNasionalProvinsiController@show')->name('inp.show');
+    Route::get('/programs/intervensi-nasionals-provinsi/{intervensiNasionalProvinsi}/edit', 'IntervensiNasionalProvinsiController@edit')->name('inp.edit');
+    Route::put('/programs/intervensi-nasionals-provinsi/{intervensiNasionalProvinsi}', 'IntervensiNasionalProvinsiController@update')->name('inp.update');
+    Route::put('/programs/intervensi-nasionals-provinsi/{intervensiNasionalProvinsi}/approve', 'IntervensiNasionalProvinsiController@approve')->name('inp.approve');
 
     Route::resource('progress/intervensi-nasionals.progress-intervensi-nasionals', 'ProgressIntervensiNasionalController')->middleware('progress.intervensi.nasional');
     Route::get('/pins/{progressIntervensiNasional}/downloaddok', 'ProgressIntervensiNasionalController@downloadDok')->name('pins.download.dok');

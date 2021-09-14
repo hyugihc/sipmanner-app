@@ -40,13 +40,14 @@
             </div><!-- /.container-fluid -->
         </div>
 
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Program Intervensi Nasional Tahun {{ date('Y') }}</h3>
+        @if (Auth::user()->isAdmin() or Auth::user()->isTopLeader())
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Program Intervensi Nasional Tahun {{ date('Y') }}</h3>
 
-                        {{-- <div class="card-tools">
+                            {{-- <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control float-right"
                                     placeholder="Search">
@@ -58,43 +59,42 @@
                                 </div>
                             </div>
                         </div> --}}
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body table-responsive">
-                        <table class="table table-hover" id="table_ins">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Output</th>
-                                    <th>Outcome</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $i = 1;
-                                @endphp
-                                @foreach ($intervensiNasionals as $program_intervensi)
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive">
+                            <table class="table table-hover" id="table_ins">
+                                <thead>
                                     <tr>
-                                        <td>{{ $i }}</td>
-                                        <td>{{ $program_intervensi->nama }}</td>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Output</th>
+                                        <th>Outcome</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @foreach ($intervensiNasionals as $program_intervensi)
+                                        <tr>
+                                            <td>{{ $i }}</td>
+                                            <td>{{ $program_intervensi->nama }}
+                                                @if ($program_intervensi->status == 0)
+                                                    <b> (draft)</b>
+                                                @endif
+                                            </td>
 
-                                        <td>
-                                            {{ $program_intervensi->output }}
+                                            <td>
+                                                {{ $program_intervensi->output }}
 
-                                        </td>
-                                        <td>
-                                            {{ $program_intervensi->outcome }}
+                                            </td>
+                                            <td>
+                                                {{ $program_intervensi->outcome }}
 
-                                        </td>
-                                        <td>
+                                            </td>
+                                            <td>
 
-                                            <form
-                                                action="{{ route('intervensi-nasionals.destroy', $program_intervensi) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
 
                                                 @can('view', $program_intervensi)
                                                     <a class="btn btn-block btn-primary btn-xs"
@@ -108,29 +108,119 @@
                                                 @endcan
 
                                                 @can('delete', $program_intervensi)
-                                                    <button type="submit" onclick="return confirm('Are you sure?')"
-                                                        class="btn btn-block btn-danger btn-xs">Delete</button>
+                                                    <form
+                                                        action="{{ route('intervensi-nasionals.destroy', $program_intervensi) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button style="margin-top: 10px" type="submit"
+                                                            onclick="return confirm('Are you sure?')"
+                                                            class="btn btn-block btn-danger btn-xs">Delete</button>
+                                                    </form>
+                                                @endcan
+                                            </td>
+
+                                        </tr>
+                                        @php
+                                            $i++;
+                                        @endphp
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        @else
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Program Intervensi Nasional Tahun {{ date('Y') }}</h3>
+
+                            {{-- <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control float-right"
+                                placeholder="Search">
+
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div> --}}
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive">
+                            <table class="table table-hover" id="table_ins">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Output</th>
+                                        <th>Outcome</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @foreach ($intervensiNasionalProvinsis as $program_intervensi)
+                                        <tr>
+                                            <td>{{ $i }}</td>
+                                            <td>{{ $program_intervensi->intervensiNasional->nama }}
+                                            </td>
+                                            <td>
+                                                {{ $program_intervensi->intervensiNasional->output }}
+                                            </td>
+                                            <td>
+                                                {{ $program_intervensi->intervensiNasional->outcome }}
+                                            </td>
+                                            <td>
+                                                {{ $program_intervensi->getStatus() }}
+                                                @if ($program_intervensi->status == 3) 
+                                                <br> ({{ $program_intervensi->alasan }})
+                                                @endif
+                                            </td>
+                                            <td>
+
+                                                @can('view', $program_intervensi)
+                                                    <a class="btn btn-block btn-primary btn-xs"
+                                                        href="{{ route('inp.show', $program_intervensi) }}">Show</a>
                                                 @endcan
 
 
+                                                @can('update', $program_intervensi)
+                                                    <a class="btn btn-block btn-warning btn-xs"
+                                                        href="{{ route('inp.edit', $program_intervensi) }}">Sesuaikan Ukuran
+                                                        Keberhasilan</a>
+                                                @endcan
 
-                                            </form>
-                                        </td>
 
-                                    </tr>
-                                    @php
-                                        $i++;
-                                    @endphp
-                                @endforeach
+                                            </td>
 
-                            </tbody>
-                        </table>
+                                        </tr>
+                                        @php
+                                            $i++;
+                                        @endphp
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card-body -->
+                    <!-- /.card -->
                 </div>
-                <!-- /.card -->
             </div>
-        </div>
+        @endif
+
 
         <div class="content-header">
             <div class="container-fluid">

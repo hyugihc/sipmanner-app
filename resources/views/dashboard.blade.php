@@ -262,12 +262,12 @@
                                                 <td>
                                                     <div class="progress progress-xs">
                                                         <div class="progress-bar bg-primary"
-                                                            style="width: {{ $pinMax->presentase_program }}%"></div>
+                                                            style="width: {{ $pinMax->realisasi_pelaksanaan_kegiatan }}%"></div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <span
-                                                        class="badge bg-primary">{{ $pinMax->presentase_program }}%</span>
+                                                        class="badge bg-primary">{{ $pinMax->realisasi_pelaksanaan_kegiatan }}%</span>
                                                 </td>
                                             </tr>
                                             @php

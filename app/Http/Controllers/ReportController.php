@@ -23,34 +23,19 @@ class ReportController extends Controller
      */
     public function index()
     {
-
+        //list report yang ada bedakan berdasarkan role
         $user = Auth::user();
 
-        //pertama kali masuk buat baru/ambil yang lama
-        $reportSm1 = Report::firstOrCreate(
-            ['tahun' => date("Y"), 'semester' => '1', 'provinsi_id' => $user->provinsi_id],
-            ['status' => '0']
-        );
-
-        $reportSm2 = Report::firstOrCreate(
-            ['tahun' => date("Y"), 'semester' => '2', 'provinsi_id' => $user->provinsi_id],
-            ['status' => '0']
-        );
-
-        //pastikan intervensi pada report masih sesuai
-        $intervensiNasionals = $this->getIntervensiNasionalReport($user);
-        $intervensiKhususes = $this->getIntervensiKhususReport($user);
-        if ($reportSm1->status == 0 or $reportSm1->status == 3) {
-            $reportSm1->intervensiNasionalProvinsis()->sync($intervensiNasionals);
-            $reportSm1->intervensiKhususes()->sync($intervensiKhususes);
+        //untuk CC
+        if ($user->isChangeChampion()) {
+            $reports = Report::where('provinsi_id', $user->provinsi_id)->get();
+        }
+        //untuk CL
+        if ($user->isChangeLeader()) {
+            $reports = Report::where('provinsi_id', $user->provinsi_id)->where('status', '!=', '0')->get();
         }
 
-        if ($reportSm2->status == 0 or $reportSm2->status == 3) {
-            $reportSm2->intervensiNasionalProvinsis()->sync($intervensiNasionals);
-            $reportSm2->intervensiKhususes()->sync($intervensiKhususes);
-        }
-
-        return view('reports.index', compact('reportSm1', 'reportSm2'));
+        return view('reports.index', compact('reports'));
     }
 
 
@@ -74,7 +59,7 @@ class ReportController extends Controller
     {
         //jika sudah ada laporan kembalikan warning
         $user = Auth::user();
-        if (Report::where('provinsi_id', $user->provinsi_id)->where('tahun', $tahun)->where('semester', $semester)->exist()) {
+        if (Report::where('provinsi_id', $user->provinsi_id)->where('tahun', $tahun)->where('semester', $semester)->first()) {
             return redirect()->route('reports.index')
                 ->with('warning', "Laporan sudah ada");
         }
@@ -84,6 +69,24 @@ class ReportController extends Controller
         $report->tahun = $tahun;
         $report->semester = $semester;
         $report->provinsi_id = $user->provinsi_id;
+        $report->status == 0;
+        $report->save();
+
+        //attach intervensi nasional pada report masih sesuai
+        $intervensiNasionals = $this->getIntervensiNasionalForReport($report);
+        $report->intervensiNasionalProvinsis()->sync($intervensiNasionals);
+
+        //attach intervensi khusus
+        $intervensiKhususes = $this->getIntervensiKhususForReport($report);
+        if ($intervensiKhususes != null) {
+            $report->intervensiKhususes()->sync($intervensiKhususes);
+        }
+
+        //attach report dengan CCnya
+        $changeChampions = User::where('role_id', 3)->where('provinsi_id', $user->provinsi_id)->get();
+        $report->changeChampions()->attach($changeChampions, ['status' => 0]);
+
+
 
         //kembali ke index
         return redirect()->route('reports.index')
@@ -122,22 +125,6 @@ class ReportController extends Controller
     public function edit(Report $report)
     {
         $user = Auth::user();
-
-        //attach cc jika belum ada
-        $changeChampions = User::where('role_id', 3)->where('provinsi_id', $user->provinsi_id)->get();
-        if ($report->changeChampions()->count() == 0) {
-            $report->changeChampions()->attach($changeChampions, ['status' => 0]);
-        } else {
-            $report->changeChampions()->sync($changeChampions);
-        }
-
-        //pastikan intervensi pada report masih sesuai
-        $intervensiNasionals = $this->getIntervensiNasionalReport($user);
-        $intervensiKhususes = $this->getIntervensiKhususReport($user);
-        if ($report->status == 0 or $report->status == 3) {
-            $report->intervensiNasionalProvinsis()->sync($intervensiNasionals);
-            $report->intervensiKhususes()->sync($intervensiKhususes);
-        }
 
         return view('reports.edit', compact('report'));
     }
@@ -215,7 +202,14 @@ class ReportController extends Controller
      */
     public function destroy(Report $report)
     {
-        //
+        //delete report
+        $report->intervensiKhususes()->detach();
+        $report->intervensiNasionalProvinsis()->detach();
+        $report->changeChampions()->detach();
+        $report->delete();
+
+        return redirect()->route('reports.index')
+            ->with('success', 'Laporan berhasil di hapus');
     }
 
     public function approve(Request $request, Report $report)
@@ -235,17 +229,25 @@ class ReportController extends Controller
         return view('reports.print', compact('report'));
     }
 
-    public function getIntervensiNasionalReport($user)
+    public function getIntervensiNasionalForReport($report)
     {
-        $intervensiNasionals = IntervensiNasional::where('tahun', date("Y"))->get();
+        //ambil intervensi nasional yang sama dengan tahun dan provinsi report
+        $intervensiNasionals = IntervensiNasional::where('tahun', $report->tahun)->get();
         $intervensiNasionalKeys = $intervensiNasionals->modelKeys();
-        $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('provinsi_id', $user->provinsi_id)->whereIn('intervensi_nasional_id', $intervensiNasionalKeys)->get();
+        $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('provinsi_id', $report->provinsi_id)->whereIn('intervensi_nasional_id', $intervensiNasionalKeys)->get();
         return $intervensiNasionalProvinsis;
     }
 
-    public function getIntervensiKhususReport($user)
+    public function getIntervensiKhususForReport($report)
     {
-        $intervensiKhususes = IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('tahun', date("Y"))->where('status', 2)->get();
+        $intervensiKhususes = IntervensiKhusus::where('provinsi_id', $report->provinsi_id)->where('tahun', $report->tahun)->where('status', 2)->get();
+        // $intervensiKhususes = array();
+        // $changeChampions = User::where('role_id', 3)->where('provinsi_id', $report->provinsi_id)->get();
+        // foreach ($changeChampions as $cc) {
+        //     $intervensiKhusus =  $cc->intervensi_khususes()->where('status', 2);
+        //     if ($intervensiKhusus != null)
+        //         $intervensiKhususes[] = $intervensiKhusus;
+        // }
         return $intervensiKhususes;
     }
 

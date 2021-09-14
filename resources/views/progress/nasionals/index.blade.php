@@ -53,6 +53,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    @if (Auth::user()->isAdmin())
+                                        <th>Satker</th>
+                                    @endif
                                     <th>Penjelasan Progres</th>
                                     <th>Bulan</th>
                                     <th>Status</th>
@@ -66,6 +69,9 @@
                                 @foreach ($progressPrograms as $progress_program)
                                     <tr>
                                         <td>{{ $i }}</td>
+                                        @if (Auth::user()->isAdmin())
+                                            <td>{{ $progress_program->intervensiNasionalProvinsi->provinsi["nama"] }}</td>
+                                        @endif
                                         <td>{{ $progress_program->uraian_program }}</td>
                                         <td>
                                             @switch($progress_program->bulan)

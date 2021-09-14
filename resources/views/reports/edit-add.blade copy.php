@@ -127,53 +127,51 @@
 
                                 <div class="form-group">
                                     <label>B. Program Intervensi Khusus </label>
-                                    @foreach ($report->changeChampions as $cc)
-                                        <div class="card-body table-bordered table-condensed table-responsive p-0">
-                                            <table class="table table-hover">
-                                                <thead>
+                                    <div class="card-body table-bordered table-condensed table-responsive p-0">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama</th>
+                                                    <th>Volume</th>
+                                                    <th>Output</th>
+                                                    <th>Outcome</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $i = 1;
+                                                @endphp
+                                                @foreach ($report->intervensiKhususes as $pi)
                                                     <tr>
-                                                        <th>No</th>
-                                                        <th>Nama</th>
-                                                        <th>Volume</th>
-                                                        <th>Output</th>
-                                                        <th>Outcome</th>
+                                                        <td><b>{{ $i }}</b></td>
+                                                        <td>{{ $pi->nama }}</td>
+                                                        <td>{{ $pi->volume }}</td>
+                                                        <td>{{ $pi->output }}</td>
+                                                        <td>{{ $pi->outcome }} </td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
+                                                    <tr>
+                                                        <td>Kendala</td>
+                                                        <td colspan="4"><input
+                                                                name="intervensiKhusus_kendala[{{ $pi->id }}]"
+                                                                class="form-control" type="text"
+                                                                value="{{ $pi->pivot->kendala }}"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Solusi</td>
+                                                        <td colspan="4"><input
+                                                                name="intervensiKhusus_solusi[{{ $pi->id }}]"
+                                                                class="form-control" type="text"
+                                                                value="{{ $pi->pivot->solusi }}"></td>
+                                                    </tr>
                                                     @php
-                                                        $i = 1;
+                                                        $i++;
                                                     @endphp
-                                                    @foreach ($report->intervensiKhususes->where('user_id', $cc->id) as $pi)
-                                                        <tr>
-                                                            <td><b>{{ $i }}</b></td>
-                                                            <td>{{ $pi->nama }}</td>
-                                                            <td>{{ $pi->volume }}</td>
-                                                            <td>{{ $pi->output }}</td>
-                                                            <td>{{ $pi->outcome }} </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Kendala</td>
-                                                            <td colspan="4"><input
-                                                                    name="intervensiKhusus_kendala[{{ $pi->id }}]"
-                                                                    class="form-control" type="text"
-                                                                    value="{{ $pi->pivot->kendala }}"  @if ($pi->user_id != Auth::user()->id) disabled @endif></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Solusi</td>
-                                                            <td colspan="4"><input
-                                                                    name="intervensiKhusus_solusi[{{ $pi->id }}]"
-                                                                    class="form-control" type="text"
-                                                                    value="{{ $pi->pivot->solusi }}"  @if ($pi->user_id != Auth::user()->id) disabled @endif></td>
-                                                        </tr>
-                                                        @php
-                                                            $i++;
-                                                        @endphp
-                                                    @endforeach
+                                                @endforeach
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
@@ -281,6 +279,9 @@
             <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
+
+       
+
         <!-- Toastr -->
         <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>
 

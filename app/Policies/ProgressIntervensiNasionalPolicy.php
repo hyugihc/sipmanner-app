@@ -67,7 +67,7 @@ class ProgressIntervensiNasionalPolicy
     public function update(User $user, ProgressIntervensiNasional $progressIntervensiNasional)
     {
         //
-        if ($user->role_id == 3 and $progressIntervensiNasional->status == 3) {
+        if ($user->role_id == 3 and ($progressIntervensiNasional->status == 3 or $progressIntervensiNasional->status == 0)) {
             return  $user->provinsi_id == $progressIntervensiNasional->intervensiNasionalProvinsi->provinsi_id;
         }
         return false;
@@ -115,7 +115,7 @@ class ProgressIntervensiNasionalPolicy
 
     public function approve(User $user, ProgressIntervensiNasional $progressIntervensiNasional)
     {
-        if ($user->role_id == 2 and $progressIntervensiNasional->status != 2) {
+        if ($user->role_id == 2 and $progressIntervensiNasional->status == 1) {
             return $user->provinsi_id == $progressIntervensiNasional->intervensiNasionalProvinsi->provinsi_id;
         }
         return false;

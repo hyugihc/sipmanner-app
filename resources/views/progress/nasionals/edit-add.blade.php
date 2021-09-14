@@ -81,9 +81,11 @@
 
                             <div class="form-group">
                                 <label>Penjelasan Progress</label>
-                                <input type="text" name="uraian_program" class="form-control" placeholder=""
-                                    value="{{ old('uraian_program', isset($progressIntervensiNasional) ? $progressIntervensiNasional->uraian_program : '') }}">
+                                <textarea type="text" name="uraian_program" class="form-control"
+                                    placeholder="">{{ old('uraian_program', isset($progressIntervensiNasional) ? $progressIntervensiNasional->uraian_program : '') }}</textarea>
                             </div>
+
+
 
                             <div class="form-group">
                                 <label>Bulan</label>
@@ -105,17 +107,12 @@
 
                             <div class="form-group">
                                 <label>Realisasi Pelaksanaan Kegiatan</label>
-                                <input type="number" name="realisasi_pelaksanaan_kegiatan" class="form-control" placeholder=""
+                                <input type="number" name="realisasi_pelaksanaan_kegiatan" class="form-control"
+                                    placeholder=""
                                     value="{{ old('realisasi_pelaksanaan_kegiatan', isset($progressIntervensiNasional) ? $progressIntervensiNasional->realisasi_pelaksanaan_kegiatan : '') }}"
                                     min="1" max="100">
                             </div>
 
-                            <div class="form-group">
-                                <label>Realisasi Capaian Keberhasilan</label>
-                                <input type="number" name="realisasi_capaian_keberhasilan" class="form-control" placeholder=""
-                                    value="{{ old('realisasi_capaian_keberhasilan', isset($progressIntervensiNasional) ? $progressIntervensiNasional->realisasi_capaian_keberhasilan : '') }}"
-                                    min="1" max="100">
-                            </div>
 
 
                             <div class="form-group">

@@ -28,10 +28,10 @@ class StoreIntervensiKhususRequest extends FormRequest
         ];
         if ($this->has('submit')) {
             $rules['uraian_kegiatan'] = 'required|max:500';
-            $rules['volume'] = 'required';
-            $rules['output'] = 'required';
-            $rules['outcome'] = 'required';
-            $rules['pias'] = 'required';
+            $rules['output'] = 'required|min:5';
+            $rules['timeline'] = 'required|min:5';
+            $rules['ukuran_keberhasilan'] = 'required|min:5';
+            $rules['outcome'] = 'required|min:5';
         }
         return $rules;
     }

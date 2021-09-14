@@ -155,20 +155,21 @@
                                                         <td colspan="4"><input
                                                                 name="intervensiKhusus_kendala[{{ $pi->id }}]"
                                                                 class="form-control" type="text"
-                                                                value="{{ $pi->pivot->kendala }}"></td>
+                                                                value="{{ $pi->pivot->kendala }}" disabled></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Solusi</td>
                                                         <td colspan="4"><input
                                                                 name="intervensiKhusus_solusi[{{ $pi->id }}]"
                                                                 class="form-control" type="text"
-                                                                value="{{ $pi->pivot->solusi }}"></td>
+                                                                value="{{ $pi->pivot->solusi }}" disabled></td>
                                                     </tr>
                                                     @php
                                                         $i++;
                                                     @endphp
                                                 @endforeach
 
+                                                {{-- @if ($pi->user_id != Auth::user()->id) disabled @endif> --}}
                                             </tbody>
                                         </table>
                                     </div>
@@ -280,7 +281,7 @@
         </div>
         <!-- /.modal -->
 
-       
+
 
         <!-- Toastr -->
         <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>

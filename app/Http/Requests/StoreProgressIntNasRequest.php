@@ -26,7 +26,7 @@ class StoreProgressIntNasRequest extends FormRequest
         $rules = [
             'uraian_program' => 'required|max:500',
             'bulan' => 'required',
-            'presentase_program' => 'required',
+            'realisasi_pelaksanaan_kegiatan' => 'required',
             'keterangan' => 'nullable',
         ];
         if ($this->getMethod() == 'POST') {

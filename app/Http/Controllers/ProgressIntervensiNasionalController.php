@@ -24,18 +24,17 @@ class ProgressIntervensiNasionalController extends Controller
         $user->cannot('viewAny', ProgressIntervensiNasional::class) ?  abort(403) : true;
 
         $intervensiNasionalProvinsi = IntervensiNasionalProvinsi::where('provinsi_id', $user->provinsi_id)->where('intervensi_nasional_id', $intervensiNasional->id)->first();
-        if ($intervensiNasionalProvinsi == null) {
-            $intervensiNasionalProvinsi =  new IntervensiNasionalProvinsi();
-            $intervensiNasionalProvinsi->provinsi_id = $user->provinsi_id;
-            $intervensiNasionalProvinsi->intervensi_nasional_id = $intervensiNasional->id;
-            $intervensiNasionalProvinsi->save();
-        }
 
-        if ($user->isChangeLeader() or $user->isTopLeader()) {
+        if ($user->isChangeLeader()) {
             $progressPrograms = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $intervensiNasionalProvinsi->id)->where("status", "!=", 0)->get();
         }
 
-        if ($user->isChangeChampion() or $user->isAdmin()) {
+        if ($user->isChangeChampion()) {
+            $progressPrograms = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $intervensiNasionalProvinsi->id)->get();
+        }
+
+        if ($user->isAdmin()) {
+            $intervensiNasionalProvinsi = IntervensiNasionalProvinsi::where('intervensi_nasional_id', $intervensiNasional->id)->first();
             $progressPrograms = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $intervensiNasionalProvinsi->id)->get();
         }
 

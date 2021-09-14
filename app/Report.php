@@ -51,4 +51,32 @@ class Report extends Model
     {
         return $this->belongsToMany(IntervensiNasionalProvinsi::class)->withPivot(['kendala', 'solusi']);
     }
+
+
+
+    public function getStatus()
+    {
+
+        switch ($this->status) {
+            case '0':
+                return "draft";
+                break;
+
+            case '1':
+                return "submitted";
+                break;
+
+            case '2':
+                return "approved";
+                break;
+
+            case '3':
+                return "ditolak";
+                break;
+
+            default:
+                # code...
+                break;
+        }
+    }
 }

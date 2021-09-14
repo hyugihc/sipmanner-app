@@ -26,10 +26,10 @@ class StoreIntervensiNasionalRequest extends FormRequest
         return [
             'nama' => 'required|min:3|max:500',
             'uraian_kegiatan' => 'required|max:500',
-            'volume' => 'required',
             'output' => 'required',
-            'outcome' => 'required',
-            'pias' => 'required'
+            'timeline' => 'required',
+            'ukuran_keberhasilan' => 'required',
+            'outcome' => 'required'
         ];
     }
 }

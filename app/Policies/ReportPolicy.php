@@ -19,7 +19,7 @@ class ReportPolicy
     public function viewAny(User $user)
     {
         //
-      //  if ($user->role_id == 1) return true; //adminTS
+        //  if ($user->role_id == 1) return true; //adminTS
         if ($user->role_id == 2) return true; //cl
         if ($user->role_id == 3) return true; //cc
         //if ($user->role_id == 5) return true; //tl
@@ -78,6 +78,12 @@ class ReportPolicy
     public function delete(User $user, Report $report)
     {
         //
+        if ($user->isChangeChampion()) {
+            if ($user->provinsi_id == $report->provinsi_id and $report->status != 2) {
+                return true;
+            }
+            return false;
+        }
         return false;
     }
 
@@ -116,6 +122,4 @@ class ReportPolicy
         }
         return false;
     }
-
-        
 }

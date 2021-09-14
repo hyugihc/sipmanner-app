@@ -58,21 +58,20 @@
                                 @php
                                     $i = 1;
                                 @endphp
-                                @foreach ($intervensiNasionals as $intervensiNasional)
+                                @foreach ($intervensiNasionalProvinsis as $intervensiNasional)
                                     <tr>
                                         <td>{{ $i }}</td>
-                                        <td>{{ $intervensiNasional->nama }}</td>
-                                      
-                                        <td>
-                                            {{ $intervensiNasional->output }}
+                                        <td>{{ $intervensiNasional->intervensiNasional->nama }}</td>
 
+                                        <td>
+                                            {{ $intervensiNasional->intervensiNasional->output }}
                                         </td>
                                         <td>
-                                            {{ $intervensiNasional->outcome }}
+                                            {{ $intervensiNasional->intervensiNasional->outcome }}
                                         </td>
                                         <td>
                                             <a class="btn btn-block btn-primary btn-xs"
-                                                href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional) }}">Show
+                                                href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional->intervensiNasional->id) }}">Show
                                                 Progress</a>
 
                                         </td>
@@ -124,7 +123,7 @@
                                             <td>{{ $intervensiKhusus->provinsi->nama }}</td>
                                         @endif
                                         <td>{{ $intervensiKhusus->nama }}</td>
-                                      
+
                                         <td>
                                             {{ $intervensiKhusus->output }}
                                         </td>

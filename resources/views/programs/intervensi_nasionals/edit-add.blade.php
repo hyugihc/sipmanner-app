@@ -71,8 +71,8 @@
                             @endif
 
                             <div class="form-group">
-                                <label>Tahun SK</label>
-                                <select name="tahun_sk" class="form-control">
+                                <label>Tahun</label>
+                                <select name="tahun" class="form-control">
                                     <option id="year"></option>
                                 </select>
                             </div>
@@ -125,7 +125,15 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <input type="submit" class="btn btn-primary" name=" draft" value="Simpan sebagai draft">
+
+                            @if (isset($intervensiNasional))
+                                @if ($intervensiNasional->status != 2)
+                                    <input type="submit" class="btn btn-primary" name=" draft" value="Simpan sebagai draft">
+                                @endif
+                            @else
+                                <input type="submit" class="btn btn-primary" name=" draft" value="Simpan sebagai draft">
+                            @endif
+
                             <input type="submit" class="btn btn-primary" name=" submit"
                                 value="{{ isset($progressIntervensiKhusus) ? 'Simpan' : 'Submit' }}">
                         </div>
@@ -148,7 +156,6 @@
             $(document).ready(function() {
                 var year = new Date().getFullYear();
                 $("#year").append('<option value=' + year + '>' + year + '</option>');
-                updateRowOrder();
             });
             $(function() {
                 //Initialize Select2 Elements

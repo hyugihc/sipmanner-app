@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Can;
 use App\Provinsi;
 use App\Role;
+use App\IntervensiKhusus;
 
 class User extends Authenticatable
 {
@@ -28,6 +29,12 @@ class User extends Authenticatable
     public function provinsi()
     {
         return $this->belongsTo(Provinsi::class);
+    }
+
+    //hanya change champion yang punya
+    public function intervensi_khususes()
+    {
+        return $this->hasMany(IntervensiKhusus::class);
     }
 
     public function isAdmin()

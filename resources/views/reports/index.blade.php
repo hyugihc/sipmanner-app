@@ -67,7 +67,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+
+                                @foreach ($reports as $report)
+                                    <tr>
+                                        <td>{{ $report->tahun }}</td>
+                                        <td>{{ $report->semester }}</td>
+                                        <td>{{ $report->updated_at }}</td>
+                                        <td>{{ $report->user_id }}</td>
+                                        <td>{{ $report->getStatus() }}</td>
+                                        <td>
+                                            @can('view', $report)
+                                                <a class="btn btn-block btn-primary btn-xs"
+                                                    href="{{ route('reports.show', $report) }}">Show</a>
+                                            @endcan
+                                            @can('update', $report)
+                                                <a class="btn btn-block btn-warning btn-xs"
+                                                    href="{{ route('reports.edit', $report) }}">Edit</a>
+                                            @endcan
+
+                                            @can('delete', $report)
+                                                <form action="{{ route('reports.destroy', $report) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"
+                                                        class="btn btn-block btn-danger btn-xs" style="margin-top: 10px">Delete</button>
+                                                </form>
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                {{-- <tr>
                                     @if (Auth::user()->isChangeLeader() and ($reportSm1->status == 0 or $reportSm1->status == 3))
                                         <td>{{ $reportSm1->tahun }}</td>
                                         <td>{{ $reportSm1->semester }}</td>
@@ -166,7 +197,7 @@
                                             @endcan
                                         </td>
                                     @endif
-                                </tr>
+                                </tr> --}}
 
                             </tbody>
                         </table>
@@ -217,6 +248,14 @@
                 "progressBar": false
                 }
                 toastr.success("{{ Session::get('success') }}");
+            @endif
+
+            @if (Session::has('warning'))
+                toastr.options = {
+                "closeButton": true,
+                "progressBar": false
+                }
+                toastr.warning("{{ Session::get('warning') }}");
             @endif
         </script>
 

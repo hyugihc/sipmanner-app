@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\IntervensiNasional;
 use App\IntervensiKhusus;
+use App\IntervensiNasionalProvinsi;
 use App\Pia;
 use App\Provinsi;
 use Illuminate\Support\Facades\Auth;
@@ -22,8 +23,25 @@ class ProgramController extends Controller
         $user = Auth::user();
         $currentYear = date("Y");
 
-        $intervensiNasionals = IntervensiNasional::where('tahun', $currentYear)->where("status", 2)->get();
-        
+        if ($user->isAdmin()) {
+            $intervensiNasionals = IntervensiNasional::where('tahun', $currentYear)->get();
+        } else {
+            $intervensiNasionals = IntervensiNasional::where('tahun', $currentYear)->where("status", 2)->get();
+            foreach ($intervensiNasionals as $intervensiNasional) {
+                $intervensiNasionalProvinsi = IntervensiNasionalProvinsi::where('provinsi_id', $user->provinsi_id)->where('intervensi_nasional_id', $intervensiNasional->id)->first();
+                if ($intervensiNasionalProvinsi == null) {
+                    $intervensiNasionalProvinsi =  new IntervensiNasionalProvinsi();
+                    $intervensiNasionalProvinsi->provinsi_id = $user->provinsi_id;
+                    $intervensiNasionalProvinsi->intervensi_nasional_id = $intervensiNasional->id;
+                    $intervensiNasionalProvinsi->ukuran_keberhasilan = $intervensiNasional->ukuran_keberhasilan;
+                    $intervensiNasionalProvinsi->status = 0;
+                    $intervensiNasionalProvinsi->save();
+                }
+            }
+            $intervensiNasionalProvinsis =  IntervensiNasionalProvinsi::where('provinsi_id', $user->provinsi_id)->get();
+        }
+
+
         if ($user->isAdmin()) {
             $intervensiKhususes = IntervensiKhusus::where('tahun', $currentYear)->get();
         } elseif ($user->isChangeLeader()) {
@@ -34,6 +52,6 @@ class ProgramController extends Controller
             $intervensiKhususes = IntervensiKhusus::where('user_id', $user->id)->where('provinsi_id', $user->provinsi_id)->where('tahun', $currentYear)->get();
         }
 
-        return view('programs.index', compact('intervensiKhususes', 'intervensiNasionals'));
+        return view('programs.index', compact('intervensiKhususes', 'intervensiNasionals', 'intervensiNasionalProvinsis'));
     }
 }
