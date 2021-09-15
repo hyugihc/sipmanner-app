@@ -70,24 +70,7 @@
                                         <td>{{ $i }}</td>
                                         <td>{{ $progress_program->uraian_program }}</td>
                                         <td>{{ $progress_program->bulan }}</td>
-                                        <td>
-                                            @switch($progress_program->status)
-                                                @case(0)
-                                                    Draft
-                                                @break
-                                                @case(1)
-                                                    Submitted
-                                                @break
-                                                @case(2)
-                                                    Approved
-                                                @break
-                                                @case(3)
-                                                    Rejected
-                                                @break
-                                                @default
-                                            @endswitch
-
-                                        </td>
+                                        <td>{{ $progress_program->getStatus() }} </td>
                                         <td>
                                             <form
                                                 action="{{ route('intervensi-khususes.progress-intervensi-khususes.destroy', [$intervensiKhusus, $progress_program]) }}"

@@ -95,7 +95,7 @@ class LoginController extends Controller
                 // echo "Foto : ". $user->getUrlFoto();
                 // echo "Eselon : ". $user->getEselon();
 
-               
+
                 $email = $user->getEmail();
                 $id = User::where('email', $email)->first();
                 if (!empty($id)) {
@@ -117,6 +117,7 @@ class LoginController extends Controller
                     $loggedinUser = User::find($id);
                     $loggedinUser->avatar = $user->getUrlFoto();
                     $loggedinUser->save();
+                    $loggedinUser->setSetting('tahun', '2021');
                     return redirect()->route('dashboard');
                 } else {
                     return redirect('/');

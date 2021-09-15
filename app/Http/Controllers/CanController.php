@@ -29,9 +29,11 @@ class CanController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $year = $user->getSetting('tahun');
+
         $cans = ($user->isAdmin() or $user->isTopLeader()) ?
-            Can::orderBy('status_sk')->paginate(5) :
-            Can::orderBy('status_sk')->where('provinsi_id', $user->provinsi_id)->paginate(5);
+            Can::where('tahun_sk', $year)->orderBy('status_sk')->paginate(5) :
+            Can::where('tahun_sk', $year)->orderBy('status_sk')->where('provinsi_id', $user->provinsi_id)->paginate(5);
         return view('cans.index', compact('cans'));
     }
 
@@ -64,7 +66,10 @@ class CanController extends Controller
 
         //create can
         $can = Can::create($request->all());
-        $can->tahun_sk = date("Y");
+
+        $year = $user->getSetting('tahun');
+
+        $can->tahun_sk = $year;
         $can->user_id = $user->id;
         $can->provinsi_id = $user->provinsi_id;
         $can->status_sk  = ($request->has('draft')) ? 0 : 1;

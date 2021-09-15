@@ -17,7 +17,7 @@
                                 href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional) }}">{{ $intervensiNasional->nama }}</a>
                         </li>
                         @if (isset($progressIntervensiNasional))
-                            <li class="breadcrumb-item active">{{ $progressIntervensiNasional->bulan }}</li>
+                            <li class="breadcrumb-item active">{{ $progressIntervensiNasional->getBulan() }}</li>
                         @else
                             <li class="breadcrumb-item active">Create</li>
                         @endif
@@ -90,18 +90,30 @@
                             <div class="form-group">
                                 <label>Bulan</label>
                                 <select class="form-control" name="bulan" id="">
-                                    <option value="1">Januari</option>
-                                    <option value="2">Februari</option>
-                                    <option value="3">Maret</option>
-                                    <option value="4">April</option>
-                                    <option value="5">Mei</option>
-                                    <option value="6">Juni</option>
-                                    <option value="7">Juli</option>
-                                    <option value="8">Agustus</option>
-                                    <option value="9">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
+                                    <option value="1" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 1)
+                                        selected='selected' @endif @endisset>Januari</option>
+                                    <option value="2" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 2)
+                                        selected='selected' @endif @endisset>Februari</option>
+                                    <option value="3" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 3)
+                                        selected='selected' @endif @endisset>Maret</option>
+                                    <option value="4" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 4)
+                                        selected='selected' @endif @endisset>April</option>
+                                    <option value="5" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 5)
+                                        selected='selected' @endif @endisset>Mei</option>
+                                    <option value="6" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 6)
+                                        selected='selected' @endif @endisset>Juni</option>
+                                    <option value="7" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 7)
+                                        selected='selected' @endif @endisset>Juli</option>
+                                    <option value="8" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 8)
+                                        selected='selected' @endif @endisset>Agustus</option>
+                                    <option value="9" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 9)
+                                        selected='selected' @endif @endisset>September</option>
+                                    <option value="10" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 10)
+                                        selected='selected' @endif @endisset>Oktober</option>
+                                    <option value="11" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 11)
+                                        selected='selected' @endif @endisset>November</option>
+                                    <option value="12" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 12)
+                                        selected='selected' @endif @endisset>Desember</option>
                                 </select>
                             </div>
 
@@ -146,8 +158,7 @@
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <input type="submit" class="btn btn-primary" name=" draft" value="Simpan sebagai draft">
-                            <input type="submit" class="btn btn-primary" name=" submit"
-                                value="{{ isset($progressIntervensiNasional) ? 'Simpan' : 'Submit' }}">
+                            <input type="submit" class="btn btn-primary" name=" submit" value="submit">
                         </div>
                         </form>
                     </div>

@@ -68,20 +68,12 @@
                                 <dt>kendala dan keterangan lain</dt>
                                 <dd> {{ $progressIntervensiKhusus->keterangan }} </dd>
                                 <dt>Status</dt>
-                                @switch($progressIntervensiKhusus->status)
-                                    @case(1)
-                                        <dl> Submitted</dl>
-                                    @break
-                                    @case(2)
-                                        <dl> Approved</dl>
-                                    @break
-                                    @case(3)
-                                        <dl> Rejected</dl>
-                                        <dl> {{ $progressIntervensiKhusus->alasan }}</dl>
-                                    @break
-                                    @default
-                                @endswitch
-
+                                <dd>{{ $progressIntervensiKhusus->getStatus() }} </dd>
+                                <dd>
+                                    @if ($progressIntervensiKhusus->status == 3)
+                                <dd>{{ $progressIntervensiKhusus->alasan }}</dd>
+                                @endif
+                                </dd>
 
                                 <!-- form start -->
                                 <form action="{{ route('piks.approve', $progressIntervensiKhusus) }}" method="POST">

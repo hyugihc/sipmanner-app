@@ -6,6 +6,7 @@ use App\Http\Requests\StoreIntervensiNasionalRequest;
 use App\IntervensiNasional;
 use App\Pia;
 use App\Provinsi;
+use Illuminate\Support\Facades\Auth;
 
 class IntervensiNasionalController extends Controller
 {
@@ -51,8 +52,11 @@ class IntervensiNasionalController extends Controller
     public function store(StoreIntervensiNasionalRequest $request)
     {
         //
+        $user = Auth::user();
+        $year = $user->getSetting('tahun');
+
         $intervensiNasional = IntervensiNasional::create($request->all());
-        $intervensiNasional->tahun = date("Y");
+        $intervensiNasional->tahun = $year;
         $intervensiNasional->status  = ($request->has('draft')) ? 0 : 2;
         $intervensiNasional->save();
 

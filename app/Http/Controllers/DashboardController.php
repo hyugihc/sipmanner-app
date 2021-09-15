@@ -27,15 +27,15 @@ class DashboardController extends Controller
     {
 
         $user = Auth::user();
-        $currentYear = date("Y");
+        $year = $user->getSetting('tahun');
 
 
         //==================================Pie Chart===================================================
 
         // Progres Intervensi Khusus by CC
 
-        $intervensiKhususesByUser = ($user->role_id == 1) ?  IntervensiKhusus::where('tahun',  $currentYear)->get()
-            : IntervensiKhusus::where('user_id', $user->id)->where('provinsi_id', $user->provinsi_id)->where('tahun',  $currentYear)->get();
+        $intervensiKhususesByUser = ($user->role_id == 1) ?  IntervensiKhusus::where('tahun',  $year)->get()
+            : IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('tahun',  $year)->get();
         $ikDraft = $intervensiKhususesByUser->where('status', 0)->count();
         $ikSubmit = $intervensiKhususesByUser->where('status', 1)->count();
         $ikApproved = $intervensiKhususesByUser->where('status', 2)->count();
@@ -46,7 +46,7 @@ class DashboardController extends Controller
         //Jumlah Can
         //$latestCan = Can::where('provinsi_id', $user->provinsi_id)->latest("updated_at")->first();
         if ($user->role_id == 1) {
-            $cans = Can::where('status_sk', 2)->where('tahun_sk', date("Y"))->get();
+            $cans = Can::where('status_sk', 2)->where('tahun_sk', $year)->get();
             if ($cans != null) {
                 $canCount = 0;
                 foreach ($cans as $can) {
@@ -57,7 +57,7 @@ class DashboardController extends Controller
                 $canCount = 0;
             }
         } else {
-            $latestCan = Can::where('provinsi_id', $user->provinsi_id)->where('status_sk', 2)->where('tahun_sk', date("Y"))->first();
+            $latestCan = Can::where('provinsi_id', $user->provinsi_id)->where('status_sk', 2)->where('tahun_sk', $year)->first();
             if ($latestCan != null) {
                 $canId = $latestCan->id;
                 $canCount = DB::table('can_user')->where('can_id', $canId)->count();
@@ -68,24 +68,27 @@ class DashboardController extends Controller
 
 
         //Jumlah Intervensi Nasional
-        $inCount = IntervensiNasional::where('tahun', $currentYear)->count();
+        $inCount = IntervensiNasional::where('tahun', $year)->where('status', 2)->count();
 
         //Jumlah Intervensi Khusus
-        $ikCount = ($user->role_id == 1) ? IntervensiKhusus::where('tahun', $currentYear)->where('status', 2)->count()
-            : IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('tahun', $currentYear)->where('status', 2)->count();
+        if ($user->isAdmin() or $user->isTopLeader()) {
+            $ikCount =  IntervensiKhusus::where('tahun', $year)->where('status', 2)->count();
+        } elseif ($user->isChangeLeader() or $user->isChangeChampion()) {
+            $ikCount = IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('tahun', $year)->where('status', 2)->count();
+        }
 
         //Jumlah Progress
         //progress Intervensi Nasional
-        $intervensiNasionals = IntervensiNasional::where('tahun', $currentYear)->get();
+        $intervensiNasionals = IntervensiNasional::where('tahun', $year)->get();
         $intervensiNasionalKeys = $intervensiNasionals->modelKeys();
-        $intervensiNasionalYearProvinsis = IntervensiNasionalProvinsi::whereIn('intervensi_nasional_id', $intervensiNasionalKeys)->get();
-        $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('provinsi_id', $user->provinsi_id)->get();
+        // $intervensiNasionalYearProvinsis = IntervensiNasionalProvinsi::whereIn('intervensi_nasional_id', $intervensiNasionalKeys)->get();
+        $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('provinsi_id', $user->provinsi_id)->whereIn('intervensi_nasional_id', $intervensiNasionalKeys)->get();
         $intervensiNasionalProvinsiKeys =  $intervensiNasionalProvinsis->modelKeys();
         $pinCount =   $intervensiNasionalProvinsiKeys != 0 ?
             ProgressIntervensiNasional::whereIn('intervensi_nasional_provinsi_id', $intervensiNasionalProvinsiKeys)->where('status', 2)->count() : 0;
 
         //progress Intervensi Khusus
-        $intervensiKhususes = IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('tahun', $currentYear)->where('status', 2)->get();
+        $intervensiKhususes = IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('tahun', $year)->where('status', 2)->get();
         $intervensiKhususKeys = $intervensiKhususes->modelKeys();
         $pikCount = $intervensiKhususKeys != 0 ? ProgressIntervensiKhusus::whereIn('intervensi_khusus_id', $intervensiKhususKeys)->where('status', 2)->count() : 0;
 
@@ -95,8 +98,8 @@ class DashboardController extends Controller
         //====================================Tabel Progress=================================================
 
         //Tabel progress Report
-        $reportSm1 = Report::where('provinsi_id', $user->provinsi_id)->where('tahun',  $currentYear)->where('semester', 1)->first();
-        $reportSm2 = Report::where('provinsi_id', $user->provinsi_id)->where('tahun',  $currentYear)->where('semester', 2)->first();
+        $reportSm1 = Report::where('provinsi_id', $user->provinsi_id)->where('tahun',  $year)->where('semester', 1)->first();
+        $reportSm2 = Report::where('provinsi_id', $user->provinsi_id)->where('tahun',  $year)->where('semester', 2)->first();
         $reportSm1Status =  $reportSm1 != null ?  $reportSm1->status : 0;
         $reportSm2Status =  $reportSm2 != null ?  $reportSm2->status : 0;
 
@@ -112,7 +115,7 @@ class DashboardController extends Controller
         //Progress Intervensi Khusus
         $pikMaxs = array();
         foreach ($intervensiKhususKeys as $ikk => $value) {
-            $pikMax = ProgressIntervensiKhusus::where('intervensi_khusus_id', $value)->where('status', 2)->orderByDesc('bulan')->first();
+            $pikMax = ProgressIntervensiKhusus::where('intervensi_khusus_id', $value)->where('status', 2)->orderByDesc('tanggal')->first();
             if ($pikMax != null) {
                 $pikMaxs[] = $pikMax;
             }

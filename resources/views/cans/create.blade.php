@@ -53,7 +53,7 @@
                                 <div class="form-group">
                                     <label>Tahun SK</label>
                                     <select name="tahun_sk" class="form-control">
-                                        <option id="year"></option>
+                                        <option> {{Auth::user()->getSetting('tahun')}}</option>
                                     </select>
                                 </div>
 

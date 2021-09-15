@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('users', UserController::class);
     //Route::get('/getUser/{nipLama}', 'UserController@getUser');
     Route::get('/getuser_by_niplama_sso/{nip_lama}', 'UserController@getuser_by_niplama_sso')->name('get_user_byniplama_sso');
+    
+    Route::get('/searchuser_by_niplama_sso/{nip_lama}', 'UserController@searchuser_by_niplama_sso')->name('search_user_byniplama_sso');
 
 
     Route::resource('cans', CanController::class);
@@ -83,6 +85,8 @@ Route::group(['middleware' => 'auth'], function () {
     })->name('faq');
 
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/about', 'AboutController@index')->name('about');
+    Route::put('/about/{user}/tahun', 'AboutController@gantiTahun')->name('settings.tahun');
 
     Route::resource('reports', ReportController::class);
     Route::get('/reports/{tahun}/{semester}/createLaporan', 'ReportController@createLaporan')->name('reports.create.laporan');

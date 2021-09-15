@@ -15,12 +15,37 @@ class ProgressIntervensiKhusus extends Model
      * @var array
      */
     protected $fillable = [
-        'uraian_program', 'bulan', 'realisasi_pelaksanaan_kegiatan', 'upload_dokumentasi', 'upload_bukti_dukung', 'keterangan'
+        'uraian_program', 'tanggal', 'realisasi_pelaksanaan_kegiatan', 'upload_dokumentasi', 'upload_bukti_dukung', 'keterangan'
     ];
 
     public function intervensi_khusus()
     {
         return $this->belongsTo(IntervensiKhusus::class);
+    }
+
+    public function getStatus()
+    {
+        switch ($this->status) {
+            case '0':
+                return "draft";
+                break;
+
+            case '1':
+                return "Disubmit";
+                break;
+
+            case '2':
+                return "Disetujui";
+                break;
+
+            case '3':
+                return "Ditolak";
+                break;
+
+            default:
+                # code...
+                break;
+        }
     }
 
     public function getNamaFileDokumentasi()

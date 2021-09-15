@@ -54,9 +54,12 @@ class IntervensiKhususController extends Controller
     public function store(StoreIntervensiKhususRequest $request)
     {
         //
+        $user = Auth::user();
+        $year = $user->getSetting('tahun');
+
         $intervensi = IntervensiKhusus::create($request->all());
         $intervensi->provinsi_id = $request->user()->provinsi_id;
-        $intervensi->tahun = date("Y");
+        $intervensi->tahun = $year;
         $intervensi->user_id = Auth::user()->id;
         $intervensi->status  = ($request->has('draft')) ? 0 : 1;
         $intervensi->save();

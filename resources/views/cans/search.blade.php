@@ -63,8 +63,6 @@
           });
       });
       $(document).ready(function() {
-          var year = new Date().getFullYear();
-          $("#year").append('<option value=' + year + '>' + year + '</option>');
           updateRowOrder();
       });
       $(document).ready(function() {

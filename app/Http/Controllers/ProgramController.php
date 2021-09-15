@@ -21,12 +21,13 @@ class ProgramController extends Controller
     {
         //
         $user = Auth::user();
-        $currentYear = date("Y");
+        $currentYear = $user->getSetting('tahun');
 
         if ($user->isAdmin()) {
             $intervensiNasionals = IntervensiNasional::where('tahun', $currentYear)->get();
         } else {
             $intervensiNasionals = IntervensiNasional::where('tahun', $currentYear)->where("status", 2)->get();
+
             foreach ($intervensiNasionals as $intervensiNasional) {
                 $intervensiNasionalProvinsi = IntervensiNasionalProvinsi::where('provinsi_id', $user->provinsi_id)->where('intervensi_nasional_id', $intervensiNasional->id)->first();
                 if ($intervensiNasionalProvinsi == null) {
@@ -38,7 +39,10 @@ class ProgramController extends Controller
                     $intervensiNasionalProvinsi->save();
                 }
             }
-            $intervensiNasionalProvinsis =  IntervensiNasionalProvinsi::where('provinsi_id', $user->provinsi_id)->get();
+            $intervensiNasionals = IntervensiNasional::where('tahun', $currentYear)->where("status", 2)->get();
+            $intervensiNasionalKeys = $intervensiNasionals->modelKeys();
+            $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('provinsi_id', $user->provinsi_id)->whereIn('intervensi_nasional_id', $intervensiNasionalKeys)->get();
+           // $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('provinsi_id', $user->provinsi_id)->get();
         }
 
 

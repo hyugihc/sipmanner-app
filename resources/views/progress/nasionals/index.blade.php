@@ -70,71 +70,11 @@
                                     <tr>
                                         <td>{{ $i }}</td>
                                         @if (Auth::user()->isAdmin())
-                                            <td>{{ $progress_program->intervensiNasionalProvinsi->provinsi["nama"] }}</td>
+                                            <td>{{ $progress_program->intervensiNasionalProvinsi->provinsi['nama'] }}</td>
                                         @endif
                                         <td>{{ $progress_program->uraian_program }}</td>
-                                        <td>
-                                            @switch($progress_program->bulan)
-                                                @case(1)
-                                                    Januari
-                                                @break
-                                                @case(2)
-                                                    Februari
-                                                @break
-                                                @case(3)
-                                                    Maret
-                                                @break
-                                                @case(4)
-                                                    April
-                                                @break
-                                                @case(5)
-                                                    Mei
-                                                @break
-                                                @case(6)
-                                                    Juni
-                                                @break
-                                                @case(7)
-                                                    Juli
-                                                @break
-                                                @case(8)
-                                                    Agustus
-                                                @break
-                                                @case(9)
-                                                    September
-                                                @break
-                                                @case(10)
-                                                    Oktober
-                                                @break
-                                                @case(11)
-                                                    November
-                                                @break
-                                                @case(12)
-                                                    Desember
-                                                @break
-
-                                                @default
-
-                                            @endswitch
-
-
-                                        </td>
-                                        <td>
-                                            @switch($progress_program->status)
-                                                @case(0)
-                                                    Draft
-                                                @break
-                                                @case(1)
-                                                    Submitted
-                                                @break
-                                                @case(2)
-                                                    Approved
-                                                @break
-                                                @case(3)
-                                                    Rejected
-                                                @break
-                                                @default
-                                            @endswitch
-                                        </td>
+                                        <td>{{ $progress_program->getBulan() }} </td>
+                                        <td>{{ $progress_program->getStatus() }} </td>
                                         <td>
                                             <form
                                                 action="{{ route('intervensi-nasionals.progress-intervensi-nasionals.destroy', [$intervensiNasional, $progress_program]) }}"

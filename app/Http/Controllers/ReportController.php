@@ -25,14 +25,16 @@ class ReportController extends Controller
     {
         //list report yang ada bedakan berdasarkan role
         $user = Auth::user();
+        
+        $year = $user->getSetting('tahun');
 
         //untuk CC
         if ($user->isChangeChampion()) {
-            $reports = Report::where('provinsi_id', $user->provinsi_id)->get();
+            $reports = Report::where('provinsi_id', $user->provinsi_id)->where('tahun', $year)->get();
         }
         //untuk CL
         if ($user->isChangeLeader()) {
-            $reports = Report::where('provinsi_id', $user->provinsi_id)->where('status', '!=', '0')->get();
+            $reports = Report::where('provinsi_id', $user->provinsi_id)->where('status', '!=', '0')->where('tahun', $year)->get();
         }
 
         return view('reports.index', compact('reports'));

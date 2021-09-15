@@ -8,7 +8,9 @@ use Illuminate\Notifications\Notifiable;
 use App\Can;
 use App\Provinsi;
 use App\Role;
+use App\Setting;
 use App\IntervensiKhusus;
+use App\Traits\UserSettingsTrait;
 
 class User extends Authenticatable
 {
@@ -20,6 +22,7 @@ class User extends Authenticatable
     public const TOP_LEADER    = 5;
 
     use Notifiable;
+    use UserSettingsTrait;
 
     public function role()
     {
@@ -64,6 +67,11 @@ class User extends Authenticatable
     public function getSatkerEs2()
     {
         return $this->provinsi_id;
+    }
+
+    public function settings()
+    {
+        return $this->hasMany(Setting::class);
     }
 
     // public function isActiveChangeAgent()

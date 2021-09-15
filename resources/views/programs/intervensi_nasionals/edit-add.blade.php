@@ -70,12 +70,7 @@
                                 </div>
                             @endif
 
-                            <div class="form-group">
-                                <label>Tahun</label>
-                                <select name="tahun" class="form-control">
-                                    <option id="year"></option>
-                                </select>
-                            </div>
+                        
 
                             <div class="form-group">
                                 <label>Nama Program*</label>
@@ -153,10 +148,7 @@
 
         <script src="{{ asset('') }}assets/plugins/select2/js/select2.full.min.js"></script>
         <script>
-            $(document).ready(function() {
-                var year = new Date().getFullYear();
-                $("#year").append('<option value=' + year + '>' + year + '</option>');
-            });
+      
             $(function() {
                 //Initialize Select2 Elements
                 $('.select2').select2()

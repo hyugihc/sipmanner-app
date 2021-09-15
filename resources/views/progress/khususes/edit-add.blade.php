@@ -17,7 +17,7 @@
                                 href="{{ route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus) }}">{{ $intervensiKhusus->nama }}</a>
                         </li>
                         @if (isset($progressIntervensiKhusus))
-                            <li class="breadcrumb-item active">{{ $progressIntervensiKhusus->bulan }}</li>
+                            <li class="breadcrumb-item active">{{ $progressIntervensiKhusus->tanggal }}</li>
                         @else
                             <li class="breadcrumb-item active">Create</li>
                         @endif
@@ -81,21 +81,23 @@
 
                             <div class="form-group">
                                 <label>Tanggal</label>
-                                <input type="date" name="bulan" class="form-control" placeholder=""
-                                    value="{{ old('bulan', isset($progressIntervensiKhusus) ? $progressIntervensiKhusus->bulan : '') }}">
+                                <input type="date" name="tanggal" class="form-control" placeholder=""
+                                    value="{{ old('tanggal', isset($progressIntervensiKhusus) ? $progressIntervensiKhusus->tanggal : '') }}">
                             </div>
 
                             <div class="form-group">
                                 <label>Realisasi Pelaksanaan Kegiatan</label>
-                                <input type="number" name="realisasi_pelaksanaan_kegiatan" class="form-control" placeholder=""
+                                <input type="number" name="realisasi_pelaksanaan_kegiatan" class="form-control"
+                                    placeholder=""
                                     value="{{ old('realisasi_pelaksanaan_kegiatan', isset($progressIntervensiKhusus) ? $progressIntervensiKhusus->realisasi_pelaksanaan_kegiatan : '') }}"
                                     min="1" max="100">
                             </div>
 
                             <div class="form-group">
                                 <label>Realisasi Capaian Keberhasilan</label>
-                                <input type="number" name="realisasi_capaian_keberhasilan" class="form-control" placeholder=""
-                                    value="{{ old('realisasi_capaian_keberhasilan', isset($progressIntervensiKhusus) ? $progressIntervensiKhusus->realisasi_capaian_keberhasilan: '') }}"
+                                <input type="number" name="realisasi_capaian_keberhasilan" class="form-control"
+                                    placeholder=""
+                                    value="{{ old('realisasi_capaian_keberhasilan', isset($progressIntervensiKhusus) ? $progressIntervensiKhusus->realisasi_capaian_keberhasilan : '') }}"
                                     min="1" max="100">
                             </div>
 

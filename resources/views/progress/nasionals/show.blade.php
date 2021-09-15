@@ -16,7 +16,7 @@
                         <li class="breadcrumb-item"><a
                                 href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional) }}">{{ $intervensiNasional->nama }}</a>
                         </li>
-                        <li class="breadcrumb-item active">{{ $progressIntervensiNasional->bulan }}</li>
+                        <li class="breadcrumb-item active">{{ $progressIntervensiNasional->getBulan() }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -45,47 +45,7 @@
                                 <dt>Penjelasan progress</dt>
                                 <dd>{{ $progressIntervensiNasional->uraian_program }}</dd>
                                 <dt>Bulan</dt>
-                                @switch($progressIntervensiNasional->bulan)
-                                    @case(1)
-                                        Januari
-                                    @break
-                                    @case(2)
-                                        Februari
-                                    @break
-                                    @case(3)
-                                        Maret
-                                    @break
-                                    @case(4)
-                                        April
-                                    @break
-                                    @case(5)
-                                        Mei
-                                    @break
-                                    @case(6)
-                                        Juni
-                                    @break
-                                    @case(7)
-                                        Juli
-                                    @break
-                                    @case(8)
-                                        Agustus
-                                    @break
-                                    @case(9)
-                                        September
-                                    @break
-                                    @case(10)
-                                        Oktober
-                                    @break
-                                    @case(11)
-                                        November
-                                    @break
-                                    @case(12)
-                                        Desember
-                                    @break
-
-                                    @default
-
-                                @endswitch
+                                <dd>{{ $progressIntervensiNasional->getBulan() }}</dd>
                                 <dt>Realisasi Pelaksanaan Kegiatan</dt>
                                 <dd> {{ $progressIntervensiNasional->realisasi_pelaksanaan_kegiatan }} </dd>
 
@@ -107,20 +67,12 @@
                                 <dt>kendala dan keterangan lain</dt>
                                 <dd> {{ $progressIntervensiNasional->keterangan }} </dd>
                                 <dt>Status</dt>
-                                @switch($progressIntervensiNasional->status)
-                                    @case(1)
-                                        <dl> Submitted</dl>
-                                    @break
-                                    @case(2)
-                                        <dl> Approved</dl>
-                                    @break
-                                    @case(3)
-                                        <dl> Rejected</dl>
-                                        <dt>Alasan</dt>
-                                        <dl> {{ $progressIntervensiNasional->alasan }}</dl>
-                                    @break
-                                    @default
-                                @endswitch
+                                <dd>{{ $progressIntervensiNasional->getStatus() }}</dd>
+                                <dd>
+                                    @if ($progressIntervensiNasional->status == 3)
+                                        {{ $progressIntervensiNasional->alasan }}
+                                    @endif
+                                </dd>
 
                                 <!-- form start -->
                                 <form action="{{ route('pins.approve', $progressIntervensiNasional) }}" method="POST">

@@ -29,7 +29,7 @@
                             <div class="form-group">
                                 <label>Cari Pegawai:</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="input_nip" />
+                                    <input type="text" class="form-control" id="input_nip" placeholder="Masukan 5 digit NIP lama" />
                                     <div class="input-group-append">
                                         <div class="input-group-text"><i class="fa fa-search" id="search_nip"></i></div>
                                     </div>
@@ -166,7 +166,7 @@
             });
 
             function cariPegawai(nip) {
-                var urlx = '{{ route('get_user_byniplama_sso', ':nip') }}';
+                var urlx = '{{ route('search_user_byniplama_sso', ':nip') }}';
                 urlx = urlx.replace(':nip', nip);
                 $.ajax({
                     url: urlx,

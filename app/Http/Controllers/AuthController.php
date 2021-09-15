@@ -51,6 +51,10 @@ class AuthController extends Controller
 
         if (Auth::check()) { // true sekalian session field di users nanti bisa dipanggil via Auth
             //Login Success
+            $user = User::where('email', $request->input('email'))->first();
+            $user->setSetting('tahun', '2021');
+            // $user->setSettings(['first_name' => 'John', 'last_name' => 'Smith']);
+
             return redirect()->route('dashboard');
         } else { // false
 
@@ -59,7 +63,7 @@ class AuthController extends Controller
             return redirect()->route('login');
         }
     }
-    
+
     public function logout()
     {
         Auth::logout(); // menghapus session yang aktif

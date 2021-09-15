@@ -73,7 +73,7 @@
                                         <td>{{ $report->tahun }}</td>
                                         <td>{{ $report->semester }}</td>
                                         <td>{{ $report->updated_at }}</td>
-                                        <td>{{ $report->user_id }}</td>
+                                        <td>{{ $report->user->name }}</td>
                                         <td>{{ $report->getStatus() }}</td>
                                         <td>
                                             @can('view', $report)
