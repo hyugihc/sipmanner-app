@@ -23,8 +23,19 @@ class StoreReportRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'lampiran' => 'nullable|mimes:pdf|max:3000'
+        $rules = [
+            
         ];
+        if ($this->has('submit')) {
+            $rules['bab_i'] = 'required|min:5|max:1000';
+            $rules['bab_ii'] = 'required|min:5|max:1000';
+            $rules['bab_iii'] = 'required|min:5|max:1000';
+            $rules['bab_iv'] = 'required|min:5|max:1000';
+            $rules['bab_v'] = 'required|min:5|max:1000';
+            $rules['bab_vi'] = 'required|min:5|max:1000';
+            $rules['bab_vii'] = 'required|min:5|max:1000';
+            
+        }
+        return $rules;
     }
 }

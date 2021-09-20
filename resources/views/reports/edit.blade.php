@@ -127,7 +127,7 @@
 
                                 <div class="form-group">
                                     <label>B. Program Intervensi Khusus </label>
-                                    @foreach ($report->changeChampions as $cc)
+                                    
                                         <div class="card-body table-bordered table-condensed table-responsive p-0">
                                             <table class="table table-hover">
                                                 <thead>
@@ -143,7 +143,7 @@
                                                     @php
                                                         $i = 1;
                                                     @endphp
-                                                    @foreach ($report->intervensiKhususes->where('user_id', $cc->id) as $pi)
+                                                    @foreach ($report->intervensiKhususes as $pi)
                                                         <tr>
                                                             <td><b>{{ $i }}</b></td>
                                                             <td>{{ $pi->nama }}</td>
@@ -173,7 +173,6 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    @endforeach
                                 </div>
 
                                 <div class="form-group">
@@ -244,7 +243,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <input type="submit" class="btn btn-primary" name=" draft" value="Simpan">
+                        <input type="submit" class="btn btn-primary" name=" draft" value="Simpan sebagai draft">
                         <input type="submit" class="btn btn-primary" name=" submit" value="Simpan & Submit">
                     </div>
                     </form>

@@ -25,7 +25,7 @@ class StoreProgressIntKhusRequest extends FormRequest
     {
         $rules = [
             'uraian_program' => 'required|max:500',
-            'bulan' => 'required',
+            'tanggal' => 'required',
             'realisasi_pelaksanaan_kegiatan' => 'required',
             'keterangan' => 'nullable',
         ];
