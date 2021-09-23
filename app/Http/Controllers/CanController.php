@@ -60,6 +60,15 @@ class CanController extends Controller
      */
     public function store(StoreCanRequest $request)
     {
+
+
+        if ($request->has('submit')) {
+            $request->validate([
+                'nomor_sk'  => 'required|min:3|max:255|unique:cans',
+                'file_sk' => 'required|mimes:pdf|max:3000'
+            ]);
+        }
+
         $user = $request->user();
         $changeLeaders = User::where('role_id', 2)->where('provinsi_id', $user->provinsi_id)->get();
         $changeChampions = User::where('role_id', 3)->where('provinsi_id', $user->provinsi_id)->get();
@@ -73,13 +82,17 @@ class CanController extends Controller
         $can->user_id = $user->id;
         $can->provinsi_id = $user->provinsi_id;
         $can->status_sk  = ($request->has('draft')) ? 0 : 1;
-        $can->file_sk =   $request->file('file_sk')->storeAs('cans', $can->getNameFileSK());
 
+        if ($request->has('file_sk')) {
+            $can->file_sk =   $request->file('file_sk')->storeAs('cans', $can->getNameFileSK());
+        }
         if ($request->has('change_agents'))
             $can->attachChangeAgents($request->change_agents);
         $can->attachChangeChampions($changeChampions);
         $can->attachChangeLeaders($changeLeaders);
         $can->save();
+
+
 
         $message = ($can->status_sk == 0) ? 'Data berhasil disimpan menjadi draft' : 'Data berhasil disubmit ke Change Leader';
         return redirect()->route('cans.index')
@@ -119,10 +132,27 @@ class CanController extends Controller
     public function update(StoreCanRequest $request, Can $can)
     {
         //
+        if ($request->has('submit')) {
+            $request->validate([
+                'nomor_sk'  => 'required|min:3|max:255|unique:cans,nomor_sk,' . $can->id
+            ]);
+            if ($can->file_sk == null) {
+                $request->validate([
+                    'file_sk' => 'required|mimes:pdf|max:3000'
+                ]);
+            }
+        }
+
         $can->update($request->all());
         $can->status_sk  = ($request->has('draft')) ? 0 : 1;
+
         if ($request->has('file_sk')) {
-            Storage::delete($can->file_sk);
+            $request->validate([
+                'file_sk' => 'required|mimes:pdf|max:3000'
+            ]);
+            if ($can->file_sk != null) {
+                Storage::delete($can->file_sk);
+            }
             $can->file_sk = $request->file('file_sk')->storeAs('cans', $can->getNameFileSK());
         }
         if ($request->has('change_agents'))

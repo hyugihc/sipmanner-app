@@ -58,30 +58,30 @@
                 <!-- /.card-header -->
                 <div>
                     <dl>
-                        <dt>I. Pendahuluan</dt>
+                        <dt><b>I. Pendahuluan</b> </dt>
                         <br>
                         <dd>{{ $report->bab_i }}</dd>
                         <br>
-                        <dt>II. Latar Belakang</dt>
+                        <dt><b>II. Latar Belakang</b> </dt>
                         <br>
                         <dd>{{ $report->bab_ii }}</dd>
                         <br>
-                        <dt>III. Program</dt>
+                        <dt><b>III. Program</b> </dt>
                         <br>
                         <dd>{{ $report->bab_iii }}</dd>
                         <br>
                         <div>
-                            <label>A. Program Intervensi Nasional </label>
+                            <label><b>A. Program Intervensi Nasional</b>  </label>
                             <br><br>
                             <div>
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Volume</th>
-                                            <th>Output</th>
-                                            <th>Outcome</th>
+                                            <td><b>No</b></td>
+                                            <td><b>Nama</b></td>
+                                            <td><b>Uraian Kegiatan</b></td>
+                                            <td><b>Output</b></td>
+                                            <td><b>Timeline</b></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -90,19 +90,29 @@
                                         @endphp
                                         @foreach ($report->intervensiNasionalProvinsis as $pi)
                                             <tr>
-                                                <td><b>{{ $i }}</b></td>
+                                                <td>{{ $i }}</td>
                                                 <td>{{ $pi->intervensiNasional->nama }}</td>
-                                                <td>{{ $pi->intervensiNasional->volume }}</td>
+                                                <td>{{ $pi->intervensiNasional->uraian_kegiatan }}</td>
                                                 <td>{{ $pi->intervensiNasional->output }}</td>
-                                                <td>{{ $pi->intervensiNasional->outcome }} </td>
+                                                <td>{{ $pi->intervensiNasional->timeline }} </td>
                                             </tr>
                                             <tr>
-                                                <td>Kendala</td>
-                                                <td colspan="4">{{ $pi->pivot->kendala }}</td>
+                                                <td><b>Outcome</b></td>
+                                                <td colspan="4"> {{ $pi->intervensiNasional->outcome }}
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Solusi</td>
-                                                <td colspan="4">{{ $pi->pivot->solusi }}</td>
+                                                <td><b>Ukuran Keberhasilan</b></td>
+                                                <td colspan="4"> {{ $pi->ukuran_keberhasilan }}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Kendala</b></td>
+                                                <td colspan="4"> {{ $pi->pivot->kendala }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Solusi</b></td>
+                                                <td colspan="4"> {{ $pi->pivot->solusi }}</td>
                                             </tr>
                                             @php
                                                 $i++;
@@ -115,17 +125,18 @@
                         </div>
                         <br>
                         <div>
-                            <label>B. Program Intervensi Khusus </label>
+                            <label><b>B. Program Intervensi Khusus </b> </label>
                             <br><br>
                             <div>
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Volume</th>
-                                            <th>Output</th>
-                                            <th>Outcome</th>
+                                            <td><b>No</b></td>
+                                            <td><b>Nama</b></td>
+                                            <td><b>Change Champions</b></td>
+                                            <td><b>Uraian Kegiatan</b></td>
+                                            <td><b>Output</b></td>
+                                            <td><b>Timeline</b></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -136,17 +147,28 @@
                                             <tr>
                                                 <td>{{ $i }}</td>
                                                 <td>{{ $pi->nama }}</td>
-                                                <td>{{ $pi->volume }}</td>
+                                                <td>{{ $pi->user->name }}</td>
+                                                <td>{{ $pi->uraian_kegiatan }}</td>
                                                 <td>{{ $pi->output }}</td>
-                                                <td>{{ $pi->outcome }} </td>
+                                                <td>{{ $pi->timeline }} </td>
                                             </tr>
                                             <tr>
-                                                <td>Kendala</td>
-                                                <td colspan="4">{{ $pi->pivot->kendala }}</td>
+                                                <td><b>Outcome</b></td>
+                                                <td colspan="5">{{ $pi->outcome }}
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Solusi</td>
-                                                <td colspan="4">{{ $pi->pivot->solusi }}</td>
+                                                <td><b>Ukuran Keberhasilan</b></td>
+                                                <td colspan="5">{{ $pi->ukuran_keberhasilan }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Kendala</b></td>
+                                                <td colspan="5"> {{ $pi->pivot->kendala }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Solusi</b></td>
+                                                <td colspan="5"> {{ $pi->pivot->solusi }}</td>
                                             </tr>
                                             @php
                                                 $i++;
@@ -159,19 +181,19 @@
                         </div>
                         <br>
 
-                        <dt>IV. Perubahan Yang Konkret</dt>
+                        <dt><b>IV. Perubahan Yang Konkret</b> </dt>
                         <br>
                         <dd>{{ $report->bab_iv }}</dd>
                         <br>
-                        <dt>V. Komitmen Pimpinan</dt>
+                        <dt><b>V. Komitmen Pimpinan</b> </dt>
                         <br>
                         <dd>{{ $report->bab_v }}</dd>
                         <br>
-                        <dt>VI. Kesimpulan</dt>
+                        <dt><b>VI. Kesimpulan</b> </dt>
                         <br>
                         <dd>{{ $report->bab_vi }} </dd>
                         <br>
-                        <dt>VII. Penutup</dt>
+                        <dt><b>VII. Penutup</b> </dt>
                         <br>
                         <dd> {{ $report->bab_vii }} </dd>
                         <br>

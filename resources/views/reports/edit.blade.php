@@ -65,13 +65,13 @@
                                 <div class="form-group">
                                     <label>BAB II. Latar Belakang</label>
                                     <textarea class="form-control" name="bab_ii" id="" cols="30" rows="10"
-                                        placeholder="Program perubahan ini dilatarbelakangi oleh aspek yang dinilai perlu dan menjadi prioritas utama dalam menjawab kebutuhan untuk meningkatkan kinerja organisasi unit kerja dalam berbagai hal (terutama kualitas pelayanan publik).">{{ $report->bab_ii }}</textarea>
+                                        placeholder="Program perubahan ini dilatarbelakangi oleh aspek yang dinilai perlu dan menjadi prioritas utama dalam menjawab kebutuhan untuk meningkatkan kinerja organisasi unit kerja dalam berbagai hal (terutama kualitas pelayanan publik).">{{ old('bab_ii', $report->bab_ii) }}</textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <label>BAB III. Program</label>
                                     <textarea class="form-control" name="bab_iii" id="" cols="30" rows="10"
-                                        placeholder="Program seharusnya terbentuk untuk menjawab kebutuhan, mengatasi permasalahan, atau sebagai upaya meningkatkan kinerja unit kerja. Program perubahan yang meningkatkan kualitas pelayanan publik unit kerja akan memperoleh poin penilaian yang lebih besar dalam penilaian RB Keterangan :     Khusus item Pelaksanaan : dalam bagian ini dijelaskan pelaksanaan program secara rinci dimulai dari proses perencanaan (termasuk penyusunan timeline kegiatan atau roadmap bila ada, dan melibatkan stakeholder internal dan eksternal/masyarakat/pengguna data), implementasi, dan upaya monitoring dan evaluasi yang berkala. Dijelaskan pula dalam melaksanakan program ini melibat aspek pilar perubahan apa saja atau bagaimana peran pilar-pilar RB lainya dalam menyukseskan program perubahan ini.">{{ $report->bab_iii }}</textarea>
+                                        placeholder="Program seharusnya terbentuk untuk menjawab kebutuhan, mengatasi permasalahan, atau sebagai upaya meningkatkan kinerja unit kerja. Program perubahan yang meningkatkan kualitas pelayanan publik unit kerja akan memperoleh poin penilaian yang lebih besar dalam penilaian RB Keterangan :     Khusus item Pelaksanaan : dalam bagian ini dijelaskan pelaksanaan program secara rinci dimulai dari proses perencanaan (termasuk penyusunan timeline kegiatan atau roadmap bila ada, dan melibatkan stakeholder internal dan eksternal/masyarakat/pengguna data), implementasi, dan upaya monitoring dan evaluasi yang berkala. Dijelaskan pula dalam melaksanakan program ini melibat aspek pilar perubahan apa saja atau bagaimana peran pilar-pilar RB lainya dalam menyukseskan program perubahan ini.">{{ old('bab_iii', $report->bab_iii) }}</textarea>
                                 </div>
 
                                 <div class="form-group">
@@ -82,12 +82,12 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Nama</th>
-                                                    <th>Volume</th>
+                                                    <th>Uraian Kegiatan</th>
                                                     <th>Output</th>
-                                                    <th>Outcome</th>
+                                                    <th>Timeline</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody style="white-space: pre-line;">
                                                 @php
                                                     $i = 1;
                                                     //dd($report->intervensiNasionalProvinsis());
@@ -96,19 +96,29 @@
                                                     <tr>
                                                         <td><b>{{ $i }}</b></td>
                                                         <td>{{ $pi->intervensiNasional->nama }}</td>
-                                                        <td>{{ $pi->intervensiNasional->volume }}</td>
+                                                        <td>{{ $pi->intervensiNasional->uraian_kegiatan }}</td>
                                                         <td>{{ $pi->intervensiNasional->output }}</td>
-                                                        <td>{{ $pi->intervensiNasional->outcome }} </td>
+                                                        <td>{{ $pi->intervensiNasional->timeline }} </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Kendala</td>
+                                                        <th>Outcome</th>
+                                                        <td colspan="4">{{ $pi->intervensiNasional->outcome }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Ukuran Keberhasilan</th>
+                                                        <td colspan="4">{{ $pi->ukuran_keberhasilan }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Kendala</th>
                                                         <td colspan="4"><input
                                                                 name="intervensiNasional_kendala[{{ $pi->id }}]"
                                                                 class="form-control" type="text"
                                                                 value="{{ $pi->pivot->kendala }}"></td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Solusi</td>
+                                                        <th>Solusi</th>
                                                         <td colspan="4"><input
                                                                 name="intervensiNasional_solusi[{{ $pi->id }}]"
                                                                 class="form-control" type="text"
@@ -127,76 +137,99 @@
 
                                 <div class="form-group">
                                     <label>B. Program Intervensi Khusus </label>
-                                    
-                                        <div class="card-body table-bordered table-condensed table-responsive p-0">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>No</th>
-                                                        <th>Nama</th>
-                                                        <th>Volume</th>
-                                                        <th>Output</th>
-                                                        <th>Outcome</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @php
-                                                        $i = 1;
-                                                    @endphp
-                                                    @foreach ($report->intervensiKhususes as $pi)
-                                                        <tr>
-                                                            <td><b>{{ $i }}</b></td>
-                                                            <td>{{ $pi->nama }}</td>
-                                                            <td>{{ $pi->volume }}</td>
-                                                            <td>{{ $pi->output }}</td>
-                                                            <td>{{ $pi->outcome }} </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Kendala</td>
-                                                            <td colspan="4"><input
-                                                                    name="intervensiKhusus_kendala[{{ $pi->id }}]"
-                                                                    class="form-control" type="text"
-                                                                    value="{{ $pi->pivot->kendala }}"  @if ($pi->user_id != Auth::user()->id) disabled @endif></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Solusi</td>
-                                                            <td colspan="4"><input
-                                                                    name="intervensiKhusus_solusi[{{ $pi->id }}]"
-                                                                    class="form-control" type="text"
-                                                                    value="{{ $pi->pivot->solusi }}"  @if ($pi->user_id != Auth::user()->id) disabled @endif></td>
-                                                        </tr>
-                                                        @php
-                                                            $i++;
-                                                        @endphp
-                                                    @endforeach
 
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                    <div class="card-body table-bordered table-condensed table-responsive p-0">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama</th>
+                                                    <th>Change Champions</th>
+                                                    <th>Uraian Kegiatan</th>
+                                                    <th>Output</th>
+                                                    <th>Timeline</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $i = 1;
+                                                @endphp
+                                                @foreach ($report->intervensiKhususes as $pi)
+                                                    <tr>
+                                                        <td><b>{{ $i }}</b></td>
+                                                        <td>{{ $pi->nama }}</td>
+                                                        <td>{{ $pi->user->name }}</td>
+                                                        <td>{{ $pi->uraian_kegiatan }}</td>
+                                                        <td>{{ $pi->output }}</td>
+                                                        <td>{{ $pi->timeline }} </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th>Outcome</th>
+                                                        <td colspan="5">{{ $pi->outcome }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Ukuran Keberhasilan</th>
+                                                        <td colspan="5">{{ $pi->ukuran_keberhasilan }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr @if ($pi->user_id != Auth::user()->id) style="display:none;" @endif>
+                                                        <th>Kendala</th>
+                                                        <td colspan="5"><input
+                                                                name="intervensiKhusus_kendala[{{ $pi->id }}]"
+                                                                class="form-control" type="text"
+                                                                value="{{ $pi->pivot->kendala }}"></td>
+                                                    </tr>
+                                                    <tr @if ($pi->user_id != Auth::user()->id) style="display:none;" @endif>
+                                                        <th>Solusi</th>
+                                                        <td colspan="5"><input
+                                                                name="intervensiKhusus_solusi[{{ $pi->id }}]"
+                                                                class="form-control" type="text"
+                                                                value="{{ $pi->pivot->solusi }}"></td>
+                                                    </tr>
+
+                                                    <tr @if ($pi->user_id == Auth::user()->id) style="display:none;" @endif>
+                                                        <th>Kendala</th>
+                                                        <td colspan="5">{{ $pi->pivot->kendala }}</td>
+                                                    </tr>
+                                                    <tr @if ($pi->user_id == Auth::user()->id) style="display:none;" @endif>
+                                                        <th>Solusi</th>
+                                                        <td colspan="5">{{ $pi->pivot->solusi }}</td>
+                                                    </tr>
+
+                                                    @php
+                                                        $i++;
+                                                    @endphp
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label>BAB IV. Perubahan yang Konkret</label>
                                     <textarea class="form-control" name="bab_iv" id="" cols="30" rows="10"
-                                        placeholder="Program yg dibangun harus berdasarkan permasalahan yang ada di unit kerja, sehingga dengan adanya program akan jelas menyelesaikan masalah yang ada, dan tentunya akan meningkatkan nilai budaya kinerja">{{ $report->bab_iv }}</textarea>
+                                        placeholder="Program yg dibangun harus berdasarkan permasalahan yang ada di unit kerja, sehingga dengan adanya program akan jelas menyelesaikan masalah yang ada, dan tentunya akan meningkatkan nilai budaya kinerja">{{ old('bab_iv', $report->bab_iv) }}</textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <label>BAB V. Komitmen Pimpinan</label>
                                     <textarea class="form-control" name="bab_v" id="" cols="30" rows="10"
-                                        placeholder="Komitmen pimpinan adalah kunci utama dalam memimpin perubahan, menyukseskan program reformasi birokrasi unit kerja/instansi, perbaikan kualitas pelayanan publik dan perbaikan kinerja dalam berbagai aspek teknis dan non teknis. Komitmen pimpinan dimulai dari upaya shared vision kepada jajarannya sehingga semua pegawai di unit kerja mempunyai sense dan visi yang sama dalam berorganisasi, dan sebagai langkah dasar dalam menciptakan budaya kerja organisasi yang kuat. Dalam konteks laporan ini, pada bagian ini ditunjukkan bahwa program perubahan ini mendapat dukungan penuh dari pimpinan dan sebagai upaya mencapai visi pimpinan unit kerja untuk menyelesaikan permasalahan unit kerja dan meningkatkan kinerja. Komitmen ini dapat berupa keterlibatan langsung pimpinan dalam perencanaan, implementasi, atau monitoring dan evaluasi program perubahan ini; dapat pula berupa dukungan pimpinan dalam berbagai kesempatan untuk menginternalisasi kegiatan ini, atau bentuk lainnya.">{{ $report->bab_v }}</textarea>
+                                        placeholder="Komitmen pimpinan adalah kunci utama dalam memimpin perubahan, menyukseskan program reformasi birokrasi unit kerja/instansi, perbaikan kualitas pelayanan publik dan perbaikan kinerja dalam berbagai aspek teknis dan non teknis. Komitmen pimpinan dimulai dari upaya shared vision kepada jajarannya sehingga semua pegawai di unit kerja mempunyai sense dan visi yang sama dalam berorganisasi, dan sebagai langkah dasar dalam menciptakan budaya kerja organisasi yang kuat. Dalam konteks laporan ini, pada bagian ini ditunjukkan bahwa program perubahan ini mendapat dukungan penuh dari pimpinan dan sebagai upaya mencapai visi pimpinan unit kerja untuk menyelesaikan permasalahan unit kerja dan meningkatkan kinerja. Komitmen ini dapat berupa keterlibatan langsung pimpinan dalam perencanaan, implementasi, atau monitoring dan evaluasi program perubahan ini; dapat pula berupa dukungan pimpinan dalam berbagai kesempatan untuk menginternalisasi kegiatan ini, atau bentuk lainnya.">{{ old('bab_v', $report->bab_v) }}</textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <label>BAB VI. Kesimpulan</label>
                                     <textarea class="form-control" name="bab_vi" id="" cols="30" rows="10"
-                                        placeholder="Dijelaskan secara umum apakah program ini telah menjawab kebutuhan yang menjadi dasar penciptaan program ini (menyelesaikan permasalahan, peningkatan pelayanan publik, atau peningkatan kinerja unit kerja) atau sesuai dengan harapan pada bagian pendahuluan. Bila telah sesuai, dijelaskan bahwa hal ini menjadi perubahan yang nyata (konkret) di unit  kerja">{{ $report->bab_iv }}</textarea>
+                                        placeholder="Dijelaskan secara umum apakah program ini telah menjawab kebutuhan yang menjadi dasar penciptaan program ini (menyelesaikan permasalahan, peningkatan pelayanan publik, atau peningkatan kinerja unit kerja) atau sesuai dengan harapan pada bagian pendahuluan. Bila telah sesuai, dijelaskan bahwa hal ini menjadi perubahan yang nyata (konkret) di unit  kerja">{{ old('bab_iv', $report->bab_iv) }}</textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <label>BAB VII. Penutup</label>
                                     <textarea class="form-control" name="bab_vii" id="" cols="30" rows="10"
-                                        placeholder="Berisi penutup secara umum, namun juga diulas rencana kedepan terkait program kegiatan ini, apakah tetap dilanjutkan, ditindaklanjuti dengan program/kegiatan lanjutan,dimodifikasi, atau ditingkatkan menjadi kegiatan yang lebih besar.">{{ $report->bab_vii }}</textarea>
+                                        placeholder="Berisi penutup secara umum, namun juga diulas rencana kedepan terkait program kegiatan ini, apakah tetap dilanjutkan, ditindaklanjuti dengan program/kegiatan lanjutan,dimodifikasi, atau ditingkatkan menjadi kegiatan yang lebih besar.">{{ old('bab_vii', $report->bab_vii) }}</textarea>
                                 </div>
 
                                 <div class="form-group">
@@ -328,8 +361,14 @@
                 });
                 if (
                     @php
-                    if ($report->lampiran != null) {
-                        echo true;
+                    if ($report != null) {
+                        if ($report->lampiran != null) {
+                            echo 'true';
+                        } else {
+                            echo 'false';
+                        }
+                    } else {
+                        echo 'false';
                     }
                     @endphp
                 ) {

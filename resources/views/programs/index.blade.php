@@ -159,33 +159,28 @@
                             <table class="table table-hover" id="table_ins">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
                                         <th>Nama</th>
-                                        <th>Output</th>
+                                        <th>Uraian Kegiatan</th>
                                         <th>Outcome</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
-                                        $i = 1;
-                                    @endphp
                                     @foreach ($intervensiNasionalProvinsis as $program_intervensi)
                                         <tr>
-                                            <td>{{ $i }}</td>
                                             <td>{{ $program_intervensi->intervensiNasional->nama }}
                                             </td>
                                             <td>
-                                                {{ $program_intervensi->intervensiNasional->output }}
+                                                {{ $program_intervensi->intervensiNasional->uraian_kegiatan }}
                                             </td>
                                             <td>
                                                 {{ $program_intervensi->intervensiNasional->outcome }}
                                             </td>
                                             <td>
                                                 {{ $program_intervensi->getStatus() }}
-                                                @if ($program_intervensi->status == 3) 
-                                                <br> ({{ $program_intervensi->alasan }})
+                                                @if ($program_intervensi->status == 3)
+                                                    <br> ({{ $program_intervensi->alasan }})
                                                 @endif
                                             </td>
                                             <td>
@@ -206,9 +201,6 @@
                                             </td>
 
                                         </tr>
-                                        @php
-                                            $i++;
-                                        @endphp
                                     @endforeach
 
                                 </tbody>
@@ -242,7 +234,7 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Program Intervensi Khusus </h3>
+                        <h3 class="card-title">Rencana Aksi </h3>
 
                         {{-- <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -262,30 +254,33 @@
                         <table class="table table-hover" id="table_iks">
                             <thead>
                                 <tr>
-                                    <th>No</th>
                                     @if (Auth::user()->isAdmin())
                                         <th>Satker</th>
                                     @endif
+
                                     <th>Nama</th>
-                                    <th>Output</th>
+                                    @if (Auth::user()->isAdmin() or Auth::user()->isChangeLeader())
+                                        <th>Change Champions</th>
+                                    @endif
+                                    <th>Uraian Kegiatan</th>
                                     <th>Outcome</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $i = 1;
-                                @endphp
                                 @foreach ($intervensiKhususes as $program_intervensi)
                                     <tr>
-                                        <td>{{ $i }}</td>
                                         @if (Auth::user()->role_id == 1)
                                             <td>{{ $program_intervensi->provinsi->nama }}</td>
                                         @endif
                                         <td>{{ $program_intervensi->nama }}</td>
+
+                                        @if (Auth::user()->isAdmin() or Auth::user()->isChangeLeader())
+                                            <td>{{ $program_intervensi->user->name }}</td>
+                                        @endif
                                         <td>
-                                            {{ $program_intervensi->output }}
+                                            {{ $program_intervensi->uraian_kegiatan }}
                                         </td>
                                         <td>
                                             {{ $program_intervensi->outcome }}
@@ -340,9 +335,6 @@
                                         </td>
 
                                     </tr>
-                                    @php
-                                        $i++;
-                                    @endphp
                                 @endforeach
 
                             </tbody>

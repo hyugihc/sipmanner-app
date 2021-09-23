@@ -32,7 +32,7 @@ class Report extends Model
     //nama lampiran
     public function getNamaFileLampiran()
     {
-        return $this->provinsi->nama . '_' . $this->tahun . "_" . $this->semester . "pdf";
+        return $this->provinsi->nama . '_' . $this->tahun . "_" . $this->semester . ".pdf";
     }
 
     public function attachChangeChampions($userArray)

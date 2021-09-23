@@ -64,7 +64,7 @@ class ReportPolicy
     public function update(User $user, Report $report)
     {
         //
-        if ($user->role_id == 3 and $report->status == 0) return $user->provinsi_id == $report->provinsi_id; //cc
+        if ($user->role_id == 3 and ($report->status == 0 or $report->status == 3)) return $user->provinsi_id == $report->provinsi_id; //cc
         return false;
     }
 

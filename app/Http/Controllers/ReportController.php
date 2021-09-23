@@ -25,7 +25,7 @@ class ReportController extends Controller
     {
         //list report yang ada bedakan berdasarkan role
         $user = Auth::user();
-        
+
         $year = $user->getSetting('tahun');
 
         //untuk CC
@@ -34,7 +34,8 @@ class ReportController extends Controller
         }
         //untuk CL
         if ($user->isChangeLeader()) {
-            $reports = Report::where('provinsi_id', $user->provinsi_id)->where('status', '!=', '0')->where('tahun', $year)->get();
+            $clStatus = [1, 2];
+            $reports = Report::where('provinsi_id', $user->provinsi_id)->whereIn('status', $clStatus)->where('tahun', $year)->get();
         }
 
         return view('reports.index', compact('reports'));
@@ -160,9 +161,11 @@ class ReportController extends Controller
             $report->intervensiNasionalProvinsis()->attach($inp, ['kendala' => $request->intervensiNasional_kendala[$inp->id], 'solusi' => $request->intervensiNasional_solusi[$inp->id]]);
         }
         foreach ($report->intervensiKhususes as $ik) {
-            $report->intervensiKhususes()->detach($ik);
-            $report->intervensiKhususes()->attach($ik, ['kendala' => $request->intervensiKhusus_kendala[$ik->id], 'solusi' => $request->intervensiKhusus_solusi[$ik->id]]);
+            $report->intervensiKhususes()->detach($ik->id);
+            $report->intervensiKhususes()->attach($ik->id, ['kendala' => $request->intervensiKhusus_kendala[$ik->id], 'solusi' => $request->intervensiKhusus_solusi[$ik->id]]);
         }
+
+
 
         //perbarui persetujuan jika di cek maupun di uncek
         if ($request->changeChampions[$user->id] != null) {
@@ -173,6 +176,27 @@ class ReportController extends Controller
             $report->changeChampions()->syncWithoutDetaching([$user->id => ['status' => 0]]);
         }
 
+
+        //kalau sudah submit kendala dan solusi tidak boleh kosong
+        if ($request->has("submit")) {
+            foreach ($report->intervensiNasionalProvinsis as $inp) {
+                if ($request->intervensiNasional_kendala[$inp->id] == null or $request->intervensiNasional_solusi[$inp->id] == null) {
+                    $report->status = 0;
+                    $report->save();
+                    return redirect()->route('reports.edit', $report)->with('success', 'Laporan berhasil disimpan')
+                        ->with('warning', "Laporan belum berhasi disubmit, masih ada kendala atau solusi program belum terisi");
+                }
+            }
+            foreach ($report->intervensiKhususes as $ik) {
+                if ($request->intervensiKhusus_kendala[$ik->id] == null or $request->intervensiKhusus_solusi[$ik->id] == null) {
+                    $report->status = 0;
+                    $report->save();
+                    return redirect()->route('reports.edit', $report)->with('success', 'Laporan berhasil disimpan')
+                        ->with('warning', "Laporan belum berhasi disubmit, masih ada kendala atau solusi program belum terisi");
+                }
+            }
+        }
+
         //pastikan sudah semua tercentang jika ingin submit
         //update CC yang terbaru
         $changeChampions = User::where('role_id', 3)->where('provinsi_id', $user->provinsi_id)->get();
@@ -181,6 +205,8 @@ class ReportController extends Controller
         if ($request->has("submit")) {
             foreach ($changeChampions as $changeChampion) {
                 if ($report->changeChampions()->where('id', $changeChampion->id)->first()->pivot->status != 2) {
+                    $report->status = 0;
+                    $report->save();
                     return redirect()->route('reports.edit', $report)->with('success', 'Laporan berhasil disimpan')
                         ->with('warning', "Laporan belum berhasi disubmit, masih ada CC yang belum setuju");
                 }
@@ -236,7 +262,7 @@ class ReportController extends Controller
         //ambil intervensi nasional yang sama dengan tahun dan provinsi report
         $intervensiNasionals = IntervensiNasional::where('tahun', $report->tahun)->get();
         $intervensiNasionalKeys = $intervensiNasionals->modelKeys();
-        $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('provinsi_id', $report->provinsi_id)->whereIn('intervensi_nasional_id', $intervensiNasionalKeys)->get();
+        $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('provinsi_id', $report->provinsi_id)->whereIn('intervensi_nasional_id', $intervensiNasionalKeys)->where('status', 2)->get();
         return $intervensiNasionalProvinsis;
     }
 

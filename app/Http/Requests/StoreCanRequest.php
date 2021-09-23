@@ -25,13 +25,7 @@ class StoreCanRequest extends FormRequest
     public function rules()
     {
         $rules = [];
-        if ($this->getMethod() == 'POST') {
-            $rules['nomor_sk'] = 'required|unique:cans|min:3|max:255';
-            $rules['file_sk'] = 'required|mimes:pdf|max:3000';
-        } else {
-            $rules['nomor_sk'] = 'required|min:3|max:255|unique:cans,nomor_sk,' . $this->can->id;
-            $rules['file_sk'] = 'nullable|mimes:pdf|max:3000';
-        }
+        //submit ke CC
         if ($this->has('submit')) {
             $changeLeaders = User::where('role_id', 2)->where('provinsi_id', $this->user()->provinsi_id)->get();
             $changeChampions = User::where('role_id', 3)->where('provinsi_id', $this->user()->provinsi_id)->get();
@@ -48,7 +42,7 @@ class StoreCanRequest extends FormRequest
     {
         return [
             'change_agents.required'  => 'Minimal 1 orang untuk ditambahkan',
-            'change_agents.size'=>'Jumlah Change Agent Network harus sebanyak '.$this->jumlah_can
+            'change_agents.size' => 'Jumlah Change Agent Network harus sebanyak ' . $this->jumlah_can
         ];
     }
 }

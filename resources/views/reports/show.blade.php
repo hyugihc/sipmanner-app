@@ -64,9 +64,9 @@
                                                         <tr>
                                                             <th>No</th>
                                                             <th>Nama</th>
-                                                            <th>Volume</th>
+                                                            <th>Uraian Kegiatan</th>
                                                             <th>Output</th>
-                                                            <th>Outcome</th>
+                                                            <th>Timeline</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -77,16 +77,26 @@
                                                             <tr>
                                                                 <td><b>{{ $i }}</b></td>
                                                                 <td>{{ $pi->intervensiNasional->nama }}</td>
-                                                                <td>{{ $pi->intervensiNasional->volume }}</td>
+                                                                <td>{{ $pi->intervensiNasional->uraian_kegiatan }}</td>
                                                                 <td>{{ $pi->intervensiNasional->output }}</td>
-                                                                <td>{{ $pi->intervensiNasional->outcome }} </td>
+                                                                <td>{{ $pi->intervensiNasional->timeline }} </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Kendala</td>
+                                                                <th>Outcome</th>
+                                                                <td colspan="4"> {{ $pi->intervensiNasional->outcome }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Ukuran Keberhasilan</th>
+                                                                <td colspan="4"> {{ $pi->ukuran_keberhasilan }}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th>Kendala</th>
                                                                 <td colspan="4"> {{ $pi->pivot->kendala }}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Solusi</td>
+                                                                <th>Solusi</th>
                                                                 <td colspan="4"> {{ $pi->pivot->solusi }}</td>
                                                             </tr>
                                                             @php
@@ -106,9 +116,10 @@
                                                         <tr>
                                                             <th>No</th>
                                                             <th>Nama</th>
-                                                            <th>Volume</th>
+                                                            <th>Change Champions</th>
+                                                            <th>Uraian Kegiatan</th>
                                                             <th>Output</th>
-                                                            <th>Outcome</th>
+                                                            <th>Timeline</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -119,17 +130,28 @@
                                                             <tr>
                                                                 <td><b>{{ $i }}</b></td>
                                                                 <td>{{ $pi->nama }}</td>
-                                                                <td>{{ $pi->volume }}</td>
+                                                                <td>{{ $pi->user->name }}</td>
+                                                                <td>{{ $pi->uraian_kegiatan }}</td>
                                                                 <td>{{ $pi->output }}</td>
-                                                                <td>{{ $pi->outcome }} </td>
+                                                                <td>{{ $pi->timeline }} </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Kendala</td>
-                                                                <td colspan="4"> {{ $pi->pivot->kendala }}</td>
+                                                                <th>Outcome</th>
+                                                                <td colspan="5">{{ $pi->outcome }}
+                                                                </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Solusi</td>
-                                                                <td colspan="4"> {{ $pi->pivot->solusi }}</td>
+                                                                <th>Ukuran Keberhasilan</th>
+                                                                <td colspan="5">{{ $pi->ukuran_keberhasilan }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Kendala</th>
+                                                                <td colspan="5"> {{ $pi->pivot->kendala }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Solusi</th>
+                                                                <td colspan="5"> {{ $pi->pivot->solusi }}</td>
                                                             </tr>
                                                             @php
                                                                 $i++;
@@ -155,6 +177,26 @@
 
                                     </dl>
 
+                                    <div class="col-md-6 float-left">
+                                        @if ($report->lampiran != null)
+                                            <a href="{{ route('reports.download-lampiran', $report) }}"> <i
+                                                    class="fas fa-paperclip"></i> Download
+                                                lampiran</a>
+                                        @endif
+
+                                    </div>
+                                    <div class="col-md-6 float-right">
+                                        @if ($report->status == 2)
+                                            <a href="{{ route('reports.print', $report) }}"><i class="fas fa-print"></i> Print</a>
+
+                                        @endif
+                                    </div>
+
+
+
+                                    <br>
+                                    <br>
+
                                     @can('approve', $report)
                                         <div class="form-group">
                                             <label>Tindakan</label>
@@ -177,20 +219,7 @@
                                     @endcan
 
 
-                                    <div class="card-footer">
-                                        <div class="col-md-2 float-right">
-                                            @if ($report->lampiran != null)
-                                                <a class="btn btn-block btn-primary btn-xs"
-                                                    href="{{ route('reports.download-lampiran', $report) }}">Download
-                                                    lampiran</a>
-                                            @endif
-                                            @if ($report->status == 2)
-                                                <a class="btn btn-block btn-primary btn-xs"
-                                                    href="{{ route('reports.print', $report) }}">Print</a>
 
-                                            @endif
-                                        </div>
-                                    </div>
 
                                 </div>
                             </form>

@@ -24,10 +24,10 @@ class StoreIntervensiKhususRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'nama' => 'required|min:3|max:50'
+            'nama' => 'required|min:3|max:100'
         ];
         if ($this->has('submit')) {
-            $rules['uraian_kegiatan'] = 'required|max:500';
+            $rules['uraian_kegiatan'] = 'required|max:1000';
             $rules['output'] = 'required|min:5';
             $rules['timeline'] = 'required|min:5';
             $rules['ukuran_keberhasilan'] = 'required|min:5';

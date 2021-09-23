@@ -53,20 +53,13 @@ class CanPolicy
      */
     public function create(User $user)
     {
-        //if ($user->role_id == 1) return true;
-        //if ($user->role_id == 2) return true;
         if ($user->isChangeChampion()) {
-            // $can = Can::where('provinsi_id', $user->provinsi_id)->where('tahun_sk', Date("y"))->where(function ($q) {
-            //     return $q->where('status_sk', 0)->orWhere('status_sk', 3)->orWhere('status_sk', 4)->exist();
-            // });
             $can = Can::where('provinsi_id', $user->provinsi_id)->where('tahun_sk', Date("y"))->where('status_sk', '!=', '2')->count();
             if ($can != 0) {
                 return Response::deny('Masih ada yang belum disetujui');
             } else {
                 return Response::allow();
             }
-            // return !(DB::table('cans')->where('provinsi_id', $user->provinsi_id)->orWhere('status_sk', 3)->orWhere('status_sk', 0)->orWhere('status_sk', 1)->exists()) ? Response::allow()
-            //     : Response::deny('Masih ada yang belum disetujui');
         }
         return false;
     }

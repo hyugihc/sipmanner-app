@@ -43,11 +43,13 @@
                             <div class="card-body">
                                 <dl>
                                     <dt> Jenis</dt>
-                                    <dd>Program Intervensi Khusus</dd>
+                                    <dd>Rencana Aksi</dd>
                                     <dt>Unit Kerja</dt>
                                     <dd>{{ $intervensiKhusus->provinsi['nama'] }} </dd>
                                     <dt>Nama Program Intervensi</dt>
                                     <dd>{{ $intervensiKhusus->nama }}</dd>
+                                    <dt>Change Champions</dt>
+                                    <dd>{{ $intervensiKhusus->user->name }}</dd>
                                     <dt>Uraian Kegiatan</dt>
                                     <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->uraian_kegiatan }}</dd>
                                     <dt>Output</dt>

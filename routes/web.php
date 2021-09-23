@@ -36,6 +36,7 @@ Route::post('/logout', [
 
 Route::group(['middleware' => 'auth'], function () {
 
+   // Route::get('/searchuser_by_name_sso/{name}', 'UserController@searchuser_by_name_sso');
 
     Route::get('/users/recap', 'UserController@recap')->name("users.recap");
     Route::get('/users/index/', 'UserController@index');

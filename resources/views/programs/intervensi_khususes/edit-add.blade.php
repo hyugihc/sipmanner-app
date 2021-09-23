@@ -39,7 +39,7 @@
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">
-                                {{ isset($intervensiKhusus) ? 'Form ' . $intervensiKhusus->nama : 'Form Program Intervensi Khusus' }}
+                                {{ isset($intervensiKhusus) ? 'Form ' . $intervensiKhusus->nama : 'Form Rencana Aksi' }}
                             </h3>
                         </div>
                         <!-- /.card-header -->

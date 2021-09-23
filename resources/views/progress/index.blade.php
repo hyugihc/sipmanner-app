@@ -49,7 +49,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
-                                    <th>Output</th>
+                                    <th>Uraian Kegiatan</th>
                                     <th>Outcome</th>
                                     <th>Action</th>
                                 </tr>
@@ -64,7 +64,7 @@
                                         <td>{{ $intervensiNasional->intervensiNasional->nama }}</td>
 
                                         <td>
-                                            {{ $intervensiNasional->intervensiNasional->output }}
+                                            {{ $intervensiNasional->intervensiNasional->uraian_kegiatan }}
                                         </td>
                                         <td>
                                             {{ $intervensiNasional->intervensiNasional->outcome }}
@@ -107,6 +107,9 @@
                                         <th>Satker</th>
                                     @endif
                                     <th>Nama</th>
+                                    @if (Auth::user()->isAdmin() or Auth::user()->isChangeLeader())
+                                        <th>Change Champions</th>
+                                    @endif
                                     <th>Output</th>
                                     <th>Outcome</th>
                                     <th>Action</th>
@@ -123,9 +126,11 @@
                                             <td>{{ $intervensiKhusus->provinsi->nama }}</td>
                                         @endif
                                         <td>{{ $intervensiKhusus->nama }}</td>
-
+                                        @if (Auth::user()->isAdmin() or Auth::user()->isChangeLeader())
+                                            <td>{{ $intervensiKhusus->user->name }}</td>
+                                        @endif
                                         <td>
-                                            {{ $intervensiKhusus->output }}
+                                            {{ $intervensiKhusus->uraian_kegiatan }}
                                         </td>
                                         <td>
                                             {{ $intervensiKhusus->outcome }}
