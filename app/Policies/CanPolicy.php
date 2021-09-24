@@ -39,6 +39,9 @@ class CanPolicy
     {
         if ($user->isAdmin()) return true;
         if ($user->isTopLeader()) return true;
+        if (($user->isChangeChampion() or $user->isChangeLeader()) and $user->provinsi->isPusat()) {
+            return $can->isCanPusat();
+        }
         if ($user->isChangeChampion() or $user->isChangeLeader()) {
             return  $user->provinsi_id == $can->provinsi_id;
         }
@@ -53,15 +56,30 @@ class CanPolicy
      */
     public function create(User $user)
     {
-        if ($user->isChangeChampion()) {
-            $can = Can::where('provinsi_id', $user->provinsi_id)->where('tahun_sk', Date("y"))->where('status_sk', '!=', '2')->count();
+        $year = $user->getSetting('tahun');
+
+        if ($user->isAdmin()) {
+            $can = Can::where('pusat', 1)->where('tahun_sk', $year)->where('status_sk', '!=', '2')->count();
             if ($can != 0) {
                 return Response::deny('Masih ada yang belum disetujui');
             } else {
                 return Response::allow();
             }
+            return true;
         }
-        return false;
+        if ($user->isChangeChampion()) {
+            if ($user->provinsi->isNotPusat()) {
+                $can = Can::where('provinsi_id', $user->provinsi_id)->where('tahun_sk', $year)->where('status_sk', '!=', '2')->count();
+                if ($can != 0) {
+                    return Response::deny('Masih ada yang belum disetujui');
+                } else {
+                    return Response::allow();
+                }
+            } else {
+                return Response::deny('Hanya Admin yang bisa upload Data CAN BPS Pusat');
+            }
+        }
+        return Response::deny('Hanya Admin dan changechampion yang bisa membuat data CAN');
     }
 
     /**
@@ -79,7 +97,13 @@ class CanPolicy
      */
     public function update(User $user, Can $can)
     {
-        if ($user->isChangeChampion()) {
+        if ($user->isAdmin() and $can->isCanPusat()) {
+            if ($can->status_sk == 0 or $can->status_sk == 3) {
+                return true;
+            }
+        }
+
+        if ($user->isChangeChampion() and  $user->provinsi->isNotPusat()) {
             if ($can->status_sk == 0 or $can->status_sk == 3) {
                 return $user->provinsi_id == $can->provinsi_id;
             }
@@ -97,7 +121,12 @@ class CanPolicy
     public function delete(User $user, Can $can)
     {
         //
-        if ($user->isChangeChampion()) {
+        if ($user->isAdmin() and $can->isCanPusat()) {
+            if ($can->status_sk == 0 or $can->status_sk == 3) {
+                return true;
+            }
+        }
+        if ($user->isChangeChampion() and  $user->provinsi->isNotPusat()) {
             return ($can->status_sk == 0 or $can->status_sk == 3)  ? $user->provinsi_id == $can->provinsi_id : false;
         }
         return false;
@@ -129,6 +158,10 @@ class CanPolicy
 
     public function approve(User $user, Can $can)
     {
+        if ($user->isAdmin() and $can->isCanPusat()) {
+            return true;
+        }
+
         if ($user->isChangeLeader() and $can->status_sk == 1) {
             return $user->provinsi_id == $can->provinsi_id;
         }

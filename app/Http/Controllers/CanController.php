@@ -31,9 +31,22 @@ class CanController extends Controller
         $user = Auth::user();
         $year = $user->getSetting('tahun');
 
-        $cans = ($user->isAdmin() or $user->isTopLeader()) ?
-            Can::where('tahun_sk', $year)->orderBy('status_sk')->paginate(5) :
-            Can::where('tahun_sk', $year)->orderBy('status_sk')->where('provinsi_id', $user->provinsi_id)->paginate(5);
+        // $cans = ($user->isAdmin() or $user->isTopLeader()) ?
+        //     Can::where('tahun_sk', $year)->orderBy('status_sk')->paginate(5) :
+        //     Can::where('tahun_sk', $year)->orderBy('status_sk')->where('provinsi_id', $user->provinsi_id)->paginate(5);
+
+        $cans = null;
+        if ($user->isAdmin()) {
+            $cans = Can::where('tahun_sk', $year)->orderBy('status_sk')->paginate(5);
+        } elseif (($user->isChangeChampion() or $user->isChangeLeader()) and $user->provinsi->isPusat()) {
+            $cans =  Can::where('tahun_sk', $year)->where('status_sk', 2)->orderBy('tahun_sk')->where('pusat', 1)->paginate(5);
+        } elseif ($user->isChangeChampion()) {
+            $cans =  Can::where('tahun_sk', $year)->orderBy('status_sk')->where('provinsi_id', $user->provinsi_id)->paginate(5);
+        } elseif ($user->isChangeLeader()) {
+            $canStatus = [1, 2, 4];
+            $cans =  Can::where('tahun_sk', $year)->whereIn('status_sk', $canStatus)->orderBy('status_sk')->where('provinsi_id', $user->provinsi_id)->paginate(5);
+        }
+
         return view('cans.index', compact('cans'));
     }
 
@@ -80,8 +93,14 @@ class CanController extends Controller
 
         $can->tahun_sk = $year;
         $can->user_id = $user->id;
-        $can->provinsi_id = $user->provinsi_id;
+        if ($user->isAdmin()) {
+            $can->pusat = 1;
+        } else {
+            $can->provinsi_id = $user->provinsi_id;
+        }
         $can->status_sk  = ($request->has('draft')) ? 0 : 1;
+        $can->save();
+
 
         if ($request->has('file_sk')) {
             $can->file_sk =   $request->file('file_sk')->storeAs('cans', $can->getNameFileSK());

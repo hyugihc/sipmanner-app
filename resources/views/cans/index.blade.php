@@ -77,7 +77,11 @@
                                     <tr>
                                         <td>{{ $can->tahun_sk }}</td>
                                         @if (Auth::user()->isAdmin() or Auth::user()->isTopLeader())
-                                            <td>{{ $can->provinsi['nama'] }}</td>
+                                            @if ($can->isCanPusat())
+                                                <td>BPS Pusat</td>
+                                            @else
+                                                <td>{{ $can->provinsi['nama'] }}</td>
+                                            @endif
                                         @endif
                                         <td>{{ $can->nomor_sk }}</td>
                                         <td>{{ $can->tanggal_sk }}</td>

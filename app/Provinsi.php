@@ -13,6 +13,11 @@ class Provinsi extends Model
         return $this->pusat == 1;
     }
 
+    public function isNotPusat()
+    {
+        return $this->pusat != 1;
+    }
+
     public function changeLeader()
     {
         return $this->hasOne(User::class)->where('role_id', "2");

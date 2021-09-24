@@ -22,6 +22,11 @@ class Can extends Model
         'nomor_sk', 'tanggal_sk', 'perihal_sk', 'jumlah_can'
     ];
 
+    public function isCanPusat()
+    {
+        return $this->pusat == 1;
+    }
+
     public function changeChampions()
     {
         return $this->belongsToMany(User::class)->wherePivot('role_id', 3);
@@ -76,10 +81,17 @@ class Can extends Model
         }
     }
 
+
     public function getNameFileSK()
     {
-        return 'sk_' . $this->tahun_sk . '_' . $this->provinsi->kode_provinsi . '_' . $this->id . '.pdf';
+        if ($this->isCanPusat()) {
+            return 'sk_' . $this->tahun_sk . '_' . "pusat" . '_' . $this->id . '.pdf';
+        } else {
+            return 'sk_' . $this->tahun_sk . '_' . $this->provinsi->kode_provinsi . '_' . $this->id . '.pdf';
+        }
     }
+
+
 
     public function getCanStatus()
     {
