@@ -97,19 +97,19 @@ class Can extends Model
     {
         switch ($this->status_sk) {
             case 0:
-                return "draft";
+                return "Draft";
                 break;
             case 1:
-                return "submitted";
+                return "Diajukan ke Change Leader";
                 break;
             case 2:
-                return "approved (Aktif)";
+                return "Disetujui (Aktif)";
                 break;
             case 3:
-                return "rejected";
+                return "Ditolak";
                 break;
             case 4:
-                return "approved (Tidak Aktif)";
+                return "Disetujui (Tidak Aktif)";
                 break;
 
             default:

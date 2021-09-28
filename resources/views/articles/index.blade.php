@@ -86,9 +86,9 @@
                                             </p>
 
                                             <p>
-                                                <a href="#" class="link-black text-sm mr-2"><i
+                                                {{-- <a href="#" class="link-black text-sm mr-2"><i
                                                         class="fas fa-share mr-1"></i>
-                                                    Share</a>
+                                                    Share</a> --}}
                                                 {{-- <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i>
                                                 Like</a> --}}
                                                 @can('update', $article)
@@ -168,8 +168,8 @@
                                         </p>
 
                                         <p>
-                                            <a href="#" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i>
-                                                Share</a>
+                                            {{-- <a href="#" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i>
+                                                Share</a> --}}
                                             {{-- <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i>
                                                 Like</a> --}}
                                             @can('update', $article)

@@ -74,7 +74,11 @@
                                         @endif
                                         <td>{{ $progress_program->uraian_program }}</td>
                                         <td>{{ $progress_program->getBulan() }} </td>
-                                        <td>{{ $progress_program->getStatus() }} </td>
+                                        <td>{{ $progress_program->getStatus() }}
+                                            @if ($progress_program->status == 1)
+                                                <br> <span class="badge badge-info right">Perlu Tindakan</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <form
                                                 action="{{ route('intervensi-nasionals.progress-intervensi-nasionals.destroy', [$intervensiNasional, $progress_program]) }}"

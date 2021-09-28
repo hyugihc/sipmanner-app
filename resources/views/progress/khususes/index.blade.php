@@ -69,8 +69,12 @@
                                     <tr>
                                         <td>{{ $i }}</td>
                                         <td>{{ $progress_program->uraian_program }}</td>
-                                        <td>{{ $progress_program->bulan }}</td>
-                                        <td>{{ $progress_program->getStatus() }} </td>
+                                        <td>{{ $progress_program->tanggal }}</td>
+                                        <td>{{ $progress_program->getStatus() }}
+                                            @if ($progress_program->status == 1)
+                                                <br> <span class="badge badge-info right">Perlu Tindakan</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <form
                                                 action="{{ route('intervensi-khususes.progress-intervensi-khususes.destroy', [$intervensiKhusus, $progress_program]) }}"

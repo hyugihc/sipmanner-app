@@ -3,6 +3,7 @@
 @section('content')
 
 
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/summernote/summernote-bs4.min.css"> 
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -59,9 +60,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="isi">Isi Berita</label>
-                                <textarea name="content" id="compose-textarea" class="form-control" style="height: 300px">
-
-                                                                        </textarea>
+                                <textarea name="content" id="compose-textarea" class="form-control"></textarea>
                             </div>
                             <div class="form-group">
                                 <div class="btn btn-default btn-file">

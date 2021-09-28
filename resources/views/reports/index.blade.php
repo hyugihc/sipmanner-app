@@ -74,7 +74,11 @@
                                         <td>{{ $report->semester }}</td>
                                         <td>{{ $report->updated_at }}</td>
                                         <td>{{ $report->user['name'] }}</td>
-                                        <td>{{ $report->getStatus() }}</td>
+                                        <td>{{ $report->getStatus() }}
+                                            @if ($report->status == 1)
+                                                <br> <span class="badge badge-info right">Perlu Tindakan</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             @can('view', $report)
                                                 <a class="btn btn-block btn-primary btn-xs"
@@ -91,7 +95,8 @@
                                                     @method('DELETE')
                                                     <button type="submit"
                                                         onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"
-                                                        class="btn btn-block btn-danger btn-xs" style="margin-top: 10px">Delete</button>
+                                                        class="btn btn-block btn-danger btn-xs"
+                                                        style="margin-top: 10px">Delete</button>
                                                 </form>
                                             @endcan
                                         </td>

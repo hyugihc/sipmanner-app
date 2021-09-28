@@ -4,7 +4,8 @@
     <a href="{{ route('about') }}" class="brand-link">
         <img src="{{ asset('') }}assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">Sip<b>manner</b> <small>  {{ Auth::user()->getSetting('tahun') }}</small></span>
+        <span class="brand-text font-weight-light">Sip<b>manner</b> <small>
+                {{ Auth::user()->getSetting('tahun') }}</small></span>
     </a>
 
     <!-- Sidebar -->
@@ -47,7 +48,9 @@
                             <i class="nav-icon fas fa-chart-pie"></i>
                             <p>
                                 Data
-                                {{-- <span class="badge badge-info right">2</span> --}}
+                                @if ($counts['canCount'] != 0)
+                                    <span class="badge badge-info right">{{ $counts['canCount'] }}</span>
+                                @endif
                             </p>
                         </a>
                     </li>
@@ -62,6 +65,10 @@
                         <i class="nav-icon fas fa-file"></i>
                         <p>
                             Rencana
+                            @if ($counts['programCount'] != 0)
+                                <span class="badge badge-info right">{{ $counts['programCount'] }}</span>
+                            @endif
+
                         </p>
                     </a>
                 </li>
@@ -72,6 +79,9 @@
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>
                             Progres
+                            @if ($counts['progressCount'] != 0)
+                                <span class="badge badge-info right">{{ $counts['progressCount'] }}</span>
+                            @endif
                         </p>
                     </a>
                 </li>
@@ -83,6 +93,9 @@
                             <i class="nav-icon fas fa-book"></i>
                             <p>
                                 Laporan
+                                @if ($counts['reportCount'] != 0)
+                                <span class="badge badge-info right">{{ $counts['reportCount'] }}</span>
+                            @endif
                             </p>
                         </a>
                     </li>

@@ -45,7 +45,7 @@
                                 <dt>Penjelasan progress</dt>
                                 <dd>{{ $progressIntervensiKhusus->uraian_program }}</dd>
                                 <dt>Tanggal</dt>
-                                <dd>{{ $progressIntervensiKhusus->bulan }}</dd>
+                                <dd>{{ $progressIntervensiKhusus->tanggal }}</dd>
                                 <dt>Realisasi Pelaksanaan Kegiatan</dt>
                                 <dd> {{ $progressIntervensiKhusus->realisasi_pelaksanaan_kegiatan }} </dd>
                                 <dt>Realisasi Capaian Keberhasilan</dt>

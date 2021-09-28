@@ -40,4 +40,29 @@ class IntervensiKhusus extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getStatus()
+    {
+        switch ($this->status) {
+            case '0':
+                return "Draft";
+                break;
+
+            case '1':
+                return "Di ajukan ke Change leader";
+                break;
+
+            case '2':
+                return "Disetujui";
+                break;
+
+            case '3':
+                return "Ditolak";
+                break;
+
+            default:
+                return "error";
+                break;
+        }
+    }
 }

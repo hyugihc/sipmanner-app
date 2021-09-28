@@ -63,15 +63,15 @@ class Report extends Model
                 break;
 
             case '1':
-                return "submitted";
+                return "Di ajukan ke Change leader";
                 break;
 
             case '2':
-                return "approved";
+                return "Disetujui";
                 break;
 
             case '3':
-                return "ditolak";
+                return "Ditolak";
                 break;
 
             default:

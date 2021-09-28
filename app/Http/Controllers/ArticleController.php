@@ -19,7 +19,7 @@ class ArticleController extends Controller
     {
         //
 
-        $submittedArticles = Article::where('status',  '!=', 2)->paginate(5);
+        $submittedArticles = Article::where('status', 1)->paginate(5);
 
         $articles = Article::where('status', 2)->paginate(5);
 
@@ -70,7 +70,7 @@ class ArticleController extends Controller
 
         $article->save();
 
-        $message = ($article->status == 0) ? 'Article drafted successfully.' : 'Article submitted successfully.';
+        $message = ($article->status == 0) ? 'Tulisan anda berhasil disimpan menjadi draft' : 'Tulisah anda sudah berhasil disubmit ke Admin.';
         return redirect()->route('articles.index')
             ->with('success', $message);
     }
@@ -140,7 +140,7 @@ class ArticleController extends Controller
 
         $article->save();
 
-        $message = ($article->status == 0) ? 'Article drafted successfully.' : 'Article submitted successfully.';
+        $message = ($article->status == 0) ? 'Tulisan anda berhasil disimpan menjadi draft' :  'Tulisah anda sudah berhasil disubmit ke Admin.';
         return redirect()->route('articles.index')
             ->with('success', $message);
     }

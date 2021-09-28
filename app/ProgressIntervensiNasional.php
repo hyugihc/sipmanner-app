@@ -26,7 +26,7 @@ class ProgressIntervensiNasional extends Model
                 break;
 
             case '1':
-                return "Disubmit";
+                return "Di ajukan ke Change leader";
                 break;
 
             case '2':

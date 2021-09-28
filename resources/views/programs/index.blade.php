@@ -12,8 +12,16 @@
     <script src="{{ asset('') }}assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#table_ins').DataTable();
-            $('#table_iks').DataTable();
+            $('#table_ins').DataTable({
+                "order": [
+                    [3, "asc"]
+                ]
+            });
+            $('#table_iks').DataTable({
+                "order": [
+                    [4, "asc"]
+                ]
+            });
         });
     </script>
 
@@ -168,6 +176,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($intervensiNasionalProvinsis as $program_intervensi)
+
                                         <tr>
                                             <td>{{ $program_intervensi->intervensiNasional->nama }}
                                             </td>
@@ -179,6 +188,9 @@
                                             </td>
                                             <td>
                                                 {{ $program_intervensi->getStatus() }}
+                                                @if ($program_intervensi->status == 1)
+                                                    <br> <span class="badge badge-info right">Perlu Tindakan</span>
+                                                @endif
                                                 @if ($program_intervensi->status == 3)
                                                     <br> ({{ $program_intervensi->alasan }})
                                                 @endif
@@ -193,7 +205,8 @@
 
                                                 @can('update', $program_intervensi)
                                                     <a class="btn btn-block btn-warning btn-xs"
-                                                        href="{{ route('inp.edit', $program_intervensi) }}">Sesuaikan Ukuran
+                                                        href="{{ route('inp.edit', $program_intervensi) }}">Sesuaikan
+                                                        Ukuran
                                                         Keberhasilan</a>
                                                 @endcan
 
@@ -201,6 +214,7 @@
                                             </td>
 
                                         </tr>
+
                                     @endforeach
 
                                 </tbody>
@@ -259,9 +273,9 @@
                                     @endif
 
                                     <th>Nama</th>
-                                    @if (Auth::user()->isAdmin() or Auth::user()->isChangeLeader())
-                                        <th>Change Champions</th>
-                                    @endif
+
+                                    <th>Change Champions</th>
+
                                     <th>Uraian Kegiatan</th>
                                     <th>Outcome</th>
                                     <th>Status</th>
@@ -276,9 +290,9 @@
                                         @endif
                                         <td>{{ $program_intervensi->nama }}</td>
 
-                                        @if (Auth::user()->isAdmin() or Auth::user()->isChangeLeader())
-                                            <td>{{ $program_intervensi->user->name }}</td>
-                                        @endif
+
+                                        <td>{{ $program_intervensi->user->name }}</td>
+
                                         <td>
                                             {{ $program_intervensi->uraian_kegiatan }}
                                         </td>
@@ -286,24 +300,13 @@
                                             {{ $program_intervensi->outcome }}
                                         </td>
                                         <td>
-                                            @switch($program_intervensi->status)
-                                                @case(0)
-                                                    <dd>Draft</dd>
-                                                @break
-                                                @case(1)
-                                                    <dd>Belum Disetujui</dd>
-                                                @break
-                                                @case(2)
-                                                    <dd>Sudah Disetujui</dd>
-                                                @break
-                                                @case(3)
-                                                    <dd>Tidak Disetujui</dd>
-                                                    <dd> {{ $program_intervensi->alasan }}</dd>
-                                                @break
-
-                                                @default
-
-                                            @endswitch
+                                            {{ $program_intervensi->getStatus() }}
+                                            @if ($program_intervensi->status == 1)
+                                                <br> <span class="badge badge-info right">Perlu Tindakan</span>
+                                            @endif
+                                            @if ($program_intervensi->status == 3)
+                                                <br> ({{ $program_intervensi->alasan }})
+                                            @endif
 
                                         </td>
                                         <td>
