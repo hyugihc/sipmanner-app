@@ -47,7 +47,7 @@
                             <!-- /.mailbox-read-message -->
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer bg-white">
+                        {{-- <div class="card-footer bg-white">
                             <ul class="mailbox-attachments d-flex align-items-stretch clearfix">
                                 <li>
                                     <span class="mailbox-attachment-icon"><i class="far fa-file-pdf"></i></span>
@@ -65,7 +65,7 @@
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </div> --}}
                         <!-- /.card-footer -->
                         <div class="card-footer">
                             <form action="{{ route('articles.approve', $article) }}" method="POST" id="quickForm">

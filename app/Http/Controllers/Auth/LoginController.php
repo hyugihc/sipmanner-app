@@ -115,7 +115,13 @@ class LoginController extends Controller
                 // Login dengan menggunakan id pengguna dari record di database aplikasi
                 if (Auth::loginUsingId($id)) {
                     $loggedinUser = User::find($id);
-                    $loggedinUser->avatar = $user->getUrlFoto();
+
+                    if ($user->getUrlFoto() == 'https://community.bps.go.id/images/avatar/') {
+                        $loggedinUser->avatar ='https://community.bps.go.id/images/nofoto.JPG';
+                    } else {
+                        $loggedinUser->avatar = $user->getUrlFoto();
+                    }
+
                     $loggedinUser->save();
                     $loggedinUser->setSetting('tahun', '2021');
                     return redirect()->route('dashboard');

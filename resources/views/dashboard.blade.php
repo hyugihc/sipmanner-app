@@ -283,7 +283,7 @@
 
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Progress Intervensi Khusus</h3>
+                                <h3 class="card-title">Progress Rencana Aksi</h3>
 
                             </div>
                             <!-- /.card-header -->
@@ -292,7 +292,7 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 10px">#</th>
-                                            <th>Intervensi Khusus</th>
+                                            <th>Rencana Aksi</th>
                                             <th>Progress</th>
                                             <th style="width: 40px">Label</th>
                                         </tr>

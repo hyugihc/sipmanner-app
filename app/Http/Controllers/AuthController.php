@@ -54,6 +54,10 @@ class AuthController extends Controller
             $user = User::where('email', $request->input('email'))->first();
             $user->setSetting('tahun', '2021');
             // $user->setSettings(['first_name' => 'John', 'last_name' => 'Smith']);
+            if ($user->avatar == null) {
+                $user->avatar = 'https://community.bps.go.id/images/nofoto.JPG';
+                $user->save();
+            }
 
             return redirect()->route('dashboard');
         } else { // false

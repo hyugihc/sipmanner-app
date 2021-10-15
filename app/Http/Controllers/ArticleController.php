@@ -19,9 +19,8 @@ class ArticleController extends Controller
     {
         //
 
-        $submittedArticles = Article::where('status', 1)->paginate(5);
-
-        $articles = Article::where('status', 2)->paginate(5);
+        $submittedArticles = Article::where('status', 1)->orderBy('created_at', 'desc')->paginate(5);
+        $articles = Article::where('status', 2)->orderBy('created_at', 'desc')->paginate(5);
 
         return view('articles.index', compact('articles', 'submittedArticles'));
     }
@@ -34,7 +33,7 @@ class ArticleController extends Controller
     public function create()
     {
         //
-        return view('articles.create');
+        return view('articles.edit-add');
     }
 
     /**
@@ -50,24 +49,12 @@ class ArticleController extends Controller
 
         $request->validate([
             'title' => 'required|min:3|max:50',
-            'content' => 'required',
-            'file_content' => 'nullable|mimes:pdf|max:2000',
-            'image_content' => 'nullable|mimes:pdf|max:2000',
+            'content' => 'required'
         ]);
 
         $article = Article::create($request->all());
         $article->user_id = Auth::user()->id;
         $article->status  = ($request->has('draft')) ? 0 : 1;
-
-        if ($request->file_content != null) {
-            $article->file_content = $request->file('file_content')->storeAs(
-                'articles',
-                'file_sharing' . $article->title . '_' .
-                    $article->id  . '.pdf'
-            );
-        }
-
-
         $article->save();
 
         $message = ($article->status == 0) ? 'Tulisan anda berhasil disimpan menjadi draft' : 'Tulisah anda sudah berhasil disubmit ke Admin.';
@@ -86,7 +73,6 @@ class ArticleController extends Controller
         //
 
         Auth::user()->cannot('view', $article) ?  abort(403) : true;
-
         return view('articles.show', compact('article'));
     }
 
@@ -99,10 +85,8 @@ class ArticleController extends Controller
     public function edit(Article $article)
     {
         //
-
-
         Auth::user()->cannot('update', $article) ?  abort(403) : true;
-        return view('articles.edit', compact('article'));
+        return view('articles.edit-add', compact('article'));
     }
 
     /**
@@ -120,23 +104,11 @@ class ArticleController extends Controller
 
         $request->validate([
             'title' => 'required|min:3|max:50',
-            'content' => 'required',
-            'file_content' => 'nullable|mimes:pdf|max:2000',
-            'image_content' => 'nullable|mimes:pdf|max:2000',
+            'content' => 'required'
         ]);
 
         $article->update($request->all());
         $article->status  = ($request->has('draft')) ? 0 : 1;
-
-        if ($request->file_content != null) {
-            Storage::delete($article->file_content);
-            $article->file_content = $request->file('file_content')->storeAs(
-                'articles',
-                'file_sharing' . $article->title . '_' .
-                    $article->id  . '.pdf'
-            );
-        }
-
 
         $article->save();
 

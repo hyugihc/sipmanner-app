@@ -19,10 +19,10 @@ class ArticlePolicy
     public function viewAny(User $user)
     {
         //
-        if ($user->role_id == 1) return true; //adminTS
-        if ($user->role_id == 2) return true; //cl
-        if ($user->role_id == 3) return true; //cc
-        if ($user->role_id == 5) return true; //tl
+        if ($user->isAdmin()) return true; //adminTS
+        if ($user->isChangeLeader()) return true; //cl
+        if ($user->isChangeChampion()) return true; //cc
+        if ($user->isTopLeader()) return true; //tl
         return false;
     }
 
@@ -36,10 +36,10 @@ class ArticlePolicy
     public function view(User $user, Article $article)
     {
         //
-        if ($user->role_id == 1) return true; //adminTS
-        if ($user->role_id == 2) return true; //cl
-        if ($user->role_id == 3) return true; //cc
-        if ($user->role_id == 5) return true; //tl
+        if ($user->isAdmin()) return true; //adminTS
+        if ($user->isChangeLeader()) return true; //cl
+        if ($user->isChangeChampion()) return true; //cc
+        if ($user->isTopLeader()) return true; //tl
         return false;
     }
 
@@ -52,10 +52,10 @@ class ArticlePolicy
     public function create(User $user)
     {
         //
-        if ($user->role_id == 1) return true; //adminTS
-        if ($user->role_id == 2) return true; //cl
-        if ($user->role_id == 3) return true; //cc
-        if ($user->role_id == 5) return true; //tl
+        if ($user->isAdmin()) return true; //adminTS
+        if ($user->isChangeLeader()) return true; //cl
+        if ($user->isChangeChampion()) return true; //cc
+        if ($user->isTopLeader()) return true; //tl
         return false;
     }
 
@@ -69,8 +69,8 @@ class ArticlePolicy
     public function update(User $user, Article $article)
     {
         //
-
-        return $user->id == $article->user_id;
+        return false;
+        //return $user->id == $article->user_id;
     }
 
     /**
@@ -83,9 +83,9 @@ class ArticlePolicy
     public function delete(User $user, Article $article)
     {
         //
-
-        if ($user->role_id == 1) return true; //adminTS
-        return $user->id == $article->user_id;
+        if ($user->isAdmin()) return true; //adminTS
+        return false;
+        //return $user->id == $article->user_id;
     }
 
     /**
@@ -114,6 +114,7 @@ class ArticlePolicy
 
     public function approve(User $user,  Article $article)
     {
-        if ($user->role_id == 1) return true; //adminTS
+        if ($user->isAdmin() and $article->status != 2) return true; //adminTS
+        return false;
     }
 }
