@@ -36,7 +36,7 @@ Route::post('/logout', [
 
 Route::group(['middleware' => 'auth'], function () {
 
-   // Route::get('/searchuser_by_name_sso/{name}', 'UserController@searchuser_by_name_sso');
+    // Route::get('/searchuser_by_name_sso/{name}', 'UserController@searchuser_by_name_sso');
 
     Route::get('/users/recap', 'UserController@recap')->name("users.recap");
     Route::get('/users/index/', 'UserController@index');
@@ -44,7 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('users', UserController::class);
     //Route::get('/getUser/{nipLama}', 'UserController@getUser');
     Route::get('/getuser_by_niplama_sso/{nip_lama}', 'UserController@getuser_by_niplama_sso')->name('get_user_byniplama_sso');
-    
+
     Route::get('/searchuser_by_niplama_sso/{nip_lama}', 'UserController@searchuser_by_niplama_sso')->name('search_user_byniplama_sso');
 
 
@@ -96,6 +96,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/reports/{report}/print', 'ReportController@print')->name('reports.print');
     Route::get('/reports/{report}/download-lampiran', 'ReportController@downloadLampiran')->name('reports.download-lampiran');
     Route::post('/reports/{report}/delete-lampiran', 'ReportController@deleteLampiran')->name('reports.delete-lampiran');
+
+    Route::get('/emailme', function () {
+        \Illuminate\Support\Facades\Mail::send(new \App\Mail\ProgramSubmitted);
+    })->name('emailme');
+
+    Route::get('/sendme', function () {
+        $details = ['title' => "ntitt", 'body' => 'fungc'];
+        \Illuminate\Support\Facades\Mail::to('hyugihc@gmail.com')->send(new \App\Mail\TestMail($details));
+        echo "mail sent";
+    })->name('sendme');
+
+    Route::get('/notifyme', function () {
+        \Illuminate\Support\Facades\Notification::send(\App\User::find(1), new \App\Notifications\ProgramSubmitted);
+    })->name('notifyme');
 });
 
 
