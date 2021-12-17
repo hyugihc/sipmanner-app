@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProgramSubmitted extends Notification
+class IntervensiNasionalProvinsiSubmitted extends Notification
 {
     use Queueable;
     public $intervensiNasionalProvinsi;
@@ -20,8 +20,7 @@ class ProgramSubmitted extends Notification
     public function __construct($intervensiNasionalProvinsi)
     {
         //
-        $this->intervensiNasionalProvinsi=$intervensiNasionalProvinsi;
-
+        $this->intervensiNasionalProvinsi = $intervensiNasionalProvinsi;
     }
 
     /**
@@ -44,8 +43,8 @@ class ProgramSubmitted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('Ada Program yang di ajukan oleh Change Champion anda')
-            ->action('Lihat Program yang diajukan', url('/programs/intervensi-nasionals-provinsi'.'/'.$this->intervensiNasionalProvinsi->id))
+            ->line('Ada Program Intervensi Nasional yang disesuaikan oleh Change Champion anda dan perlu persetujuan anda')
+            ->action('Lihat Program yang diajukan', url('/programs/intervensi-nasionals-provinsi' . '/' . $this->intervensiNasionalProvinsi->id))
             ->line('Terima kasih telah menggunakan Sipmanner');
     }
 

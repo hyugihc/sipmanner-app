@@ -53,7 +53,7 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Program Intervensi Nasional Tahun {{ date('Y') }}</h3>
+                            <h3 class="card-title">Program Intervensi Nasional Tahun {{ Auth::user()->getSetting('tahun') }}</h3>
 
                             {{-- <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -147,7 +147,7 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Program Intervensi Nasional</h3>
+                            <h3 class="card-title">Program Intervensi Nasional Tahun {{ Auth::user()->getSetting('tahun') }}</h3>
 
                             {{-- <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">

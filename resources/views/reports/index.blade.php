@@ -229,11 +229,11 @@
                         {{-- <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button> --}}
 
                         <a class="btn btn-outline-light"
-                            href="{{ route('reports.create.laporan', ['2021', '1']) }}">Semester
-                            1 tahun 2021</a>
+                            href="{{ route('reports.create.laporan', [Auth::user()->getSetting('tahun'), '1']) }}">Semester
+                            1 tahun  {{ Auth::user()->getSetting('tahun') }}</a>
                         <a class="btn btn-outline-light"
-                            href="{{ route('reports.create.laporan', ['2021', '2']) }}">Semester
-                            2 tahun 2021</a>
+                            href="{{ route('reports.create.laporan', [Auth::user()->getSetting('tahun'), '2']) }}">Semester
+                            2 tahun  {{ Auth::user()->getSetting('tahun') }}</a>
 
                     </div>
                 </div>

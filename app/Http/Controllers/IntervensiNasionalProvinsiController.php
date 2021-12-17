@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\IntervensiNasionalProvinsi;
+use App\Provinsi;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class IntervensiNasionalProvinsiController extends Controller
 {
@@ -78,6 +81,12 @@ class IntervensiNasionalProvinsiController extends Controller
 
         $intervensiNasionalProvinsi->ukuran_keberhasilan = $request->ukuran_keberhasilan;
         $intervensiNasionalProvinsi->status = 1;
+
+        //send notificatio to change leader
+       // $changeLeader = User::where('provinsi_id', $intervensiNasionalProvinsi->provinsi_id)->where('role_id', 2)->first();
+       // Notification::send($changeLeader, new \App\Notifications\IntervensiNasionalProvinsiSubmitted($intervensiNasionalProvinsi));
+
+
         $intervensiNasionalProvinsi->save();
 
         return redirect()->route('programs.index')

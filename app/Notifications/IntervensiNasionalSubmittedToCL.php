@@ -7,21 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProgramSubmitted extends Notification
+class IntervensiNasionalSubmittedToCL extends Notification
 {
     use Queueable;
-    public $intervensiNasionalProvinsi;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($intervensiNasionalProvinsi)
+    public function __construct()
     {
         //
-        $this->intervensiNasionalProvinsi=$intervensiNasionalProvinsi;
-
     }
 
     /**
@@ -44,9 +41,9 @@ class ProgramSubmitted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('Ada Program yang di ajukan oleh Change Champion anda')
-            ->action('Lihat Program yang diajukan', url('/programs/intervensi-nasionals-provinsi'.'/'.$this->intervensiNasionalProvinsi->id))
-            ->line('Terima kasih telah menggunakan Sipmanner');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
