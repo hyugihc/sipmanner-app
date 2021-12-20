@@ -57,9 +57,19 @@ class CanController extends Controller
      */
     public function create()
     {
-        $changeLeaders = User::where('role_id', 2)->where('provinsi_id', Auth::user()->provinsi_id)->get();
-        $changeChampions = User::where('role_id', 3)->where('provinsi_id', Auth::user()->provinsi_id)->get();
-
+        //apakah user mempunyai role admin
+        $user = Auth::user();
+        if ($user->isAdmin()) {
+            //ambil semua provinsi yang berkategori pusat dari database
+            $provinsiPusats = \App\Provinsi::where('pusat', 1)->get();
+            //ambil change leader yang mempunyai provinsi pusat
+            $changeLeaders = \App\User::where('role_id', 2)->whereIn('provinsi_id', $provinsiPusats)->get();
+            //ambil change champion yang mempunyai provinsi pusat
+            $changeChampions = \App\User::where('role_id', 3)->whereIn('provinsi_id', $provinsiPusats)->get();
+        } else {
+            $changeLeaders = User::where('role_id', 2)->where('provinsi_id', Auth::user()->provinsi_id)->get();
+            $changeChampions = User::where('role_id', 3)->where('provinsi_id', Auth::user()->provinsi_id)->get();
+        }
         return view('cans.create', compact('changeLeaders', 'changeChampions'));
     }
 
