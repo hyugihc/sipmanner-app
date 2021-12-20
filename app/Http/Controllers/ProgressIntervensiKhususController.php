@@ -77,11 +77,45 @@ class ProgressIntervensiKhususController extends Controller
                 $progressIntervensiKhusus->getNamaFileBuktiDukung()
             );
         }
+
+        if ($progressIntervensiKhusus->status == 1) {
+            if ($this->getLastProgressIntervensiKhusus($intervensiKhusus)) {
+                $lastProgressIntervensiKhusus = $this->getLastProgressIntervensiKhusus($intervensiKhusus);
+                // bandingkan tanggal, jika lebih kecil maka simpan sebagai draft dan kembali ke index
+                if ($lastProgressIntervensiKhusus->tanggal >= $progressIntervensiKhusus->tanggal) {
+                    $progressIntervensiKhusus->status = 0;
+                    $progressIntervensiKhusus->save();
+                    return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
+                        ->with('error', 'Tanggal yang diinputkan lebih kecil atau sama dengan dari Tanggal sebelumnya');
+                }
+                // bandingkan realisasi pelaksanaan kegiatan, jika lebih kecil maka simpan sebagai draft dan kembali ke index
+                if ($lastProgressIntervensiKhusus->realisasi_pelaksanaan_kegiatan >= $progressIntervensiKhusus->realisasi_pelaksanaan_kegiatan) {
+                    $progressIntervensiKhusus->status = 0;
+                    $progressIntervensiKhusus->save();
+                    return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
+                        ->with('error', 'Realisasi Pelaksanaan Kegiatan yang diinputkan lebih kecil atau sama dengan dari Realisasi Pelaksanaan Kegiatan sebelumnya');
+                }
+                // bandingkan realisasi capaian keberhasilan, jika lebih kecil maka simpan sebagai draft dan kembali ke index
+                if ($lastProgressIntervensiKhusus->realisasi_capaian_keberhasilan > $progressIntervensiKhusus->realisasi_capaian_keberhasilan) {
+                    $progressIntervensiKhusus->status = 0;
+                    $progressIntervensiKhusus->save();
+                    return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
+                        ->with('error', 'Realisasi Capaian Kebahasilan yang diinputkan lebih kecil atau sama dengan dari Realisasi Capaian Kebahasilan sebelumnya');
+                }
+            }
+        }
         $progressIntervensiKhusus->save();
 
         $message = ($progressIntervensiKhusus->status == 0) ? 'Progress berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
         return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
             ->with('success', $message);
+    }
+
+    // ambil progress intervensi khusus terakhir
+    public function getLastProgressIntervensiKhusus(IntervensiKhusus $intervensiKhusus)
+    {
+        $progressIntervensiKhusus = $intervensiKhusus->progress_intervensi_khususes()->where("status", "!=", 0)->orderBy("tanggal", "desc")->first();
+        return $progressIntervensiKhusus;
     }
 
     /**
@@ -145,6 +179,32 @@ class ProgressIntervensiKhususController extends Controller
                 'piks',
                 $progressIntervensiKhusus->getNamaFileBuktiDukung()
             );
+        }
+        if ($progressIntervensiKhusus->status == 1) {
+            if ($this->getLastProgressIntervensiKhusus($intervensiKhusus)) {
+                $lastProgressIntervensiKhusus = $this->getLastProgressIntervensiKhusus($intervensiKhusus);
+                // bandingkan tanggal, jika lebih kecil maka simpan sebagai draft dan kembali ke index
+                if ($lastProgressIntervensiKhusus->tanggal > $progressIntervensiKhusus->tanggal) {
+                    $progressIntervensiKhusus->status = 0;
+                    $progressIntervensiKhusus->save();
+                    return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
+                        ->with('error', 'Tanggal yang diinputkan lebih kecil atau sama dengan dari Tanggal sebelumnya');
+                }
+                // bandingkan realisasi pelaksanaan kegiatan, jika lebih kecil maka simpan sebagai draft dan kembali ke index
+                if ($lastProgressIntervensiKhusus->realisasi_pelaksanaan_kegiatan >= $progressIntervensiKhusus->realisasi_pelaksanaan_kegiatan) {
+                    $progressIntervensiKhusus->status = 0;
+                    $progressIntervensiKhusus->save();
+                    return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
+                        ->with('error', 'Realisasi Pelaksanaan Kegiatan yang diinputkan lebih kecil atau sama dengan dari Realisasi Pelaksanaan Kegiatan sebelumnya');
+                }
+                // bandingkan realisasi capaian keberhasilan, jika lebih kecil maka simpan sebagai draft dan kembali ke index
+                if ($lastProgressIntervensiKhusus->realisasi_capaian_keberhasilan >= $progressIntervensiKhusus->realisasi_capaian_keberhasilan) {
+                    $progressIntervensiKhusus->status = 0;
+                    $progressIntervensiKhusus->save();
+                    return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
+                        ->with('error', 'Realisasi Capaian Kebahasilan yang diinputkan lebih kecil atau sama dengan dari Realisasi Capaian Kebahasilan sebelumnya');
+                }
+            }
         }
         $progressIntervensiKhusus->save();
 

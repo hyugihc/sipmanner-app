@@ -9,6 +9,7 @@ use App\IntervensiNasional;
 use App\IntervensiNasionalProvinsi;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProgressIntervensiNasionalController extends Controller
 {
@@ -82,6 +83,40 @@ class ProgressIntervensiNasionalController extends Controller
                 $progressIntervensiNasional->getNamaFileBuktiDukung()
             );
         }
+
+        if ($progressIntervensiNasional->status == 1) {
+            $intervensiNasionalProvinsi = $this->getIntervensiNasionalProvinsi();
+            if ($this->getLastProgressIntervensiNasionalProvinsi($intervensiNasionalProvinsi)) {
+                $lastProgressIntervensiNasionalProvinsi = $this->getLastProgressIntervensiNasionalProvinsi($intervensiNasionalProvinsi);
+                //bandingkan bulan
+
+                if ($lastProgressIntervensiNasionalProvinsi->bulan >= $progressIntervensiNasional->bulan) {
+                    $progressIntervensiNasional->status = 0;
+                    $progressIntervensiNasional->save();
+                    return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
+                        ->with('error', 'Bulan yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya');
+
+                    // return back()
+                    //     ->withInput($request->input())
+                    //     ->withErrors([
+                    //         'bulan' => 'Bulan yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya',
+                    //     ]);
+                }
+                //bandingkan progress
+                if ($lastProgressIntervensiNasionalProvinsi->realisasi_pelaksanaan_kegiatan  >= $progressIntervensiNasional->realisasi_pelaksanaan_kegiatan) {
+                    $progressIntervensiNasional->status = 0;
+                    $progressIntervensiNasional->save();
+                    return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
+                        ->with('error', 'Progress yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya');
+
+                    // return back()
+                    //     ->withInput($request->input())
+                    //     ->withErrors([
+                    //         'realisasi_pelaksanaan_kegiatan' => 'Progres yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya',
+                    //     ]);
+                }
+            }
+        }
         $progressIntervensiNasional->save();
 
         $message = ($progressIntervensiNasional->status == 0) ? 'Progress berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
@@ -130,7 +165,8 @@ class ProgressIntervensiNasionalController extends Controller
         Auth::user()->cannot('update', $progressIntervensiNasional) ?  abort(403) : true;
 
         $progressIntervensiNasional->update($request->all());
-        $progressIntervensiNasional->status = ($request->has('draft')) ? 0 : 1;
+
+
         if ($request->has("upload_dokumentasi")) {
             if ($progressIntervensiNasional->upload_dokumentasi != null) {
                 Storage::delete($progressIntervensiNasional->upload_dokumentasi);
@@ -149,12 +185,65 @@ class ProgressIntervensiNasionalController extends Controller
                 $progressIntervensiNasional->getNamaFileBuktiDukung()
             );
         }
+
+        $progressIntervensiNasional->status = ($request->has('draft')) ? 0 : 1;
+        if ($progressIntervensiNasional->status == 1) {
+            $intervensiNasionalProvinsi = $this->getIntervensiNasionalProvinsi();
+            if ($this->getLastProgressIntervensiNasionalProvinsi($intervensiNasionalProvinsi)) {
+                $lastProgressIntervensiNasionalProvinsi = $this->getLastProgressIntervensiNasionalProvinsi($intervensiNasionalProvinsi);
+                //bandingkan bulan
+
+                if ($lastProgressIntervensiNasionalProvinsi->bulan >= $progressIntervensiNasional->bulan) {
+                    $progressIntervensiNasional->status = 0;
+                    $progressIntervensiNasional->save();
+                    return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
+                        ->with('error', 'Bulan yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya');
+
+                    // return back()
+                    //     ->withInput($request->input())
+                    //     ->withErrors([
+                    //         'bulan' => 'Bulan yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya',
+                    //     ]);
+                }
+                //bandingkan progress
+                if ($lastProgressIntervensiNasionalProvinsi->realisasi_pelaksanaan_kegiatan >= $progressIntervensiNasional->realisasi_pelaksanaan_kegiatan) {
+                    $progressIntervensiNasional->status = 0;
+                    $progressIntervensiNasional->save();
+                    return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
+                        ->with('error', 'Progress yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya');
+
+                    // return back()
+                    //     ->withInput($request->input())
+                    //     ->withErrors([
+                    //         'realisasi_pelaksanaan_kegiatan' => 'Progres yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya',
+                    //     ]);
+                }
+            }
+        }
+
         $progressIntervensiNasional->save();
 
         $message = ($progressIntervensiNasional->status == 0) ? 'Progress berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
         return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
             ->with('success', $message);
     }
+
+    //get Intervensi Nasional Provinsi dari user
+    public function getIntervensiNasionalProvinsi()
+    {
+        $intervensiNasionalProvinsi = IntervensiNasionalProvinsi::where('provinsi_id', Auth::user()->provinsi_id)->first();
+        return $intervensiNasionalProvinsi;
+    }
+
+
+    //ambil progress intervensi nasional dengan bulan terbesar jika ada
+    public function getLastProgressIntervensiNasionalProvinsi($intervensiNasionalProvinsi)
+    {
+        $progressIntervensiNasional = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $intervensiNasionalProvinsi->id)->where('status', '!=', '0')->orderBy('bulan', 'desc')->first();
+        return $progressIntervensiNasional;
+    }
+
+
 
     /**
      * Remove the specified resource from storage.

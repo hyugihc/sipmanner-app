@@ -123,6 +123,13 @@
                 }
                 toastr.success("{{ Session::get('success') }}");
             @endif
+            @if (Session::has('error'))
+                toastr.options = {
+                "closeButton": true,
+                "progressBar": false
+                }
+                toastr.error("{{ Session::get('error') }}");
+            @endif
         </script>
 
     </section>
