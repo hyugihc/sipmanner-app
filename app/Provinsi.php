@@ -13,11 +13,6 @@ class Provinsi extends Model
         return $this->pusat == 1;
     }
 
-    public function isKabupaten()
-    {
-        return $this->pusat == 0;
-    }
-
     public function isNotPusat()
     {
         return $this->pusat != 1;
