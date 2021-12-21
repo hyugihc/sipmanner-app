@@ -18,12 +18,6 @@ class Provinsi extends Model
         return $this->pusat != 1;
     }
 
-    public function isKabupaten()
-    {
-        return $this->pusat == 0;
-    }
-
-
     public function changeLeader()
     {
         return $this->hasOne(User::class)->where('role_id', "2");
