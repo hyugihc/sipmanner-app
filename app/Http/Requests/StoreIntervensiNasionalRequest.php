@@ -26,6 +26,7 @@ class StoreIntervensiNasionalRequest extends FormRequest
         return [
             'nama' => 'required|min:3|max:500',
             'uraian_kegiatan' => 'required|max:500',
+            'isu_strategis' => 'required|max:500',
             'output' => 'required',
             'timeline' => 'required',
             'ukuran_keberhasilan' => 'required',

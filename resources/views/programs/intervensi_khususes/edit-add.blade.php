@@ -77,6 +77,11 @@
                                 <textarea type="text" name="uraian_kegiatan" class="form-control"
                                     placeholder="">{{ old('uraian_kegiatan', isset($intervensiKhusus) ? $intervensiKhusus->uraian_kegiatan : '') }}</textarea>
                             </div>
+                            <div class="form-group">
+                                <label>Isu Strategis*</label>
+                                <textarea type="text" name="isu_strategis" class="form-control"
+                                    placeholder="">{{ old('isu_strategis', isset($intervensiKhusus) ? $intervensiKhusus->isu_strategis : '') }}</textarea>
+                            </div>
 
                             <div class="form-group">
                                 <label>Output*</label>

@@ -16,7 +16,7 @@ class IntervensiNasional extends Model
      * @var array
      */
     protected $fillable = [
-        'nama', 'uraian_kegiatan', 'output', 'timeline', 'ukuran_keberhasilan', 'outcome', 'keterangan'
+        'nama', 'uraian_kegiatan','isu_strategis', 'output', 'timeline', 'ukuran_keberhasilan', 'outcome', 'keterangan'
     ];
 
     // public function pias()

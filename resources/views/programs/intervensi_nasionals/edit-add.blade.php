@@ -85,6 +85,12 @@
                             </div>
 
                             <div class="form-group">
+                                <label>Isu Strategis*</label>
+                                <textarea type="text" name="isu_strategis" class="form-control"
+                                    placeholder="">{{ old('isu_strategis', isset($intervensiNasional) ? $intervensiNasional->isu_strategis : '') }}</textarea>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Output*</label>
                                 <textarea type="text" name="output" class="form-control"
                                     placeholder="">{{ old('output', isset($intervensiNasional) ? $intervensiNasional->output : '') }}</textarea>

@@ -52,6 +52,8 @@
                                     <dd>{{ $intervensiKhusus->user->name }}</dd>
                                     <dt>Uraian Kegiatan</dt>
                                     <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->uraian_kegiatan }}</dd>
+                                    <dt>Isu Strategis</dt>
+                                    <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->isu_strategis }}</dd>
                                     <dt>Output</dt>
                                     <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->output }} </dd>
                                     <dt>Timeline</dt>

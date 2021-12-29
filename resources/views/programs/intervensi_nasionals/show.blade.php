@@ -44,6 +44,8 @@
                                 <dd>{{ $intervensiNasional->nama }}</dd>
                                 <dt>Uraian Kegiatan</dt>
                                 <dd style="white-space: pre-wrap;">{{ $intervensiNasional->uraian_kegiatan }}</dd>
+                                <dt>Isu Strategis</dt>
+                                <dd style="white-space: pre-wrap;">{{ $intervensiNasional->isu_strategis }}</dd>
                                 <dt>Output</dt>
                                 <dd style="white-space: pre-wrap;">{{ $intervensiNasional->output }} </dd>
                                 <dt>Timeline</dt>
