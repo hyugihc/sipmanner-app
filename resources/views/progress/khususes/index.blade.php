@@ -11,8 +11,10 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-2">
-                    <a class="btn btn-block btn-primary btn-sm"
-                        href="{{ route('intervensi-khususes.progress-intervensi-khususes.create', $intervensiKhusus) }}">Create</a>
+                    @can('create', $intervensiKhusus)
+                        <a class="btn btn-block btn-primary btn-sm"
+                            href="{{ route('intervensi-khususes.progress-intervensi-khususes.create', $intervensiKhusus) }}">Create</a>
+                    @endcan
                 </div><!-- /.col -->
 
                 <div class="col-sm-10">

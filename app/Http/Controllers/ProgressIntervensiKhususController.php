@@ -44,7 +44,14 @@ class ProgressIntervensiKhususController extends Controller
     public function create(IntervensiKhusus $intervensiKhusus)
     {
         $user = Auth::user();
-        if ($user->provinsi_id != $intervensiKhusus->provinsi_id and !$user->isChangeChampion()) abort(403);
+
+        //if ($user->provinsi_id != $intervensiKhusus->provinsi_id and !$user->isChangeChampion()) abort(403);
+
+        //abort jika user bukan change champion dan user_id tidak sama dengan intervensi khusus user_id
+        if (!$user->isChangeChampion()) abort(403, "anda bukan change champions");
+        if ($intervensiKhusus->user_id != $user->id) abort(403, "Anda bukan pembuat rencana aksi");
+
+
 
         return view('progress.khususes.edit-add', compact('intervensiKhusus'));
     }

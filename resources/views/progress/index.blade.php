@@ -107,9 +107,9 @@
                                         <th>Satker</th>
                                     @endif
                                     <th>Nama</th>
-                                    @if (Auth::user()->isAdmin() or Auth::user()->isChangeLeader())
-                                        <th>Change Champions</th>
-                                    @endif
+
+                                    <th>Change Champions</th>
+
                                     <th>Output</th>
                                     <th>Outcome</th>
                                     <th>Action</th>
@@ -126,9 +126,9 @@
                                             <td>{{ $intervensiKhusus->provinsi->nama }}</td>
                                         @endif
                                         <td>{{ $intervensiKhusus->nama }}</td>
-                                        @if (Auth::user()->isAdmin() or Auth::user()->isChangeLeader())
-                                            <td>{{ $intervensiKhusus->user->name }}</td>
-                                        @endif
+
+                                        <td>{{ $intervensiKhusus->user->name }}</td>
+
                                         <td>
                                             {{ $intervensiKhusus->uraian_kegiatan }}
                                         </td>

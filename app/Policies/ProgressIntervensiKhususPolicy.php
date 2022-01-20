@@ -6,6 +6,7 @@ use App\IntervensiKhusus;
 use App\ProgressIntervensiKhusus;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class ProgressIntervensiKhususPolicy
 {
@@ -55,11 +56,14 @@ class ProgressIntervensiKhususPolicy
      */
     public function create(User $user, IntervensiKhusus $intervensiKhusus)
     {
-        //
-        if ($intervensiKhusus->provinsi_id = $user->provinsi_id) {
-            if ($user->role_id == 3) return true; //cc
-        }
-        return false;
+        //deny jika user bukan change champion
+        if ($user->role_id != 3) return Response::deny('Anda bukan change champion');
+        //deny jika user_id intervensi_khusus tidak sama dengan user id
+        if ($user->id != $intervensiKhusus->user_id) return Response::deny('Anda bukan pembuat rencana aksi ini');
+        //deny jika provinsi_id intervensi_khusus tidak sama dengan user provinsi_id
+        if ($user->provinsi_id != $intervensiKhusus->provinsi_id) return Response::deny('satker tidak sama');
+        return true;
+        
     }
 
     /**
@@ -73,7 +77,7 @@ class ProgressIntervensiKhususPolicy
     {
         //
 
-        if ($user->role_id == 3) {
+        if ($user->role_id == 3 and $user->id == $progressIntervensiKhusus->intervensi_khusus->user_id) {
             if ($progressIntervensiKhusus->status == 3 or $progressIntervensiKhusus->status == 0)
                 return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
             return false;
@@ -92,7 +96,7 @@ class ProgressIntervensiKhususPolicy
     {
         //
 
-        if ($user->role_id == 3) {
+        if ($user->role_id == 3 and $user->id == $progressIntervensiKhusus->intervensi_khusus->user_id) {
             if ($progressIntervensiKhusus->status == 3 or $progressIntervensiKhusus->status == 0)
                 return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
             return false;

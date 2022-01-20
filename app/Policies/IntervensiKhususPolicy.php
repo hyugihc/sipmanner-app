@@ -70,8 +70,8 @@ class IntervensiKhususPolicy
     {
         //
         if ($intervensiKhusus->status == 2 or $intervensiKhusus->status == 1) return false;
-        if ($user->role_id == 3) {
-            return  $user->provinsi_id == $intervensiKhusus->provinsi_id;
+        if ($user->role_id == 3 and  $user->provinsi_id == $intervensiKhusus->provinsi_id) {
+            return $intervensiKhusus->user_id == $user->id;
         }
         return false;
     }
@@ -87,8 +87,8 @@ class IntervensiKhususPolicy
     {
         //
         if ($intervensiKhusus->status == 2 or $intervensiKhusus->status == 1) return false;
-        if ($user->role_id == 3) {
-            return  $user->provinsi_id == $intervensiKhusus->provinsi_id;
+        if ($user->role_id == 3 and  $user->provinsi_id == $intervensiKhusus->provinsi_id) {
+            return $intervensiKhusus->user_id == $user->id;
         }
         return false;
     }

@@ -57,7 +57,7 @@ class ProgramController extends Controller
                 $query->where('status', 1)->orWhere('status', 2);
             })->get();
         } elseif ($user->isChangeChampion()) {
-            $intervensiKhususes = IntervensiKhusus::where('user_id', $user->id)->where('provinsi_id', $user->provinsi_id)->where('tahun', $currentYear)->get();
+            $intervensiKhususes = IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('tahun', $currentYear)->get();
         }
 
         return view('programs.index', compact('intervensiKhususes', 'intervensiNasionals', 'intervensiNasionalProvinsis'));
