@@ -97,7 +97,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/reports/{report}/download-lampiran', 'ReportController@downloadLampiran')->name('reports.download-lampiran');
     Route::post('/reports/{report}/delete-lampiran', 'ReportController@deleteLampiran')->name('reports.delete-lampiran');
 
-   
+    //2021
+    Route::get('/reports/{report}', 'ReportController@report2021show')->name('reports.2021.show');
+
     //upload laporan
     Route::post('/reports/{report}/upload-laporan', 'ReportController@uploadLaporan')->name('reports.upload-laporan');
     //unduh laporan

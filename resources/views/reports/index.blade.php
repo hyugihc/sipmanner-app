@@ -38,7 +38,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data</h3>
+                        <h3 class="card-title">Laporan</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -72,7 +72,7 @@
                                     <tr>
                                         <td>{{ $report->tahun }}</td>
                                         <td>{{ $report->semester }}</td>
-                                        <td>{{ $report->updated_at }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($report->updated_at)) }}</td>
                                         <td>{{ $report->user['name'] }}</td>
                                         <td>{{ $report->getStatus() }}
                                             @if ($report->status == 1)

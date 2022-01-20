@@ -34,9 +34,15 @@ class ReportController extends Controller
         }
         //untuk CL
         if ($user->isChangeLeader()) {
-            $clStatus = [1, 2];
+            $clStatus = [1, 2, 4];
             $reports = Report::where('provinsi_id', $user->provinsi_id)->whereIn('status', $clStatus)->where('tahun', $year)->get();
         }
+
+        if ($year == 2021) {
+            return view('reports.2021-index', compact('reports'));
+        }
+
+
 
         return view('reports.index', compact('reports'));
     }
@@ -328,6 +334,9 @@ class ReportController extends Controller
         //ubah status laporan menjadi 4
         $report->status = 4;
 
+        //update last modified
+        $report->user_id = Auth::user()->id;
+
         $report->save();
 
         return redirect()->route('reports.index', $report)
@@ -338,5 +347,11 @@ class ReportController extends Controller
     public function downloadLaporan(Report $report)
     {
         return Storage::disk('local')->download($report->laporan);
+    }
+
+    //2021
+    public function report2021Show(Report $report)
+    {
+        return view('reports.2021-show', compact('report'));
     }
 }
