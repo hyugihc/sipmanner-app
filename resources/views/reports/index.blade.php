@@ -78,12 +78,23 @@
                                             @if ($report->status == 1)
                                                 <br> <span class="badge badge-info right">Perlu Tindakan</span>
                                             @endif
+                                            @if ($report->status == 2)
+                                                <br> <span class="badge badge-info right">Belum Upload softcopy</span>
+                                            @endif
+                                            @if ($report->status == 4)
+                                                <br> <span class="badge badge-info right">Sudah Upload softcopy</span>
+                                            @endif
                                         </td>
                                         <td>
                                             @can('view', $report)
                                                 <a class="btn btn-block btn-primary btn-xs"
                                                     href="{{ route('reports.show', $report) }}">Show</a>
                                             @endcan
+                                            {{-- @if ($report->status == 2)
+                                                <a class="btn btn-block btn-success btn-xs"
+                                                    href="{{ route('reports.upload-laporan-ui', $report) }}">Upload
+                                                    Laporan</a>
+                                            @endif --}}
                                             @can('update', $report)
                                                 <a class="btn btn-block btn-warning btn-xs"
                                                     href="{{ route('reports.edit', $report) }}">Edit</a>
@@ -230,10 +241,10 @@
 
                         <a class="btn btn-outline-light"
                             href="{{ route('reports.create.laporan', [Auth::user()->getSetting('tahun'), '1']) }}">Semester
-                            1 tahun  {{ Auth::user()->getSetting('tahun') }}</a>
+                            1 tahun {{ Auth::user()->getSetting('tahun') }}</a>
                         <a class="btn btn-outline-light"
                             href="{{ route('reports.create.laporan', [Auth::user()->getSetting('tahun'), '2']) }}">Semester
-                            2 tahun  {{ Auth::user()->getSetting('tahun') }}</a>
+                            2 tahun {{ Auth::user()->getSetting('tahun') }}</a>
 
                     </div>
                 </div>

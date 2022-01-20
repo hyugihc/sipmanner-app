@@ -97,6 +97,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/reports/{report}/download-lampiran', 'ReportController@downloadLampiran')->name('reports.download-lampiran');
     Route::post('/reports/{report}/delete-lampiran', 'ReportController@deleteLampiran')->name('reports.delete-lampiran');
 
+   
+    //upload laporan
+    Route::post('/reports/{report}/upload-laporan', 'ReportController@uploadLaporan')->name('reports.upload-laporan');
+    //unduh laporan
+    ROute::get('/reports/{report}/download-laporan', 'ReportController@downloadLaporan')->name('reports.download-laporan');
+
+
     Route::get('/emailme', function () {
         \Illuminate\Support\Facades\Mail::send(new \App\Mail\ProgramSubmitted);
     })->name('emailme');

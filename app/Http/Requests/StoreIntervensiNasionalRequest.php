@@ -24,9 +24,9 @@ class StoreIntervensiNasionalRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama' => 'required|min:3|max:500',
-            'uraian_kegiatan' => 'required|max:500',
-            'isu_strategis' => 'required|max:500',
+            'nama' => 'required|min:3|max:1500',
+            'uraian_kegiatan' => 'required|max:1500',
+            'isu_strategis' => 'required|max:1500',
             'output' => 'required',
             'timeline' => 'required',
             'ukuran_keberhasilan' => 'required',

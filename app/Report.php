@@ -74,6 +74,10 @@ class Report extends Model
                 return "Ditolak";
                 break;
 
+            case '4':
+                return "Disetujui";
+                break;
+
             default:
                 # code...
                 break;

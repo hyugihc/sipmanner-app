@@ -32,6 +32,47 @@
                 <!-- left column -->
                 <div class="col-md-12">
                     <div class="position-relative">
+                        @if ($report->status == 2)
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Upload Softcopy Laporan
+                                    </h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+
+                                    <div class="form-group">
+                                        {{-- <label>Upload Softcopy Laporan</label> --}}
+                                        <!-- upload softcopy pdf laporan -->
+                                        <form action="{{ route('reports.upload-laporan', $report->id) }}" method="POST"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="form-group">
+                                                {{-- <label for="exampleInputFile">Upload Softcopy Laporan</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="exampleInputFile"
+                                                            name="laporan" accept=".pdf">
+                                                        <label class="custom-file-label" for="exampleInputFile">Choose
+                                                            file</label>
+                                                    </div>
+
+                                                </div> --}}
+                                                <label>Upload Softcopy Laporan</label>
+                                                <input accept=".pdf" type="file" name="laporan" class="form-control"
+                                                    placeholder="">
+
+
+                                                <div class="input-group-append" style="padding-top: 5px">
+                                                    <button class="btn btn-primary" type="submit">Upload</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        @endif
 
 
                         <div class="card card-primary">
@@ -40,189 +81,205 @@
                                     {{ $report->semester }}
                                 </h3>
                             </div>
-                            <!-- form start -->
-                            <form action="{{ route('reports.approve', $report) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <!-- /.card-header -->
+
+                            <!-- /.card-header -->
 
 
-                                <div class="card-body">
-                                    <dl>
-                                        <dt>I. Pendahuluan</dt>
-                                        <dd>{{ $report->bab_i }}</dd>
-                                        <dt>II. Latar Belakang</dt>
-                                        <dd>{{ $report->bab_ii }}</dd>
-                                        <dt>III. Program</dt>
-                                        <dd>{{ $report->bab_iii }}</dd>
+                            <div class="card-body">
 
-                                        <div class="form-group">
-                                            <label>A. Program Intervensi Nasional </label>
-                                            <div class="card-body table-bordered table-condensed table-responsive p-0">
-                                                <table class="table table-hover ">
-                                                    <thead>
+
+                                <dl>
+                                    <dt>I. Pendahuluan</dt>
+                                    <dd>{{ $report->bab_i }}</dd>
+                                    <dt>II. Latar Belakang</dt>
+                                    <dd>{{ $report->bab_ii }}</dd>
+                                    <dt>III. Program</dt>
+                                    <dd>{{ $report->bab_iii }}</dd>
+
+                                    <div class="form-group">
+                                        <label>A. Program Intervensi Nasional </label>
+                                        <div class="card-body table-bordered table-condensed table-responsive p-0">
+                                            <table class="table table-hover ">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Nama</th>
+                                                        <th>Uraian Kegiatan</th>
+                                                        <th>Output</th>
+                                                        <th>Timeline</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $i = 1;
+                                                    @endphp
+                                                    @foreach ($report->intervensiNasionalProvinsis as $pi)
                                                         <tr>
-                                                            <th>No</th>
-                                                            <th>Nama</th>
-                                                            <th>Uraian Kegiatan</th>
-                                                            <th>Output</th>
-                                                            <th>Timeline</th>
+                                                            <td><b>{{ $i }}</b></td>
+                                                            <td>{{ $pi->intervensiNasional->nama }}</td>
+                                                            <td>{{ $pi->intervensiNasional->uraian_kegiatan }}</td>
+                                                            <td>{{ $pi->intervensiNasional->output }}</td>
+                                                            <td>{{ $pi->intervensiNasional->timeline }} </td>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @php
-                                                            $i = 1;
-                                                        @endphp
-                                                        @foreach ($report->intervensiNasionalProvinsis as $pi)
-                                                            <tr>
-                                                                <td><b>{{ $i }}</b></td>
-                                                                <td>{{ $pi->intervensiNasional->nama }}</td>
-                                                                <td>{{ $pi->intervensiNasional->uraian_kegiatan }}</td>
-                                                                <td>{{ $pi->intervensiNasional->output }}</td>
-                                                                <td>{{ $pi->intervensiNasional->timeline }} </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Outcome</th>
-                                                                <td colspan="4"> {{ $pi->intervensiNasional->outcome }}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Ukuran Keberhasilan</th>
-                                                                <td colspan="4"> {{ $pi->ukuran_keberhasilan }}</td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th>Kendala</th>
-                                                                <td colspan="4"> {{ $pi->pivot->kendala }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Solusi</th>
-                                                                <td colspan="4"> {{ $pi->pivot->solusi }}</td>
-                                                            </tr>
-                                                            @php
-                                                                $i++;
-                                                            @endphp
-                                                        @endforeach
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>B. Program Intervensi Khusus </label>
-                                            <div class="card-body table-bordered table-condensed table-responsive p-0">
-                                                <table class="table table-hover">
-                                                    <thead>
                                                         <tr>
-                                                            <th>No</th>
-                                                            <th>Nama</th>
-                                                            <th>Change Champions</th>
-                                                            <th>Uraian Kegiatan</th>
-                                                            <th>Output</th>
-                                                            <th>Timeline</th>
+                                                            <th>Outcome</th>
+                                                            <td colspan="4"> {{ $pi->intervensiNasional->outcome }}
+                                                            </td>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
+                                                        <tr>
+                                                            <th>Ukuran Keberhasilan</th>
+                                                            <td colspan="4"> {{ $pi->ukuran_keberhasilan }}</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th>Kendala</th>
+                                                            <td colspan="4"> {{ $pi->pivot->kendala }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Solusi</th>
+                                                            <td colspan="4"> {{ $pi->pivot->solusi }}</td>
+                                                        </tr>
                                                         @php
-                                                            $i = 1;
+                                                            $i++;
                                                         @endphp
-                                                        @foreach ($report->intervensiKhususes as $pi)
-                                                            <tr>
-                                                                <td><b>{{ $i }}</b></td>
-                                                                <td>{{ $pi->nama }}</td>
-                                                                <td>{{ $pi->user->name }}</td>
-                                                                <td>{{ $pi->uraian_kegiatan }}</td>
-                                                                <td>{{ $pi->output }}</td>
-                                                                <td>{{ $pi->timeline }} </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Outcome</th>
-                                                                <td colspan="5">{{ $pi->outcome }}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Ukuran Keberhasilan</th>
-                                                                <td colspan="5">{{ $pi->ukuran_keberhasilan }}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Kendala</th>
-                                                                <td colspan="5"> {{ $pi->pivot->kendala }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Solusi</th>
-                                                                <td colspan="5"> {{ $pi->pivot->solusi }}</td>
-                                                            </tr>
-                                                            @php
-                                                                $i++;
-                                                            @endphp
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
                                         </div>
-
-                                        <dt>IV. Perubahan Yang Konkret</dt>
-                                        <dd>{{ $report->bab_iv }}</dd>
-                                        <dt>V. Komitmen Pimpinan</dt>
-                                        <dd>{{ $report->bab_v }}</dd>
-                                        <dt>VI. Kesimpulan</dt>
-                                        <dd>{{ $report->bab_vi }} </dd>
-                                        <dt>VII. Penutup</dt>
-                                        <dd> {{ $report->bab_vii }} </dd>
-                                        @if ($report->status == 3)
-                                            <dt>Alasan Tidak Disetujui</dt>
-                                            <dd>{{ $report->alasan }}</dd>
-                                        @endif
-
-                                    </dl>
-
-                                    <div class="col-md-6 float-left">
-                                        @if ($report->lampiran != null)
-                                            <a href="{{ route('reports.download-lampiran', $report) }}"> <i
-                                                    class="fas fa-paperclip"></i> Download
-                                                lampiran</a>
-                                        @endif
-
                                     </div>
-                                    <div class="col-md-6 float-right">
-                                        @if ($report->status == 2)
-                                            <a href="{{ route('reports.print', $report) }}"><i class="fas fa-print"></i> Print</a>
-
-                                        @endif
+                                    <div class="form-group">
+                                        <label>B. Program Intervensi Khusus </label>
+                                        <div class="card-body table-bordered table-condensed table-responsive p-0">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Nama</th>
+                                                        <th>Change Champions</th>
+                                                        <th>Uraian Kegiatan</th>
+                                                        <th>Output</th>
+                                                        <th>Timeline</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $i = 1;
+                                                    @endphp
+                                                    @foreach ($report->intervensiKhususes as $pi)
+                                                        <tr>
+                                                            <td><b>{{ $i }}</b></td>
+                                                            <td>{{ $pi->nama }}</td>
+                                                            <td>{{ $pi->user->name }}</td>
+                                                            <td>{{ $pi->uraian_kegiatan }}</td>
+                                                            <td>{{ $pi->output }}</td>
+                                                            <td>{{ $pi->timeline }} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Outcome</th>
+                                                            <td colspan="5">{{ $pi->outcome }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Ukuran Keberhasilan</th>
+                                                            <td colspan="5">{{ $pi->ukuran_keberhasilan }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Kendala</th>
+                                                            <td colspan="5"> {{ $pi->pivot->kendala }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Solusi</th>
+                                                            <td colspan="5"> {{ $pi->pivot->solusi }}</td>
+                                                        </tr>
+                                                        @php
+                                                            $i++;
+                                                        @endphp
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
 
+                                    <dt>IV. Perubahan Yang Konkret</dt>
+                                    <dd>{{ $report->bab_iv }}</dd>
+                                    <dt>V. Komitmen Pimpinan</dt>
+                                    <dd>{{ $report->bab_v }}</dd>
+                                    <dt>VI. Kesimpulan</dt>
+                                    <dd>{{ $report->bab_vi }} </dd>
+                                    <dt>VII. Penutup</dt>
+                                    <dd> {{ $report->bab_vii }} </dd>
+                                    @if ($report->status == 3)
+                                        <dt>Alasan Tidak Disetujui</dt>
+                                        <dd>{{ $report->alasan }}</dd>
+                                    @endif
 
+                                </dl>
 
-                                    <br>
-                                    <br>
-
-                                    @can('approve', $report)
-                                        <div class="form-group">
-                                            <label>Tindakan</label>
-                                            <select id="selectA" class="form-control" name="status">
-                                                <option value="2">Setuju</option>
-                                                <option value="3">Tidak Setuju</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group" id="divtextarea">
-                                            <label>Alasan</label>
-                                            <textarea type="text" name="alasan" value="{{ $report->alasan }}"
-                                                class="form-control" placeholder=""></textarea>
-                                        </div>
-
-                                        <!-- /.card-body -->
-                                        <div class="card-footer">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </div>
-                                    @endcan
-
-
-
+                                <div class="col-md-6 float-left">
+                                    @if ($report->lampiran != null)
+                                        <a href="{{ route('reports.download-lampiran', $report) }}"> <i
+                                                class="fas fa-paperclip"></i> Download
+                                            lampiran</a>
+                                    @endif
 
                                 </div>
-                            </form>
+                                <div class="col-md-6 float-right">
+                                    @if ($report->status == 2)
+                                        <a href="{{ route('reports.print', $report) }}"><i class="fas fa-print"></i>
+                                            Print</a>
+                                    @endif
+                                    @if ($report->status == 4)
+                                        <a href="{{ route('reports.download-laporan', $report) }}"><i
+                                                class="fas fa-download"></i>
+                                            Unduh Laporan</a>
+                                    @endif
+
+                                </div>
+
+
+
+                                <br>
+                                <br>
+
+
+
+
+
+                                <!-- cek jika report sedang diajukan ke change leader -->
+                                @if ($report->status == 1)
+                                    <!-- form start -->
+                                    <form action="{{ route('reports.approve', $report) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        @can('approve', $report)
+                                            <div class="form-group">
+                                                <label>Tindakan</label>
+                                                <select id="selectA" class="form-control" name="status">
+                                                    <option value="2">Setuju</option>
+                                                    <option value="3">Tidak Setuju</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group" id="divtextarea">
+                                                <label>Alasan</label>
+                                                <textarea type="text" name="alasan" value="{{ $report->alasan }}"
+                                                    class="form-control" placeholder=""></textarea>
+                                            </div>
+
+                                            <!-- /.card-body -->
+                                            <div class="card-footer">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        @endcan
+                                    </form>
+                                @endif
+
+
+
+                            </div>
+
                         </div>
                         <!-- /.card -->
                         <div class="ribbon-wrapper ribbon-xl">
@@ -235,10 +292,13 @@
                                         Belum Disetujui
                                     @break
                                     @case(2)
-                                        Sudah Disetujui
+                                        Belum Upload
                                     @break
                                     @case(3)
                                         Tidak Disetujui
+                                    @break
+                                    @case(4)
+                                        Sudah Upload
                                     @break
                                     @default
                                         Tidak ada yang sesuai

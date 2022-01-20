@@ -79,7 +79,7 @@ class ReportPolicy
     {
         //
         if ($user->isChangeChampion()) {
-            if ($user->provinsi_id == $report->provinsi_id and $report->status != 2) {
+            if ($user->provinsi_id == $report->provinsi_id and $report->status != 2 and $report->status != 4) {
                 return true;
             }
             return false;

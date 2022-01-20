@@ -301,4 +301,42 @@ class ReportController extends Controller
             throw $th;
         }
     }
+
+
+    //upload laporan
+    public function uploadLaporan(Request $request, Report $report)
+    {
+        $request->validate([
+            'laporan' => 'required|file|mimes:pdf|max:2048',
+        ]);
+
+        //hapus laporan sebelumnya jika ada
+        if ($report->laporan != null) {
+            Storage::delete($report->laporan);
+        }
+
+
+        $file = $request->file('laporan');
+        $fileName = $report->tahun . '_' . $report->semester . '_' . $report->provinsi->nama . '_' . $report->id;
+        $fileExtension = $file->getClientOriginalExtension();
+        $fileSize = $file->getSize();
+        $fileMimeType = $file->getMimeType();
+        $filePath = 'laporan/' . $fileName;
+        $file->storeAs('laporan', $fileName);
+        $report->laporan = $filePath;
+
+        //ubah status laporan menjadi 4
+        $report->status = 4;
+
+        $report->save();
+
+        return redirect()->route('reports.index', $report)
+            ->with('success', 'Laporan berhasil diunggah');
+    }
+
+    //unduh laporan
+    public function downloadLaporan(Report $report)
+    {
+        return Storage::disk('local')->download($report->laporan);
+    }
 }
