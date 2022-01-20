@@ -123,7 +123,7 @@ class LoginController extends Controller
                     }
 
                     $loggedinUser->save();
-                    $loggedinUser->setSetting('tahun', '2021');
+                    $loggedinUser->setSetting('tahun', '2022');
                     return redirect()->route('dashboard');
                 } else {
                     return redirect('/');

@@ -23,7 +23,7 @@
     <!-- Automatic element centering -->
     <div class="lockscreen-wrapper">
         <div class="lockscreen-logo">
-            <a href="../../index2.html">SIP<b>MANNER</b> {{ Auth::user()->getSetting('tahun') }}</a>
+            <i class="bi bi-gear-fill"></i><a href="#">SIP<b>MANNER</b></a>
         </div>
 
         <!-- form start -->
@@ -44,7 +44,7 @@
                     <div class="input-group">
                         <select name="tahun" class="form-control select2" style="width: 100%;">
                             <option value="2021">2021</option>
-                            <option value="2022">2022</option>
+                            <option value="2022" selected>2022</option>
                         </select>
 
                     </div>
