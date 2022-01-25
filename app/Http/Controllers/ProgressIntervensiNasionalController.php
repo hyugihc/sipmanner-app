@@ -120,7 +120,7 @@ class ProgressIntervensiNasionalController extends Controller
         $progressIntervensiNasional->save();
 
         $message = ($progressIntervensiNasional->status == 0) ? 'Progress berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
-        return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
+        return redirect()->to(config('app.url').'/progress')
             ->with('success', $message);
     }
 

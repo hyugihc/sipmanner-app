@@ -65,7 +65,7 @@ class IntervensiKhususController extends Controller
         $intervensi->save();
 
         $message = ($intervensi->status == 0) ? 'Program Intervensi Khusus Berhasil disimpan  menjadi Draft' : 'Program Intervensi Khusus berhasil di submit ke Change Leader';
-        return redirect()->route('programs.index')
+        return redirect()->to(config('app.url').'/programs')
             ->with('success', $message);
     }
 

@@ -70,6 +70,9 @@ class CanController extends Controller
             $changeLeaders = User::where('role_id', 2)->where('provinsi_id', Auth::user()->provinsi_id)->get();
             $changeChampions = User::where('role_id', 3)->where('provinsi_id', Auth::user()->provinsi_id)->get();
         }
+
+        //dd(config('app.url'));
+
         return view('cans.create', compact('changeLeaders', 'changeChampions'));
     }
 
@@ -124,7 +127,7 @@ class CanController extends Controller
 
 
         $message = ($can->status_sk == 0) ? 'Data berhasil disimpan menjadi draft' : 'Data berhasil disubmit ke Change Leader';
-        return redirect()->route('cans.index')
+        return redirect()->to(config('app.url').'/cans')
             ->with('success', $message);
     }
 

@@ -22,7 +22,9 @@ class ProgressController extends Controller
         $year = $user->getSetting('tahun');
 
         if ($user->isAdmin()) {
-            $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('status', 2)->get();
+            $intervensiNasionals = IntervensiNasional::where('tahun', $year)->where("status", 2)->get();
+            $intervensiNasionalKeys = $intervensiNasionals->modelKeys();
+            $intervensiNasionalProvinsis = IntervensiNasionalProvinsi::where('status', 2)->whereIn('intervensi_nasional_id', $intervensiNasionalKeys)->get();
         }
         if ($user->isChangeChampion() or $user->isChangeLeader()) {
             $intervensiNasionals = IntervensiNasional::where('tahun', $year)->where("status", 2)->get();

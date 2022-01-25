@@ -62,7 +62,7 @@ class UserController extends Controller
         $user->role_id = $request->role_id;
         $user->save();
 
-        return redirect()->route('users.index')->with('success', 'user created successfully.');
+        return redirect()->to(config('app.url') . '/users')->with('success', 'user created successfully.');
     }
 
 
@@ -154,8 +154,8 @@ class UserController extends Controller
         $url_base       = 'https://sso.bps.go.id/auth/';
         $url_token      = $url_base . 'realms/pegawai-bps/protocol/openid-connect/token';
         $url_api        = $url_base . 'realms/pegawai-bps/api-pegawai';
-        $client_id      = env('KEYCLOAK_CLIENT_ID');
-        $client_secret  = env('KEYCLOAK_CLIENT_SECRET');
+        $client_id      = '02140-manner-9uo';
+        $client_secret  = '5db9541a-a8b8-482d-924b-e41c69d61df3';
 
 
         //Mencari pengguna berdasarkan Username
@@ -248,8 +248,8 @@ class UserController extends Controller
         $url_base       = 'https://sso.bps.go.id/auth/';
         $url_token      = $url_base . 'realms/pegawai-bps/protocol/openid-connect/token';
         $url_api        = $url_base . 'realms/pegawai-bps/api-pegawai';
-        $client_id      = env('KEYCLOAK_CLIENT_ID');
-        $client_secret  = env('KEYCLOAK_CLIENT_SECRET');
+        $client_id      = '02140-manner-9uo';
+        $client_secret  = '5db9541a-a8b8-482d-924b-e41c69d61df3';
 
 
         //Mencari pengguna berdasarkan Username
@@ -323,7 +323,7 @@ class UserController extends Controller
 
         $newUser->password = Hash::make('password');
         $newUser->role_id = 6;
-       
+
 
         //350200092840 jawa timur
         //000000021420 yoga
@@ -331,64 +331,4 @@ class UserController extends Controller
 
         return new UserResource($newUser);
     }
-
-    // public function searchuser_by_name_sso($name)
-    // {
-
-    //   //  $user = User::where('nip_lama', '3400' . $nip_lama)->first();
-
-    //  //   if ($user != null) return new UserResource($user);
-
-    //     $url_base       = 'https://sso.bps.go.id/auth/';
-    //     $url_token      = $url_base . 'realms/pegawai-bps/protocol/openid-connect/token';
-    //     $url_api        = $url_base . 'realms/pegawai-bps/api-pegawai';
-    //     $client_id      = env('KEYCLOAK_CLIENT_ID');
-    //     $client_secret  = env('KEYCLOAK_CLIENT_SECRET');
-
-
-    //     //Mencari pengguna berdasarkan Username
-    //   //  $query_search   = '/nip' . '/' . '3400' . $nip_lama;
-
-    //     // //Mencari pengguna berdasarkan Email
-    //      $query_search   = '/nip/'.$name;
-
-    //     // //Mencari pengguna berdasarkan NIP
-    //     // $query_search   = '/nip/{nip}';
-
-    //     // //Mencari pengguna berdasarkan NIP Baru
-    //     // $query_search   = '/nipbaru/{nipbaru}';
-
-    //     // //Mencari pengguna berdasarkan Kode Unit Organisasi
-    //     // $query_search   = '/unit/{kodeunitorganisasi}';
-
-
-    //     $ch = curl_init($url_token);
-    //     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-    //     curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
-    //     curl_setopt($ch, CURLOPT_USERPWD, $client_id . ":" . $client_secret);
-    //     curl_setopt($ch, CURLOPT_POST, 1);
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     $response_token = curl_exec($ch);
-    //     if (curl_errno($ch)) {
-    //         throw new Exception(curl_error($ch));
-    //     }
-    //     curl_close($ch);
-    //     $json_token = json_decode($response_token, true);
-    //     $access_token = $json_token['access_token'];
-
-    //     //==========================================================================
-    //     $ch = curl_init($url_api . $query_search);
-    //     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token));
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     $response = curl_exec($ch);
-    //     if (curl_errno($ch)) {
-    //         throw new Exception(curl_error($ch));
-    //     }
-    //     curl_close($ch);
-
-    //     echo $response;
-
-       
-        
-    // }
 }

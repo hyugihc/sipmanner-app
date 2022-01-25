@@ -114,7 +114,7 @@ class ProgressIntervensiKhususController extends Controller
         $progressIntervensiKhusus->save();
 
         $message = ($progressIntervensiKhusus->status == 0) ? 'Progress berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
-        return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
+        return redirect()->to(config('app.url').'/progress')
             ->with('success', $message);
     }
 

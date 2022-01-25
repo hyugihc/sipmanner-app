@@ -122,7 +122,8 @@
 
             function cariPegawai(query) {
                 console.log("cari peg");
-                var urlx = '{{ route('users.index.query', ':query') }}';
+                var urlx = '{{ config("app.url") }}'+'/users/index/'+':query';
+                // var urlx = '{{ route('users.index.query', ':query') }}';
                 urlx = urlx.replace(':query', query);
                 window.location.href = urlx;
 

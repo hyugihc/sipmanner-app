@@ -62,7 +62,7 @@ class IntervensiNasionalController extends Controller
 
         $message = ($intervensiNasional->status == 0) ? 'Program Intervensi Nasional Berhasil disimpan menjadi Draft' : 'Program Intervensi Nasional berhasil di submit';
 
-        return redirect()->route('programs.index')
+        return redirect()->to(config('app.url').'/programs')
             ->with('success', $message);
     }
 

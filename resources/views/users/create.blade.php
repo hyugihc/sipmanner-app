@@ -166,7 +166,8 @@
             });
 
             function cariPegawai(nip) {
-                var urlx = '{{ route('search_user_byniplama_sso', ':nip') }}';
+                var urlx = '{{ config("app.url") }}'+'/searchuser_by_niplama_sso/'+':nip';
+                // var urlx = '{{ route('search_user_byniplama_sso', ':nip') }}';
                 urlx = urlx.replace(':nip', nip);
                 $.ajax({
                     url: urlx,

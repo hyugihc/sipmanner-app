@@ -339,7 +339,8 @@
                     }
                 });
                 $('#lampiran-delete').click(function() {
-                    var urlx = '{{ route('reports.delete-lampiran', ':id') }}';
+                    var urlx = '{{ config('app.url') }}' + '/reports/:id/delete-lampiran';
+                    // var urlx = '{{ route('reports.delete-lampiran', ':id') }}';
                     urlx = urlx.replace(':id', @php echo $report->id;   @endphp);
                     $.ajax({
                         url: urlx,

@@ -90,7 +90,7 @@
       var tr_str;
 
       function cariPegawai(id) {
-          var urlx = '{{ route('get_user_byniplama_sso', ':id') }}';
+          var urlx = '{{ config("app.url") }}'+'/getuser_by_niplama_sso/'+':id';
           urlx = urlx.replace(':id', id);
           $.ajax({
               url: urlx,

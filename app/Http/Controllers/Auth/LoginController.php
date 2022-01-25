@@ -56,6 +56,7 @@ class LoginController extends Controller
         ]);
 
 
+
         if (!isset($_GET['code'])) {
             // Untuk mendapatkan authorization code
             $authUrl = $provider->getAuthorizationUrl();
