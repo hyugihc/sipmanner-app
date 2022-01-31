@@ -87,7 +87,7 @@ class Can extends Model
         if ($this->isCanPusat()) {
             return 'sk_' . $this->tahun_sk . '_' . "pusat" . '_' . $this->id . '.pdf';
         } else {
-            return 'sk_' . $this->tahun_sk . '_' . $this->provinsi->kode_provinsi . '_' . $this->id . '.pdf';
+            return 'sk_' . $this->tahun_sk . '_' . $this->provinsi->kode_provinsi . '_' .$this->provinsi->nama.'_'. $this->id . '.pdf';
         }
     }
 

@@ -42,26 +42,38 @@
                             <div class="card-body">
                                 <dl>
                                     <dt> Tahun SK</dt>
-                                    <dd> {{ $can->tahun_sk }}</dd>
+                                     {{ $can->tahun_sk }}
                                     <dt>Tanggal SK</dt>
-                                    <dd>{{ $can->tanggal_sk }}</dd>
+                                    <dd>{{ date('d-M-Y', strtotime($can->tanggal_sk)) }}</dd>
                                     <dt>Perihal SK</dt>
                                     <dd>{{ $can->perihal_sk }}</dd>
                                     <dt>File SK</dt>
-                                    <dd> <a href="{{ route('cans.download', $can) }}"> File SK</a></dd>
-                                    <dt>Jumlah Change Agent Network</dt>
+                                    <dd> <a href="{{ route('cans.download', $can) }}">Download File SK</a></dd>
+                                    <dt>Jumlah Change Agent Network <small><i>(Change leader, Change Champions, Change Agent)</i></small></dt>
                                     <dd>{{ $can->jumlah_can }}</dd>
                                     <dt>Change Leader</dt>
                                     @foreach ($can->changeLeaders as $user)
-                                        <dd> {{ $user->name }} </dd>
+                                        <dd>1.  {{ $user->name }} </dd>
                                     @endforeach
                                     <dt>Change Champions</dt>
+                                    @php
+                                        $i = 1;
+                                    @endphp
                                     @foreach ($can->changeChampions as $user)
-                                        <dd> {{ $user->name }} </dd>
+                                        <dd>{{ $i }}. {{ $user->name }} </dd>
+                                        @php
+                                            $i++;
+                                        @endphp
                                     @endforeach
                                     <dt>Change Agents</dt>
+                                    @php
+                                        $i = 1;
+                                    @endphp
                                     @foreach ($can->changeAgents as $user)
-                                        <dd> {{ $user->name }} </dd>
+                                        <dd> {{ $i }}. {{ $user->name }} </dd>
+                                        @php
+                                            $i++;
+                                        @endphp
                                     @endforeach
 
                                     <dt>Status</dt>

@@ -208,6 +208,10 @@ class CanController extends Controller
         $can->changeChampions()->detach();
         $can->changeLeaders()->detach();
         $can->changeAgents()->detach();
+        //jika can ada file sk, hapus file sk dari storage
+        if ($can->file_sk != null) {
+            Storage::delete($can->file_sk);
+        }
         $can->delete();
 
         return redirect()->route('cans.index')
