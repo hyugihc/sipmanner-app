@@ -71,6 +71,7 @@ class DashboardController extends Controller
         $inCount = IntervensiNasional::where('tahun', $year)->where('status', 2)->count();
 
         //Jumlah Intervensi Khusus
+        $ikCount = 0;
         if ($user->isAdmin() or $user->isTopLeader()) {
             $ikCount =  IntervensiKhusus::where('tahun', $year)->where('status', 2)->count();
         } elseif ($user->isChangeLeader() or $user->isChangeChampion()) {
