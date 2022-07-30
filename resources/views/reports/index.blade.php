@@ -1,8 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
-
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
 
@@ -12,11 +10,15 @@
         <div class="container-fluid">
             <div class="row mb-2">
 
+
                 <div class="col-sm-2">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
-                        Create
-                    </button>
+                    @if (!Auth::user()->isAdmin())
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
+                            Create
+                        </button>
+                    @endif
                 </div><!-- /.col -->
+
                 <div class="col-sm-4">
                 </div><!-- /.col -->
 
@@ -58,6 +60,9 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
+                                    @if (Auth::user()->isAdmin())
+                                        <th>Satker</th>
+                                    @endif
                                     <th>Tahun</th>
                                     <th>Semester</th>
                                     <th>Tanggal Modified</th>
@@ -70,10 +75,20 @@
 
                                 @foreach ($reports as $report)
                                     <tr>
+                                        @if (Auth::user()->isAdmin())
+                                            <td>{{ $report->provinsi->nama }}</td>
+                                        @endif
                                         <td>{{ $report->tahun }}</td>
                                         <td>{{ $report->semester }}</td>
                                         <td>{{ date('d-m-Y', strtotime($report->updated_at)) }}</td>
-                                        <td>{{ $report->user['name'] }}</td>
+                                        <td>
+                                            @if ($report->user_id == null)
+                                                -
+                                            @else
+                                                {{ $report->user->name }}
+                                            @endif
+
+                                        </td>
                                         <td>{{ $report->getStatus() }}
                                             @if ($report->status == 1)
                                                 <br> <span class="badge badge-info right">Perlu Tindakan</span>
@@ -260,16 +275,16 @@
         <script>
             @if (Session::has('success'))
                 toastr.options = {
-                "closeButton": true,
-                "progressBar": false
+                    "closeButton": true,
+                    "progressBar": false
                 }
                 toastr.success("{{ Session::get('success') }}");
             @endif
 
             @if (Session::has('warning'))
                 toastr.options = {
-                "closeButton": true,
-                "progressBar": false
+                    "closeButton": true,
+                    "progressBar": false
                 }
                 toastr.warning("{{ Session::get('warning') }}");
             @endif
@@ -277,5 +292,4 @@
 
 
     </section>
-
 @endsection

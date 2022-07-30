@@ -25,7 +25,6 @@ class ReportController extends Controller
     {
         //list report yang ada bedakan berdasarkan role
         $user = Auth::user();
-
         $year = $user->getSetting('tahun');
 
         //untuk CC
@@ -37,12 +36,14 @@ class ReportController extends Controller
             $clStatus = [1, 2, 4];
             $reports = Report::where('provinsi_id', $user->provinsi_id)->whereIn('status', $clStatus)->where('tahun', $year)->get();
         }
+        //untuk admin
+        if ($user->isAdmin()) {
+            $reports = Report::where('tahun', $year)->get();
+        }
 
         if ($year == 2021) {
             return view('reports.2021-index', compact('reports'));
         }
-
-
 
         return view('reports.index', compact('reports'));
     }

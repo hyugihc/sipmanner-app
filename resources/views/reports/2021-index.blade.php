@@ -1,8 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
-
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
 
@@ -73,7 +71,15 @@
                                         <td>{{ $report->tahun }}</td>
                                         <td>{{ $report->semester }}</td>
                                         <td>{{ date('d-m-Y', strtotime($report->updated_at)) }}</td>
-                                        <td>{{ $report->user['name'] }}</td>
+                                        <td>
+                                            @if ($report->user_id == null)
+                                                -
+                                            @else
+                                                {{ $report->user->name }}
+                                            @endif
+
+
+                                        </td>
                                         <td>
                                             @if ($report->status == 0)
                                                 Belum ada laporan
@@ -146,16 +152,16 @@
         <script>
             @if (Session::has('success'))
                 toastr.options = {
-                "closeButton": true,
-                "progressBar": false
+                    "closeButton": true,
+                    "progressBar": false
                 }
                 toastr.success("{{ Session::get('success') }}");
             @endif
 
             @if (Session::has('warning'))
                 toastr.options = {
-                "closeButton": true,
-                "progressBar": false
+                    "closeButton": true,
+                    "progressBar": false
                 }
                 toastr.warning("{{ Session::get('warning') }}");
             @endif
@@ -163,5 +169,4 @@
 
 
     </section>
-
 @endsection

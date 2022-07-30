@@ -46,7 +46,16 @@
                                     <tr>
                                         <td>{{ $i }}</td>
                                         <td>{{ $provinsi->nama }}</td>
-                                        <td>{{ $provinsi->changeLeader['name'] }}</td>
+                                        <td>
+                                            <!-- / jika provinsi tidak  mempunyai change leader tampilkan kosong, jika punya tampilkan nama change leader -->
+                                            @if (!$provinsi->changeLeader()->exists())
+                                                -
+                                            @else
+                                                {{ $provinsi->changeLeader['name'] }}
+                                            @endif
+                                            
+                                           
+                                        </td>
                                         <td>
                                             @php
                                                 $x = 1;

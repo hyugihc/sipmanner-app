@@ -100,18 +100,19 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     //=============================REPORTS========================================
+    Route::resource('reports', ReportController::class);
     Route::get('/reports/{tahun}/{semester}/createLaporan', 'ReportController@createLaporan')->name('reports.create.laporan');
     Route::put('/reports/{report}/approve', 'ReportController@approve')->name('reports.approve');
     Route::get('/reports/{report}/print', 'ReportController@print')->name('reports.print');
     Route::get('/reports/{report}/download-lampiran', 'ReportController@downloadLampiran')->name('reports.download-lampiran');
     Route::post('/reports/{report}/delete-lampiran', 'ReportController@deleteLampiran')->name('reports.delete-lampiran');
     //2021
-    Route::get('/reports/{report}', 'ReportController@report2021show')->name('reports.2021.show');
+    Route::get('/reports/{report}/2021', 'ReportController@report2021show')->name('reports.2021.show');
     //upload laporan
     Route::post('/reports/{report}/upload-laporan', 'ReportController@uploadLaporan')->name('reports.upload-laporan');
     //unduh laporan
     ROute::get('/reports/{report}/download-laporan', 'ReportController@downloadLaporan')->name('reports.download-laporan');
-    Route::resource('reports', ReportController::class);
+    
 
     //=============================NOTIFIKASI========================================
     Route::get('/emailme', function () {
