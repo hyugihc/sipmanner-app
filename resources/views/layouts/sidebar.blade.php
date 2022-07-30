@@ -24,14 +24,14 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
 
                 <li class="nav-item">
-                    <a href="{{ route('dashboard') }}"
-                        class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard') }}" class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -39,6 +39,18 @@
                     </a>
                 </li>
 
+                <!-- jika pengguna adalah admin tampilkan menu dibawah -->
+                @if (Auth::user()->isAdmin())
+                    <li class="nav-item">
+                        <a href="{{ route('reports.index') }}"
+                            class="nav-link {{ Request::is('rekaps*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-ellipsis-h"></i>
+                            <p>
+                                Rekap
+                            </p>
+                        </a>
+                    </li>
+                @endif
 
                 <li class="nav-header">Change Agent Network</li>
 
@@ -94,12 +106,15 @@
                             <p>
                                 Laporan
                                 @if ($counts['reportCount'] != 0)
-                                <span class="badge badge-info right">{{ $counts['reportCount'] }}</span>
-                            @endif
+                                    <span class="badge badge-info right">{{ $counts['reportCount'] }}</span>
+                                @endif
                             </p>
                         </a>
                     </li>
                 @endcan
+
+
+
                 <li class="nav-item">
                     <a href="{{ route('articles.index') }}"
                         class="nav-link {{ Request::is('articles*') ? 'active' : '' }}">
@@ -121,7 +136,6 @@
 
 
                 @can('viewAny', App\User::class)
-
                     <li class="nav-header">Manajemen User</li>
 
                     <li class="nav-item ">
@@ -143,7 +157,6 @@
                             </p>
                         </a>
                     </li>
-
                 @endcan
 
 

@@ -44,8 +44,8 @@ class DashboardController extends Controller
         //===================================Small Box==================================================
 
         //Jumlah Can
-        //$latestCan = Can::where('provinsi_id', $user->provinsi_id)->latest("updated_at")->first();
-        if ($user->role_id == 1) {
+
+        if ($user->isAdmin()) {
             $cans = Can::where('status_sk', 2)->where('tahun_sk', $year)->get();
             if ($cans != null) {
                 $canCount = 0;

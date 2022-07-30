@@ -80,7 +80,7 @@ class AppServiceProvider extends ServiceProvider
 
                 $counts = ['canCount' => $submittedCansCount, 'programCount' => $submittedProgram, 'progressCount' =>  $submittedProgress, 'reportCount' => $reportCount];
             } else {
-                $counts = null;
+                $counts = ['canCount' => 0, 'programCount' => 0, 'progressCount' => 0, 'reportCount' => 0];
             }
             return $view->with('counts', $counts);
         });

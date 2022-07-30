@@ -50,9 +50,12 @@ class LoginController extends Controller
         $provider = new Keycloak([
             'authServerUrl'         => 'https://sso.bps.go.id',
             'realm'                 => 'pegawai-bps',
-            'clientId'              => env('KEYCLOAK_CLIENT_ID'),
-            'clientSecret'          => env('KEYCLOAK_CLIENT_SECRET'),
-            'redirectUri'           => env('KEYCLOAK_REDIRECT_URI'),
+            'clientId'              => '02140-manner-9uo',
+            'clientSecret'          => '5db9541a-a8b8-482d-924b-e41c69d61df3',
+            'redirectUri'           => 'http://localhost:8000/',
+            //'clientId'              => env('KEYCLOAK_CLIENT_ID'),
+            //'clientSecret'          => env('KEYCLOAK_CLIENT_SECRET'),
+            //'redirectUri'           => env('KEYCLOAK_REDIRECT_URI'),
         ]);
 
 
@@ -118,7 +121,7 @@ class LoginController extends Controller
                     $loggedinUser = User::find($id);
 
                     if ($user->getUrlFoto() == 'https://community.bps.go.id/images/avatar/') {
-                        $loggedinUser->avatar ='https://community.bps.go.id/images/nofoto.JPG';
+                        $loggedinUser->avatar = 'https://community.bps.go.id/images/nofoto.JPG';
                     } else {
                         $loggedinUser->avatar = $user->getUrlFoto();
                     }

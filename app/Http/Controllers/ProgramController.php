@@ -49,9 +49,9 @@ class ProgramController extends Controller
             }
         }
 
-
         if ($user->isAdmin()) {
             $intervensiKhususes = IntervensiKhusus::where('tahun', $currentYear)->get();
+            return view('programs.index', compact('intervensiKhususes', 'intervensiNasionals'));
         } elseif ($user->isChangeLeader()) {
             $intervensiKhususes = IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('tahun', $currentYear)->where(function ($query) {
                 $query->where('status', 1)->orWhere('status', 2);
