@@ -112,7 +112,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/reports/{report}/upload-laporan', 'ReportController@uploadLaporan')->name('reports.upload-laporan');
     //unduh laporan
     ROute::get('/reports/{report}/download-laporan', 'ReportController@downloadLaporan')->name('reports.download-laporan');
-    
+
+    //=============================REKAP========================================    
+    //rekap index ke rekap controller
+    Route::get('/rekap-rencanaaksi', 'RekapController@indexIntervensiKhusus')->name('rekap.intervensikhusus.index');
 
     //=============================NOTIFIKASI========================================
     Route::get('/emailme', function () {

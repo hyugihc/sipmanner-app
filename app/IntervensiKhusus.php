@@ -31,6 +31,16 @@ class IntervensiKhusus extends Model
         return $this->hasMany(ProgressIntervensiKhusus::class);
     }
 
+    //ambil progress bulan terakhir
+    public function getRealisasiTerakhir()
+    {
+        if (ProgressIntervensiKhusus::where('intervensi_khusus_id', $this->id)->where('status', 2)->orderBy('tanggal', 'desc')->first() == null) {
+            return null;
+        } else {
+            return ProgressIntervensiKhusus::where('intervensi_khusus_id', $this->id)->where('status', 2)->orderBy('tanggal', 'desc')->first()->realisasi_pelaksanaan_kegiatan;
+        }
+    }
+
     public function provinsi()
     {
         return $this->belongsTo(Provinsi::class);

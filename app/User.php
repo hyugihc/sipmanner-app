@@ -11,6 +11,7 @@ use App\Role;
 use App\Setting;
 use App\IntervensiKhusus;
 use App\Traits\UserSettingsTrait;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -40,6 +41,16 @@ class User extends Authenticatable
         return $this->hasMany(IntervensiKhusus::class);
     }
 
+    //mempunyai banyak intervensi khusus pada tahun setting
+    public function intervensi_khususes_by_year()
+    {
+        $user = Auth::user();
+        $currentYear = $user->getSetting('tahun');
+        return $this->hasMany(IntervensiKhusus::class)->where('tahun', $currentYear);
+    }
+
+
+
     public function isAdmin()
     {
         return $this->role->id == 1;
@@ -58,6 +69,11 @@ class User extends Authenticatable
     public function isTopLeader()
     {
         return $this->role->id == 5;
+    }
+
+    public function isAdminOrTopLeader()
+    {
+        return $this->role->id == 5 || $this->role->id == 1;
     }
 
     public function setUserSatkerFromSSO($ssoOrg)

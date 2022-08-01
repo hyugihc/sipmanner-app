@@ -39,18 +39,7 @@
                     </a>
                 </li>
 
-                <!-- jika pengguna adalah admin tampilkan menu dibawah -->
-                @if (Auth::user()->isAdmin())
-                    <li class="nav-item">
-                        <a href="{{ route('reports.index') }}"
-                            class="nav-link {{ Request::is('rekaps*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-ellipsis-h"></i>
-                            <p>
-                                Rekap
-                            </p>
-                        </a>
-                    </li>
-                @endif
+
 
                 <li class="nav-header">Change Agent Network</li>
 
@@ -112,6 +101,36 @@
                         </a>
                     </li>
                 @endcan
+
+                <!-- jika pengguna adalah admin tampilkan menu dibawah -->
+                @if (Auth::user()->isAdminOrTopLeader())
+                    <li class="nav-item">
+                        <a href="#" class="nav-link {{ Request::is('rekaps*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-ellipsis-h"></i>
+                            <p>
+                                Rekap
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('reports.index') }}"
+                                    class="nav-link {{ Request::is('rekaps*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Intervensi Nasional</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('rekap.intervensikhusus.index') }}"
+                                    class="nav-link {{ Request::is('rekap.intervensikhusus*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Rencana Aksi</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                @endif
 
 
 

@@ -23,7 +23,7 @@ class ProgressIntervensiKhusus extends Model
         return $this->belongsTo(IntervensiKhusus::class);
     }
 
-    public function getStatus()
+     public function getStatus()
     {
         switch ($this->status) {
             case '0':

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use App\IntervensiKhusus;
 
 class Provinsi extends Model
 {
@@ -26,6 +27,12 @@ class Provinsi extends Model
     public function changeChampions()
     {
         return $this->hasMany(User::class)->where('role_id', "3");
+    }
+
+    //mempunyai banyak intervensi khusus sesuai dengan id provinsi
+    public function intervensi_khususes()
+    {
+        return $this->hasMany(IntervensiKhusus::class);
     }
 
     public function activeCan()
