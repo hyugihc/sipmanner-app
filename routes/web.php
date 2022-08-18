@@ -115,7 +115,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //=============================REKAP========================================    
     //rekap index ke rekap controller
-    Route::get('/rekap-rencanaaksi', 'RekapController@indexIntervensiKhusus')->name('rekap.intervensikhusus.index');
+    Route::get('/rekap-rencanaaksi', 'RekapController@indexIntervensi')->name('rekap.intervensikhusus.index');
+    
 
     //=============================NOTIFIKASI========================================
     Route::get('/emailme', function () {

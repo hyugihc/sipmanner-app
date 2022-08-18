@@ -11,6 +11,7 @@ use App\IntervensiKhusus;
 use App\ProgressIntervensiKhusus;
 use App\ProgressIntervensiNasional;
 use App\IntervensiNasionalProvinsi;
+use App\Provinsi;
 use App\Report;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -29,12 +30,66 @@ class DashboardController extends Controller
         $user = Auth::user();
         $year = $user->getSetting('tahun');
 
+        //jika admin
+        if ($user->isAdminOrTopLeader()) {
+
+            //============================pie chart====================================
+            //tampilkan data intervensi khusus yang draft, submitted, approved & rejected
+            $intervensi_khusus = IntervensiKhusus::where('tahun', $year)->get();
+            $ikDraft = $intervensi_khusus->where('status', '0')->count();
+            $ikSubmit = $intervensi_khusus->where('status', '1')->count();
+            $ikApproved = $intervensi_khusus->where('status', '2')->count();
+            $ikRejected = $intervensi_khusus->where('status', '3')->count();
+
+            //=====================================smallbox===========================
+            //tambahkan jumlah can pada setiap can seluruh indonesia yang sudah diapprove
+            $can = Can::where('tahun_sk', $year)->get();
+            $can_approved = $can->where('status', '2');
+            $canCount = 0;
+            foreach ($can_approved as $can) {
+                $canCount += $can->jumlah_can;
+            }
+
+            //hitung data intervensi nasional yang sudah diapprove
+            $intervensi_nasional = IntervensiNasional::where('tahun', $year)->get();
+            $inCount = $intervensi_nasional->where('status', '2')->count();
+
+            //hitung data intervensi khusus yang sudah diapprove pada tahun setting
+            $ikCount =  IntervensiKhusus::where('tahun', $year)->where('status', 2)->count();
+
+            $data = [
+                //pie chart
+                'ikDraft'  => $ikDraft,
+
+                'ikSubmit'   => $ikSubmit,
+
+                'ikApproved' => $ikApproved,
+
+                'ikRejected' => $ikRejected,
+                // smalbox
+                'inCount' => $inCount,
+
+                'ikCount' => $ikCount,
+
+                'canCount' => $canCount,
+            ];
+
+            //=================tabel rekap rencana aksi==============
+
+            //ambil semua provinsi dari database
+            $provinsis = Provinsi::all();
+
+            //kembalikan ke view dashboard untuk admin dan top leader
+            return view('dashboard.admin-tl', compact('data', 'provinsis'));
+        }
+
+
 
         //==================================Pie Chart===================================================
 
         // Progres Intervensi Khusus by CC
 
-        $intervensiKhususesByUser = ($user->role_id == 1) ?  IntervensiKhusus::where('tahun',  $year)->get()
+        $intervensiKhususesByUser = ($user->isAdmin()) ?  IntervensiKhusus::where('tahun',  $year)->get()
             : IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('tahun',  $year)->get();
         $ikDraft = $intervensiKhususesByUser->where('status', 0)->count();
         $ikSubmit = $intervensiKhususesByUser->where('status', 1)->count();

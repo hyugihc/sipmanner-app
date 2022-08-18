@@ -29,6 +29,16 @@ class IntervensiNasionalProvinsi extends Model
         return $this->belongsTo(IntervensiNasional::class);
     }
 
+    //ambil progres intervensi nasional bulan teraskhir
+    public function getRealisasiTerakhir()
+    {
+        if (ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $this->id)->where('status', 2)->orderBy('bulan', 'desc')->first() == null) {
+            return null;
+        } else {
+            return ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $this->id)->where('status', 2)->orderBy('bulan', 'desc')->first()->realisasi_pelaksanaan_kegiatan;
+        }
+    }
+
     public function getStatus()
     {
         switch ($this->status) {

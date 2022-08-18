@@ -10,14 +10,11 @@ use Illuminate\Support\Facades\Auth;
 class RekapController extends Controller
 {
     //munculkan fungsi index
-    public function indexIntervensiKhusus()
+    public function indexIntervensi()
     {
-        $user = Auth::user();
-        $currentYear = $user->getSetting('tahun');
-
         //ambil semua provinsi dari database
         $provinsis = Provinsi::all();
         //tampilkan ke sebuah tabel
-        return view('programs.rekap.index', compact('provinsis', 'currentYear'));
+        return view('programs.rekap.index', compact('provinsis'));
     }
 }
