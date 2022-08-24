@@ -48,7 +48,7 @@
                         <table class="table table-hover text-nowrap" id="table_cans">
                             <thead>
                                 <tr>
-                                    <th>Tahun SK</th>
+                                    <th>No</th>
                                     @if (Auth::user()->isAdminOrTopLeader())
                                         <th>Unit Kerja</th>
                                     @endif
@@ -62,7 +62,7 @@
                             <tbody>
                                 @foreach ($cans as $can)
                                     <tr>
-                                        <td>{{ $can->tahun_sk }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         @if (Auth::user()->isAdminOrTopLeader())
                                             @if ($can->isCanPusat())
                                                 <td>BPS Pusat</td>
