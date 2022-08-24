@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
     <!-- Data Table -->
@@ -50,7 +49,7 @@
                             <thead>
                                 <tr>
                                     <th>Tahun SK</th>
-                                    @if (Auth::user()->isAdmin())
+                                    @if (Auth::user()->isAdminOrTopLeader())
                                         <th>Unit Kerja</th>
                                     @endif
                                     <th>Nomor SK</th>
@@ -64,7 +63,7 @@
                                 @foreach ($cans as $can)
                                     <tr>
                                         <td>{{ $can->tahun_sk }}</td>
-                                        @if (Auth::user()->isAdmin() or Auth::user()->isTopLeader())
+                                        @if (Auth::user()->isAdminOrTopLeader())
                                             @if ($can->isCanPusat())
                                                 <td>BPS Pusat</td>
                                             @else
@@ -124,15 +123,13 @@
                 $('#table_cans').DataTable();
             });
             @if (Session::has('success'))
-                toastr.options =
-                {
-                "closeButton" : true,
-                "progressBar" : false
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": false
                 }
                 toastr.success("{{ Session::get('success') }}");
             @endif
         </script>
 
     </section>
-
 @endsection

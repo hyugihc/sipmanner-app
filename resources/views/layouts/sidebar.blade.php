@@ -42,18 +42,19 @@
                 @if (Auth::user()->isAdminOrTopLeader())
                     <li class="nav-item">
                         <a href="{{ route('rekap.intervensikhusus.index') }}"
-                            class="nav-link {{ Request::is('rekap.intervensikhusus*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
+                            class="nav-link {{ Request::is('rekap-rencanaaksi*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-copy"></i>
                             <p>Rekap Program</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('rekap.intervensikhusus.index') }}"
-                            class="nav-link {{ Request::is('rekap.intervensikhusus*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
+                        <a href="{{ route('rekap.can') }}"
+                            class="nav-link {{ Request::is('rekap.can*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-copy"></i>
                             <p>Rekap CAN</p>
                         </a>
                     </li>
+                    
                 @endif
 
 
@@ -123,7 +124,7 @@
 
 
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ route('articles.index') }}"
                         class="nav-link {{ Request::is('articles*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-copy"></i>
@@ -131,7 +132,7 @@
                             Sharing
                         </p>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="nav-item">
                     <a href="{{ route('faq') }}" class="nav-link {{ Request::is('faq*') ? 'active' : '' }}">

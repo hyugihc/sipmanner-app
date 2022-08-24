@@ -75,11 +75,9 @@
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            @if (Auth::user()->role_id != 1)
-                                <h3>{{ $data['piCount'] }}</h3>
-                            @else
-                                <h3> <i class="fas fa-arrow-circle-right"></i></h3>
-                            @endif
+
+                            <h3> <i class="fas fa-arrow-circle-right"></i></h3>
+
 
                             <p>Progress Program</p>
                         </div>
@@ -124,7 +122,8 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Jumlah <b> Change Champions, Intervensi Nasional & Rencana Aksi </b> Tiap Eselon II</h3>
+                            <h3 class="card-title">Jumlah <b> Change Champions, Intervensi Nasional & Rencana Aksi </b> Tiap
+                                Eselon II</h3>
 
                         </div>
                         <!-- /.card-header -->
@@ -158,9 +157,9 @@
                                                     @endforeach --}}
                                                 </td>
                                                 <td>
-                                                  
-                                                        {{ $provinsi->intervensi_nasional_provinsi_by_year->count() }}
-                                                
+
+                                                    {{ $provinsi->intervensi_nasional_provinsi_by_year->count() }}
+
                                                 </td>
                                                 <td>
                                                     {{ $provinsi->intervensi_khususes_by_year->count() }}

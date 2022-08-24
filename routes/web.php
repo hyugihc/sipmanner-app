@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/cans/{can}/download', 'CanController@downloadFileSk')->name('cans.download');
     Route::put('/cans/{can}/approve', 'CanController@approve')->name('cans.approve');
     //====================================================================================
-  
+
     Route::get('/programs', 'ProgramController@index')->name('programs.index');
     Route::get('/progress', 'ProgressController@index')->name('progress.index');
     //====================================================================================
@@ -116,7 +116,10 @@ Route::group(['middleware' => 'auth'], function () {
     //=============================REKAP========================================    
     //rekap index ke rekap controller
     Route::get('/rekap-rencanaaksi', 'RekapController@indexIntervensi')->name('rekap.intervensikhusus.index');
-    
+    //rekap change agent network
+    Route::get('/rekap-can',  'UserController@rekapCan')->name('rekap.can');
+
+
 
     //=============================NOTIFIKASI========================================
     Route::get('/emailme', function () {

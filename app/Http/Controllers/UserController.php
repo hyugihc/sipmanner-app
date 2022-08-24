@@ -141,6 +141,15 @@ class UserController extends Controller
         return view('users.recap', compact('provinsis'));
     }
 
+    public function rekapCan()
+    {
+        $provinsis = Provinsi::get();
+
+        //ambil user yang mempunyai role top leader
+        $top_leaders = User::where('role_id', '=', '5')->get();
+
+        return view('dashboard.rekap.rekap-can', compact('provinsis', 'top_leaders'));
+    }
 
 
 

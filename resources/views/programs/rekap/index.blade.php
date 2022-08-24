@@ -72,19 +72,23 @@
 
                                     <!-- /.col -->
                                     <div class="col-sm-6 invoice-col">
-                                        <b>Jumlah Change Champions:</b>
-                                        @if (!$provinsi->changeChampions()->exists())
-                                            tidak ada change champion <br>
-                                        @else
-                                            {{ $provinsi->changeChampions->count() }} <br>
-                                        @endif
+
+                                        <address>
+                                            <strong>Change Champions</strong><br>
+                                            @if (!$provinsi->changeChampions()->exists())
+                                                tidak ada Change Champions
+                                            @else
+                                                @foreach ($provinsi->changeChampions as $cc)
+                                                    {{ $cc->name }} <br>
+                                                @endforeach
+                                            @endif
+                                        </address>
 
 
                                     </div>
                                     <!-- /.col -->
                                 </div>
                                 <!-- /.row -->
-
 
                                 @if (!$provinsi->changeChampions()->exists())
                                     <p>Belum ada Change Champion</p>
@@ -99,11 +103,12 @@
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th>No</th>
-                                                        <th>Nama Intervensi Nasional</th>
-                                                        <th>Ukuran Keberhasilan</th>
-                                                        <th>Status</th>
-                                                        <th>Realisasi Terakhir</th>
+                                                        <th style="width: 5%">No</th>
+                                                        <th style="width: 22%">Nama Intervensi Nasional</th>
+                                                        <th style="width: 53%">Ukuran Keberhasilan</th>
+
+                                                        <th style="width: 10%">Realisasi Terakhir</th>
+                                                        <th style="width: 10%">Aksi</th>
 
                                                     </tr>
                                                 </thead>
@@ -112,15 +117,22 @@
                                                         @foreach ($provinsi->intervensi_nasional_provinsi_by_year as $intervensi)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
-                                                                <td>{{ $intervensi->nama }}</td>
+                                                                <td>{{ $intervensi->intervensiNasional->nama }}</td>
                                                                 <td>{{ $intervensi->ukuran_keberhasilan }}</td>
-                                                                <td>Sedang Berjalan</td>
+
                                                                 <td>
                                                                     @if (!$intervensi->getRealisasiTerakhir() == null)
                                                                         {{ $intervensi->getRealisasiTerakhir() }} %
                                                                     @else
                                                                         0 %
                                                                     @endif
+                                                                </td>
+                                                                <td>
+                                                                    @can('view', $intervensi->intervensiNasional)
+                                                                        <a class="btn btn-block btn-primary btn-xs " style="width: 100%;
+                                                                            href="{{ route('intervensi-nasionals.show', $intervensi->intervensiNasional) }}">Show</a>
+                                                                    @endcan
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     @else
@@ -144,37 +156,41 @@
                                             <h6>Rencana Aksi oleh {{ $cc->name }}</h6>
                                         </div>
 
-
-
-
                                         <!-- Table row -->
                                         <div class="row">
                                             <div class="col-12 table-responsive">
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <th>No</th>
-                                                            <th>Nama Rencana Aksi</th>
-                                                            <th>Keterangan</th>
-                                                            <th>Status</th>
-                                                            <th>Realisasi Terakhir</th>
+                                                            <th style="width: 5%">No</th>
+                                                            <th style="width: 22%">Nama Rencana Aksi</th>
+                                                            <th style="width: 53%">Keterangan</th>
+                                                            <th style="width: 10%">Realisasi Terakhir</th>
+                                                            <th style="width: 10%">Aksi</th>
 
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @if ($cc->intervensi_khususes_by_year->count() > 0)
                                                             @foreach ($cc->intervensi_khususes_by_year as $intervensi)
-                                                                <tr>
+                                                                <tr class='clickable-row'
+                                                                    data-href='{{ route('intervensi-khususes.show', $intervensi) }}'>
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $intervensi->nama }}</td>
                                                                     <td>{{ $intervensi->uraian_kegiatan }}</td>
-                                                                    <td>{{ $intervensi->getStatus() }}</td>
                                                                     <td>
                                                                         @if (!$intervensi->getRealisasiTerakhir() == null)
                                                                             {{ $intervensi->getRealisasiTerakhir() }} %
                                                                         @else
                                                                             0 %
                                                                         @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @can('view', $intervensi)
+                                                                            <a class="btn btn-block btn-primary btn-xs" style="width: 100%;"
+                                                                                href="{{ route('intervensi-khususes.show', $intervensi) }}">Show</a>
+                                                                        @endcan
+                                                                    </td>
                                                                 </tr>
                                                             @endforeach
                                                         @else
@@ -204,7 +220,11 @@
         <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>
 
         <script>
-  
+            jQuery(document).ready(function($) {
+                $(".clickable-row").click(function() {
+                    window.location = $(this).data("href");
+                });
+            });
         </script>
 
     </section>

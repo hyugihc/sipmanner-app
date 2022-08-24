@@ -23,7 +23,7 @@ class ProgramController extends Controller
         $user = Auth::user();
         $currentYear = $user->getSetting('tahun');
 
-        if ($user->isAdmin()) {
+        if ($user->isAdminorTopLeader()) {
             $intervensiNasionals = IntervensiNasional::where('tahun', $currentYear)->get();
         } else {
             $intervensiNasionals = IntervensiNasional::where('tahun', $currentYear)->where("status", 2)->get();
@@ -49,7 +49,7 @@ class ProgramController extends Controller
             }
         }
 
-        if ($user->isAdmin()) {
+        if ($user->isAdminorTopLeader()) {
             $intervensiKhususes = IntervensiKhusus::where('tahun', $currentYear)->get();
             return view('programs.index', compact('intervensiKhususes', 'intervensiNasionals'));
         } elseif ($user->isChangeLeader()) {

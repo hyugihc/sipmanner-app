@@ -11,9 +11,12 @@
             <div class="row mb-2">
 
                 <div class="col-sm-2">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
-                        Upload
-                    </button>
+                    @if (!Auth::user()->isAdminOrTopLeader())
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
+                            Upload
+                        </button>
+                    @endif
+
                 </div><!-- /.col -->
                 <div class="col-sm-4">
                 </div><!-- /.col -->
@@ -56,10 +59,9 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>Tahun</th>
-                                    <th>Semester</th>
-                                    <th>Tanggal Modified</th>
-                                    <th>Last Modified by</th>
+                                    <th>No</th>
+                                    <th>Satker</th>
+                                    <th>Tahun - Semester</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -68,18 +70,11 @@
 
                                 @foreach ($reports as $report)
                                     <tr>
-                                        <td>{{ $report->tahun }}</td>
-                                        <td>{{ $report->semester }}</td>
-                                        <td>{{ date('d-m-Y', strtotime($report->updated_at)) }}</td>
-                                        <td>
-                                            @if ($report->user_id == null)
-                                                -
-                                            @else
-                                                {{ $report->user->name }}
-                                            @endif
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $report->provinsi->nama_singkat }}</td>
+                                       
+                                        <td>{{ $report->tahun }}- {{ $report->semester }}</td>
 
-
-                                        </td>
                                         <td>
                                             @if ($report->status == 0)
                                                 Belum ada laporan

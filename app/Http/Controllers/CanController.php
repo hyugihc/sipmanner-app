@@ -36,7 +36,7 @@ class CanController extends Controller
         //     Can::where('tahun_sk', $year)->orderBy('status_sk')->where('provinsi_id', $user->provinsi_id)->paginate(5);
 
         $cans = null;
-        if ($user->isAdmin()) {
+        if ($user->isAdminOrTopLeader()) {
             $cans = Can::where('tahun_sk', $year)->orderBy('status_sk')->paginate(5);
         } elseif (($user->isChangeChampion() or $user->isChangeLeader()) and $user->provinsi->isPusat()) {
             $cans =  Can::where('tahun_sk', $year)->where('status_sk', 2)->orderBy('tahun_sk')->where('pusat', 1)->paginate(5);
@@ -127,7 +127,7 @@ class CanController extends Controller
 
 
         $message = ($can->status_sk == 0) ? 'Data berhasil disimpan menjadi draft' : 'Data berhasil disubmit ke Change Leader';
-        return redirect()->to(config('app.url').'/cans')
+        return redirect()->to(config('app.url') . '/cans')
             ->with('success', $message);
     }
 
