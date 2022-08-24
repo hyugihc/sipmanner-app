@@ -58,6 +58,10 @@ class Report extends Model
     {
 
         switch ($this->status) {
+            case null:
+                return "draft";
+                break;
+
             case '0':
                 return "draft";
                 break;

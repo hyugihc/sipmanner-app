@@ -63,10 +63,9 @@
                                     @if (Auth::user()->isAdmin())
                                         <th>Satker</th>
                                     @endif
-                                    <th>Tahun</th>
+                         
                                     <th>Semester</th>
                                     <th>Tanggal Modified</th>
-                                    <th>Last Modified by</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -78,17 +77,10 @@
                                         @if (Auth::user()->isAdmin())
                                             <td>{{ $report->provinsi->nama }}</td>
                                         @endif
-                                        <td>{{ $report->tahun }}</td>
-                                        <td>{{ $report->semester }}</td>
-                                        <td>{{ date('d-m-Y', strtotime($report->updated_at)) }}</td>
-                                        <td>
-                                            @if ($report->user_id == null)
-                                                -
-                                            @else
-                                                {{ $report->user->name }}
-                                            @endif
-
-                                        </td>
+                                   
+                                        <td>{{ $report->tahun }}-{{ $report->semester }}</td>
+                                        <td>{{ date('d-M-Y', strtotime($report->updated_at)) }}</td>
+                                     
                                         <td>{{ $report->getStatus() }}
                                             @if ($report->status == 1)
                                                 <br> <span class="badge badge-info right">Perlu Tindakan</span>
