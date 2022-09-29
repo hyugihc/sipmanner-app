@@ -314,7 +314,7 @@ class ReportController extends Controller
     public function uploadLaporan(Request $request, Report $report)
     {
         $request->validate([
-            'laporan' => 'required|file|mimes:pdf|max:2048',
+            'laporan' => 'required|file|mimes:pdf|max:6048',
         ]);
 
         //hapus laporan sebelumnya jika ada
