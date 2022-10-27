@@ -49,6 +49,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
+                                    <th>Satker</th>
                                     <th>Uraian Kegiatan</th>
                                     <th>Outcome</th>
                                     <th>Action</th>
@@ -62,6 +63,7 @@
                                     <tr>
                                         <td>{{ $i }}</td>
                                         <td>{{ $intervensiNasional->intervensiNasional->nama }}</td>
+                                        <td>{{ $intervensiNasional->provinsi->nama }}</td>
 
                                         <td>
                                             {{ $intervensiNasional->intervensiNasional->uraian_kegiatan }}

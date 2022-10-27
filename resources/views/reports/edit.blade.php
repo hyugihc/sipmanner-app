@@ -223,7 +223,7 @@
                                 <div class="form-group">
                                     <label>BAB VI. Kesimpulan</label>
                                     <textarea class="form-control" name="bab_vi" id="" cols="30" rows="10"
-                                        placeholder="Dijelaskan secara umum apakah program ini telah menjawab kebutuhan yang menjadi dasar penciptaan program ini (menyelesaikan permasalahan, peningkatan pelayanan publik, atau peningkatan kinerja unit kerja) atau sesuai dengan harapan pada bagian pendahuluan. Bila telah sesuai, dijelaskan bahwa hal ini menjadi perubahan yang nyata (konkret) di unit  kerja">{{ old('bab_iv', $report->bab_iv) }}</textarea>
+                                        placeholder="Dijelaskan secara umum apakah program ini telah menjawab kebutuhan yang menjadi dasar penciptaan program ini (menyelesaikan permasalahan, peningkatan pelayanan publik, atau peningkatan kinerja unit kerja) atau sesuai dengan harapan pada bagian pendahuluan. Bila telah sesuai, dijelaskan bahwa hal ini menjadi perubahan yang nyata (konkret) di unit  kerja">{{ old('bab_vi', $report->bab_vi) }}</textarea>
                                 </div>
 
                                 <div class="form-group">

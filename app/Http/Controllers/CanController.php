@@ -37,7 +37,7 @@ class CanController extends Controller
 
         $cans = null;
         if ($user->isAdminOrTopLeader()) {
-            $cans = Can::where('tahun_sk', $year)->orderBy('status_sk')->paginate(5);
+            $cans = Can::where('tahun_sk', $year)->orderBy('status_sk')->paginate(25);
         } elseif (($user->isChangeChampion() or $user->isChangeLeader()) and $user->provinsi->isPusat()) {
             $cans =  Can::where('tahun_sk', $year)->where('status_sk', 2)->orderBy('tahun_sk')->where('pusat', 1)->paginate(5);
         } elseif ($user->isChangeChampion()) {
