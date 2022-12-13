@@ -27,8 +27,8 @@ class StoreIntervensiKhususRequest extends FormRequest
             'nama' => 'required|min:3|max:100'
         ];
         if ($this->has('submit')) {
-            $rules['uraian_kegiatan'] = 'required|max:1000';
-            $rules['isu_strategis'] = 'required|max:500';
+            $rules['uraian_kegiatan'] = 'required';
+            $rules['isu_strategis'] = 'required';
             $rules['output'] = 'required|min:5';
             $rules['timeline'] = 'required|min:5';
             $rules['ukuran_keberhasilan'] = 'required|min:5';

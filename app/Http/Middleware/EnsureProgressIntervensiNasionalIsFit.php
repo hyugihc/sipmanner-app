@@ -20,9 +20,11 @@ class EnsureProgressIntervensiNasionalIsFit
         if ($progress != null) {
             $intervensi = $request->route('intervensi_nasional');
             $intervensiProv = IntervensiNasionalProvinsi::where('intervensi_nasional_id', $intervensi->id)->first();
-            if ($progress->intervensi_nasional_provinsi_id != $intervensiProv->id) {
-                return abort(404);
-            }
+            // dd($intervensiProv);
+            //if ($progress->intervensi_nasional_provinsi_id != $intervensiProv->id) {
+            //  echo  "intervensi prov id = ".$intervensiProv->id ;
+            //return abort(404);
+            //}
         }
         return $next($request);
     }

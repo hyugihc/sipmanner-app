@@ -45,6 +45,7 @@
                         <select name="tahun" class="form-control select2" style="width: 100%;">
                             <option value="2021">2021</option>
                             <option value="2022" selected>2022</option>
+                            <option value="2023">2023</option>
                         </select>
 
                     </div>
