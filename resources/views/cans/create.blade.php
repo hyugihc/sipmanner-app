@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                   {{-- <h1 class="m-0"> Create</h1> --}}
+                    {{-- <h1 class="m-0"> Create</h1> --}}
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -53,7 +53,7 @@
                                 <div class="form-group">
                                     <label>Tahun SK</label>
                                     <select name="tahun_sk" class="form-control">
-                                        <option> {{Auth::user()->getSetting('tahun')}}</option>
+                                        <option> {{ Auth::user()->getSetting('tahun') }}</option>
                                     </select>
                                 </div>
 
@@ -63,7 +63,8 @@
 
                                 <div class="form-group">
                                     <label>Nomor SK</label>
-                                    <input type="text" name="nomor_sk" class="form-control" value="{{ old('nomor_sk') }}">
+                                    <input type="text" name="nomor_sk" class="form-control"
+                                        value="{{ old('nomor_sk') }}">
                                 </div>
 
                                 @error('nomor_sk')
@@ -111,8 +112,12 @@
                                 <div class="form-group">
                                     <label>Change Network</label>
                                     <button type="button" class="btn btn-default float-right" data-toggle="modal"
+                                        data-target="#modal-default-name">
+                                        + Tambahkan Change Agent (Beta)
+                                    </button>
+                                    <button type="button" class="btn btn-default float-right" data-toggle="modal"
                                         data-target="#modal-default">
-                                        + Tambahkan Change Agent
+                                        + Tambahkan Change Agent (nip)
                                     </button>
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
@@ -204,6 +209,8 @@
     </section>
 
     @include('cans.search')
+    <!-- include search-name.blade.php -->
+    @include('cans.search-name')
 
 
 @endsection

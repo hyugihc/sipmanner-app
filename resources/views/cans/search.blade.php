@@ -9,14 +9,15 @@
                   </button>
               </div>
               <div class="modal-body">
+
                   <div class="form-group">
                       <label>Masukan 5 digit NIP lama</label>
-                      <input class="form-control" type='number' id='p_input' name='search' placeholder='Enter nip lama'>
+                      <input class="form-control" type='number' id='p_input' name='search'
+                          placeholder='Enter nip lama'>
                   </div>
 
                   <button class="btn btn-primary" type='button' value='Search' id='sp_button'>
                       Search
-
                   </button><br><br>
 
 
@@ -90,7 +91,8 @@
       var tr_str;
 
       function cariPegawai(id) {
-          var urlx = '{{ config("app.url") }}'+'/getuser_by_niplama_sso/'+':id';
+          //var urlx = '{{ config('app.url') }}'+'/getuser_by_niplama_sso/'+':id';
+          var urlx = 'http://localhost:8000/getuser_by_niplama_sso/' + ':id';
           urlx = urlx.replace(':id', id);
           $.ajax({
               url: urlx,

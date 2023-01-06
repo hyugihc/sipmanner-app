@@ -46,7 +46,11 @@ Route::group(['middleware' => 'auth'], function () {
     //Route::get('/getUser/{nipLama}', 'UserController@getUser');
     Route::get('/getuser_by_niplama_sso/{nip_lama}', 'UserController@getuser_by_niplama_sso')->name('get_user_byniplama_sso');
     Route::get('/searchuser_by_niplama_sso/{nip_lama}', 'UserController@searchuser_by_niplama_sso')->name('search_user_byniplama_sso');
-
+    //cari user berdasarkan nama
+    Route::get('/search_user_byname/{name}', 'UserController@searchUserByName')->name('search_user_byname');
+    Route::get('/is_change_leader/{nip_lama}', 'UserController@isChangeLeader')->name('is_cl');
+    //cari user berdasarkan nip lama
+    Route::get('/search_user_by_niplama/{nip_lama}', 'UserController@searchUserByNipLama')->name('search_user_by_niplama');
     //======================================DATA=====================================
 
     Route::resource('cans', CanController::class);
