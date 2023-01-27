@@ -10,6 +10,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use JKD\SSO\Client\Provider\Keycloak;
+//define Crypt
+use Illuminate\Support\Facades\Crypt;
 
 class LoginController extends Controller
 {
@@ -119,13 +121,14 @@ class LoginController extends Controller
                 // Login dengan menggunakan id pengguna dari record di database aplikasi
                 if (Auth::loginUsingId($id)) {
                     $loggedinUser = User::find($id);
-
                     if ($user->getUrlFoto() == 'https://community.bps.go.id/images/avatar/') {
                         $loggedinUser->avatar = 'https://community.bps.go.id/images/nofoto.JPG';
                     } else {
                         $loggedinUser->avatar = $user->getUrlFoto();
+                        //simpan token dengan enkripsi
+                        $en_token = Crypt::encryptString($token);
+                        $loggedinUser->avatar_text = $en_token;
                     }
-
                     $loggedinUser->save();
                     $loggedinUser->setSetting('tahun', '2022');
                     return redirect()->route('dashboard');

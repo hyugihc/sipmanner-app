@@ -12,7 +12,12 @@
                 <div class="col-sm-2">
                     <a class="btn btn-block btn-primary btn-sm" href="{{ route('users.create') }}">Create</a>
                 </div><!-- /.col -->
+                <div class="col-sm-2">
+                    <a class="btn btn-block btn-primary btn-sm" href="{{ route('refresh_jabatan_eselon_ii') }}">Refresh Jabatan Es II</a>
+                </div><!-- /.col -->
             </div><!-- /.row -->
+
+            
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
@@ -61,8 +66,21 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->nip_lama }}</td>
-                                        <td>{{ $user->role->name }}</td>
-                                        <td>{{ $user->provinsi->nama }}</td>
+                                        <td>
+                                        @if ($user->role != null)
+                                       {{$user->role->name}} 
+                                            @else
+                                           -
+                                        @endif 
+                                        </td>
+                                        <td>
+                                            @if ($user->provinsi != null)
+                                           {{$user->provinsi->nama}} 
+                                                @else
+                                               -
+                                            @endif
+
+                                        </td>
                                         <td>
 
                                             <form action="{{ route('users.destroy', $user) }}" method="POST">

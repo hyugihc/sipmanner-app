@@ -51,6 +51,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/is_change_leader/{nip_lama}', 'UserController@isChangeLeader')->name('is_cl');
     //cari user berdasarkan nip lama
     Route::get('/search_user_by_niplama/{nip_lama}', 'UserController@searchUserByNipLama')->name('search_user_by_niplama');
+   // refresh jabatan eselon II semua user
+    Route::get('/refresh_jabatan_eselon_ii', 'UserController@refreshJabatanEselonII')->name('refresh_jabatan_eselon_ii');
+
+   
+   
     //======================================DATA=====================================
 
     Route::resource('cans', CanController::class);
@@ -139,6 +144,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/notifyme', function () {
         \Illuminate\Support\Facades\Notification::send(\App\User::find(1), new \App\Notifications\ProgramSubmitted);
     })->name('notifyme');
+
+    ////test
+    Route::get('/test2',  'CanController@test')->name('test2');
+
+
 });
 
 

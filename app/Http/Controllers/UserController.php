@@ -13,6 +13,13 @@ use App\Http\Resources\UserResource;
 use Exception;
 use Symfony\Component\Process\Process;
 
+//define auth
+use Illuminate\Support\Facades\Auth;
+//define Crypt
+use Illuminate\Support\Facades\Crypt;
+//define Client
+use GuzzleHttp\Client;
+
 class UserController extends Controller
 {
 
@@ -124,6 +131,7 @@ class UserController extends Controller
     public function queryIndex($query)
     {
         $users = User::where('name', 'like', '%' . $query . '%')->orWhere('nip_lama', 'like', '%' . $query . '%')->orWhere('email', 'like', '%' . $query . '%')->paginate(10);
+        // kembalikan ke users.index dengan object users dan query
         return view('users.index', compact('users', 'query'));
     }
 
@@ -481,5 +489,60 @@ class UserController extends Controller
         $result = $json[0];
 
         dd($result);
+    }
+
+    //refresh jabatan eselon ii semua user refreshJabatanEselonII
+    public function refreshJabatanEselonII()
+    {
+        $user_login = Auth::user();
+        $token = Crypt::decryptString($user_login->avatar_text);      
+
+        $url = 'https://simpeg.bps.go.id/api/sipmanner';
+        $apiKey = 'bFpnSEhGejB2aGlHaFE3UWtEaUhpQT09';
+        $kategori = 'view_pegawai';
+        // dd($user->nip_lama);
+        //$nip = "340012030";
+        //$kdorg = "92000";
+        $kdesl = "2";
+
+        //ambil data dari url
+        $client = new Client();
+        $response = $client->request('GET', $url, [
+            'query' => [
+                'apiKey' => $apiKey . '.' . $token,
+                'kategori' => $kategori,
+                'kdesl' => $kdesl,
+            ]
+        ]);
+        $data = $response->getBody()->getContents();
+        $data = json_decode($data, true);
+        $data_pegawai = ($data['pegawai']);
+
+        //ambil data pegawai yang mempunyai role_id 2
+        $change_leaders = User::where('role_id', 2)->get();
+        //set role_id menjadi 6
+        foreach ($change_leaders as $change_leader) {
+            $change_leader->role_id = 6;
+            $change_leader->save();
+        }
+
+        //looping data pegawai
+        foreach ($data_pegawai as $pegawai) {
+            $user = User::where('nip_lama', $pegawai['niplama'])->first();
+            if ($user != null) {
+                //set as change leader
+                $user->setChangeLeader($pegawai['kdorg'], $pegawai['kdprop']);
+                $user->save();
+            }
+        }
+
+        //kembalikan ke halaman sebelumnya dengan pesan berhasil
+        return redirect()->back()->with('success', 'Berhasil refresh jabatan eselon II');
+    }
+
+
+    //method untuk mencari pegawai berdasarkan nama
+    public function searchByName($name)
+    {
     }
 }

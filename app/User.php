@@ -66,6 +66,15 @@ class User extends Authenticatable
         return $this->role->id == 2;
     }
 
+    //set as ChangeLeader
+    public function setChangeLeader($simpeg_kdorg, $simpeg_kdprop)
+    {
+        $this->role_id = 2;
+        //ubah satker sesuai kdorg dan kdprop yang ada di table provinsi
+        $this->provinsi_id = Provinsi::where('simpeg_kdorg', $simpeg_kdorg)->where('simpeg_kdprop', $simpeg_kdprop)->first()->id;
+        $this->save();
+    }
+
     public function isTopLeader()
     {
         return $this->role->id == 5;
