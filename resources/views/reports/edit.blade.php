@@ -174,7 +174,21 @@
                                                         <td colspan="5">{{ $pi->ukuran_keberhasilan }}
                                                         </td>
                                                     </tr>
-                                                    <tr @if ($pi->user_id != Auth::user()->id) style="display:none;" @endif>
+                                                    <tr >
+                                                        <th>Kendala</th>
+                                                        <td colspan="5"><input
+                                                                name="intervensiKhusus_kendala[{{ $pi->id }}]"
+                                                                class="form-control" type="text"
+                                                                value="{{ $pi->pivot->kendala }}"></td>
+                                                    </tr>
+                                                    <tr >
+                                                        <th>Solusi</th>
+                                                        <td colspan="5"><input
+                                                                name="intervensiKhusus_solusi[{{ $pi->id }}]"
+                                                                class="form-control" type="text"
+                                                                value="{{ $pi->pivot->solusi }}"></td>
+                                                    </tr>
+                                                    {{-- <tr @if ($pi->user_id != Auth::user()->id) style="display:none;" @endif>
                                                         <th>Kendala</th>
                                                         <td colspan="5"><input
                                                                 name="intervensiKhusus_kendala[{{ $pi->id }}]"
@@ -196,7 +210,7 @@
                                                     <tr @if ($pi->user_id == Auth::user()->id) style="display:none;" @endif>
                                                         <th>Solusi</th>
                                                         <td colspan="5">{{ $pi->pivot->solusi }}</td>
-                                                    </tr>
+                                                    </tr> --}}
 
                                                     @php
                                                         $i++;

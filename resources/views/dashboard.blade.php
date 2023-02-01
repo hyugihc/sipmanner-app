@@ -80,8 +80,7 @@
                             @if (Auth::user()->role_id != 1)
                                 <h3>{{ $data['piCount'] }}</h3>
                             @else
-                                <h3> <i
-                                    class="fas fa-arrow-circle-right"></i></h3>
+                                <h3> <i class="fas fa-arrow-circle-right"></i></h3>
                             @endif
 
                             <p>Progress Program</p>
@@ -152,17 +151,24 @@
                                                         @case(0)
                                                             <div class="progress-bar bg-primary" style="width: 0%"></div>
                                                         @break
+
                                                         @case(1)
                                                             <div class="progress-bar bg-warning" style="width: 50%"></div>
                                                         @break
+
                                                         @case(2)
                                                             <div class="progress-bar bg-success" style="width: 100%"></div>
                                                         @break
+
                                                         @case(3)
                                                             <div class="progress-bar-danger" style="width: 100%"></div>
                                                         @break
-                                                        @default
 
+                                                        @case(4)
+                                                            <div class="progress-bar bg-success" style="width: 100%"></div>
+                                                        @break
+
+                                                        @default
                                                     @endswitch
                                                 </div>
                                             </td>
@@ -171,17 +177,24 @@
                                                     @case(0)
                                                         <span class="badge bg-primary">Draft</span>
                                                     @break
+
                                                     @case(1)
                                                         <span class="badge bg-warning">Submit</span>
                                                     @break
+
                                                     @case(2)
                                                         <span class="badge bg-success">Approved</span>
                                                     @break
+
                                                     @case(3)
                                                         <span class="badge bg-danger">Rejected</span>
                                                     @break
-                                                    @default
 
+                                                    @case(4)
+                                                        <span class="badge bg-success">Uploaded</span>
+                                                    @break
+
+                                                    @default
                                                 @endswitch
                                             </td>
                                         </tr>
@@ -194,17 +207,24 @@
                                                         @case(0)
                                                             <div class="progress-bar bg-primary" style="width: 0%"></div>
                                                         @break
+
                                                         @case(1)
                                                             <div class="progress-bar bg-warning" style="width: 50%"></div>
                                                         @break
+
                                                         @case(2)
                                                             <div class="progress-bar bg-success" style="width: 100%"></div>
                                                         @break
+
                                                         @case(3)
                                                             <div class="progress-bar-danger" style="width: 100%"></div>
                                                         @break
-                                                        @default
 
+                                                        @case(4)
+                                                            <div class="progress-bar bg-success" style="width: 100%"></div>
+                                                        @break
+
+                                                        @default
                                                     @endswitch
                                                 </div>
                                             </td>
@@ -213,17 +233,24 @@
                                                     @case(0)
                                                         <span class="badge bg-primary">Draft</span>
                                                     @break
+
                                                     @case(1)
                                                         <span class="badge bg-warning">Submit</span>
                                                     @break
+
                                                     @case(2)
                                                         <span class="badge bg-success">Approved</span>
                                                     @break
+
                                                     @case(3)
                                                         <span class="badge bg-danger">Rejected</span>
                                                     @break
-                                                    @default
 
+                                                    @case(4)
+                                                        <span class="badge bg-success">Uploaded</span>
+                                                    @break
+
+                                                    @default
                                                 @endswitch
                                             </td>
                                         </tr>
@@ -262,7 +289,8 @@
                                                 <td>
                                                     <div class="progress progress-xs">
                                                         <div class="progress-bar bg-primary"
-                                                            style="width: {{ $pinMax->realisasi_pelaksanaan_kegiatan }}%"></div>
+                                                            style="width: {{ $pinMax->realisasi_pelaksanaan_kegiatan }}%">
+                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -308,12 +336,13 @@
                                                 <td>
                                                     <div class="progress progress-xs">
                                                         <div class="progress-bar bg-primary"
-                                                            style="width: {{ $pikMax->realisasi_pelaksanaan_kegiatan  }}%"></div>
+                                                            style="width: {{ $pikMax->realisasi_pelaksanaan_kegiatan }}%">
+                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <span
-                                                        class="badge bg-primary">{{ $pikMax->realisasi_pelaksanaan_kegiatan  }}%</span>
+                                                        class="badge bg-primary">{{ $pikMax->realisasi_pelaksanaan_kegiatan }}%</span>
                                                 </td>
                                             </tr>
                                             @php
@@ -351,15 +380,15 @@
                     ['Intervensi Khusus', 'status'],
 
                     @php
-                    
-                    echo "['Draft', " . $data['ikDraft'] . '],';
-                    
-                    echo "['Submit', " . $data['ikSubmit'] . '],';
-                    
-                    echo "['Disetujui', " . $data['ikApproved'] . '],';
-                    
-                    echo "['Ditolak', " . $data['ikRejected'] . '],';
-                    
+                        
+                        echo "['Draft', " . $data['ikDraft'] . '],';
+                        
+                        echo "['Submit', " . $data['ikSubmit'] . '],';
+                        
+                        echo "['Disetujui', " . $data['ikApproved'] . '],';
+                        
+                        echo "['Ditolak', " . $data['ikRejected'] . '],';
+                        
                     @endphp
                 ]);
 
