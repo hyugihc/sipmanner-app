@@ -113,11 +113,11 @@
                                     <label>Change Network</label>
                                     <button type="button" class="btn btn-default float-right" data-toggle="modal"
                                         data-target="#modal-default-name">
-                                        + Tambahkan Change Agent (Beta)
+                                        + Tambahkan Change Ambassador (Beta)
                                     </button>
                                     <button type="button" class="btn btn-default float-right" data-toggle="modal"
                                         data-target="#modal-default">
-                                        + Tambahkan Change Agent (nip)
+                                        + Tambahkan Change Ambassador (nip)
                                     </button>
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
@@ -166,7 +166,7 @@
                                                                 value='{{ old('ca_name')[$i] }}' hidden></td>
                                                         <td>{{ old('ca_email')[$i] }} <input name='ca_email[]'
                                                                 value='{{ old('ca_email')[$i] }}' hidden></td>
-                                                        <td>Change Agent<input hidden name='change_agents[]'
+                                                        <td>Change Ambassador<input hidden name='change_agents[]'
                                                                 value='{{ old('change_agents')[$i] }}'></td>
                                                         <td><button type='button' name='remove'
                                                                 id='{{ old('change_agents')[$i] }}'

@@ -49,7 +49,7 @@
                                     <dd>{{ $can->perihal_sk }}</dd>
                                     <dt>File SK</dt>
                                     <dd> <a href="{{ route('cans.download', $can) }}">Download File SK</a></dd>
-                                    <dt>Jumlah Change Agent Network <small><i>(Change leader, Change Champions, Change Agent)</i></small></dt>
+                                    <dt>Jumlah Change Agent Network <small><i>(Change leader, Change Champions, Change Ambassador)</i></small></dt>
                                     <dd>{{ $can->jumlah_can }}</dd>
                                     <dt>Change Leader</dt>
                                     @foreach ($can->changeLeaders as $user)
@@ -65,7 +65,7 @@
                                             $i++;
                                         @endphp
                                     @endforeach
-                                    <dt>Change Agents</dt>
+                                    <dt>Change Ambassador</dt>
                                     @php
                                         $i = 1;
                                     @endphp

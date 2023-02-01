@@ -112,7 +112,7 @@
                                     <label for="exampleInputEmail1">Change Network</label>
                                     <button type="button" class="btn btn-default float-right" data-toggle="modal"
                                         data-target="#modal-default">
-                                        + Tambahkan Change Agent
+                                        + Tambahkan Change Ambassador
                                     </button>
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
@@ -161,7 +161,7 @@
                                                                 value='{{ old('ca_name')[$i] }}' hidden></td>
                                                         <td>{{ old('ca_email')[$i] }} <input name='ca_email[]'
                                                                 value='{{ old('ca_email')[$i] }}' hidden></td>
-                                                        <td>Change Agent<input hidden name='change_agents[]'
+                                                        <td>Change Ambassador<input hidden name='change_agents[]'
                                                                 value='{{ old('change_agents')[$i] }}'></td>
                                                         <td><button type='button' name='remove'
                                                                 id='{{ old('change_agents')[$i] }}'
@@ -181,7 +181,7 @@
                                                                 value='{{ $ca->name }}' hidden></td>
                                                         <td>{{ $ca->email }}<input name='ca_email[]'
                                                                 value='{{ $ca->email }}' hidden></td>
-                                                        <td>Change Agent<input hidden name="change_agents[]"
+                                                        <td>Change Ambassador<input hidden name="change_agents[]"
                                                                 value="{{ $ca->id }}"></td>
                                                         <td><button type='button' name='remove' id='{{ $ca->id }}'
                                                                 class='btn btn-danger btn_remove'>delete</button></td>

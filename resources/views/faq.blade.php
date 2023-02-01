@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -50,16 +49,27 @@
                     <div id="collapseTwo" class="collapse" data-parent="#accordion">
                         <div class="card-body">
                             Saat ini fitur-fitur yang tersedia yaitu:
-                            a. Data: Berisi database Change Agent Network BPS seluruh Indonesia
-                            b. Program: Berisi rencana, progres, dan laporan kegiatan manajemen perubahan
-                            c. Dashboard: Berisi chart yang menggambarkan progres pelaksanaan kegiatan manajemen perubahan
-                            sebagai monitoring dan evaluasi kegiatan.
-                            d. Sharing: Berisi berbagai informasi berupa panduan aplikasi, panduan kegiatan dan panduan lain
-                            terkait manajemen perubahan. Selain itu fitur ini merupakan sarana berbagi informasi terkait
-                            manajemen perubahan baik dalam skala nasional maupun pada unit kerja.
-                            e. FAQ: Berisi list pertanyaan yang sering diajukan beserta jawabannya terkait penggunaan
-                            aplikasi, kegiatan manajemen perubahan maupun pertanyaan lainnya.
-
+                            <ul>
+                                <li>
+                                    Data: Berisi database Change Agent Network BPS seluruh Indonesia</li>
+                                <li>
+                                    Program: Berisi rencana, progres, dan laporan kegiatan manajemen perubahan</li>
+                                </li>
+                                <li>
+                                    Dashboard: Berisi chart yang menggambarkan progres pelaksanaan kegiatan manajemen
+                                    perubahan sebagai monitoring dan evaluasi kegiatan.</li>
+                                </li>
+                                <li>
+                                    Sharing: Berisi berbagai informasi berupa panduan aplikasi, panduan kegiatan dan
+                                    panduan lain terkait manajemen perubahan. Selain itu fitur ini merupakan sarana
+                                    berbagi informasi terkait manajemen perubahan baik dalam skala nasional maupun pada
+                                    unit kerja.</li>
+                                </li>
+                                <li>
+                                    FAQ: Berisi list pertanyaan yang sering diajukan beserta jawabannya terkait
+                                    penggunaan aplikasi, kegiatan manajemen perubahan maupun pertanyaan lainnya.</li>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -73,8 +83,7 @@
                     </a>
                     <div id="collapseThree" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            SIPMANNER dapat diakses oleh Change Agent Network (Top Leader, Change Leader, Change Champion,
-                            Change Agent), Sekretariat RB, serta pihak lain yang berkepentingan dalam kegiatan manajemen
+                            SIPMANNER dapat diakses oleh Change Agent Network (Top Leader, Change Leader, Change Champion), Sekretariat RB, serta pihak lain yang berkepentingan dalam kegiatan manajemen
                             perubahan.
                         </div>
                     </div>

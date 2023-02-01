@@ -114,7 +114,7 @@
                           "</td>" +
                           "<td>" + email + "<input hidden name='ca_email[]' value = '" + email + "'  >" +
                           "</td>" +
-                          "<td> Change Agents <input hidden name = 'change_agents[]' value = '" +
+                          "<td> Change Ambassador <input hidden name = 'change_agents[]' value = '" +
                           id + "'> </td>" +
                           "<td>" + "<button type='button' name='remove' id='" + id +
                           "' class='btn btn-danger btn_remove'>delete</button>" + "</td>" +
