@@ -2,27 +2,35 @@
 
 namespace App\Notifications;
 
+use App\IntervensiNasionalProvinsi;
+use App\ProgressIntervensiNasional;
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-//define report
-use App\Can;
 
-class CanSubmittedToCL extends Notification
+
+
+
+class ProgressInNasSubmittedToCL extends Notification
 {
     use Queueable;
-    private $can;
+    private $intervensi;
+    private $cc;
+    private $progressIntervensiNasional;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Can $can)
+    public function __construct(IntervensiNasionalProvinsi $intervensiNasionalProvinsi, ProgressIntervensiNasional $progressIntervensiNasional, User $cc)
     {
-        $this->can = $can;
         //
+        $this->intervensi = $intervensiNasionalProvinsi;
+        $this->cc = $cc;
+        $this->progressIntervensiNasional = $progressIntervensiNasional;
     }
 
     /**
@@ -46,10 +54,10 @@ class CanSubmittedToCL extends Notification
     {
         //construct mail message
         $mailMessage = (new MailMessage)
-            ->subject('Data Change Agent Network Perlu di Review')
+            ->subject('Progres Rencana Aksi ' . $this->intervensi->nama . ' perlu di review')
             ->greeting('Yth, ' . $notifiable->name)
-            ->line('Data Change Agent Network telah diajukan oleh Change Champion anda dan perlu approval anda.')
-            ->action('Review Data', route('cans.show', $this->can->id))
+            ->line('Progres Rencana Aksi ' . $this->intervensi->nama . ' telah diajukan oleh ' . $this->cc->name . ' dan perlu approval anda.')
+            ->action('Review Progres', route('intervensi-nasionals.progress-intervensi-nasionals.show', [$this->intervensi->intervensiNasional->id,$this->progressIntervensiNasional->id]))
             ->line('Terima kasih atas kerjasamanya.');
         //customisasi regards
         $mailMessage->salutation('Email ini digenerate otomatis oleh aplikasi SIPMANNER, tidak perlu dibalas.');

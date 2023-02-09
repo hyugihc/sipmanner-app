@@ -10,6 +10,10 @@ use App\IntervensiNasionalProvinsi;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+//define user
+use App\User;
+//define ProgressInNaSubmittedToCL
+use App\Notifications\ProgressInNasSubmittedToCL;
 
 class ProgressIntervensiNasionalController extends Controller
 {
@@ -119,9 +123,28 @@ class ProgressIntervensiNasionalController extends Controller
         }
         $progressIntervensiNasional->save();
 
-        $message = ($progressIntervensiNasional->status == 0) ? 'Progress berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
-        return redirect()->to(config('app.url').'/progress')
-            ->with('success', $message);
+        if ($progressIntervensiNasional->status == 1) {
+            $message = 'Progress berhasil disubmit ke Change Leader';
+            //notif ke change leader
+
+            try {
+                $changeLeader = User::where('role_id', 2)->where('provinsi_id', $intervensiNasionalProvinsi->provinsi_id)->first();
+                $cc = Auth::user();
+                $changeLeader->notify(new ProgressInNasSubmittedToCL($intervensiNasionalProvinsi, $progressIntervensiNasional, $cc));
+                $info = 'Email notifikasi telah dikirim ke Change Leader';
+                return redirect()->to(config('app.url') . '/progress')
+                    ->with('success', $message)->with('info', $info);
+            } catch (\Throwable $th) {
+                Log::error($th->getMessage());
+                $warning = 'Email notifikasi gagal dikirim ke Change Leader';
+                return redirect()->to(config('app.url') . '/progress')
+                    ->with('success', $message)->with('warning', $warning);
+            }
+        } elseif ($progressIntervensiNasional->status == 0) {
+            $message = 'Progress berhasil disimpan menjadi draft';
+            return redirect()->to(config('app.url') . '/progress')
+                ->with('success', $message);
+        }
     }
 
     /**
@@ -223,9 +246,28 @@ class ProgressIntervensiNasionalController extends Controller
 
         $progressIntervensiNasional->save();
 
-        $message = ($progressIntervensiNasional->status == 0) ? 'Progress berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
-        return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
-            ->with('success', $message);
+        if ($progressIntervensiNasional->status == 1) {
+            $message = 'Progress berhasil disubmit ke Change Leader';
+            //notif ke change leader
+
+            try {
+                $changeLeader = User::where('role_id', 2)->where('provinsi_id', $intervensiNasionalProvinsi->provinsi_id)->first();
+                $cc = Auth::user();
+                $changeLeader->notify(new ProgressInNasSubmittedToCL($intervensiNasionalProvinsi, $progressIntervensiNasional, $cc));
+                $info = 'Email notifikasi telah dikirim ke Change Leader';
+                return redirect()->to(config('app.url') . '/progress')
+                    ->with('success', $message)->with('info', $info);
+            } catch (\Throwable $th) {
+                Log::error($th->getMessage());
+                $warning = 'Email notifikasi gagal dikirim ke Change Leader';
+                return redirect()->to(config('app.url') . '/progress')
+                    ->with('success', $message)->with('warning', $warning);
+            }
+        } elseif ($progressIntervensiNasional->status == 0) {
+            $message = 'Progress berhasil disimpan menjadi draft';
+            return redirect()->to(config('app.url') . '/progress')
+                ->with('success', $message);
+        }
     }
 
     //get Intervensi Nasional Provinsi dari user

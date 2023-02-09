@@ -111,10 +111,10 @@
 
                                 <div class="form-group">
                                     <label>Change Network</label>
-                                    <button type="button" class="btn btn-default float-right" data-toggle="modal"
+                                    {{-- <button type="button" class="btn btn-default float-right" data-toggle="modal"
                                         data-target="#modal-default-name">
                                         + Tambahkan Change Ambassador (Beta)
-                                    </button>
+                                    </button> --}}
                                     <button type="button" class="btn btn-default float-right" data-toggle="modal"
                                         data-target="#modal-default">
                                         + Tambahkan Change Ambassador (nip)

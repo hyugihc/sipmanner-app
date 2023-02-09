@@ -2,28 +2,30 @@
 
 namespace App\Notifications;
 
+use App\Report;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-//define report
-use App\Can;
 
-class CanSubmittedToCL extends Notification
+class ReportSubmittedToCL extends Notification
 {
     use Queueable;
-    private $can;
+    //define intervensiKhusus variable
+    private $report;
+
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Can $can)
+    public function __construct(Report $report)
     {
-        $this->can = $can;
-        //
+        $this->report = $report;
     }
+
+
 
     /**
      * Get the notification's delivery channels.
@@ -44,18 +46,25 @@ class CanSubmittedToCL extends Notification
      */
     public function toMail($notifiable)
     {
+
         //construct mail message
         $mailMessage = (new MailMessage)
-            ->subject('Data Change Agent Network Perlu di Review')
+            ->subject('Laporan Manajemen Perubahan Semester ' . $this->report->semester . ' perlu di review')
             ->greeting('Yth, ' . $notifiable->name)
-            ->line('Data Change Agent Network telah diajukan oleh Change Champion anda dan perlu approval anda.')
-            ->action('Review Data', route('cans.show', $this->can->id))
+            ->line('Laporan Manajemen Perubahan Semester ' . $this->report->semester  . ' telah diajukan oleh' . $this->report->user->name . ' dan perlu approval anda.')
+            ->action('Review Laporan', route('reports.show', $this->report->id))
             ->line('Terima kasih atas kerjasamanya.');
         //customisasi regards
         $mailMessage->salutation('Email ini digenerate otomatis oleh aplikasi SIPMANNER, tidak perlu dibalas.');
 
         //return mail message
         return $mailMessage;
+
+
+        // return (new MailMessage)
+        //             ->line('The introduction to the notification.')
+        //             ->action('Notification Action', url('/'))
+        //             ->line('Thank you for using our application!');
     }
 
     /**

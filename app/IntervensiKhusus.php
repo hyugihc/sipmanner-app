@@ -51,6 +51,14 @@ class IntervensiKhusus extends Model
         return $this->belongsTo(User::class);
     }
 
+    //getChangeLeader
+    public function getChangeLeader()
+    {
+        //ambli user yang punya role_id 2 dan mempunyai provinsi_id yang sama dengan provinsi_id dari user
+        $user = User::where('role_id', 2)->where('provinsi_id', $this->user->provinsi_id)->first();
+        return $user;
+    }
+
     public function getStatus()
     {
         switch ($this->status) {

@@ -59,7 +59,14 @@ class AuthController extends Controller
                 $user->save();
             }
 
-            return redirect()->route('dashboard');
+            //kembalikan  ke link awal
+            if (Session::has('url.intended')) {
+                return redirect()->intended();
+            } else {
+                return redirect()->route('dashboard');
+            }
+
+            //return redirect()->route('dashboard');
         } else { // false
 
             //Login Fail

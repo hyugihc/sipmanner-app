@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use JKD\SSO\Client\Provider\Keycloak;
 //define Crypt
 use Illuminate\Support\Facades\Crypt;
+//define session
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -131,7 +133,11 @@ class LoginController extends Controller
                     }
                     $loggedinUser->save();
                     $loggedinUser->setSetting('tahun', '2022');
-                    return redirect()->route('dashboard');
+                    if (Session::has('url.intended')) {
+                        return redirect()->intended();
+                    } else {
+                        return redirect()->route('dashboard');
+                    }
                 } else {
                     return redirect('/');
                 }

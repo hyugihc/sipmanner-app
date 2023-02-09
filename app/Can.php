@@ -42,6 +42,7 @@ class Can extends Model
         return $this->belongsToMany(User::class)->wherePivot('role_id', 4);
     }
 
+
     public function provinsi()
     {
         return $this->belongsTo(Provinsi::class);
@@ -87,7 +88,7 @@ class Can extends Model
         if ($this->isCanPusat()) {
             return 'sk_' . $this->tahun_sk . '_' . "pusat" . '_' . $this->id . '.pdf';
         } else {
-            return 'sk_' . $this->tahun_sk . '_' . $this->provinsi->kode_provinsi . '_' .$this->provinsi->nama.'_'. $this->id . '.pdf';
+            return 'sk_' . $this->tahun_sk . '_' . $this->provinsi->kode_provinsi . '_' . $this->provinsi->nama . '_' . $this->id . '.pdf';
         }
     }
 

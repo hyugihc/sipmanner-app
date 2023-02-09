@@ -7,8 +7,11 @@ use App\ProgressIntervensiKhusus;
 use App\IntervensiKhusus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Support\Facades\Storage;
+//use notif progressInKusSubmittedToCL
+use App\Notifications\ProgressInKusSubmittedToCL;
+// Log
+use Illuminate\Support\Facades\Log;
 
 class ProgressIntervensiKhususController extends Controller
 {
@@ -113,9 +116,26 @@ class ProgressIntervensiKhususController extends Controller
         }
         $progressIntervensiKhusus->save();
 
-        $message = ($progressIntervensiKhusus->status == 0) ? 'Progress berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
-        return redirect()->to(config('app.url').'/progress')
-            ->with('success', $message);
+        if ($progressIntervensiKhusus->status == 1) {
+            $message = 'Progress berhasil disubmit ke Change Leader';
+            //notify change leader
+            try {
+                $changeLeader = $intervensiKhusus->getChangeLeader();
+                $changeLeader->notify(new ProgressInKusSubmittedToCL($intervensiKhusus, $progressIntervensiKhusus));
+                $info = 'email notifikasi telah dikirim ke Change Leader';
+                return redirect()->to(config('app.url') . '/progress')
+                    ->with('success', $message)->with('info', $info);
+            } catch (\Exception $e) {
+                Log::error($e->getMessage());
+                $warning = 'email notifikasi gagal dikirim ke Change Leader';
+                return redirect()->to(config('app.url') . '/progress')
+                    ->with('success', $message)->with('warning', $warning);
+            }
+        } elseif ($progressIntervensiKhusus->status == 0) {
+            $message = 'Progress berhasil disimpan menjadi draft';
+            return redirect()->to(config('app.url') . '/progress')
+                ->with('success', $message);
+        }
     }
 
     // ambil progress intervensi khusus terakhir
@@ -215,9 +235,27 @@ class ProgressIntervensiKhususController extends Controller
         }
         $progressIntervensiKhusus->save();
 
-        $message = ($progressIntervensiKhusus->status == 0) ? 'Progress berhasil disimpan menjadi draft' : 'Progress berhasil disubmit ke Change Leader';
-        return redirect()->route('intervensi-khususes.progress-intervensi-khususes.index', $intervensiKhusus)
-            ->with('success', $message);
+        if ($progressIntervensiKhusus->status == 1) {
+            $message = 'Progress berhasil disubmit ke Change Leader';
+            //notify change leader
+
+            try {
+                $changeLeader = $intervensiKhusus->getChangeLeader();
+                $changeLeader->notify(new ProgressInKusSubmittedToCL($intervensiKhusus, $progressIntervensiKhusus));
+                $info = 'email notifikasi telah dikirim ke Change Leader';
+                return redirect()->to(config('app.url') . '/progress')
+                    ->with('success', $message)->with('info', $info);
+            } catch (\Exception $e) {
+                Log::error($e->getMessage());
+                $warning = 'email notifikasi gagal dikirim ke Change Leader';
+                return redirect()->to(config('app.url') . '/progress')
+                    ->with('success', $message)->with('warning', $warning);
+            }
+        } elseif ($progressIntervensiKhusus->status == 0) {
+            $message = 'Progress berhasil disimpan menjadi draft';
+            return redirect()->to(config('app.url') . '/progress')
+                ->with('success', $message);
+        }
     }
 
     /**

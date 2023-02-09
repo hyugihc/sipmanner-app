@@ -10,16 +10,18 @@ use Illuminate\Notifications\Notification;
 class IntervensiNasionalProvinsiSubmitted extends Notification
 {
     use Queueable;
-    public $intervensiNasionalProvinsi;
+    private $intervensiNasionalProvinsi;
+    private $cc;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($intervensiNasionalProvinsi)
+    public function __construct($intervensiNasionalProvinsi, $cc)
     {
         //
+        $this->cc = $cc;
         $this->intervensiNasionalProvinsi = $intervensiNasionalProvinsi;
     }
 
@@ -42,10 +44,18 @@ class IntervensiNasionalProvinsiSubmitted extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-            ->line('Ada Program Intervensi Nasional yang disesuaikan oleh Change Champion anda dan perlu persetujuan anda')
-            ->action('Lihat Program yang diajukan', url('/programs/intervensi-nasionals-provinsi' . '/' . $this->intervensiNasionalProvinsi->id))
-            ->line('Terima kasih telah menggunakan Sipmanner');
+        //construct mail message
+        $mailMessage = (new MailMessage)
+            ->subject('Program Intervensi Nasional Perlu di Review')
+            ->greeting('Yth, ' . $notifiable->name)
+            ->line('Program ' . $this->intervensiNasionalProvinsi->intervensiNasional->name . ' telah diajukan oleh ' . $this->cc->name . ' dan perlu approval anda.')
+            ->action('Review Program', route('inp.show', $this->intervensiNasionalProvinsi->id))
+            ->line('Terima kasih atas kerjasamanya.');
+        //customisasi regards
+        $mailMessage->salutation('Email ini digenerate otomatis oleh aplikasi SIPMANNER, tidak perlu dibalas.');
+
+        //return mail message
+        return $mailMessage;
     }
 
     /**

@@ -53,7 +53,8 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Program Intervensi Nasional Tahun {{ Auth::user()->getSetting('tahun') }}</h3>
+                            <h3 class="card-title">Program Intervensi Nasional Tahun {{ Auth::user()->getSetting('tahun') }}
+                            </h3>
 
                             {{-- <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -147,7 +148,8 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Program Intervensi Nasional Tahun {{ Auth::user()->getSetting('tahun') }}</h3>
+                            <h3 class="card-title">Program Intervensi Nasional Tahun
+                                {{ Auth::user()->getSetting('tahun') }}</h3>
 
                             {{-- <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
@@ -176,7 +178,6 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($intervensiNasionalProvinsis as $program_intervensi)
-
                                         <tr>
                                             <td>{{ $program_intervensi->intervensiNasional->nama }}
                                             </td>
@@ -214,7 +215,6 @@
                                             </td>
 
                                         </tr>
-
                                     @endforeach
 
                                 </tbody>
@@ -311,8 +311,7 @@
                                         </td>
                                         <td>
 
-                                            <form
-                                                action="{{ route('intervensi-khususes.destroy', $program_intervensi) }}"
+                                            <form action="{{ route('intervensi-khususes.destroy', $program_intervensi) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
@@ -354,12 +353,25 @@
 
         <script>
             @if (Session::has('success'))
-                toastr.options =
-                {
-                "closeButton" : true,
-                "progressBar" : false
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": false
                 }
                 toastr.success("{{ Session::get('success') }}");
+            @endif
+            @if (Session::has('info'))
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": false
+                }
+                toastr.info("{{ Session::get('info') }}");
+            @endif
+            @if (Session::has('warning'))
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": false
+                }
+                toastr.warning("{{ Session::get('warning') }}");
             @endif
         </script>
 

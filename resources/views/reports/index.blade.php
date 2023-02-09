@@ -63,7 +63,7 @@
                                     @if (Auth::user()->isAdmin())
                                         <th>Satker</th>
                                     @endif
-                         
+
                                     <th>Semester</th>
                                     <th>Tanggal Modified</th>
                                     <th>Status</th>
@@ -77,10 +77,10 @@
                                         @if (Auth::user()->isAdmin())
                                             <td>{{ $report->provinsi->nama }}</td>
                                         @endif
-                                   
+
                                         <td>{{ $report->tahun }}-{{ $report->semester }}</td>
                                         <td>{{ date('d-M-Y', strtotime($report->updated_at)) }}</td>
-                                     
+
                                         <td>{{ $report->getStatus() }}
                                             @if ($report->status == 1)
                                                 <br> <span class="badge badge-info right">Perlu Tindakan</span>
@@ -279,6 +279,14 @@
                     "progressBar": false
                 }
                 toastr.warning("{{ Session::get('warning') }}");
+            @endif
+
+            @if (Session::has('info'))
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": false
+                }
+                toastr.info("{{ Session::get('info') }}");
             @endif
         </script>
 

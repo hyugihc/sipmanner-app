@@ -8,6 +8,11 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+//define Notification and CanSumbittedToCL
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\CanSubmittedToCL;
+//define log
+use Illuminate\Support\Facades\Log;
 
 class CanController extends Controller
 {
@@ -101,9 +106,7 @@ class CanController extends Controller
 
         //create can
         $can = Can::create($request->all());
-
         $year = $user->getSetting('tahun');
-
         $can->tahun_sk = $year;
         $can->user_id = $user->id;
         if ($user->isAdmin()) {
@@ -111,9 +114,7 @@ class CanController extends Controller
         } else {
             $can->provinsi_id = $user->provinsi_id;
         }
-        $can->status_sk  = ($request->has('draft')) ? 0 : 1;
         $can->save();
-
 
         if ($request->has('file_sk')) {
             $can->file_sk =   $request->file('file_sk')->storeAs('cans', $can->getNameFileSK());
@@ -122,13 +123,33 @@ class CanController extends Controller
             $can->attachChangeAgents($request->change_agents);
         $can->attachChangeChampions($changeChampions);
         $can->attachChangeLeaders($changeLeaders);
-        $can->save();
 
-
-
-        $message = ($can->status_sk == 0) ? 'Data berhasil disimpan menjadi draft' : 'Data berhasil disubmit ke Change Leader';
-        return redirect()->to(config('app.url') . '/cans')
-            ->with('success', $message);
+        //jika submit
+        if ($request->has('submit')) {
+            $can->status_sk = 1;
+            $can->save();
+            try {
+                $changeLeader = User::where('role_id', 2)->where('provinsi_id', $user->provinsi_id)->first();
+                Notification::send($changeLeader, new CanSubmittedToCL($can));
+                $message = 'Data berhasil disubmit ke Change Leader';
+                $info = 'Email notifikasi telah dikirim ke Change Leader';
+                return redirect()->to(config('app.url') . '/cans')
+                    ->with('success', $message)->with('info', $info);
+            } catch (\Exception $e) {
+                //buat log
+                Log::error($e->getMessage());
+                $message = 'Data berhasil disubmit ke Change Leader';
+                $info = 'Email notifikasi gagal dikirim ke Change Leader';
+                return redirect()->to(config('app.url') . '/cans')
+                    ->with('success', $message)->with('info', $info);
+            }
+        } else {
+            $can->status_sk = 0;
+            $can->save();
+            $message = 'Data berhasil disimpan menjadi draft';
+            return redirect()->to(config('app.url') . '/cans')
+                ->with('success', $message);
+        }
     }
 
 
@@ -176,7 +197,6 @@ class CanController extends Controller
         }
 
         $can->update($request->all());
-        $can->status_sk  = ($request->has('draft')) ? 0 : 1;
 
         if ($request->has('file_sk')) {
             $request->validate([
@@ -191,9 +211,32 @@ class CanController extends Controller
             $can->syncChangeAgents($request->change_agents);
         $can->save();
 
-        $message = ($can->status_sk == 0) ? 'Data berhasil disimpan menjadi draft' : 'Data berhasil disubmit ke Change Leader';
-        return redirect()->route('cans.index')
-            ->with('success', $message);
+        if ($request->has('submit')) {
+            $can->status_sk = 1;
+            $can->save();
+            try {
+                $user = Auth::user();
+                $changeLeader = User::where('role_id', 2)->where('provinsi_id', $user->provinsi_id)->first();
+                Notification::send($changeLeader, new CanSubmittedToCL($can));
+                $message = 'Data berhasil disubmit ke Change Leader';
+                $info = 'Email notifikasi telah dikirim ke Change Leader';
+                return redirect()->to(config('app.url') . '/cans')
+                    ->with('success', $message)->with('info', $info);
+            } catch (\Exception $e) {
+                //buat log
+                Log::error($e->getMessage());
+                $message = 'Data berhasil disubmit ke Change Leader';
+                $warning = 'Email notifikasi gagal dikirim ke Change Leader';
+                return redirect()->to(config('app.url') . '/cans')
+                    ->with('success', $message)->with('warning', $warning);
+            }
+        } else {
+            $can->status_sk = 0;
+            $can->save();
+            $message = 'Data berhasil disimpan menjadi draft';
+            return redirect()->to(config('app.url') . '/cans')
+                ->with('success', $message);
+        }
     }
 
 

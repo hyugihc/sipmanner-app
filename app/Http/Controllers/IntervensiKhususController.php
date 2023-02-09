@@ -7,7 +7,12 @@ use App\IntervensiKhusus;
 use Illuminate\Http\Request;
 use App\Pia;
 use App\Provinsi;
+use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use PhpParser\Node\Stmt\TryCatch;
+//define log
+use Illuminate\Support\Facades\Log;
 
 class IntervensiKhususController extends Controller
 {
@@ -61,12 +66,26 @@ class IntervensiKhususController extends Controller
         $intervensi->provinsi_id = $request->user()->provinsi_id;
         $intervensi->tahun = $year;
         $intervensi->user_id = Auth::user()->id;
-        $intervensi->status  = ($request->has('draft')) ? 0 : 1;
-        $intervensi->save();
-
-        $message = ($intervensi->status == 0) ? 'Program Intervensi Khusus Berhasil disimpan  menjadi Draft' : 'Program Intervensi Khusus berhasil di submit ke Change Leader';
-        return redirect()->to(config('app.url').'/programs')
-            ->with('success', $message);
+        if ($request->has('draft')) {
+            $intervensi->status = 0;
+            $intervensi->save();
+            $message =  'Program Intervensi Khusus Berhasil disimpan  menjadi Draft';
+            return redirect()->to(config('app.url') . '/programs')
+                ->with('success', $message);
+        } else {
+            $intervensi->status = 1;
+            $intervensi->save();
+            //ambil change leader dari provinsi yang sama
+            $changeLeader = User::where('role_id', 2)->where('provinsi_id', $intervensi->provinsi_id)->first();
+            //kirim notifikasi email ke change leader
+            try {
+                Notification::send($changeLeader, new \App\Notifications\IntervensiKhususSubmittedToCL($intervensi));
+                return  redirect()->to(config('app.url') . '/programs')->with('success', 'Program Intervensi Khusus berhasil di submit ke Change Leader')->with('info', 'email notifikasi telah dikirim ke Change Leader');
+            } catch (\Throwable $th) {
+                //throw $th;
+                return  redirect()->to(config('app.url') . '/programs')->with('success', 'Program Intervensi Khusus berhasil di submit ke Change Leader')->with('warning', 'email notifikasi gagal dikirim ke Change Leader');
+            }
+        }
     }
 
     /**
@@ -103,15 +122,32 @@ class IntervensiKhususController extends Controller
     public function update(StoreIntervensiKhususRequest $request, IntervensiKhusus $intervensiKhusus)
     {
         //
-
         $intervensiKhusus->update($request->all());
-        $intervensiKhusus->status  = ($request->has('draft')) ? 0 : 1;
-        $intervensiKhusus->save();
 
-        $message = ($intervensiKhusus->status == 0) ?'Program Intervensi Khusus Berhasil disimpan  menjadi Draft' : 'Program Intervensi Khusus berhasil di submit ke Change Leader';
-        return redirect()->route('programs.index')
-            ->with('success', $message);
+        if ($request->has('draft')) {
+            $intervensiKhusus->status = 0;
+            $intervensiKhusus->save();
+            $message =  'Program Intervensi Khusus Berhasil disimpan  menjadi Draft';
+            return  redirect()->to(config('app.url') . '/programs')
+                ->with('success', $message);
+        } else {
+            //submitToCL dengan parameter intervensi khusus
+            $intervensiKhusus->status = 1;
+            $intervensiKhusus->save();
+            //ambil change leader dari provinsi yang sama
+            $changeLeader = User::where('role_id', 2)->where('provinsi_id', $intervensiKhusus->provinsi_id)->first();
+            //kirim notifikasi email ke change leader
+            try {
+                Notification::send($changeLeader, new \App\Notifications\IntervensiKhususSubmittedToCL($intervensiKhusus));
+                return  redirect()->to(config('app.url') . '/programs')->with('success', 'Program Intervensi Khusus berhasil di submit ke Change Leader')->with('info', 'email notifikasi telah dikirim ke Change Leader');
+            } catch (\Throwable $th) {
+                //catatkan error handling tentang email di file log menggunakan monolog
+                Log::error("Email gagal dikirim ke: " . $changeLeader->name . " dari " . Auth::user()->name . " " . $th->getMessage());
+                return  redirect()->to(config('app.url') . '/programs')->with('success', 'Program Intervensi Khusus berhasil di submit ke Change Leader')->with('warning', 'email notifikasi gagal dikirim ke Change Leader');
+            }
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -134,7 +170,7 @@ class IntervensiKhususController extends Controller
         $intervensiKhusus->alasan = $request->alasan;
         $intervensiKhusus->save();
 
-        $message = ($intervensiKhusus->status == 2) ?'Program Intervensi Khusus Berhasil disetujui' : 'Program Intervensi Khusus berhasil untuk tidak disetujui';
+        $message = ($intervensiKhusus->status == 2) ? 'Program Intervensi Khusus Berhasil disetujui' : 'Program Intervensi Khusus berhasil untuk tidak disetujui';
 
         return redirect()->route('programs.index')
             ->with('success', $message);

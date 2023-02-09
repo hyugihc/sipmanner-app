@@ -11,7 +11,15 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Stmt\TryCatch;
 use Throwable;
+//define Notification
+use Illuminate\Support\Facades\Notification;
+//define ReportSubmittedToCL
+use App\Notifications\ReportSubmittedToCL;
+//define log
+use Illuminate\Support\Facades\Log;
+
 
 class ReportController extends Controller
 {
@@ -149,19 +157,15 @@ class ReportController extends Controller
     public function update(StoreReportRequest $request, Report $report)
     {
         //
-
         $user = Auth::user();
         $report->update($request->all());
-
         //update last modified
         $report->user_id = $user->id;
-
         //simpan file
         if ($request->has("lampiran")) {
             $report->lampiran != null ? Storage::delete($report->lampiran) : true;
             $report->lampiran = $request->file('lampiran')->storeAs('lampiran-laporan', $report->getNamaFileLampiran());
         }
-
         //isi kendala dan solusi masng2 program
         foreach ($report->intervensiNasionalProvinsis as $inp) {
             $report->intervensiNasionalProvinsis()->detach($inp);
@@ -171,21 +175,23 @@ class ReportController extends Controller
             $report->intervensiKhususes()->detach($ik->id);
             $report->intervensiKhususes()->attach($ik->id, ['kendala' => $request->intervensiKhusus_kendala[$ik->id], 'solusi' => $request->intervensiKhusus_solusi[$ik->id]]);
         }
-
-
-
         //perbarui persetujuan jika di cek maupun di uncek
-        if ($request->changeChampions[$user->id] != null) {
-            //jika di cek
-            $report->changeChampions()->syncWithoutDetaching([$user->id => ['status' => 2]]);
-        } else {
-            //jika di uncek
-            $report->changeChampions()->syncWithoutDetaching([$user->id => ['status' => 0]]);
+        //cek apakah ada centang
+        if ($request->changeChampions != null) {
+            if ($request->changeChampions[$user->id] != null) {
+                //jika di cek
+                $report->changeChampions()->syncWithoutDetaching([$user->id => ['status' => 2]]);
+            } else {
+                //jika di uncek
+                $report->changeChampions()->syncWithoutDetaching([$user->id => ['status' => 0]]);
+            }
         }
+        //update CC yang terbaru
+        $changeChampions = User::where('role_id', 3)->where('provinsi_id', $user->provinsi_id)->get();
+        $report->changeChampions()->sync($changeChampions);
 
-
-        //kalau sudah submit kendala dan solusi tidak boleh kosong
         if ($request->has("submit")) {
+            //kalau sudah submit kendala dan solusi tidak boleh kosong
             foreach ($report->intervensiNasionalProvinsis as $inp) {
                 if ($request->intervensiNasional_kendala[$inp->id] == null or $request->intervensiNasional_solusi[$inp->id] == null) {
                     $report->status = 0;
@@ -202,14 +208,8 @@ class ReportController extends Controller
                         ->with('warning', "Laporan belum berhasi disubmit, masih ada kendala atau solusi program belum terisi");
                 }
             }
-        }
 
-        //pastikan sudah semua tercentang jika ingin submit
-        //update CC yang terbaru
-        $changeChampions = User::where('role_id', 3)->where('provinsi_id', $user->provinsi_id)->get();
-        $report->changeChampions()->sync($changeChampions);
-        //pastikan semua cc terbaru tercentang
-        if ($request->has("submit")) {
+            //pastikan semua cc terbaru tercentang
             foreach ($changeChampions as $changeChampion) {
                 if ($report->changeChampions()->where('id', $changeChampion->id)->first()->pivot->status != 2) {
                     $report->status = 0;
@@ -219,14 +219,29 @@ class ReportController extends Controller
                 }
             }
             $report->status = 1;
+            $report->save();
+            //kirim email ke change leader
+           
+            try {
+                $changeLeader = User::where('role_id', 2)->where('provinsi_id', $user->provinsi_id)->first();
+                Notification::send($changeLeader, new ReportSubmittedToCL($report));
+                $message = 'Laporan berhasil disubmit ke Change Leader';
+                $info = 'Email notifikasi telah dikirim ke Change Leader';
+                return redirect()->route('reports.index')
+                    ->with('success', $message)->with('info', $info);
+            } catch (\Exception $e) {
+                //catatkan di log
+                Log::error($e->getMessage());
+                return redirect()->route('reports.edit', $report)->with('success', 'Laporan berhasil disimpan')
+                    ->with('warning', "Laporan berhasil disubmit, namun email ke change leader gagal dikirim");
+            }
         } else {
             $report->status = 0;
+            $report->save();
+            $message = 'Laporan berhasil disimpan menjadi draft';
+            return redirect()->route('reports.index')
+                ->with('success', $message);
         }
-        $report->save();
-
-        $message = ($report->status == 0) ? 'Laporan berhasil disimpan menjadi draft' : 'Laporan berhasil disubmit ke Change Leader';
-        return redirect()->route('reports.index')
-            ->with('success', $message);
     }
 
     /**
