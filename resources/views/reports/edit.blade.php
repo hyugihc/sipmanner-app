@@ -174,14 +174,14 @@
                                                         <td colspan="5">{{ $pi->ukuran_keberhasilan }}
                                                         </td>
                                                     </tr>
-                                                    <tr >
+                                                    <tr>
                                                         <th>Kendala</th>
                                                         <td colspan="5"><input
                                                                 name="intervensiKhusus_kendala[{{ $pi->id }}]"
                                                                 class="form-control" type="text"
                                                                 value="{{ $pi->pivot->kendala }}"></td>
                                                     </tr>
-                                                    <tr >
+                                                    <tr>
                                                         <th>Solusi</th>
                                                         <td colspan="5"><input
                                                                 name="intervensiKhusus_solusi[{{ $pi->id }}]"
@@ -246,7 +246,7 @@
                                         placeholder="Berisi penutup secara umum, namun juga diulas rencana kedepan terkait program kegiatan ini, apakah tetap dilanjutkan, ditindaklanjuti dengan program/kegiatan lanjutan,dimodifikasi, atau ditingkatkan menjadi kegiatan yang lebih besar.">{{ old('bab_vii', $report->bab_vii) }}</textarea>
                                 </div>
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label>Lampiran</label><br>
                                     <span>Berisi foto-foto/dokumentasi lain terkait kegiatan Manajemen Perubahan (Catatan :
                                         Jumlah halaman termasuk lampiran maksimal 20 halaman)</span>
@@ -257,8 +257,8 @@
                                                     href="{{ route('reports.download-lampiran', $report) }}">Lampiran</a></span>
                                             <div class="btn-group btn-group-sm">
                                                 {{-- <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a> --}}
-                                                {{-- <a id="lampiran-delete" href="#" class="btn btn-danger"><i
-                                                        class="fas fa-trash"></i></a> --}}
+                                {{-- <a id="lampiran-delete" href="#" class="btn btn-danger"><i
+                                                        class="fas fa-trash"></i></a> 
                                                 <button type="button" class="btn btn-danger" data-toggle="modal"
                                                     data-target="#modal-danger">
                                                     <i class="fas fa-trash"></i>
@@ -271,7 +271,7 @@
                                         <input accept=".pdf" type="file" name="lampiran" class="form-control">
                                     </div>
 
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group">
                                     <label>Persetujuan </label>
@@ -279,28 +279,29 @@
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox"
                                                 name="changeChampions[{{ $changeChampion->id }}]"
-                                                @if (Auth::User()->id != $changeChampion->id) disabled @endif @if ($changeChampion->pivot->status == 2) checked
-                                    @endif >
-                                    <label class="form-check-label">{{ $changeChampion->name }}</label>
+                                                @if (Auth::User()->id != $changeChampion->id) disabled @endif
+                                                @if ($changeChampion->pivot->status == 2) checked @endif>
+                                            <label class="form-check-label">{{ $changeChampion->name }}</label>
+                                        </div>
+                                    @endforeach
                                 </div>
-                                @endforeach
+
+
                             </div>
-
-
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <input type="submit" class="btn btn-primary" name=" draft"
+                                    value="Simpan sebagai draft">
+                                <input type="submit" class="btn btn-primary" name=" submit" value="Simpan & Submit">
+                            </div>
+                        </form>
                     </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        <input type="submit" class="btn btn-primary" name=" draft" value="Simpan sebagai draft">
-                        <input type="submit" class="btn btn-primary" name=" submit" value="Simpan & Submit">
-                    </div>
-                    </form>
+                    <!-- /.card -->
                 </div>
-                <!-- /.card -->
+
+
             </div>
-
-
-        </div>
-        <!-- /.row -->
+            <!-- /.row -->
         </div><!-- /.container-fluid -->
 
         <!-- .modal -->
@@ -333,15 +334,15 @@
         <script>
             @if (Session::has('warning'))
                 toastr.options = {
-                "closeButton": true,
-                "progressBar": false
+                    "closeButton": true,
+                    "progressBar": false
                 }
                 toastr.warning("{{ Session::get('warning') }}");
             @endif
             @if (Session::has('success'))
                 toastr.options = {
-                "closeButton": true,
-                "progressBar": false
+                    "closeButton": true,
+                    "progressBar": false
                 }
                 toastr.success("{{ Session::get('success') }}");
             @endif
@@ -376,15 +377,15 @@
                 });
                 if (
                     @php
-                    if ($report != null) {
-                        if ($report->lampiran != null) {
-                            echo 'true';
+                        if ($report != null) {
+                            if ($report->lampiran != null) {
+                                echo 'true';
+                            } else {
+                                echo 'false';
+                            }
                         } else {
                             echo 'false';
                         }
-                    } else {
-                        echo 'false';
-                    }
                     @endphp
                 ) {
                     $("#link-lampiran").show();

@@ -232,7 +232,7 @@ class ReportController extends Controller
             } catch (\Exception $e) {
                 //catatkan di log
                 Log::error($e->getMessage());
-                return redirect()->route('reports.edit', $report)->with('success', 'Laporan berhasil disimpan')
+                return redirect()->route('reports.index', $report)->with('success', 'Laporan berhasil disimpan')
                     ->with('warning', "Laporan berhasil disubmit, namun email ke change leader gagal dikirim");
             }
         } else {
