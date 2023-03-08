@@ -46,7 +46,7 @@
                                 <dd>{{ $progressIntervensiNasional->uraian_program }}</dd>
                                 <dt>Bulan</dt>
                                 <dd>{{ $progressIntervensiNasional->getBulan() }}</dd>
-                                <dt>Realisasi Pelaksanaan Kegiatan</dt>
+                                <dt>Realisasi Pelaksanaan Kegiatan %</dt>
                                 <dd> {{ $progressIntervensiNasional->realisasi_pelaksanaan_kegiatan }} </dd>
 
                                 <dt>Dokumentasi</dt>

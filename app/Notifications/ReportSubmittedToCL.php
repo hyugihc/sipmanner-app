@@ -51,8 +51,8 @@ class ReportSubmittedToCL extends Notification
         $mailMessage = (new MailMessage)
             ->subject('Laporan Manajemen Perubahan Semester ' . $this->report->semester . ' perlu di review')
             ->greeting('Yth, ' . $notifiable->name)
-            ->line('Laporan Manajemen Perubahan Semester ' . $this->report->semester  . ' telah diajukan oleh' . $this->report->user->name . ' dan perlu approval anda.')
-            ->action('Review Laporan', route('reports.show', $this->report->id))
+            ->line('Laporan Manajemen Perubahan Semester ' . $this->report->semester  . ' telah diajukan oleh ' . $this->report->user->name . ' dan perlu approval anda.')
+            ->action('Review Laporan',  "https://webapps.bps.go.id/manner/reports/" . $this->report->id)
             ->line('Terima kasih atas kerjasamanya.');
         //customisasi regards
         $mailMessage->salutation('Email ini digenerate otomatis oleh aplikasi SIPMANNER, tidak perlu dibalas.');

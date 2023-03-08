@@ -88,39 +88,40 @@ class ProgressIntervensiNasionalController extends Controller
             );
         }
 
-        if ($progressIntervensiNasional->status == 1) {
-            $intervensiNasionalProvinsi = $this->getIntervensiNasionalProvinsi();
-            if ($this->getLastProgressIntervensiNasionalProvinsi($intervensiNasionalProvinsi)) {
-                $lastProgressIntervensiNasionalProvinsi = $this->getLastProgressIntervensiNasionalProvinsi($intervensiNasionalProvinsi);
-                //bandingkan bulan
+        // if ($progressIntervensiNasional->status == 1) {
+        //     $intervensiNasionalProvinsi = $this->getIntervensiNasionalProvinsi();
+        //     if ($this->getLastProgressIntervensiNasionalProvinsi($intervensiNasionalProvinsi)) {
+        //         $lastProgressIntervensiNasionalProvinsi = $this->getLastProgressIntervensiNasionalProvinsi($intervensiNasionalProvinsi);
+        //         //bandingkan bulan
 
-                if ($lastProgressIntervensiNasionalProvinsi->bulan >= $progressIntervensiNasional->bulan) {
-                    $progressIntervensiNasional->status = 0;
-                    $progressIntervensiNasional->save();
-                    return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
-                        ->with('error', 'Bulan yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya');
+        //         if ($lastProgressIntervensiNasionalProvinsi->bulan >= $progressIntervensiNasional->bulan) {
+        //             $progressIntervensiNasional->status = 0;
+        //             $progressIntervensiNasional->save();
+        //             return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
+        //                 ->with('error', 'Bulan yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya');
 
-                    // return back()
-                    //     ->withInput($request->input())
-                    //     ->withErrors([
-                    //         'bulan' => 'Bulan yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya',
-                    //     ]);
-                }
-                //bandingkan progress
-                if ($lastProgressIntervensiNasionalProvinsi->realisasi_pelaksanaan_kegiatan  >= $progressIntervensiNasional->realisasi_pelaksanaan_kegiatan) {
-                    $progressIntervensiNasional->status = 0;
-                    $progressIntervensiNasional->save();
-                    return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
-                        ->with('error', 'Progress yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya');
+        //             // return back()
+        //             //     ->withInput($request->input())
+        //             //     ->withErrors([
+        //             //         'bulan' => 'Bulan yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya',
+        //             //     ]);
+        //         }
+        //         //bandingkan progress
+        //         if ($lastProgressIntervensiNasionalProvinsi->realisasi_pelaksanaan_kegiatan  >= $progressIntervensiNasional->realisasi_pelaksanaan_kegiatan) {
+        //             $progressIntervensiNasional->status = 0;
+        //             $progressIntervensiNasional->save();
+        //             return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
+        //                 ->with('error', 'Progress yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya');
 
-                    // return back()
-                    //     ->withInput($request->input())
-                    //     ->withErrors([
-                    //         'realisasi_pelaksanaan_kegiatan' => 'Progres yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya',
-                    //     ]);
-                }
-            }
-        }
+        //             // return back()
+        //             //     ->withInput($request->input())
+        //             //     ->withErrors([
+        //             //         'realisasi_pelaksanaan_kegiatan' => 'Progres yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya',
+        //             //     ]);
+        //         }
+        //     }
+        // }
+        
         $progressIntervensiNasional->save();
 
         if ($progressIntervensiNasional->status == 1) {
@@ -210,39 +211,39 @@ class ProgressIntervensiNasionalController extends Controller
         }
 
         $progressIntervensiNasional->status = ($request->has('draft')) ? 0 : 1;
-        if ($progressIntervensiNasional->status == 1) {
-            $intervensiNasionalProvinsi = $this->getIntervensiNasionalProvinsi();
-            if ($this->getLastProgressIntervensiNasionalProvinsi($intervensiNasionalProvinsi)) {
-                $lastProgressIntervensiNasionalProvinsi = $this->getLastProgressIntervensiNasionalProvinsi($intervensiNasionalProvinsi);
-                //bandingkan bulan
+        // if ($progressIntervensiNasional->status == 1) {
+        //     $intervensiNasionalProvinsi = $this->getIntervensiNasionalProvinsi();
+        //     if ($this->getLastProgressIntervensiNasionalProvinsi($intervensiNasionalProvinsi)) {
+        //         $lastProgressIntervensiNasionalProvinsi = $this->getLastProgressIntervensiNasionalProvinsi($intervensiNasionalProvinsi);
+        //         //bandingkan bulan
 
-                if ($lastProgressIntervensiNasionalProvinsi->bulan >= $progressIntervensiNasional->bulan) {
-                    $progressIntervensiNasional->status = 0;
-                    $progressIntervensiNasional->save();
-                    return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
-                        ->with('error', 'Bulan yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya');
+        //         if ($lastProgressIntervensiNasionalProvinsi->bulan >= $progressIntervensiNasional->bulan) {
+        //             $progressIntervensiNasional->status = 0;
+        //             $progressIntervensiNasional->save();
+        //             return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
+        //                 ->with('error', 'Bulan yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya');
 
-                    // return back()
-                    //     ->withInput($request->input())
-                    //     ->withErrors([
-                    //         'bulan' => 'Bulan yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya',
-                    //     ]);
-                }
-                //bandingkan progress
-                if ($lastProgressIntervensiNasionalProvinsi->realisasi_pelaksanaan_kegiatan >= $progressIntervensiNasional->realisasi_pelaksanaan_kegiatan) {
-                    $progressIntervensiNasional->status = 0;
-                    $progressIntervensiNasional->save();
-                    return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
-                        ->with('error', 'Progress yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya');
+        //             // return back()
+        //             //     ->withInput($request->input())
+        //             //     ->withErrors([
+        //             //         'bulan' => 'Bulan yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya',
+        //             //     ]);
+        //         }
+        //         //bandingkan progress
+        //         if ($lastProgressIntervensiNasionalProvinsi->realisasi_pelaksanaan_kegiatan >= $progressIntervensiNasional->realisasi_pelaksanaan_kegiatan) {
+        //             $progressIntervensiNasional->status = 0;
+        //             $progressIntervensiNasional->save();
+        //             return redirect()->route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional)
+        //                 ->with('error', 'Progress yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya');
 
-                    // return back()
-                    //     ->withInput($request->input())
-                    //     ->withErrors([
-                    //         'realisasi_pelaksanaan_kegiatan' => 'Progres yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya',
-                    //     ]);
-                }
-            }
-        }
+        //             // return back()
+        //             //     ->withInput($request->input())
+        //             //     ->withErrors([
+        //             //         'realisasi_pelaksanaan_kegiatan' => 'Progres yang diinputkan lebih kecil atau sama dengan dari bulan sebelumnya',
+        //             //     ]);
+        //         }
+        //     }
+        // }
 
         $progressIntervensiNasional->save();
 

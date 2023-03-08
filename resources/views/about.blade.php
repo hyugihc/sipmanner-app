@@ -72,10 +72,10 @@
         </div> --}}
 
         <div class="lockscreen-footer text-center">
-            <strong>Copyright &copy; 2021 <a href="https://bps.go.id">Transformasi Statistik BPS</a>.</strong>
+            <strong>Copyright &copy; 2023 <a href="https://bps.go.id">Transformasi Statistik BPS</a>.</strong>
 
             <div class=" d-none d-sm-inline-block">
-                <b>Version</b> 1.0.0
+                <b>Version</b> 2.1.0
             </div>
         </div>
     </div>

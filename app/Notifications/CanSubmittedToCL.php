@@ -49,7 +49,7 @@ class CanSubmittedToCL extends Notification
             ->subject('Data Change Agent Network Perlu di Review')
             ->greeting('Yth, ' . $notifiable->name)
             ->line('Data Change Agent Network telah diajukan oleh Change Champion anda dan perlu approval anda.')
-            ->action('Review Data', route('cans.show', $this->can->id))
+            ->action('Review Data', "https://webapps.bps.go.id/manner/cans/" . $this->can->id)
             ->line('Terima kasih atas kerjasamanya.');
         //customisasi regards
         $mailMessage->salutation('Email ini digenerate otomatis oleh aplikasi SIPMANNER, tidak perlu dibalas.');

@@ -57,7 +57,7 @@ class ProgressInNasSubmittedToCL extends Notification
             ->subject('Progres Rencana Aksi ' . $this->intervensi->nama . ' perlu di review')
             ->greeting('Yth, ' . $notifiable->name)
             ->line('Progres Rencana Aksi ' . $this->intervensi->nama . ' telah diajukan oleh ' . $this->cc->name . ' dan perlu approval anda.')
-            ->action('Review Progres', route('intervensi-nasionals.progress-intervensi-nasionals.show', [$this->intervensi->intervensiNasional->id,$this->progressIntervensiNasional->id]))
+            ->action('Review Progres', "https://webapps.bps.go.id/manner/progress/intervensi-nasionals/" . $this->intervensi->intervensiNasional->id . "/progress-intervensi-nasionals/" . $this->progressIntervensiNasional->id)
             ->line('Terima kasih atas kerjasamanya.');
         //customisasi regards
         $mailMessage->salutation('Email ini digenerate otomatis oleh aplikasi SIPMANNER, tidak perlu dibalas.');

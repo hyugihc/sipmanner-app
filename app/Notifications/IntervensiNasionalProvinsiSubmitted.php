@@ -49,7 +49,7 @@ class IntervensiNasionalProvinsiSubmitted extends Notification
             ->subject('Program Intervensi Nasional Perlu di Review')
             ->greeting('Yth, ' . $notifiable->name)
             ->line('Program ' . $this->intervensiNasionalProvinsi->intervensiNasional->name . ' telah diajukan oleh ' . $this->cc->name . ' dan perlu approval anda.')
-            ->action('Review Program', route('inp.show', $this->intervensiNasionalProvinsi->id))
+            ->action('Review Program',  "https://webapps.bps.go.id/manner/programs/intervensi-nasionals-provinsi/" . $this->intervensiNasionalProvinsi->id)
             ->line('Terima kasih atas kerjasamanya.');
         //customisasi regards
         $mailMessage->salutation('Email ini digenerate otomatis oleh aplikasi SIPMANNER, tidak perlu dibalas.');

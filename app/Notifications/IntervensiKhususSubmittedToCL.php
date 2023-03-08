@@ -51,7 +51,7 @@ class IntervensiKhususSubmittedToCL extends Notification
             ->subject('Rencana Aksi ' . $this->intervensiKhusus->nama . ' perlu di review')
             ->greeting('Yth, ' . $notifiable->name)
             ->line('Rencana Aksi ' . $this->intervensiKhusus->nama . ' telah diajukan oleh ' . $this->intervensiKhusus->user->name . ' dan perlu approval anda.')
-            ->action('Review Rencana Aksi', route('intervensi-khususes.show', $this->intervensiKhusus->id))
+            ->action('Review Rencana Aksi',  "https://webapps.bps.go.id/manner/programs/intervensi-khususes/" . $this->intervensiKhusus->id)
             ->line('Terima kasih atas kerjasamanya.');
         //customisasi regards
         $mailMessage->salutation('Email ini digenerate otomatis oleh aplikasi SIPMANNER, tidak perlu dibalas.');

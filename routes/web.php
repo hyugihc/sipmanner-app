@@ -149,9 +149,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/test2',  'CanController@test')->name('test2');
 
     //=============================SETTING========================================
-  
-    Route::get('/logs', 'LogController@index');
 
+    Route::get('/logs', 'LogController@index');
+    Route::get('/testing', 'TestController@index');
 });
 
 

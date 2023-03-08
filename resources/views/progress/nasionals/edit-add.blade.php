@@ -118,7 +118,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Realisasi Pelaksanaan Kegiatan</label>
+                                <label>Realisasi Pelaksanaan Kegiatan %</label>
                                 <input type="number" name="realisasi_pelaksanaan_kegiatan" class="form-control"
                                     placeholder=""
                                     value="{{ old('realisasi_pelaksanaan_kegiatan', isset($progressIntervensiNasional) ? $progressIntervensiNasional->realisasi_pelaksanaan_kegiatan : '') }}"

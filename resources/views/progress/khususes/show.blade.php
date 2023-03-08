@@ -46,9 +46,9 @@
                                 <dd>{{ $progressIntervensiKhusus->uraian_program }}</dd>
                                 <dt>Tanggal</dt>
                                 <dd>{{ $progressIntervensiKhusus->tanggal }}</dd>
-                                <dt>Realisasi Pelaksanaan Kegiatan</dt>
+                                <dt>Realisasi Pelaksanaan Kegiatan %</dt>
                                 <dd> {{ $progressIntervensiKhusus->realisasi_pelaksanaan_kegiatan }} </dd>
-                                <dt>Realisasi Capaian Keberhasilan</dt>
+                                <dt>Realisasi Capaian Keberhasilan %</dt>
                                 <dd> {{ $progressIntervensiKhusus->realisasi_capaian_keberhasilan }} </dd>
                                 <dt>Upload Dokumentasi</dt>
                                 @if ($progressIntervensiKhusus->upload_dokumentasi != null)
