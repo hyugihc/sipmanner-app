@@ -495,7 +495,7 @@ class UserController extends Controller
     public function refreshJabatanEselonII()
     {
         $user_login = Auth::user();
-        $token = Crypt::decryptString($user_login->avatar_text);      
+        $token = Crypt::decryptString($user_login->avatar_text);
 
         $url = 'https://simpeg.bps.go.id/api/sipmanner';
         $apiKey = 'bFpnSEhGejB2aGlHaFE3UWtEaUhpQT09';
@@ -544,5 +544,15 @@ class UserController extends Controller
     //method untuk mencari pegawai berdasarkan nama
     public function searchByName($name)
     {
+    }
+
+    //method untuk revoke jabatan berdasarkan id
+    public function revokeJabatan($id)
+    {
+        $user = User::find($id);
+        $user->role_id = 6;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Berhasil revoke jabatan');
     }
 }

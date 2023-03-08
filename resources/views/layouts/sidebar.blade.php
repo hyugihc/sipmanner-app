@@ -162,7 +162,7 @@
                             class="nav-link {{ Request::is('users/recap*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
-                                Rekap User
+                                Manage User
                             </p>
                         </a>
                     </li>

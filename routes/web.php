@@ -53,7 +53,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/search_user_by_niplama/{nip_lama}', 'UserController@searchUserByNipLama')->name('search_user_by_niplama');
     // refresh jabatan eselon II semua user
     Route::get('/refresh_jabatan_eselon_ii', 'UserController@refreshJabatanEselonII')->name('refresh_jabatan_eselon_ii');
-
+    // revoke jabatan user tertentu
+    Route::get('/revoke_jabatan/{id}', 'UserController@revokeJabatan')->name('revoke_jabatan');
 
 
     //======================================DATA=====================================
@@ -127,6 +128,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/rekap-rencanaaksi', 'RekapController@indexIntervensi')->name('rekap.intervensikhusus.index');
     //rekap change agent network
     Route::get('/rekap-can',  'UserController@rekapCan')->name('rekap.can');
+
 
 
 

@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
 
@@ -51,17 +50,20 @@
                                             @if (!$provinsi->changeLeader()->exists())
                                                 -
                                             @else
-                                                {{ $provinsi->changeLeader['name'] }}
+                                                {{ $provinsi->changeLeader['name'] }}<a
+                                                    href="{{ route('revoke_jabatan', $provinsi->changeLeader['id']) }}"> <small>&#60;revoke&#62;</small></a>
                                             @endif
-                                            
-                                           
+
+
                                         </td>
                                         <td>
                                             @php
                                                 $x = 1;
                                             @endphp
                                             @foreach ($provinsi->changeChampions as $cc)
-                                                ({{ $x }}) {{ $cc['name'] }}
+                                                ({{ $x }})
+                                                {{ $cc['name'] }} <a
+                                                    href="{{ route('revoke_jabatan', $cc['id']) }}"><small>&#60;revoke&#62;</small></a>
                                                 <br>
                                                 @php
                                                     $x++;
@@ -94,10 +96,9 @@
 
         <script>
             @if (Session::has('success'))
-                toastr.options =
-                {
-                "closeButton" : true,
-                "progressBar" : false
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": false
                 }
                 toastr.success("{{ Session::get('success') }}");
             @endif
@@ -111,23 +112,23 @@
                 // toastr.error("{{ session('error') }}");
                 // @endif
 
-            @if (Session::has('info'))
-                // toastr.options =
-                // {
-                // "closeButton" : true,
-                // "progressBar" : false
-                // }
-                // toastr.info("{{ session('info') }}");
-                // @endif
+                @if (Session::has('info'))
+                    // toastr.options =
+                    // {
+                    // "closeButton" : true,
+                    // "progressBar" : false
+                    // }
+                    // toastr.info("{{ session('info') }}");
+                    // @endif
 
-            @if (Session::has('warning'))
-                // toastr.options =
-                // {
-                // "closeButton" : true,
-                // "progressBar" : false
-                // }
-                // toastr.warning("{{ session('warning') }}");
-                // @endif
+                    @if (Session::has('warning'))
+                        // toastr.options =
+                        // {
+                        // "closeButton" : true,
+                        // "progressBar" : false
+                        // }
+                        // toastr.warning("{{ session('warning') }}");
+                        // @endif
         </script>
     </section>
 @endsection
