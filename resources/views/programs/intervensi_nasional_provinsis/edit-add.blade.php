@@ -39,7 +39,7 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title"> Penyesuaian Ukuran Keberhasilan</h3>
+                            <h3 class="card-title"> Penyesuaian Program Intervensi Nasional</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -68,20 +68,51 @@
                                 <div class="form-group">
                                     <label>Ukuran Keberhasilan*</label>
                                     <span>(silakan sesuaikan % nya saja)</span>
-                                    <textarea type="text" name="ukuran_keberhasilan" class="form-control"
-                                        placeholder="">{{ old('ukuran_keberhasilan', $intervensiNasionalProvinsi->intervensiNasional->ukuran_keberhasilan) }}</textarea>
+                                    <textarea type="text" name="ukuran_keberhasilan" class="form-control" placeholder="">{{ old('ukuran_keberhasilan', $intervensiNasionalProvinsi->intervensiNasional->ukuran_keberhasilan) }}</textarea>
                                     </textarea>
                                 </div>
 
+                                <div class="form-group">
+                                    <label>Timeline*</label>
+                                    {{-- dropdown Semesteran, Triwulanan, Bulanan, Mingguan, Lainnya --}}
+                                    <select name="timeline" class="form-control select2bs4" style="width: 100%;">
+                                        <option value="Semesteran"
+                                            {{ old('timeline', $intervensiNasionalProvinsi->intervensiNasional->timeline) == 'Semesteran' ? 'selected' : '' }}>
+                                            Semesteran</option>
+                                        <option value="Triwulanan"
+                                            {{ old('timeline', $intervensiNasionalProvinsi->intervensiNasional->timeline) == 'Triwulanan' ? 'selected' : '' }}>
+                                            Triwulanan</option>
+                                        <option value="Bulanan"
+                                            {{ old('timeline', $intervensiNasionalProvinsi->intervensiNasional->timeline) == 'Bulanan' ? 'selected' : '' }}>
+                                            Bulanan</option>
+                                        <option value="Mingguan"
+                                            {{ old('timeline', $intervensiNasionalProvinsi->intervensiNasional->timeline) == 'Mingguan' ? 'selected' : '' }}>
+                                            Mingguan</option>
+                                        <option value="Lainnya"
+                                            {{ old('timeline', $intervensiNasionalProvinsi->intervensiNasional->timeline) == 'Lainnya' ? 'selected' : '' }}>
+                                            Lainnya</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Keterangan*</label>
+                                    <textarea type="text" name="keterangan" class="form-control" placeholder="">{{ old('keterangan', $intervensiNasionalProvinsi->intervensiNasional->keterangan) }}</textarea>
+                                    </textarea>
+                                </div>
+
+
+
+
                                 @if ($intervensiNasionalProvinsi->status == 3)
-                                   Alasan Penolakan:  {{ $intervensiNasionalProvinsi->alasan }}
+                                    Alasan Penolakan: {{ $intervensiNasionalProvinsi->alasan }}
                                 @endif
 
 
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <input type="submit" class="btn btn-primary" name=" submit" value="Submit ke Change Leader">
+                                <input type="submit" class="btn btn-primary" name=" submit"
+                                    value="Submit ke Change Leader">
                             </div>
                         </form>
                     </div>

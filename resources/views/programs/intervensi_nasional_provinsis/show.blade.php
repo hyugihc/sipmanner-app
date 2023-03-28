@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -26,7 +25,6 @@
 
         <div class="container-fluid">
             <div class="row">
-                <!-- left column -->
                 <div class="col-md-12">
                     <!-- jquery validation -->
                     <div class="card card-primary">
@@ -44,10 +42,13 @@
                                 <dd>{{ $intervensiNasionalProvinsi->intervensiNasional->nama }}</dd>
                                 <dt>Uraian Kegiatan</dt>
                                 <dd>
-                                    {{ $intervensiNasionalProvinsi->intervensiNasional->uraian_kegiatan }}</dd>
+                                    <p class="preline">{{ $intervensiNasionalProvinsi->intervensiNasional->uraian_kegiatan }}
+                                    </p>
+                                </dd>
                                 <dt>Output</dt>
                                 <dd>
-                                    {{ $intervensiNasionalProvinsi->intervensiNasional->output }} </dd>
+                                    <p class="preline"> {{ $intervensiNasionalProvinsi->intervensiNasional->output }} </p>
+                                </dd>
                                 <dt>Timeline</dt>
                                 <dd>
                                     {{ $intervensiNasionalProvinsi->intervensiNasional->timeline }} </dd>
@@ -56,16 +57,75 @@
                                     @if ($intervensiNasionalProvinsi->ukuran_keberhasilan == null)
                                         Ukuran keberhasilan untuk satker belum ditentukan
                                     @else
-                                        {{ $intervensiNasionalProvinsi->ukuran_keberhasilan }}
+                                        <p class="preline"> {{ $intervensiNasionalProvinsi->ukuran_keberhasilan }} </p>
                                     @endif
 
                                 </dd>
                                 <dt>Outcome</dt>
                                 <dd>
-                                    {{ $intervensiNasionalProvinsi->intervensiNasional->outcome }} </dd>
-                                <dt>keterangan</dt>
+                                    <p class="preline"> {{ $intervensiNasionalProvinsi->intervensiNasional->outcome }} </p>
+                                </dd>
+                                @if ($intervensiNasionalProvinsi->intervensiNasional->keterangan == null)
+                                @else
+                                    <dt>Keterangan</dt>
+                                    <dd>
+                                        <p class="preline">
+                                            {{ $intervensiNasionalProvinsi->intervensiNasional->keterangan }}
+                                        </p>
+                                    </dd>
+                                @endif
+
+
+
+                            </dl>
+
+
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- jquery validation -->
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">Penyesuaian Program Intervensi
+                                {{ $intervensiNasionalProvinsi->intervensiNasional->nama }} pada
+                                {{ $intervensiNasionalProvinsi->provinsi->nama_singkat }}</h3>
+                        </div>
+                        <!-- /.card-header -->
+
+
+                        <div class="card-body">
+                            <dl>
+
+
+                                <dt>Ukuran Keberhasilan</dt>
                                 <dd>
-                                    {{ $intervensiNasionalProvinsi->intervensiNasional->keterangan }} </dd>
+                                    @if ($intervensiNasionalProvinsi->ukuran_keberhasilan == null)
+                                        Ukuran keberhasilan untuk satker belum ditentukan
+                                    @else
+                                        <p class="preline">{{ $intervensiNasionalProvinsi->ukuran_keberhasilan }} </p>
+                                    @endif
+
+                                </dd>
+                                @if ($intervensiNasionalProvinsi->timeline == null)
+                                @else
+                                    <dt>Timeline</dt>
+                                    <dd>
+                                        {{ $intervensiNasionalProvinsi->timeline }}
+                                @endif
+                                @if ($intervensiNasionalProvinsi->keterangan == null)
+                                @else
+                                    <dt>Keterangan</dt>
+                                    <dd>
+                                        <p class="preline"> {{ $intervensiNasionalProvinsi->keterangan }} </p>
+                                    </dd>
+                                @endif
+
                                 <dt>Status</dt>
                                 <dd>
                                     {{ $intervensiNasionalProvinsi->getStatus() }} </dd>
@@ -76,7 +136,6 @@
                                 @endif
 
                                 @can('approve', $intervensiNasionalProvinsi)
-
                                     <!-- form start -->
                                     <form action="{{ route('inp.approve', $intervensiNasionalProvinsi) }}" method="POST">
                                         @csrf
@@ -91,8 +150,7 @@
 
                                         <div class="form-group" id="divtextarea">
                                             <label>Alasan</label>
-                                            <textarea type="text" name="alasan"
-                                                value="{{ $intervensiNasionalProvinsi->intervensiNasional->alasan }}"
+                                            <textarea type="text" name="alasan" value="{{ $intervensiNasionalProvinsi->intervensiNasional->alasan }}"
                                                 class="form-control" placeholder=""></textarea>
                                         </div>
 
@@ -109,16 +167,17 @@
                         </div>
                         <!-- /.card -->
                     </div>
-                    <!--/.col (left) -->
-                    <!-- right column -->
-                    <div class="col-md-6">
-
-                    </div>
-                    <!--/.col (right) -->
                 </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
     </section>
+    <style>
+        /* kelas preline untuk element <p> */
+        p.preline {
+            white-space: pre-line;
+        }
+    </style>
 
     <script>
         $(document).ready(function() {
@@ -140,5 +199,4 @@
             }
         });
     </script>
-
 @endsection

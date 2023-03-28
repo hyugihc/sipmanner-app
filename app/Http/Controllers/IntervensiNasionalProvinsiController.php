@@ -83,6 +83,8 @@ class IntervensiNasionalProvinsiController extends Controller
         ]);
 
         $intervensiNasionalProvinsi->ukuran_keberhasilan = $request->ukuran_keberhasilan;
+        $intervensiNasionalProvinsi->timeline= $request->timeline;
+        $intervensiNasionalProvinsi->keterangan = $request->keterangan;
         $intervensiNasionalProvinsi->status = 1;
         $intervensiNasionalProvinsi->save();
         //send notificatio to change leader

@@ -207,8 +207,7 @@
                                                 @can('update', $program_intervensi)
                                                     <a class="btn btn-block btn-warning btn-xs"
                                                         href="{{ route('inp.edit', $program_intervensi) }}">Sesuaikan
-                                                        Ukuran
-                                                        Keberhasilan</a>
+                                                        Program</a>
                                                 @endcan
 
 
