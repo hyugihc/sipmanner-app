@@ -107,7 +107,15 @@ class LoginController extends Controller
                 $email = $user->getEmail();
                 $id = User::where('email', $email)->first();
                 if (!empty($id)) {
-                    $id = $id->id;
+                    //jika normal user kembalikan 403
+                    if ($id->role_id == 6) {
+                        $email = $user->getEmail();
+                        $name = $user->getName();
+                        $url_logout = $provider->getLogoutUrl();
+                        return view('403', compact('name', 'email'));
+                    } else {
+                        $id = $id->id;
+                    }
                 } else {
                     // $newUser = User::create([
                     //     'name' => $user->getName(),
@@ -132,7 +140,7 @@ class LoginController extends Controller
                         $loggedinUser->avatar_text = $en_token;
                     }
                     $loggedinUser->save();
-                    $loggedinUser->setSetting('tahun', '2022');
+                    $loggedinUser->setSetting('tahun', '2023');
                     if (Session::has('url.intended')) {
                         return redirect()->intended();
                     } else {

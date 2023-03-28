@@ -52,7 +52,7 @@ class AuthController extends Controller
         if (Auth::check()) { // true sekalian session field di users nanti bisa dipanggil via Auth
             //Login Success
             $user = User::where('email', $request->input('email'))->first();
-            $user->setSetting('tahun', '2022');
+            $user->setSetting('tahun', '2023');
             // $user->setSettings(['first_name' => 'John', 'last_name' => 'Smith']);
             if ($user->avatar == null) {
                 $user->avatar = 'https://community.bps.go.id/images/nofoto.JPG';
@@ -60,10 +60,18 @@ class AuthController extends Controller
             }
 
             //kembalikan  ke link awal
-            if (Session::has('url.intended')) {
-                return redirect()->intended();
+
+            if ($user->role_id == 6) {
+                $email = $user->email;
+                $name = $user->name;
+                Auth::logout();
+                return view('403', compact('name', 'email'));
             } else {
-                return redirect()->route('dashboard');
+                if (Session::has('url.intended')) {
+                    return redirect()->intended();
+                } else {
+                    return redirect()->route('dashboard');
+                }
             }
 
             //return redirect()->route('dashboard');
