@@ -38,24 +38,7 @@
                         </p>
                     </a>
                 </li>
-                <!-- jika pengguna adalah admin tampilkan menu dibawah -->
-                @if (Auth::user()->isAdminOrTopLeader())
-                    <li class="nav-item">
-                        <a href="{{ route('rekap.intervensikhusus.index') }}"
-                            class="nav-link {{ Request::is('rekap-rencanaaksi*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-copy"></i>
-                            <p>Rekap Program</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('rekap.can') }}"
-                            class="nav-link {{ Request::is('rekap.can*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-copy"></i>
-                            <p>Rekap CAN</p>
-                        </a>
-                    </li>
-                    
-                @endif
+
 
 
 
@@ -73,6 +56,16 @@
                             </p>
                         </a>
                     </li>
+
+                    @if (Auth::user()->isAdminOrTopLeader())
+                        <li class="nav-item">
+                            <a href="{{ route('rekap.can') }}"
+                                class="nav-link {{ Request::is('rekap-can*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>Rekap CAN</p>
+                            </a>
+                        </li>
+                    @endif
 
                 @endcan
 
@@ -120,6 +113,19 @@
                     </li>
                 @endcan
 
+                <!-- jika pengguna adalah admin tampilkan menu dibawah -->
+                @if (Auth::user()->isAdminOrTopLeader())
+                    <li class="nav-item">
+                        <a href="{{ route('rekap.intervensikhusus.index') }}"
+                            class="nav-link {{ Request::is('rekap-rencanaaksi*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>Rekap Program</p>
+                        </a>
+                    </li>
+                @endif
+
+
+
 
 
 
@@ -134,14 +140,7 @@
                     </a>
                 </li> --}}
 
-                <li class="nav-item">
-                    <a href="{{ route('faq') }}" class="nav-link {{ Request::is('faq*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-search"></i>
-                        <p>
-                            FAQ
-                        </p>
-                    </a>
-                </li>
+
 
 
                 @can('viewAny', App\User::class)
@@ -167,6 +166,16 @@
                         </a>
                     </li>
                 @endcan
+
+                <li class="nav-header">Lainnya</li>
+                <li class="nav-item">
+                    <a href="{{ route('faq') }}" class="nav-link {{ Request::is('faq*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-search"></i>
+                        <p>
+                            FAQ
+                        </p>
+                    </a>
+                </li>
 
 
 

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,6 +36,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+
+        Paginator::useBootstrap();
         View::composer('layouts.sidebar', function ($view) {
             $user = Auth::user();
             $year = $user->getSetting('tahun');

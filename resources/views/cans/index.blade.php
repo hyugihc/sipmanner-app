@@ -40,7 +40,8 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Data</h3>
+                        <h3 class="card-title">Data Change Agent Network Tahun {{ Auth::user()->getSetting('tahun') }}
+                        </h3>
 
                     </div>
                     <!-- /.card-header -->
@@ -110,8 +111,16 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
+
                 </div>
                 <!-- /.card -->
+
+                <div class="d-flex justify-content-center">
+                    {!! $cans->links() !!}
+                </div>
+
+
+
             </div>
         </div>
 
@@ -119,9 +128,44 @@
         <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>
 
         <script>
-            $(document).ready(function() {
-                $('#table_cans').DataTable();
-            });
+            //define data table
+   
+
+            //toastr
+            @if (Session::has('error'))
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": false
+                }
+                toastr.error("{{ Session::get('error') }}");
+            @endif
+
+            @if (Session::has('success'))
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": false
+                }
+                toastr.success("{{ Session::get('success') }}");
+            @endif
+
+            @if (Session::has('warning'))
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": false
+                }
+                toastr.warning("{{ Session::get('warning') }}");
+            @endif
+
+            @if (Session::has('info'))
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": false
+                }
+                toastr.info("{{ Session::get('info') }}");
+            @endif
+
+
+
             @if (Session::has('success'))
                 toastr.options = {
                     "closeButton": true,
