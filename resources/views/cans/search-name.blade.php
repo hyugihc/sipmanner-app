@@ -5,16 +5,6 @@
   <script type="text/javascript">
       $(document).ready(function() {
 
-          $('#n_input').keypress(function(e) {
-              var key = e.which;
-              if (key == 13)
-              // the enter key code
-              {
-                  $('#n_add_pegawai').click();
-                  return false;
-              }
-          });
-
           //jika n_input karakter lebih dari 3 maka cari pegawai
           $('#n_input').keyup(function() {
               var query_name = $('#n_input').val();
@@ -49,7 +39,7 @@
 
                   //jika n_input kosong maka disable button add_pegawai
               } else {
-                  $('#n_add_pegawai').prop('disabled', true);
+                  $('#add_pegawai').prop('disabled', true);
               }
 
 
@@ -88,7 +78,7 @@
                               "<input hidden name='ca_email[]' value = '" +
                               email + "'  >" +
                               "</td>" +
-                              "<td> Change Ambassador <input hidden name = 'change_agents[]' value = '" +
+                              "<td> Change Agents <input hidden name = 'change_agents[]' value = '" +
                               item.value + "'> </td>" +
                               "<td>" +
                               "<button type='button' name='remove' id='" +
@@ -125,7 +115,7 @@
               $('#example1 tbody').append(n_tr_str);
               console.log(n_tr_str);
               $('#n_input').val('');
-
+              
               $('#n_input').focus();
               updateRowOrder();
               $(this).prop('disabled', true);
@@ -152,7 +142,7 @@
                       {{-- input autocomplete jquery nama pegawai --}}
                       <input type="text" class="form-control" id="n_input" placeholder="Masukan nama pegawai">
 
-                      <small><i>(jika pegawai tidak ditemukan, gunakan pencarian menggunakan nip lama)</i></small>
+
                   </div>
 
 

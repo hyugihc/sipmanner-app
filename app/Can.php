@@ -42,12 +42,6 @@ class Can extends Model
         return $this->belongsToMany(User::class)->wherePivot('role_id', 4);
     }
 
-    //jumlah change agent + change leader + change champion
-    public function jumlahCAN()
-    {
-        return $this->changeAgents()->count() + $this->changeLeaders()->count() + $this->changeChampions()->count();
-    }
-
 
     public function provinsi()
     {
