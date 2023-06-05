@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -42,18 +41,19 @@
                             <div class="card-body">
                                 <dl>
                                     <dt> Tahun SK</dt>
-                                     {{ $can->tahun_sk }}
+                                    {{ $can->tahun_sk }}
                                     <dt>Tanggal SK</dt>
                                     <dd>{{ date('d-M-Y', strtotime($can->tanggal_sk)) }}</dd>
                                     <dt>Perihal SK</dt>
                                     <dd>{{ $can->perihal_sk }}</dd>
                                     <dt>File SK</dt>
                                     <dd> <a href="{{ route('cans.download', $can) }}">Download File SK</a></dd>
-                                    <dt>Jumlah Change Agent Network <small><i>(Change leader, Change Champions, Change Ambassador)</i></small></dt>
-                                    <dd>{{ $can->jumlah_can }}</dd>
+                                    <dt>Jumlah Change Agent Network <small><i>(Change leader, Change Champions, Change
+                                                Ambassador)</i></small></dt>
+                                    <dd>{{ $can->jumlahCAN() }}</dd>
                                     <dt>Change Leader</dt>
                                     @foreach ($can->changeLeaders as $user)
-                                        <dd>1.  {{ $user->name }} </dd>
+                                        <dd>1. {{ $user->name }} </dd>
                                     @endforeach
                                     <dt>Change Champions</dt>
                                     @php
@@ -81,20 +81,25 @@
                                         @case(0)
                                             <dd>Draft</dd>
                                         @break
+
                                         @case(1)
                                             <dd>Belum Disetujui</dd>
                                         @break
+
                                         @case(2)
                                             <dd>Sudah Disetujui</dd>
                                         @break
+
                                         @case(3)
                                             <dd>Tidak Disetujui</dd>
                                             <dt>Alasan</dt>
                                             <dd>{{ $can->alasan }}</dd>
                                         @break
+
                                         @case(4)
                                             <dd>Sudah Disetujui (Tidak Aktif)</dd>
                                         @break
+
                                         @default
                                             <dd>Tidak ada yang sesuai</dd>
                                     @endswitch
@@ -111,8 +116,7 @@
 
                                     <div class="form-group" id="divtextarea">
                                         <label for="exampleInputEmail1">Alasan</label>
-                                        <textarea type="text" name="alasan" value="{{ $can->alasan }}" class="form-control"
-                                            placeholder=""></textarea>
+                                        <textarea type="text" name="alasan" value="{{ $can->alasan }}" class="form-control" placeholder=""></textarea>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -157,5 +161,4 @@
             }
         });
     </script>
-
 @endsection

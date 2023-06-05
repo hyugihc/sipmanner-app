@@ -27,13 +27,14 @@ class StoreCanRequest extends FormRequest
         $rules = [];
         //submit ke CC
         if ($this->has('submit')) {
-            $changeLeaders = User::where('role_id', 2)->where('provinsi_id', $this->user()->provinsi_id)->get();
-            $changeChampions = User::where('role_id', 3)->where('provinsi_id', $this->user()->provinsi_id)->get();
-            $jumlahCa = $this->jumlah_can - $changeLeaders->count() - $changeChampions->count();
+            // $changeLeaders = User::where('role_id', 2)->where('provinsi_id', $this->user()->provinsi_id)->get();
+            // $changeChampions = User::where('role_id', 3)->where('provinsi_id', $this->user()->provinsi_id)->get();
+            // $jumlahCa = $this->jumlah_can - $changeLeaders->count() - $changeChampions->count();
             $rules['tanggal_sk'] = 'required';
             $rules['perihal_sk'] = 'required';
-            $rules['jumlah_can'] = 'required';
-            $rules['change_agents'] = 'required|array|size:' . $jumlahCa;
+            //$rules['jumlah_can'] = 'required';
+            $rules['change_agents'] = 'required';
+            //$rules['change_agents'] = 'required|array|size:' . $jumlahCa;
         }
         return $rules;
     }
@@ -42,7 +43,7 @@ class StoreCanRequest extends FormRequest
     {
         return [
             'change_agents.required'  => 'Minimal 1 orang untuk ditambahkan',
-            'change_agents.size' => 'Jumlah Change Agent Network harus sebanyak ' . $this->jumlah_can
+            //'change_agents.size' => 'Jumlah Change Agent Network harus sebanyak ' . $this->jumlah_can
         ];
     }
 }

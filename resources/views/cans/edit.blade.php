@@ -71,8 +71,9 @@
                                 @enderror
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tanggal SK</label>
-                                    <input type="date" name="tanggal_sk" value="{{ old('tanggal_sk', $can->tanggal_sk) }}"
-                                        class="form-control" placeholder="">
+                                    <input type="date" name="tanggal_sk"
+                                        value="{{ old('tanggal_sk', $can->tanggal_sk) }}" class="form-control"
+                                        placeholder="">
                                 </div>
                                 @error('tanggal_sk')
                                     <div class="alert alert-danger">{{ $message }}</div>
@@ -97,19 +98,23 @@
                                 @enderror
 
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label>Jumlah Change Agent Network <small>(Termasuk Change Leader & Change
                                             Champions)</small></label>
                                     <input type="number" name="jumlah_can" class="form-control"
                                         value="{{ old('jumlah_can', $can->jumlah_can) }}">
-                                </div>
+                                </div> 
                                 @error('jumlah_can')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
-
+--}}
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Change Network</label>
+                                    <button type="button" class="btn btn-default float-right" data-toggle="modal"
+                                        data-target="#modal-default-name">
+                                        + Tambahkan Change Ambassador (nama)
+                                    </button>
                                     <button type="button" class="btn btn-default float-right" data-toggle="modal"
                                         data-target="#modal-default">
                                         + Tambahkan Change Ambassador
@@ -183,7 +188,8 @@
                                                                 value='{{ $ca->email }}' hidden></td>
                                                         <td>Change Ambassador<input hidden name="change_agents[]"
                                                                 value="{{ $ca->id }}"></td>
-                                                        <td><button type='button' name='remove' id='{{ $ca->id }}'
+                                                        <td><button type='button' name='remove'
+                                                                id='{{ $ca->id }}'
                                                                 class='btn btn-danger btn_remove'>delete</button></td>
                                                     </tr>
                                                 @endforeach
@@ -218,6 +224,8 @@
     </section>
 
     @include('cans.search')
+    <!-- include search-name.blade.php -->
+    @include('cans.search-name')
 
 
 

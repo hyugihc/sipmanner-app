@@ -73,7 +73,7 @@
                                         @endif
                                         <td>{{ $can->nomor_sk }}</td>
                                         <td>{{ $can->tanggal_sk }}</td>
-                                        <td>{{ $can->changeAgents->count() }}</td>
+                                        <td>{{ $can->jumlahCAN() }}</td>
                                         <td>{{ $can->getCanStatus() }}
                                             @if ($can->status_sk == 1)
                                                 <br> <span class="badge badge-info right">Perlu Tindakan</span>
@@ -129,7 +129,7 @@
 
         <script>
             //define data table
-   
+
 
             //toastr
             @if (Session::has('error'))
@@ -139,32 +139,6 @@
                 }
                 toastr.error("{{ Session::get('error') }}");
             @endif
-
-            @if (Session::has('success'))
-                toastr.options = {
-                    "closeButton": true,
-                    "progressBar": false
-                }
-                toastr.success("{{ Session::get('success') }}");
-            @endif
-
-            @if (Session::has('warning'))
-                toastr.options = {
-                    "closeButton": true,
-                    "progressBar": false
-                }
-                toastr.warning("{{ Session::get('warning') }}");
-            @endif
-
-            @if (Session::has('info'))
-                toastr.options = {
-                    "closeButton": true,
-                    "progressBar": false
-                }
-                toastr.info("{{ Session::get('info') }}");
-            @endif
-
-
 
             @if (Session::has('success'))
                 toastr.options = {

@@ -99,7 +99,7 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label>Jumlah Change Agent Network <small>(Termasuk Change Leader & Change
                                             Champions)</small></label>
                                     <input type="number" name="jumlah_can" class="form-control"
@@ -107,14 +107,14 @@
                                 </div>
                                 @error('jumlah_can')
                                     <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
+                                @enderror --}}
 
                                 <div class="form-group">
                                     <label>Change Network</label>
-                                    {{-- <button type="button" class="btn btn-default float-right" data-toggle="modal"
+                                    <button type="button" class="btn btn-default float-right" data-toggle="modal"
                                         data-target="#modal-default-name">
-                                        + Tambahkan Change Ambassador (Beta)
-                                    </button> --}}
+                                        + Tambahkan Change Ambassador (nama)
+                                    </button>
                                     <button type="button" class="btn btn-default float-right" data-toggle="modal"
                                         data-target="#modal-default">
                                         + Tambahkan Change Ambassador (nip)
