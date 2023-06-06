@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Notification;
 use PhpParser\Node\Stmt\TryCatch;
 //define log
 use Illuminate\Support\Facades\Log;
+//define rb2023
+use App\rb2023;
 
 class IntervensiKhususController extends Controller
 {
@@ -46,8 +48,9 @@ class IntervensiKhususController extends Controller
      */
     public function create()
     {
-        //
-        return view('programs.intervensi_khususes.edit-add');
+        // get rb2023
+        $rb2023s = rb2023::all();
+        return view('programs.intervensi_khususes.edit-add', compact('rb2023s'));
     }
 
     /**
@@ -66,6 +69,9 @@ class IntervensiKhususController extends Controller
         $intervensi->provinsi_id = $request->user()->provinsi_id;
         $intervensi->tahun = $year;
         $intervensi->user_id = Auth::user()->id;
+        $intervensi->save();
+        $intervensi->rb2023s()->attach($request->rb2023s);
+
         if ($request->has('draft')) {
             $intervensi->status = 0;
             $intervensi->save();
@@ -109,7 +115,9 @@ class IntervensiKhususController extends Controller
     public function edit(IntervensiKhusus $intervensiKhusus)
     {
         //     
-        return view('programs.intervensi_khususes.edit-add', compact('intervensiKhusus'));
+
+        $rb2023s = rb2023::all();
+        return view('programs.intervensi_khususes.edit-add', compact('intervensiKhusus', 'rb2023s'));
     }
 
     /**
@@ -123,6 +131,9 @@ class IntervensiKhususController extends Controller
     {
         //
         $intervensiKhusus->update($request->all());
+        //update rb2023
+        $intervensiKhusus->save();
+        $intervensiKhusus->rb2023s()->sync($request->rb2023s);
 
         if ($request->has('draft')) {
             $intervensiKhusus->status = 0;
@@ -158,6 +169,7 @@ class IntervensiKhususController extends Controller
     public function destroy(IntervensiKhusus $intervensiKhusus)
     {
         //
+        $intervensiKhusus->rb2023s()->detach();
         $intervensiKhusus->delete();
         return redirect()->route('programs.index')
             ->with('success', 'Program Intervensi Khusus berhasil dihapus');

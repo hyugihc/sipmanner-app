@@ -13,7 +13,7 @@
                 <div class="col-sm-2">
                     @can('create', $intervensiKhusus)
                         <a class="btn btn-block btn-primary btn-sm"
-                            href="{{ route('intervensi-khususes.progress-intervensi-khususes.create', $intervensiKhusus) }}">Create</a>
+                            href="{{ route('intervensi-khususes.progress-intervensi-khususes.create', $intervensiKhusus) }}">Buat Progres</a>
                     @endcan
                 </div><!-- /.col -->
 

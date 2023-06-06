@@ -11,7 +11,7 @@
             <div class="row mb-2">
                 <div class="col-sm-2">
                     <a class="btn btn-block btn-primary btn-sm"
-                        href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.create', $intervensiNasional) }}">Create</a>
+                        href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.create', $intervensiNasional) }}">Buat Progres</a>
                 </div><!-- /.col -->
                 <div class="col-sm-10">
                     <ol class="breadcrumb float-sm-right">

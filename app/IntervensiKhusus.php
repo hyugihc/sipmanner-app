@@ -18,13 +18,22 @@ class IntervensiKhusus extends Model
      * @var array
      */
     protected $fillable = [
-        'nama', 'uraian_kegiatan', 'isu_strategis',  'output', 'timeline', 'ukuran_keberhasilan', 'outcome', 'keterangan'
+        'nama', 'uraian_kegiatan', 'isu_strategis', 'output', 'timeline', 'ukuran_keberhasilan', 'outcome', 'keterangan'
     ];
+
+    //has many rb2023
+    public function rb2023s()
+    {
+        return $this->belongsToMany(rb2023::class);
+    }
+
 
     // public function pias()
     // {
     //     return $this->belongsToMany(Pia::class);
     // }
+
+
 
     public function progress_intervensi_khususes()
     {

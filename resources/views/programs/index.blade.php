@@ -33,10 +33,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-2">
-                        @can('create', App\IntervensiNasional::class)
-                            <a class="btn btn-block btn-primary btn-sm"
-                                href="{{ route('intervensi-nasionals.create') }}">Create</a>
-                        @endcan
+                      
                     </div><!-- /.col -->
                     <div class="col-sm-10">
                         <ol class="breadcrumb float-sm-right">
@@ -139,6 +136,16 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
+                        <div class="card-footer">
+                            @can('create', App\IntervensiNasional::class)
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <a class="btn btn-block btn-primary btn-sm"
+                                            href="{{ route('intervensi-nasionals.create') }}">Buat Intervensi Nasional</a>
+                                    </div>
+                                </div>
+                            @endcan
+                        </div>
                     </div>
                     <!-- /.card -->
                 </div>
@@ -229,17 +236,7 @@
 
         <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-2">
-                        @can('create', App\IntervensiKhusus::class)
-                            <a class="btn btn-block btn-primary btn-sm"
-                                href="{{ route('intervensi-khususes.create') }}">Create</a>
-                        @endcan
-                    </div><!-- /.col -->
-                    <div class="col-sm-10">
 
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
 
@@ -342,6 +339,19 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
+                    <div class="card-footer">
+                        @can('create', App\IntervensiKhusus::class)
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <a class="btn btn-block btn-primary btn-sm"
+                                        href="{{ route('intervensi-khususes.create') }}">Buat
+                                        Rencana Aksi</a>
+                                </div>
+                            </div>
+                        @endcan
+                    </div>
+
+
                 </div>
                 <!-- /.card -->
             </div>
