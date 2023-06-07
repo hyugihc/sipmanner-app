@@ -53,17 +53,12 @@
                                     <dd>{{ $can->jumlahCAN() }}</dd>
                                     <dt>Change Leader</dt>
                                     @foreach ($can->changeLeaders as $user)
-                                        <dd>1. {{ $user->name }} </dd>
+                                        <dd>{{ $user->name }} </dd>
                                     @endforeach
                                     <dt>Change Champions</dt>
-                                    @php
-                                        $i = 1;
-                                    @endphp
+
                                     @foreach ($can->changeChampions as $user)
-                                        <dd>{{ $i }}. {{ $user->name }} </dd>
-                                        @php
-                                            $i++;
-                                        @endphp
+                                        <dd> {{ $user->name }} </dd>
                                     @endforeach
                                     <dt>Change Ambassador</dt>
                                     @php

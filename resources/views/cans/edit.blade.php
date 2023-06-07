@@ -117,7 +117,7 @@
                                     </button>
                                     <button type="button" class="btn btn-default float-right" data-toggle="modal"
                                         data-target="#modal-default">
-                                        + Tambahkan Change Ambassador
+                                        + Tambahkan Change Ambassador (nip)
                                     </button>
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
