@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -54,6 +53,14 @@
                                     <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->uraian_kegiatan }}</dd>
                                     <dt>Isu Strategis</dt>
                                     <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->isu_strategis }}</dd>
+                                    <dt>Dukungan RB</dt>
+                                    <dd>
+                                        @foreach ($intervensiKhusus->rb2023s as $item)
+                                            <span class="badge badge-info right"> {{ $item->nama }}</span>
+                                        @endforeach
+                                    </dd>
+
+
                                     <dt>Output</dt>
                                     <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->output }} </dd>
                                     <dt>Timeline</dt>
@@ -70,17 +77,21 @@
                                         @case(0)
                                             <dd>Draft</dd>
                                         @break
+
                                         @case(1)
                                             <dd>Belum Disetujui</dd>
                                         @break
+
                                         @case(2)
                                             <dd>Sudah Disetujui</dd>
                                         @break
+
                                         @case(3)
                                             <dd>Tidak Disetujui</dd>
                                             <dt>Alasan</dt>
                                             <dd style="white-space: pre-wrap;">{{ $intervensiKhusus->alasan }}</dd>
                                         @break
+
                                         @default
                                             <dd>Tidak ada yang sesuai</dd>
                                     @endswitch
@@ -97,8 +108,7 @@
 
                                     <div class="form-group" id="divtextarea">
                                         <label>Alasan</label>
-                                        <textarea type="text" name="alasan" value="{{ $intervensiKhusus->alasan }}"
-                                            class="form-control" placeholder=""></textarea>
+                                        <textarea type="text" name="alasan" value="{{ $intervensiKhusus->alasan }}" class="form-control" placeholder=""></textarea>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -141,5 +151,4 @@
             }
         });
     </script>
-
 @endsection
