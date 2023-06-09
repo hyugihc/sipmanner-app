@@ -39,6 +39,8 @@ Route::group(['middleware' => 'auth'], function () {
     //====================================USER====================================
 
     // Route::get('/searchuser_by_name_sso/{name}', 'UserController@searchuser_by_name_sso');
+    // user provinsi
+    Route::get('/users/unit', 'UserController@showRolePerUnit')->name('users.provinsi');
     Route::get('/users/recap', 'UserController@recap')->name("users.recap");
     Route::get('/users/index/', 'UserController@index');
     Route::get('/users/index/{query}', 'UserController@queryIndex')->name('users.index.query');
@@ -55,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/refresh_jabatan_eselon_ii', 'UserController@refreshJabatanEselonII')->name('refresh_jabatan_eselon_ii');
     // revoke jabatan user tertentu
     Route::get('/revoke_jabatan/{id}', 'UserController@revokeJabatan')->name('revoke_jabatan');
+
 
 
     //======================================DATA=====================================

@@ -149,6 +149,15 @@ class UserController extends Controller
         return view('users.recap', compact('provinsis'));
     }
 
+    public function showRolePerUnit()
+    {
+        //ambil provinsi dari user
+        $provinsi = Auth::user()->provinsi;
+
+
+        return view('users.role-per-unit', compact('provinsi'));
+    }
+
     public function rekapCan()
     {
         $provinsis = Provinsi::get();

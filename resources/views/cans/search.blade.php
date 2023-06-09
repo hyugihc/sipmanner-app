@@ -26,7 +26,6 @@
                           <tr>
                               <th>Nip Lama</th>
                               <th>Name</th>
-                              <th>Email</th>
                           </tr>
                       </thead>
                       <tbody id="user_table"></tbody>
@@ -105,14 +104,11 @@
                   if (response['data'] != null) {
                       var id = response['data'].id;
                       var name = response['data'].name;
-                      var email = response['data'].email;
                       var nip_lama = response['data'].nip_lama;
                       tr_str = "<tr><td class='id'></td>" +
                           "<td>" + nip_lama + "<input hidden name='ca_nip[]' value ='" + nip_lama + "'>" +
                           "</td>" +
                           "<td>" + name + "<input hidden name='ca_name[]' value = '" + name + "'  >" +
-                          "</td>" +
-                          "<td>" + email + "<input hidden name='ca_email[]' value = '" + email + "'  >" +
                           "</td>" +
                           "<td> Change Ambassador <input hidden name = 'change_agents[]' value = '" +
                           id + "'> </td>" +
@@ -122,7 +118,6 @@
                       var tr_str2 = "<tr>" +
                           "<td>" + nip_lama + "</td>" +
                           "<td>" + name + "</td>" +
-                          "<td>" + email + "</td>" +
                           "</tr>";
                       $("#userTable tbody").append(tr_str2);
                       $("#sp_button").html("Search");

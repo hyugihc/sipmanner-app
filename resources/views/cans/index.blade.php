@@ -14,9 +14,7 @@
             <div class="row mb-2">
 
                 <div class="col-sm-2">
-                    @can('create', App\Can::class)
-                        <a class="btn btn-block btn-primary btn-sm" href="{{ route('cans.create') }}">Create</a>
-                    @endcan
+
                 </div><!-- /.col -->
                 <div class="col-sm-4">
                 </div><!-- /.col -->
@@ -111,6 +109,17 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
+                    <div class="card-footer">
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                @can('create', App\Can::class)
+                                    <a class="btn btn-block btn-primary btn-sm" href="{{ route('cans.create') }}">Upload SK CAN</a>
+                                @endcan
+                            </div>
+                        </div>
+
+                    </div>
 
                 </div>
                 <!-- /.card -->

@@ -143,15 +143,15 @@
 
 
 
-                @can('viewAny', App\User::class)
-                    <li class="nav-header">Manajemen User</li>
 
+                <li class="nav-header">Manajemen User</li>
+                @can('viewAny', App\User::class)
                     <li class="nav-item ">
                         <a href="{{ route('users.index') }}"
                             class="nav-link {{ (Request::is('users*') and !Request::is('users/recap*')) ? 'active' : '' }}">
                             <i class="nav-icon far fa-plus-square"></i>
                             <p>
-                                User
+                                Manage User
                             </p>
                         </a>
                     </li>
@@ -161,11 +161,25 @@
                             class="nav-link {{ Request::is('users/recap*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
-                                Manage User
+                                User
                             </p>
                         </a>
                     </li>
                 @endcan
+                @if (Auth::user()->isChangeChampion())
+                    <li class="nav-item ">
+                        <a href="{{ route('users.provinsi') }}"
+                            class="nav-link {{ Request::is('users/unit*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-table"></i>
+                            <p>
+                                Pengguna
+                            </p>
+                        </a>
+                    </li>
+                @endif
+
+
+
 
                 <li class="nav-header">Lainnya</li>
                 <li class="nav-item">

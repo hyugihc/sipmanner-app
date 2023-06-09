@@ -125,7 +125,6 @@
                                                 <th>No</th>
                                                 <th>Nip Lama</th>
                                                 <th>Nama</th>
-                                                <th>Email</th>
                                                 <th>Role</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -136,7 +135,6 @@
                                                     <td class="id"></td>
                                                     <td>{{ $user->nip_lama }}</td>
                                                     <td>{{ $user->name }}</td>
-                                                    <td>{{ $user->email }}</td>
                                                     <td>Change Leader</td>
                                                     <td>-</td>
                                                 </tr>
@@ -146,7 +144,6 @@
                                                     <td class="id"></td>
                                                     <td>{{ $user->nip_lama }}</td>
                                                     <td>{{ $user->name }}</td>
-                                                    <td>{{ $user->email }}</td>
                                                     <td>Change Champions</td>
                                                     <td>-</td>
                                                 </tr>
@@ -164,8 +161,6 @@
                                                                 value='{{ old('ca_nip')[$i] }}' hidden> </td>
                                                         <td>{{ old('ca_name')[$i] }} <input name='ca_name[]'
                                                                 value='{{ old('ca_name')[$i] }}' hidden></td>
-                                                        <td>{{ old('ca_email')[$i] }} <input name='ca_email[]'
-                                                                value='{{ old('ca_email')[$i] }}' hidden></td>
                                                         <td>Change Ambassador<input hidden name='change_agents[]'
                                                                 value='{{ old('change_agents')[$i] }}'></td>
                                                         <td><button type='button' name='remove'
@@ -184,8 +179,6 @@
                                                                 value='{{ $ca->nip_lama }}' hidden></td>
                                                         <td>{{ $ca->name }}<input name='ca_name[]'
                                                                 value='{{ $ca->name }}' hidden></td>
-                                                        <td>{{ $ca->email }}<input name='ca_email[]'
-                                                                value='{{ $ca->email }}' hidden></td>
                                                         <td>Change Ambassador<input hidden name="change_agents[]"
                                                                 value="{{ $ca->id }}"></td>
                                                         <td><button type='button' name='remove'

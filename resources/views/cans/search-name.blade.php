@@ -65,49 +65,25 @@
                   //pisahkan label menjadi 2 bagian dengan pemisah - dan simpan ke variabel nip_lama dan name
                   var nip_lama = item.label.split("-")[0];
                   var name = item.label.split("-")[1];
-                  //ambil email dari /search_user_by_niplama/nip_lama 
-                  $.ajax({
-                      url: "http://localhost:8000/search_user_by_niplama/" +
-                          nip_lama,
-                      dataType: "text",
-                      success: function(data) {
-                          console.log(data);
-                          var email = data;
-                          n_tr_str =
-                              "<tr><td class='id'></td>" +
-                              "<td>" + nip_lama +
-                              "<input hidden name='ca_nip[]' value ='" +
-                              nip_lama +
-                              "'>" +
-                              "</td>" +
-                              "<td>" + name +
-                              "<input hidden name='ca_name[]' value = '" +
-                              name + "'  >" +
-                              "</td>" +
-                              "<td>" + email +
-                              "<input hidden name='ca_email[]' value = '" +
-                              email + "'  >" +
-                              "</td>" +
-                              "<td> Change Ambassador <input hidden name = 'change_agents[]' value = '" +
-                              item.value + "'> </td>" +
-                              "<td>" +
-                              "<button type='button' name='remove' id='" +
-                              item.value +
-                              "' class='btn btn-danger btn_remove'>delete</button>" +
-                              "</td>" +
-                              "</tr>";
-
-                      },
-                      error: function(response) {
-                          console.log("response error");
-
-                      }
-                  });
-
-
-
-
-
+                  n_tr_str =
+                      "<tr><td class='id'></td>" +
+                      "<td>" + nip_lama +
+                      "<input hidden name='ca_nip[]' value ='" +
+                      nip_lama +
+                      "'>" +
+                      "</td>" +
+                      "<td>" + name +
+                      "<input hidden name='ca_name[]' value = '" +
+                      name + "'  >" +
+                      "</td>" +
+                      "<td> Change Ambassador <input hidden name = 'change_agents[]' value = '" +
+                      item.value + "'> </td>" +
+                      "<td>" +
+                      "<button type='button' name='remove' id='" +
+                      item.value +
+                      "' class='btn btn-danger btn_remove'>delete</button>" +
+                      "</td>" +
+                      "</tr>";
 
                   $('#n_add_pegawai').prop('disabled', false);
               }
@@ -125,7 +101,6 @@
               $('#example1 tbody').append(n_tr_str);
               console.log(n_tr_str);
               $('#n_input').val('');
-
               $('#n_input').focus();
               updateRowOrder();
               $(this).prop('disabled', true);
