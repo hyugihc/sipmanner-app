@@ -30,10 +30,8 @@ class StoreProgressIntKhusRequest extends FormRequest
             'keterangan' => 'nullable',
         ];
         if ($this->getMethod() == 'POST') {
-            $rules['upload_dokumentasi'] = 'required|mimes:pdf|max:5000';
             $rules['upload_bukti_dukung'] = 'required|mimes:pdf|max:5000';
         } else {
-            $rules['upload_dokumentasi'] = 'nullable|mimes:pdf|max:5000';
             $rules['upload_bukti_dukung'] = 'nullable|mimes:pdf|max:5000';
         }
         return $rules;

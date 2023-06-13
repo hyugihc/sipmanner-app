@@ -74,12 +74,6 @@ class ProgressIntervensiKhususController extends Controller
         $progressIntervensiKhusus->intervensi_khusus_id = $intervensiKhusus->id;
         $progressIntervensiKhusus->status = ($request->has('draft')) ? 0 : 1;
 
-        if ($request->has("upload_dokumentasi")) {
-            $progressIntervensiKhusus->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
-                'piks',
-                $progressIntervensiKhusus->getNamaFileDokumentasi()
-            );
-        }
 
         if ($request->has("upload_bukti_dukung")) {
             $progressIntervensiKhusus->upload_bukti_dukung = $request->file('upload_bukti_dukung')->storeAs(
@@ -188,16 +182,6 @@ class ProgressIntervensiKhususController extends Controller
         $progressIntervensiKhusus->update($request->all());
         $progressIntervensiKhusus->status = ($request->has('draft')) ? 0 : 1;
 
-        if ($request->has("upload_dokumentasi")) {
-            if ($progressIntervensiKhusus->upload_dokumentasi != null) {
-                Storage::delete($progressIntervensiKhusus->upload_dokumentasi);
-            }
-            $progressIntervensiKhusus->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
-                'piks',
-                $progressIntervensiKhusus->getNamaFileDokumentasi()
-            );
-        }
-
         if ($request->has("upload_bukti_dukung")) {
             if ($progressIntervensiKhusus->upload_bukti_dukung == null) {
                 Storage::delete($progressIntervensiKhusus->upload_bukti_dukung);
@@ -271,7 +255,7 @@ class ProgressIntervensiKhususController extends Controller
         if ($progressIntervensiKhusus->upload_dokumentasi != null) {
             Storage::delete($progressIntervensiKhusus->upload_dokumentasi);
         }
-        if ($progressIntervensiKhusus->upload_bukti_dukung == null) {
+        if ($progressIntervensiKhusus->upload_bukti_dukung != null) {
             Storage::delete($progressIntervensiKhusus->upload_bukti_dukung);
         }
         $progressIntervensiKhusus->delete();

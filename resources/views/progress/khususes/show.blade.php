@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -50,14 +49,15 @@
                                 <dd> {{ $progressIntervensiKhusus->realisasi_pelaksanaan_kegiatan }} </dd>
                                 <dt>Realisasi Capaian Keberhasilan %</dt>
                                 <dd> {{ $progressIntervensiKhusus->realisasi_capaian_keberhasilan }} </dd>
-                                <dt>Upload Dokumentasi</dt>
+
                                 @if ($progressIntervensiKhusus->upload_dokumentasi != null)
+                                    <dt>Dokumentasi</dt>
                                     <dd> <a href="{{ route('piks.download.dok', $progressIntervensiKhusus) }}">
                                             Dokumentasi</a>
                                     @else
-                                    <dd>Belum ada dokumentasi yang di upload</dd>
+                                    <dd></dd>
                                 @endif
-                                <dt>Upload Bukti Dukung</dt>
+                                <dt>Bukti Dukung</dt>
                                 @if ($progressIntervensiKhusus->upload_bukti_dukung != null)
                                     <dd> <a href="{{ route('piks.download.duk', $progressIntervensiKhusus) }}"> Bukti
                                             Dukung</a>
@@ -91,8 +91,7 @@
 
                                         <div class="form-group" id="divtextarea">
                                             <label>Alasan</label>
-                                            <textarea type="text" name="alasan"
-                                                value="{{ $progressIntervensiKhusus->alasan }}" class="form-control"
+                                            <textarea type="text" name="alasan" value="{{ $progressIntervensiKhusus->alasan }}" class="form-control"
                                                 placeholder=""></textarea>
                                         </div>
                                         <div class="card-footer">
@@ -137,5 +136,4 @@
             }
         });
     </script>
-
 @endsection

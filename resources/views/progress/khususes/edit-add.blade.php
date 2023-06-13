@@ -19,7 +19,7 @@
                         @if (isset($progressIntervensiKhusus))
                             <li class="breadcrumb-item active">{{ $progressIntervensiKhusus->tanggal }}</li>
                         @else
-                            <li class="breadcrumb-item active">Create</li>
+                            <li class="breadcrumb-item active">Buat Progres</li>
                         @endif
                     </ol>
                 </div><!-- /.col -->
@@ -37,7 +37,7 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Create Progres {{ $intervensiKhusus->nama }}</h3>
+                            <h3 class="card-title">Buat Progres {{ $intervensiKhusus->nama }}</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -74,7 +74,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Penjelasan progress</label>
+                                <label>Penjelasan progres</label>
                                 <input type="text" name="uraian_program" class="form-control" placeholder=""
                                     value="{{ old('uraian_program', isset($progressIntervensiKhusus) ? $progressIntervensiKhusus->uraian_program : '') }}">
                             </div>
@@ -102,17 +102,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Upload Dokumentasi</label>
-                                @if (isset($progressIntervensiKhusus))
-                                    <a href="{{ route('piks.download.dok', $progressIntervensiKhusus) }}"> Dokumentasi
-                                    </a>
-                                @endif
-                                <input type="file" accept=".pdf" name="upload_dokumentasi" class="form-control"
-                                    placeholder="">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Upload Bukti Dukung</label>
+                                <label>Upload Dokumentasi & Bukti Dukung</label>
                                 @if (isset($progressIntervensiKhusus))
                                     <a href="{{ route('piks.download.duk', $progressIntervensiKhusus) }}"> Bukti
                                         Dukung</a>
