@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -44,17 +43,23 @@
                             <dl>
                                 <dt>Penjelasan progress</dt>
                                 <dd>{{ $progressIntervensiNasional->uraian_program }}</dd>
-                                <dt>Bulan</dt>
-                                <dd>{{ $progressIntervensiNasional->getBulan() }}</dd>
+
+                                @if ($progressIntervensiNasional->tanggal != null)
+                                    <dt>Tanggal</dt>
+                                    <dd>{{ $progressIntervensiNasional->tanggal }}</dd>
+                                @else
+                                    <dt>Bulan</dt>
+                                    <dd>{{ $progressIntervensiNasional->getBulan() }}</dd>
+                                @endif
                                 <dt>Realisasi Pelaksanaan Kegiatan %</dt>
                                 <dd> {{ $progressIntervensiNasional->realisasi_pelaksanaan_kegiatan }} </dd>
 
-                                <dt>Dokumentasi</dt>
                                 @if ($progressIntervensiNasional->upload_dokumentasi != null)
+                                    <dt>Dokumentasi</dt>
                                     <dd> <a href="{{ route('pins.download.dok', $progressIntervensiNasional) }}">
                                             Arsip Dokumentasi</a>
                                     @else
-                                    <dd>Belum ada dokumentasi yang di upload</dd>
+                                    <dd></dd>
                                 @endif
                                 <dt>Bukti Dukung</dt>
                                 @if ($progressIntervensiNasional->upload_bukti_dukung != null)
@@ -90,8 +95,7 @@
 
                                         <div class="form-group" id="divtextarea">
                                             <label>Alasan</label>
-                                            <textarea type="text" name="alasan"
-                                                value="{{ $progressIntervensiNasional->alasan }}" class="form-control"
+                                            <textarea type="text" name="alasan" value="{{ $progressIntervensiNasional->alasan }}" class="form-control"
                                                 placeholder=""></textarea>
                                         </div>
                                         <div class="card-footer">
@@ -137,5 +141,4 @@
             }
         });
     </script>
-
 @endsection

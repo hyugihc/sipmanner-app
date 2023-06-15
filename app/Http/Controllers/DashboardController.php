@@ -162,7 +162,7 @@ class DashboardController extends Controller
         //progress Intervensi Nasional
         $pinMaxs = array();
         foreach ($intervensiNasionalProvinsiKeys as $inpk => $value) {
-            $pinMax = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $value)->where('status', 2)->orderByDesc('bulan')->first();
+            $pinMax = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $value)->where('status', 2)->orderByDesc('realisasi_pelaksanaan_kegiatan')->first();
             if ($pinMax != null) {
                 $pinMaxs[] = $pinMax;
             }

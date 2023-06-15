@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Sipmanner-App')</title>
+    <link rel="icon" href="{{ asset('') }}assets/dist/img/top.png">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/fontawesome-free/css/all.min.css">

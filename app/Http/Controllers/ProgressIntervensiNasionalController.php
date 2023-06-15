@@ -75,12 +75,7 @@ class ProgressIntervensiNasionalController extends Controller
         $progressIntervensiNasional = ProgressIntervensiNasional::create($request->all());
         $progressIntervensiNasional->status = ($request->has('draft')) ? 0 : 1;
         $progressIntervensiNasional->intervensi_nasional_provinsi_id = $intervensiNasionalProvinsi->id;
-        if ($request->has("upload_dokumentasi")) {
-            $progressIntervensiNasional->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
-                'pins',
-                $progressIntervensiNasional->getNamaFileDokumentasi()
-            );
-        }
+        $progressIntervensiNasional->save();
         if ($request->has("upload_bukti_dukung")) {
             $progressIntervensiNasional->upload_bukti_dukung = $request->file('upload_bukti_dukung')->storeAs(
                 'pins',
@@ -121,7 +116,7 @@ class ProgressIntervensiNasionalController extends Controller
         //         }
         //     }
         // }
-        
+
         $progressIntervensiNasional->save();
 
         if ($progressIntervensiNasional->status == 1) {
@@ -191,15 +186,7 @@ class ProgressIntervensiNasionalController extends Controller
         $progressIntervensiNasional->update($request->all());
 
 
-        if ($request->has("upload_dokumentasi")) {
-            if ($progressIntervensiNasional->upload_dokumentasi != null) {
-                Storage::delete($progressIntervensiNasional->upload_dokumentasi);
-            }
-            $progressIntervensiNasional->upload_dokumentasi = $request->file('upload_dokumentasi')->storeAs(
-                'pins',
-                $progressIntervensiNasional->getNamaFileDokumentasi()
-            );
-        }
+
         if ($request->has("upload_bukti_dukung")) {
             if ($progressIntervensiNasional->upload_bukti_dukung != null) {
                 Storage::delete($progressIntervensiNasional->upload_bukti_dukung);

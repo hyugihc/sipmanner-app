@@ -81,40 +81,13 @@
 
                             <div class="form-group">
                                 <label>Penjelasan Progress</label>
-                                <textarea type="text" name="uraian_program" class="form-control"
-                                    placeholder="">{{ old('uraian_program', isset($progressIntervensiNasional) ? $progressIntervensiNasional->uraian_program : '') }}</textarea>
+                                <textarea type="text" name="uraian_program" class="form-control" placeholder="">{{ old('uraian_program', isset($progressIntervensiNasional) ? $progressIntervensiNasional->uraian_program : '') }}</textarea>
                             </div>
 
-
-
                             <div class="form-group">
-                                <label>Bulan</label>
-                                <select class="form-control" name="bulan" id="">
-                                    <option value="1" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 1)
-                                        selected='selected' @endif @endisset>Januari</option>
-                                    <option value="2" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 2)
-                                        selected='selected' @endif @endisset>Februari</option>
-                                    <option value="3" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 3)
-                                        selected='selected' @endif @endisset>Maret</option>
-                                    <option value="4" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 4)
-                                        selected='selected' @endif @endisset>April</option>
-                                    <option value="5" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 5)
-                                        selected='selected' @endif @endisset>Mei</option>
-                                    <option value="6" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 6)
-                                        selected='selected' @endif @endisset>Juni</option>
-                                    <option value="7" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 7)
-                                        selected='selected' @endif @endisset>Juli</option>
-                                    <option value="8" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 8)
-                                        selected='selected' @endif @endisset>Agustus</option>
-                                    <option value="9" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 9)
-                                        selected='selected' @endif @endisset>September</option>
-                                    <option value="10" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 10)
-                                        selected='selected' @endif @endisset>Oktober</option>
-                                    <option value="11" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 11)
-                                        selected='selected' @endif @endisset>November</option>
-                                    <option value="12" @isset($progressIntervensiNasional) @if ($progressIntervensiNasional->bulan == 12)
-                                        selected='selected' @endif @endisset>Desember</option>
-                                </select>
+                                <label>Tanggal</label>
+                                <input type="date" name="tanggal" class="form-control" placeholder=""
+                                    value="{{ old('tanggal', isset($progressIntervensiNasional) ? $progressIntervensiNasional->tanggal : '') }}">
                             </div>
 
                             <div class="form-group">
@@ -126,20 +99,8 @@
                             </div>
 
 
-
                             <div class="form-group">
-                                <label>Upload Dokumentasi</label>
-                                @if (isset($progressIntervensiNasional))
-                                    <a href="{{ route('pins.download.dok', $progressIntervensiNasional) }}"> Dokumentasi
-                                    </a>
-                                @endif
-                                <input type="file" accept=".pdf" name="upload_dokumentasi" class="form-control"
-                                    placeholder="" value="">
-                            </div>
-
-
-                            <div class="form-group">
-                                <label>Upload Bukti Dukung</label>
+                                <label>Upload Bukti Dukung & Dokumentasi</label>
                                 @if (isset($progressIntervensiNasional))
                                     <a href="{{ route('pins.download.duk', $progressIntervensiNasional) }}">Bukti Dukung
                                     </a>

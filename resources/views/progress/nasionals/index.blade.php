@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
 
@@ -10,8 +9,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-2">
-                    <a class="btn btn-block btn-primary btn-sm"
-                        href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.create', $intervensiNasional) }}">Buat Progres</a>
+
                 </div><!-- /.col -->
                 <div class="col-sm-10">
                     <ol class="breadcrumb float-sm-right">
@@ -92,7 +90,6 @@
                                                 @can('update', $progress_program)
                                                     <a class="btn btn-block btn-warning btn-xs"
                                                         href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.edit', [$intervensiNasional, $progress_program]) }}">Edit</a>
-
                                                 @endcan
 
                                                 @can('delete', $progress_program)
@@ -113,6 +110,16 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <a class="btn btn-block btn-primary btn-sm"
+                                    href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.create', $intervensiNasional) }}">Buat
+                                    Progres</a>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
                 <!-- /.card -->
             </div>
@@ -124,20 +131,19 @@
         <script>
             @if (Session::has('success'))
                 toastr.options = {
-                "closeButton": true,
-                "progressBar": false
+                    "closeButton": true,
+                    "progressBar": false
                 }
                 toastr.success("{{ Session::get('success') }}");
             @endif
             @if (Session::has('error'))
                 toastr.options = {
-                "closeButton": true,
-                "progressBar": false
+                    "closeButton": true,
+                    "progressBar": false
                 }
                 toastr.error("{{ Session::get('error') }}");
             @endif
         </script>
 
     </section>
-
 @endsection
