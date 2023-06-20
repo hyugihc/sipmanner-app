@@ -112,17 +112,15 @@
                                                     </tr>
                                                     <tr>
                                                         <th>Kendala</th>
-                                                        <td colspan="4"><input
+                                                        <td colspan="4"><textarea rows="3"
                                                                 name="intervensiNasional_kendala[{{ $pi->id }}]"
-                                                                class="form-control" type="text"
-                                                                value="{{ $pi->pivot->kendala }}"></td>
+                                                                class="form-control" type="text">{{ $pi->pivot->kendala }}</textarea></td>
                                                     </tr>
                                                     <tr>
                                                         <th>Solusi</th>
-                                                        <td colspan="4"><input
+                                                        <td colspan="4"><textarea rows="3"
                                                                 name="intervensiNasional_solusi[{{ $pi->id }}]"
-                                                                class="form-control" type="text"
-                                                                value="{{ $pi->pivot->solusi }}"></td>
+                                                                class="form-control" type="text">{{ $pi->pivot->solusi }}</textarea></td>
                                                     </tr>
                                                     @php
                                                         $i++;
@@ -176,17 +174,15 @@
                                                     </tr>
                                                     <tr>
                                                         <th>Kendala</th>
-                                                        <td colspan="5"><input
+                                                        <td colspan="5"><textarea rows="3"
                                                                 name="intervensiKhusus_kendala[{{ $pi->id }}]"
-                                                                class="form-control" type="text"
-                                                                value="{{ $pi->pivot->kendala }}"></td>
+                                                                class="form-control" type="text">{{ $pi->pivot->kendala }}</textarea></td>
                                                     </tr>
                                                     <tr>
                                                         <th>Solusi</th>
-                                                        <td colspan="5"><input
+                                                        <td colspan="5"><textarea rows="3"
                                                                 name="intervensiKhusus_solusi[{{ $pi->id }}]"
-                                                                class="form-control" type="text"
-                                                                value="{{ $pi->pivot->solusi }}"></td>
+                                                                class="form-control" type="text">{{ $pi->pivot->solusi }}</textarea></td>
                                                     </tr>
                                                     {{-- <tr @if ($pi->user_id != Auth::user()->id) style="display:none;" @endif>
                                                         <th>Kendala</th>

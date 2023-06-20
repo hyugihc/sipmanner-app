@@ -75,8 +75,7 @@
 
                             <div class="form-group">
                                 <label>Penjelasan progres</label>
-                                <input type="text" name="uraian_program" class="form-control" placeholder=""
-                                    value="{{ old('uraian_program', isset($progressIntervensiKhusus) ? $progressIntervensiKhusus->uraian_program : '') }}">
+                                <textarea type="text" rows="3" name="uraian_program" class="form-control" placeholder="">{{ old('uraian_program', isset($progressIntervensiKhusus) ? $progressIntervensiKhusus->uraian_program : '') }}</textarea>
                             </div>
 
                             <div class="form-group">
@@ -113,8 +112,7 @@
 
                             <div class="form-group">
                                 <label>kendala dan keterangan lain</label>
-                                <input type="text" name="keterangan" class="form-control" placeholder=""
-                                    value="{{ old('keterangan', isset($progressIntervensiKhusus) ? $progressIntervensiKhusus->keterangan : '') }}">
+                                <textarea type="text" rows="3" name="keterangan" class="form-control" placeholder="">{{ old('keterangan', isset($progressIntervensiKhusus) ? $progressIntervensiKhusus->keterangan : '') }}</textarea>
                             </div>
 
 
@@ -122,8 +120,7 @@
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <input type="submit" class="btn btn-primary" name=" draft" value="Simpan sebagai draft">
-                            <input type="submit" class="btn btn-primary" name=" submit"
-                                value="{{ isset($progressIntervensiKhusus) ? 'Simpan' : 'Submit' }}">
+                            <input type="submit" class="btn btn-primary" name=" submit">
                         </div>
                         </form>
                     </div>

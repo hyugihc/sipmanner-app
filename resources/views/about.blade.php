@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sipmanner-app</title>
+    
+    <link rel="icon" href="{{ asset('') }}assets/dist/img/top.png">
 
 
     <!-- Google Font: Source Sans Pro -->
@@ -75,11 +77,55 @@
             <strong>Copyright &copy; 2023 <a href="https://bps.go.id">Transformasi Statistik BPS</a>.</strong>
 
             <div class=" d-none d-sm-inline-block">
-                <b>Version</b> 2.1.0
+                <b>Version</b> 2.2.0
             </div>
         </div>
     </div>
     <!-- /.center -->
+    <!-- Main content -->
+    <br>
+    <br>
+
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-6">
+            <section class="content">
+
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Change Log</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        Versi 2.2.0
+                        <ul>
+                            {{-- judul --}}
+                            <li>Menggabungkan input dokumentasi dan bukti dukung pada menu <b>Progres</b></li>
+                            <li>Penambahan Fitur Pencarian by Nama pada menu <b>Data</b></li>
+                            <li>Perbaikan bug pada logo <b>Sipmanner</b></li>
+                        </ul>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+
+                    </div>
+                    <!-- /.card-footer-->
+                </div>
+                <!-- /.card -->
+
+            </section>
+        </div>
+    </div>
+
+    <!-- /.content -->
 
     <!-- jQuery -->
     <script src="{{ asset('') }}assets/plugins/jquery/jquery.min.js"></script>
@@ -91,10 +137,9 @@
 
     <script>
         @if (Session::has('success'))
-            toastr.options =
-            {
-            "closeButton" : true,
-            "progressBar" : false
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": false
             }
             toastr.success("{{ Session::get('success') }}");
         @endif

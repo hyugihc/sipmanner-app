@@ -81,7 +81,7 @@
 
                             <div class="form-group">
                                 <label>Penjelasan Progress</label>
-                                <textarea type="text" name="uraian_program" class="form-control" placeholder="">{{ old('uraian_program', isset($progressIntervensiNasional) ? $progressIntervensiNasional->uraian_program : '') }}</textarea>
+                                <textarea rows="3"  type="text" name="uraian_program" class="form-control" placeholder="">{{ old('uraian_program', isset($progressIntervensiNasional) ? $progressIntervensiNasional->uraian_program : '') }}</textarea>
                             </div>
 
                             <div class="form-group">
@@ -111,8 +111,7 @@
 
                             <div class="form-group">
                                 <label>kendala dan keterangan lain</label>
-                                <input type="text" name="keterangan" class="form-control" placeholder=""
-                                    value="{{ old('keterangan', isset($progressIntervensiNasional) ? $progressIntervensiNasional->keterangan : '') }}">
+                                <textarea rows="3" type="text" name="keterangan" class="form-control" placeholder="">{{ old('keterangan', isset($progressIntervensiNasional) ? $progressIntervensiNasional->keterangan : '') }}</textarea>
                             </div>
 
                         </div>

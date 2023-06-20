@@ -23,14 +23,14 @@ class StoreProgressIntKhusRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'uraian_program' => 'required|max:500',
-            'tanggal' => 'required',
-            'realisasi_pelaksanaan_kegiatan' => 'required',
-            'keterangan' => 'nullable',
-        ];
-        if ($this->getMethod() == 'POST') {
+        $rules = [];
+        if ($this->has('submit')) {
             $rules['upload_bukti_dukung'] = 'required|mimes:pdf|max:5000';
+            $rules['uraian_program'] = 'required|max:2000';
+            $rules['tanggal'] = 'required';
+            $rules['realisasi_pelaksanaan_kegiatan'] = 'required';
+            $rules['realisasi_capaian_keberhasilan'] = 'required';
+            $rules['keterangan'] = 'nullable';
         } else {
             $rules['upload_bukti_dukung'] = 'nullable|mimes:pdf|max:5000';
         }

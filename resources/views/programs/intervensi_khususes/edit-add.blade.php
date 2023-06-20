@@ -73,11 +73,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Uraian Kegiatan*</label>
-                                <textarea type="text" name="uraian_kegiatan" class="form-control" placeholder="">{{ old('uraian_kegiatan', isset($intervensiKhusus) ? $intervensiKhusus->uraian_kegiatan : '') }}</textarea>
+                                <textarea rows="3" type="text" name="uraian_kegiatan" class="form-control" placeholder="">{{ old('uraian_kegiatan', isset($intervensiKhusus) ? $intervensiKhusus->uraian_kegiatan : '') }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label>Isu Strategis*</label>
-                                <textarea type="text" name="isu_strategis" class="form-control" placeholder="">{{ old('isu_strategis', isset($intervensiKhusus) ? $intervensiKhusus->isu_strategis : '') }}</textarea>
+                                <textarea rows="3" type="text" name="isu_strategis" class="form-control" placeholder="">{{ old('isu_strategis', isset($intervensiKhusus) ? $intervensiKhusus->isu_strategis : '') }}</textarea>
                             </div>
 
                             {{-- select2 rb2023 --}}
@@ -120,28 +120,28 @@
 
                             <div class="form-group">
                                 <label>Output*</label>
-                                <textarea type="text" name="output" class="form-control" placeholder="">{{ old('output', isset($intervensiKhusus) ? $intervensiKhusus->output : '') }}</textarea>
+                                <textarea rows="3" type="text" name="output" class="form-control" placeholder="">{{ old('output', isset($intervensiKhusus) ? $intervensiKhusus->output : '') }}</textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>Timeline*</label>
-                                <textarea type="text" name="timeline" class="form-control" placeholder="">{{ old('timeline', isset($intervensiKhusus) ? $intervensiKhusus->timeline : '') }}</textarea>
+                                <textarea rows="3" type="text" name="timeline" class="form-control" placeholder="">{{ old('timeline', isset($intervensiKhusus) ? $intervensiKhusus->timeline : '') }}</textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>Ukuran Keberhasilan*</label>
-                                <textarea type="text" name="ukuran_keberhasilan" class="form-control" placeholder="">{{ old('ukuran_keberhasilan', isset($intervensiKhusus) ? $intervensiKhusus->ukuran_keberhasilan : '') }}</textarea>
+                                <textarea rows="3" type="text" name="ukuran_keberhasilan" class="form-control" placeholder="">{{ old('ukuran_keberhasilan', isset($intervensiKhusus) ? $intervensiKhusus->ukuran_keberhasilan : '') }}</textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>Outcome*</label>
-                                <textarea type="text" name="outcome" class="form-control" placeholder="">{{ old('outcome', isset($intervensiKhusus) ? $intervensiKhusus->outcome : '') }}</textarea>
+                                <textarea rows="3" type="text" name="outcome" class="form-control" placeholder="">{{ old('outcome', isset($intervensiKhusus) ? $intervensiKhusus->outcome : '') }}</textarea>
                             </div>
 
 
                             <div class="form-group">
                                 <label>Keterangan</label>
-                                <textarea type="text" name="keterangan" class="form-control" placeholder="">{{ old('keterangan', isset($intervensiKhusus) ? $intervensiKhusus->keterangan : '') }}</textarea>
+                                <textarea rows="3" type="text" name="keterangan" class="form-control" placeholder="">{{ old('keterangan', isset($intervensiKhusus) ? $intervensiKhusus->keterangan : '') }}</textarea>
                             </div>
 
                         </div>
