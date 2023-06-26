@@ -48,7 +48,7 @@ class CanController extends Controller
         } elseif ($user->isChangeChampion()) {
             $cans =  Can::where('tahun_sk', $year)->orderByDesc('created_at')->where('provinsi_id', $user->provinsi_id)->paginate(5);
         } elseif ($user->isChangeLeader()) {
-            $canStatus = [1, 2, 4];
+            $canStatus = [1, 2, 4, 5];
             $cans =  Can::where('tahun_sk', $year)->whereIn('status_sk', $canStatus)->orderByDesc('created_at')->where('provinsi_id', $user->provinsi_id)->paginate(5);
         }
 
@@ -145,7 +145,7 @@ class CanController extends Controller
 
             //set semua can sebelumnya yang mempunyai status 2 dan set menjadi = 4
 
-            $can->status_sk = 1;
+            $can->status_sk = 5;
             $can->save();
 
             $message = 'Data berhasil dikirim';
@@ -239,7 +239,7 @@ class CanController extends Controller
             //         ->with('success', $message)->with('warning', $warning);
             // }
 
-            $can->status_sk = 1;
+            $can->status_sk = 5;
             $can->save();
 
             $message = 'Data berhasil dikirim';

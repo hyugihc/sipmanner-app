@@ -95,6 +95,10 @@
                                             <dd>Sudah Disetujui (Tidak Aktif)</dd>
                                         @break
 
+                                        @case(5)
+                                            <dd>Sudah Dientri</dd>
+                                        @break
+
                                         @default
                                             <dd>Tidak ada yang sesuai</dd>
                                     @endswitch

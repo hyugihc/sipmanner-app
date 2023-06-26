@@ -118,6 +118,9 @@ class Can extends Model
             case 4:
                 return "Terentri";
                 break;
+            case 5:
+                return "Terentri";
+                break;
 
             default:
                 # code...
