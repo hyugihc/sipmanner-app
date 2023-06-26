@@ -69,12 +69,7 @@ class CanPolicy
         }
         if ($user->isChangeChampion()) {
             if ($user->provinsi->isNotPusat()) {
-                $can = Can::where('provinsi_id', $user->provinsi_id)->where('tahun_sk', $year)->where('status_sk', '!=', '2')->count();
-                if ($can != 0) {
-                    return Response::deny('Masih ada yang belum disetujui');
-                } else {
-                    return Response::allow();
-                }
+                return Response::allow();
             } else {
                 return Response::deny('Hanya Admin yang bisa upload Data CAN BPS Pusat');
             }

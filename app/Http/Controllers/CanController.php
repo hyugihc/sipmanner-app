@@ -42,14 +42,14 @@ class CanController extends Controller
 
         $cans = null;
         if ($user->isAdminOrTopLeader()) {
-            $cans = Can::where('tahun_sk', $year)->orderBy('status_sk')->paginate(25);
+            $cans = Can::where('tahun_sk', $year)->orderByDesc('created_at')->paginate(25);
         } elseif (($user->isChangeChampion() or $user->isChangeLeader()) and $user->provinsi->isPusat()) {
-            $cans =  Can::where('tahun_sk', $year)->where('status_sk', 2)->orderBy('tahun_sk')->where('pusat', 1)->paginate(5);
+            $cans =  Can::where('tahun_sk', $year)->where('status_sk', 2)->orderByDesc('created_at')->where('pusat', 1)->paginate(5);
         } elseif ($user->isChangeChampion()) {
-            $cans =  Can::where('tahun_sk', $year)->orderBy('status_sk')->where('provinsi_id', $user->provinsi_id)->paginate(5);
+            $cans =  Can::where('tahun_sk', $year)->orderByDesc('created_at')->where('provinsi_id', $user->provinsi_id)->paginate(5);
         } elseif ($user->isChangeLeader()) {
             $canStatus = [1, 2, 4];
-            $cans =  Can::where('tahun_sk', $year)->whereIn('status_sk', $canStatus)->orderBy('status_sk')->where('provinsi_id', $user->provinsi_id)->paginate(5);
+            $cans =  Can::where('tahun_sk', $year)->whereIn('status_sk', $canStatus)->orderByDesc('created_at')->where('provinsi_id', $user->provinsi_id)->paginate(5);
         }
 
         return view('cans.index', compact('cans'));
@@ -126,23 +126,32 @@ class CanController extends Controller
 
         //jika submit
         if ($request->has('submit')) {
+
+            // try {
+            //     $changeLeader = User::where('role_id', 2)->where('provinsi_id', $user->provinsi_id)->first();
+            //     Notification::send($changeLeader, new CanSubmittedToCL($can));
+            //     $message = 'Data berhasil disubmit ke Change Leader';
+            //     $info = 'Email notifikasi telah dikirim ke Change Leader';
+            //     return redirect()->to(config('app.url') . '/cans')
+            //         ->with('success', $message)->with('info', $info);
+            // } catch (\Exception $e) {
+            //     //buat log
+            //     Log::error($e->getMessage());
+            //     $message = 'Data berhasil disubmit ke Change Leader';
+            //     $info = 'Email notifikasi gagal dikirim ke Change Leader';
+            //     return redirect()->to(config('app.url') . '/cans')
+            //         ->with('success', $message)->with('info', $info);
+            // }
+
+            //set semua can sebelumnya yang mempunyai status 2 dan set menjadi = 4
+
             $can->status_sk = 1;
             $can->save();
-            try {
-                $changeLeader = User::where('role_id', 2)->where('provinsi_id', $user->provinsi_id)->first();
-                Notification::send($changeLeader, new CanSubmittedToCL($can));
-                $message = 'Data berhasil disubmit ke Change Leader';
-                $info = 'Email notifikasi telah dikirim ke Change Leader';
-                return redirect()->to(config('app.url') . '/cans')
-                    ->with('success', $message)->with('info', $info);
-            } catch (\Exception $e) {
-                //buat log
-                Log::error($e->getMessage());
-                $message = 'Data berhasil disubmit ke Change Leader';
-                $info = 'Email notifikasi gagal dikirim ke Change Leader';
-                return redirect()->to(config('app.url') . '/cans')
-                    ->with('success', $message)->with('info', $info);
-            }
+
+            $message = 'Data berhasil dikirim';
+            $info = 'Data Tidak perlu persetujuan Change Leader lagi';
+            return redirect()->to(config('app.url') . '/cans')
+                ->with('success', $message)->with('info', $info);
         } else {
             $can->status_sk = 0;
             $can->save();
@@ -212,24 +221,31 @@ class CanController extends Controller
         $can->save();
 
         if ($request->has('submit')) {
+
+            // try {
+            //     $user = Auth::user();
+            //     $changeLeader = User::where('role_id', 2)->where('provinsi_id', $user->provinsi_id)->first();
+            //     Notification::send($changeLeader, new CanSubmittedToCL($can));
+            //     $message = 'Data berhasil disubmit ke Change Leader';
+            //     $info = 'Email notifikasi telah dikirim ke Change Leader';
+            //     return redirect()->to(config('app.url') . '/cans')
+            //         ->with('success', $message)->with('info', $info);
+            // } catch (\Exception $e) {
+            //     //buat log
+            //     Log::error($e->getMessage());
+            //     $message = 'Data berhasil disubmit ke Change Leader';
+            //     $warning = 'Email notifikasi gagal dikirim ke Change Leader';
+            //     return redirect()->to(config('app.url') . '/cans')
+            //         ->with('success', $message)->with('warning', $warning);
+            // }
+
             $can->status_sk = 1;
             $can->save();
-            try {
-                $user = Auth::user();
-                $changeLeader = User::where('role_id', 2)->where('provinsi_id', $user->provinsi_id)->first();
-                Notification::send($changeLeader, new CanSubmittedToCL($can));
-                $message = 'Data berhasil disubmit ke Change Leader';
-                $info = 'Email notifikasi telah dikirim ke Change Leader';
-                return redirect()->to(config('app.url') . '/cans')
-                    ->with('success', $message)->with('info', $info);
-            } catch (\Exception $e) {
-                //buat log
-                Log::error($e->getMessage());
-                $message = 'Data berhasil disubmit ke Change Leader';
-                $warning = 'Email notifikasi gagal dikirim ke Change Leader';
-                return redirect()->to(config('app.url') . '/cans')
-                    ->with('success', $message)->with('warning', $warning);
-            }
+
+            $message = 'Data berhasil dikirim';
+            $info = 'Data Tidak perlu persetujuan Change Leader lagi';
+            return redirect()->to(config('app.url') . '/cans')
+                ->with('success', $message)->with('info', $info);
         } else {
             $can->status_sk = 0;
             $can->save();

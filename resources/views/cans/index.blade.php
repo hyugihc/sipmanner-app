@@ -72,10 +72,10 @@
                                         <td>{{ $can->nomor_sk }}</td>
                                         <td>{{ $can->tanggal_sk }}</td>
                                         <td>{{ $can->jumlahCAN() }}</td>
-                                        <td>{{ $can->getCanStatus() }}
-                                            @if ($can->status_sk == 1)
-                                                <br> <span class="badge badge-info right">Perlu Tindakan</span>
-                                            @endif
+                                        <td>{{  $can->getCanStatus() }} </span>
+                                            {{-- @if ($can->status_sk == 1)
+                                                <br> Perlu Tindakan
+                                            @endif --}}
                                         </td>
 
                                         <td>

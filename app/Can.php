@@ -107,16 +107,16 @@ class Can extends Model
                 return "Draft";
                 break;
             case 1:
-                return "Diajukan ke Change Leader";
+                return "Terentri";
                 break;
             case 2:
-                return "Disetujui (Aktif)";
+                return "Terentri";
                 break;
             case 3:
                 return "Ditolak";
                 break;
             case 4:
-                return "Disetujui (Tidak Aktif)";
+                return "Terentri";
                 break;
 
             default:
