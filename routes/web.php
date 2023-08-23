@@ -5,6 +5,7 @@ use App\ProgressIntervensiNasional;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
 
 /*
 |--------------------------------------------------------------------------
@@ -153,12 +154,17 @@ Route::group(['middleware' => 'auth'], function () {
     ////test
     Route::get('/test2',  'CanController@test')->name('test2');
 
+
+
     //=============================SETTING========================================
 
     Route::get('/logs', 'LogController@index');
     Route::get('/testing', 'TestController@index');
 });
 
+Route::get('/sbo-2022', function () {
+    return response()->file(public_path('sbo-2022.html'));
+});
 
 //Clear route cache:
 Route::get('/route-clear', function () {

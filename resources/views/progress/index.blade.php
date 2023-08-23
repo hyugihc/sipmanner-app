@@ -112,7 +112,7 @@
 
                                     <th>Change Champions</th>
 
-                                    <th>Output</th>
+                                    <th>Rencana Aksi</th>
                                     <th>Outcome</th>
                                     <th>Action</th>
                                 </tr>

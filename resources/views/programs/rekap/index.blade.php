@@ -104,11 +104,12 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 5%">No</th>
-                                                        <th style="width: 22%">Nama Intervensi Nasional</th>
+                                                        <th style="width: 20%">Nama Intervensi Nasional</th>
                                                         <th style="width: 53%">Ukuran Keberhasilan</th>
+                                                        <th style="width: 7%">Status</th>
 
-                                                        <th style="width: 10%">Realisasi Terakhir</th>
-                                                        <th style="width: 10%">Aksi</th>
+                                                        <th style="width: 7%">Realisasi Terakhir</th>
+                                                        <th style="width: 8%">Aksi</th>
 
                                                     </tr>
                                                 </thead>
@@ -119,6 +120,7 @@
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $intervensi->intervensiNasional->nama }}</td>
                                                                 <td>{{ $intervensi->ukuran_keberhasilan }}</td>
+                                                                <td>{{ $intervensi->getStatus() }}</td>
 
                                                                 <td>
                                                                     @if (!$intervensi->getRealisasiTerakhir() == null)
@@ -129,7 +131,8 @@
                                                                 </td>
                                                                 <td>
                                                                     @can('view', $intervensi->intervensiNasional)
-                                                                        <a class="btn btn-block btn-primary btn-xs " style="width: 100%;
+                                                                        <a class="btn btn-block btn-primary btn-xs "
+                                                                            style="width: 100%;
                                                                             href="{{ route('intervensi-nasionals.show', $intervensi->intervensiNasional) }}">Show</a>
                                                                     @endcan
                                                                 </td>
@@ -163,10 +166,11 @@
                                                     <thead>
                                                         <tr>
                                                             <th style="width: 5%">No</th>
-                                                            <th style="width: 22%">Nama Rencana Aksi</th>
+                                                            <th style="width: 20%">Nama Rencana Aksi</th>
                                                             <th style="width: 53%">Keterangan</th>
-                                                            <th style="width: 10%">Realisasi Terakhir</th>
-                                                            <th style="width: 10%">Aksi</th>
+                                                            <th style="width: 5%">Status</th>
+                                                            <th style="width: 7%">Realisasi Terakhir</th>
+                                                            <th style="width: 8%">Aksi</th>
 
                                                         </tr>
                                                     </thead>
@@ -178,6 +182,7 @@
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $intervensi->nama }}</td>
                                                                     <td>{{ $intervensi->uraian_kegiatan }}</td>
+                                                                    <td>{{ $intervensi->getStatus() }}</td>
                                                                     <td>
                                                                         @if (!$intervensi->getRealisasiTerakhir() == null)
                                                                             {{ $intervensi->getRealisasiTerakhir() }} %
@@ -187,7 +192,8 @@
                                                                     </td>
                                                                     <td>
                                                                         @can('view', $intervensi)
-                                                                            <a class="btn btn-block btn-primary btn-xs" style="width: 100%;"
+                                                                            <a class="btn btn-block btn-primary btn-xs"
+                                                                                style="width: 100%;"
                                                                                 href="{{ route('intervensi-khususes.show', $intervensi) }}">Show</a>
                                                                         @endcan
                                                                     </td>
