@@ -292,7 +292,7 @@
                                         Belum Disetujui
                                     @break
                                     @case(2)
-                                        Belum Upload
+                                        Sudah Disetujui
                                     @break
                                     @case(3)
                                         Tidak Disetujui

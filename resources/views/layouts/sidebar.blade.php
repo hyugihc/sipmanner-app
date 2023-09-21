@@ -40,6 +40,14 @@
                 </li>
 
 
+                @if (Auth::user()->getSetting('tahun') == 2023)
+                    <li class="nav-item">
+                        <a href="{{ route('sbo-2022') }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Publikasi SBO 2022</p>
+                        </a>
+                    </li>
+                @endif
 
 
                 <li class="nav-header">Change Agent Network</li>

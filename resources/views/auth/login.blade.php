@@ -20,7 +20,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="#">SIP<b>MANNER</b> </a>
+            <a href="#">LOG<b>IN</b> </a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
@@ -90,7 +90,7 @@
                 <p class="mb-1">
                     {{-- <a href="forgot-password.html">I forgot my password</a> --}}
 
-                    Tidak bisa login?<br> email ke rb_bps@bps.go.id sekarang
+                    {{-- Tidak bisa login?<br> email ke rb_bps@bps.go.id sekarang --}}
                 </p>
 
                 {{-- </p>

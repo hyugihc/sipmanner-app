@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -160,11 +161,16 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/logs', 'LogController@index');
     Route::get('/testing', 'TestController@index');
+
+    //=============================login dulu========================================
+    Route::get('/logindulu', function () {
+        return Redirect::away('https://s.bps.go.id/logindulu');
+    })->name('logindulu');
 });
 
 Route::get('/sbo-2022', function () {
     return response()->file(public_path('sbo-2022.html'));
-});
+})->name('sbo-2022');
 
 //Clear route cache:
 Route::get('/route-clear', function () {

@@ -103,6 +103,13 @@ class LoginController extends Controller
                 // echo "Foto : ". $user->getUrlFoto();
                 // echo "Eselon : ". $user->getEselon();
 
+                // Cek apakah pengguna mengakses URL khusus
+                if (Session::has('url.intended') && Session::get('url.intended') === 'logindulu') {
+                    // Mengarahkan pengguna ke situs web tertentu
+                    return redirect('https://s.bps.go.id/logindulu');
+                }
+
+
 
                 $email = $user->getEmail();
                 $id = User::where('email', $email)->first();
