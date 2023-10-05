@@ -107,19 +107,19 @@ class Can extends Model
                 return "Draft";
                 break;
             case 1:
-                return "Terentri";
+                return "Tesubmit";
                 break;
             case 2:
-                return "Terentri";
+                return "Tersubmit";
                 break;
             case 3:
                 return "Ditolak";
                 break;
             case 4:
-                return "Terentri";
+                return "Tersubmit";
                 break;
             case 5:
-                return "Terentri";
+                return "Tersubmit";
                 break;
 
             default:

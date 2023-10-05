@@ -69,9 +69,6 @@
                                         <td>{{ $progress_program->uraian_program }}</td>
                                         <td>{{ $progress_program->tanggal }}</td>
                                         <td>{{ $progress_program->getStatus() }}
-                                            @if ($progress_program->status == 1)
-                                                <br> <span class="badge badge-info right">Perlu Tindakan</span>
-                                            @endif
                                         </td>
                                         <td>
                                             <form

@@ -5,13 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sipmanner-app</title>
-    
+
     <link rel="icon" href="{{ asset('') }}assets/dist/img/top.png">
 
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('') }}plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
@@ -105,6 +104,13 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        Update 2.2.0
+                        <ul>
+                            {{-- judul --}}
+                            <li> submit <b>Progres</b> tidak perlu persetujuan Change Leader</li>
+                            <li> submit <b> Data CAN</b> tidak perlu persetujuan Change Leader</li>
+
+                        </ul>
                         Versi 2.2.0
                         <ul>
                             {{-- judul --}}
@@ -136,12 +142,12 @@
     <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>
 
     <script>
-        @if (Session::has('success'))
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": false
-            }
-            toastr.success("{{ Session::get('success') }}");
+        @if(Session::has('success'))
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": false
+        }
+        toastr.success("{{ Session::get('success') }}");
         @endif
     </script>
 </body>

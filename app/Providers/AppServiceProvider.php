@@ -67,21 +67,10 @@ class AppServiceProvider extends ServiceProvider
                 }
                 $submittedProgram = $submittedIkCount + $submittedInCount;
 
-
-                $intervensiNasionalProvinsiApproved = IntervensiNasionalProvinsi::where('provinsi_id', $user->provinsi_id)->whereIn('intervensi_nasional_id', $intervensiNasionalKeys)->where('status', 2)->get();
-                $intervensiNasionalProvinsiApprovedModelKeys = $intervensiNasionalProvinsiApproved->modelKeys();
-                $submittedPinCount =  $intervensiNasionalProvinsiApprovedModelKeys != 0 ?
-                    ProgressIntervensiNasional::whereIn('intervensi_nasional_provinsi_id',  $intervensiNasionalProvinsiApprovedModelKeys)->where('status', 1)->count() : 0;
-                $intervensiKhususes = IntervensiKhusus::where('provinsi_id', $user->provinsi_id)->where('tahun', $year)->where('status', 2)->get();
-                $intervensiKhususKeys = $intervensiKhususes->modelKeys();
-                $submittedPikCount = $intervensiKhususKeys != 0 ? ProgressIntervensiKhusus::whereIn('intervensi_khusus_id', $intervensiKhususKeys)->where('status', 1)->count() : 0;
-
-                $submittedProgress =  $submittedPinCount +  $submittedPikCount;
-
                 $reportCount = Report::where('provinsi_id', $user->provinsi_id)->where('tahun', $year)->where('status', 1)->count();
 
 
-                $counts = ['canCount' => $submittedCansCount, 'programCount' => $submittedProgram, 'progressCount' =>  $submittedProgress, 'reportCount' => $reportCount];
+                $counts = ['canCount' => $submittedCansCount, 'programCount' => $submittedProgram,  'reportCount' => $reportCount];
             } else {
                 $counts = ['canCount' => 0, 'programCount' => 0, 'progressCount' => 0, 'reportCount' => 0];
             }

@@ -63,7 +63,6 @@ class ProgressIntervensiKhususPolicy
         //deny jika provinsi_id intervensi_khusus tidak sama dengan user provinsi_id
         if ($user->provinsi_id != $intervensiKhusus->provinsi_id) return Response::deny('satker tidak sama');
         return true;
-        
     }
 
     /**
@@ -78,9 +77,7 @@ class ProgressIntervensiKhususPolicy
         //
 
         if ($user->role_id == 3 and $user->id == $progressIntervensiKhusus->intervensi_khusus->user_id) {
-            if ($progressIntervensiKhusus->status == 3 or $progressIntervensiKhusus->status == 0)
-                return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
-            return false;
+            return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
         }
         return false;
     }
@@ -97,9 +94,7 @@ class ProgressIntervensiKhususPolicy
         //
 
         if ($user->role_id == 3 and $user->id == $progressIntervensiKhusus->intervensi_khusus->user_id) {
-            if ($progressIntervensiKhusus->status == 3 or $progressIntervensiKhusus->status == 0)
-                return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
-            return false;
+            return  $user->provinsi_id == $progressIntervensiKhusus->intervensi_khusus['provinsi_id'];
         }
         return false;
     }
