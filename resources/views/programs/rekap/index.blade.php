@@ -132,8 +132,8 @@
                                                                 <td>
                                                                     @can('view', $intervensi->intervensiNasional)
                                                                         <a class="btn btn-block btn-primary btn-xs "
-                                                                            style="width: 100%;
-                                                                            href="{{ route('intervensi-nasionals.show', $intervensi->intervensiNasional) }}">Show</a>
+                                                                            style="width: 100%;"
+                                                                            href="{{ route('inp.show', $intervensi)}}">Show</a>
                                                                     @endcan
                                                                 </td>
                                                             </tr>

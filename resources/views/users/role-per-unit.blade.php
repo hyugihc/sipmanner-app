@@ -43,7 +43,8 @@
                                             @if (!$provinsi->changeLeader()->exists())
                                                 -
                                             @else
-                                                {{ $provinsi->changeLeader['name'] }}
+                                                {{ $provinsi->changeLeader['name'] }} <br>
+                                                ({{$provinsi->changeLeader['email']}})
                                             @endif
 
 
@@ -53,8 +54,9 @@
                                                 $x = 1;
                                             @endphp
                                             @foreach ($provinsi->changeChampions as $cc)
-                                                ({{ $x }})
-                                                {{ $cc['name'] }} 
+                                            
+                                                {{ $cc['name'] }} <br>
+                                                ({{$cc['email']}})
                                                 <br>
                                                 @php
                                                     $x++;

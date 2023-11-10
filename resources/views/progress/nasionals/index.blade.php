@@ -55,7 +55,8 @@
                                         <th>Satker</th>
                                     @endif
                                     <th>Penjelasan Progres</th>
-                                    <th>Bulan</th>
+                                    <th>Dilaporkan pada</th>  
+                                    <th>Bulan Pelaksanaan</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -71,6 +72,7 @@
                                             <td>{{ $progress_program->intervensiNasionalProvinsi->provinsi['nama'] }}</td>
                                         @endif
                                         <td>{{ $progress_program->uraian_program }}</td>
+                                        <td>{{ $progress_program->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $progress_program->getBulan() }} </td>
                                         <td>{{ $progress_program->getStatus() }}
                                          

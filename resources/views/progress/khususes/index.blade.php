@@ -54,7 +54,8 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Penjelasan Progress</th>
-                                    <th>Tanggal</th>
+                                    <th>Dilaporkan pada</th>
+                                    <th>Tanggal Pelaksanaan</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -67,6 +68,9 @@
                                     <tr>
                                         <td>{{ $i }}</td>
                                         <td>{{ $progress_program->uraian_program }}</td>
+                                        <!-- format dd mmm yyyy -->
+                                        <td>{{ $progress_program->created_at->format('Y-m-d') }}</td>
+                                            <!-- format dd mmm yyyy -->
                                         <td>{{ $progress_program->tanggal }}</td>
                                         <td>{{ $progress_program->getStatus() }}
                                         </td>

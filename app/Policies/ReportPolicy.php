@@ -6,6 +6,8 @@ use App\Report;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
+use Illuminate\Auth\Access\Response;
+
 class ReportPolicy
 {
     use HandlesAuthorization;
@@ -36,12 +38,25 @@ class ReportPolicy
     public function view(User $user, Report $report)
     {
         //
+
         if ($user->role_id == 1) return true; //adminTS
-        if ($user->role_id == 2) return $user->provinsi_id == $report->provinsi_id; //cl
-        if ($user->role_id == 3) return $user->provinsi_id == $report->provinsi_id; //cc
-        if ($user->role_id == 5) return true; //tl
+        //jika masih draft, hanya CC dan CL satkernya yang bisa melihat
+        if ($report->status == 0 or $report->status == 3) {
+            if ($user->role_id == 3) {
+                return $user->provinsi_id == $report->provinsi_id;
+            } else {
+                return Response::deny('Laporan masih bersatus draft');
+            }
+        }
+        //Jika sudah diajukan dan diapprove, CC dan CL bisa melihat satker lain
+        if ($report->status == 1 or $report->status == 2 or $report->status == 4) {
+            if ($user->role_id == 2) return true; //cl
+            if ($user->role_id == 3) return true; //cc
+            return false;
+        }
         return false;
     }
+
 
     /**
      * Determine whether the user repo$report create models.
@@ -64,6 +79,7 @@ class ReportPolicy
     public function update(User $user, Report $report)
     {
         //
+        if ($user->role_id == 1) return true; //adminTS
         if ($user->role_id == 3 and ($report->status == 0 or $report->status == 3)) return $user->provinsi_id == $report->provinsi_id; //cc
         return false;
     }
@@ -78,13 +94,13 @@ class ReportPolicy
     public function delete(User $user, Report $report)
     {
         //
-        if ($user->isChangeChampion()) {
-            if ($user->provinsi_id == $report->provinsi_id and $report->status != 2 and $report->status != 4) {
-                return true;
-            }
+        if ($user->role_id == 1) return true; //adminTS
+        if ($user->isChangeChampionOf($report->provinsi_id)) {
+            if ($report->status == 0 or $report->status == 3) return true;
+            return false;
+        } else {
             return false;
         }
-        return false;
     }
 
     /**
@@ -97,6 +113,7 @@ class ReportPolicy
     public function restore(User $user, Report $report)
     {
         //
+        if ($user->role_id == 1) return true; //adminTS
     }
 
     /**
@@ -113,8 +130,38 @@ class ReportPolicy
 
     public function approve(User $user, Report $report)
     {
+        if ($user->role_id == 1) return true; //adminTS
         if ($user->role_id == 2) {
             if ($report->status == 1 or $report->status == 3) {
+                return $user->provinsi_id == $report->provinsi_id;
+            } else {
+                //Tambahkan pesan error, jika status bukan 1 atau 3
+                return Response::deny('Laporan tidak berstatus diajukan ke Change Leader');
+            }
+        }
+        return false;
+    }
+
+    //upload laporan
+    public function uploadLaporan(User $user, Report $report)
+    {
+        if ($user->role_id == 1) return true; //adminTS
+        if ($user->role_id == 3) {
+            if ($report->status == 2) {
+                return $user->provinsi_id == $report->provinsi_id;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    //unsubmit
+    public function unsubmit(User $user, Report $report)
+    {
+
+        if ($user->role_id == 3 or $user->role_id == 1) {
+            if ($report->status == 1) {
                 return $user->provinsi_id == $report->provinsi_id;
             } else {
                 return false;

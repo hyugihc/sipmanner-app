@@ -56,14 +56,6 @@
                 </a>
             </li>
 
-            @if (Auth::user()->isAdminOrTopLeader())
-            <li class="nav-item">
-                <a href="{{ route('rekap.can') }}" class="nav-link {{ Request::is('rekap-can*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>Rekap CAN</p>
-                </a>
-            </li>
-            @endif
 
             @endcan
 
@@ -106,7 +98,18 @@
             </li>
             @endcan
 
+            <li class="nav-header">Rekap</li>
+
             <!-- jika pengguna adalah admin tampilkan menu dibawah -->
+            @if (Auth::user()->isAdminOrTopLeader())
+            <li class="nav-item">
+                <a href="{{ route('rekap.can') }}" class="nav-link {{ Request::is('rekap-can*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-copy"></i>
+                    <p>Rekap CAN</p>
+                </a>
+            </li>
+            @endif
+
             @if (Auth::user()->isAdminOrTopLeader())
             <li class="nav-item">
                 <a href="{{ route('rekap.intervensikhusus.index') }}" class="nav-link {{ Request::is('rekap-rencanaaksi*') ? 'active' : '' }}">
@@ -115,6 +118,13 @@
                 </a>
             </li>
             @endif
+            <li class="nav-item">
+                <a href="{{ route('rekap.laporan.index') }}" class="nav-link {{ Request::is('rekap-laporan*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-copy"></i>
+                    <p>Rekap Laporan</p>
+                </a>
+            </li>
+
 
 
 
@@ -135,9 +145,10 @@
 
 
 
-            @can('viewAny', App\User::class)
+
             <li class="nav-header">Manajemen User</li>
-            
+
+            @can('viewAny', App\User::class)
             <li class="nav-item ">
                 <a href="{{ route('users.index') }}" class="nav-link {{ (Request::is('users*') and !Request::is('users/recap*')) ? 'active' : '' }}">
                     <i class="nav-icon far fa-plus-square"></i>
@@ -156,7 +167,7 @@
                 </a>
             </li>
             @endcan
-            @if (Auth::user()->isChangeChampion())
+            @if (Auth::user()->isChangeChampion() or Auth::user()->isChangeLeader())
             <li class="nav-item ">
                 <a href="{{ route('users.provinsi') }}" class="nav-link {{ Request::is('users/unit*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-table"></i>
@@ -170,7 +181,10 @@
 
 
 
+
             <li class="nav-header">Lainnya</li>
+
+
             @if (Auth::user()->getSetting('tahun') == 2023)
             <li class="nav-item">
                 <a href="{{ route('sbo-2022') }}" class="nav-link">
@@ -179,6 +193,8 @@
                 </a>
             </li>
             @endif
+
+
             <li class="nav-item">
                 <a href="{{ route('faq') }}" class="nav-link {{ Request::is('faq*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-search"></i>

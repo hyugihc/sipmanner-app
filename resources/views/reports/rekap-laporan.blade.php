@@ -4,6 +4,17 @@
 <!-- Toastr -->
 <link rel="stylesheet" href="{{ asset('') }}assets/plugins/toastr/toastr.min.css">
 
+<!-- Data Table -->
+<link rel="stylesheet" href="{{ asset('') }}assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="{{ asset('') }}assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#laporan-table').DataTable();
+
+    });
+</script>
 
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -11,15 +22,7 @@
         <div class="row mb-2">
 
 
-            <div class="col-sm-2">
-                @if (!Auth::user()->isAdmin())
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
-                    Create
-                </button>
-                @endif
-            </div><!-- /.col -->
-
-            <div class="col-sm-4">
+            <div class="col-sm-6">
             </div><!-- /.col -->
 
             <div class="col-sm-6">
@@ -36,35 +39,40 @@
 <!-- Main content -->
 <section class="content">
 
+    @if (Auth::user()->isChangeLeader() or Auth::user()->isChangeChampion())
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h5><i class="icon fas fa-check"></i> Informasi</h5>
+        Hanya Laporan yang berstatus <b>Diajukan ke Change Leader</b> dan <b>Disetujui</b> saja yang tampil disini
+    </div>
+    @endif
+
+    @if (Auth::user()->isAdmin() )
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h5><i class="icon fas fa-check"></i> Informasi</h5>
+        Pada sisi CC & CL, Hanya Laporan yang berstatus <b>Diajukan ke Change Leader</b> dan <b>Disetujui</b> saja yang tampil disini 
+    </div>
+    @endif
+
+
     <div class="row">
         <div class="col-12">
-            <div class="card">
+
+            <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Laporan</h3>
+                    <h3 class="card-title">Rekap Laporan</h3>
 
-                    <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-default">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
+                <div class="card-body table-responsive">
+                    <table class="table table-hover" id="laporan-table">
                         <thead>
                             <tr>
-                                @if (Auth::user()->isAdmin())
+                                <th>No</th>
                                 <th>Satker</th>
-                                @endif
 
                                 <th>Semester</th>
-                                <th>Tanggal Modified</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -73,23 +81,22 @@
 
                             @foreach ($reports as $report)
                             <tr>
-                                @if (Auth::user()->isAdmin())
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $report->provinsi->nama }}</td>
-                                @endif
+
 
                                 <td>{{ $report->tahun }}-{{ $report->semester }}</td>
-                                <td>{{ date('d-M-Y', strtotime($report->updated_at)) }}</td>
 
                                 <td>{{ $report->getStatus() }}
                                     @if ($report->status == 1)
                                     <br> <span class="badge badge-info right">Perlu Tindakan</span>
                                     @endif
                                     <!-- @if ($report->status == 2)
-                                                <br> <span class="badge badge-info right">Belum Upload softcopy</span>
-                                            @endif
-                                            @if ($report->status == 4)
-                                                <br> <span class="badge badge-info right">Sudah Upload softcopy</span>
-                                            @endif -->
+                                    <br> <span class="badge badge-info right">Belum Upload softcopy</span>
+                                    @endif
+                                    @if ($report->status == 4)
+                                    <br> <span class="badge badge-info right">Sudah Upload softcopy</span>
+                                    @endif -->
                                 </td>
                                 <td>
                                     @can('view', $report)
@@ -111,17 +118,6 @@
                                         <button type="submit" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" class="btn btn-block btn-danger btn-xs" style="margin-top: 10px">Delete</button>
                                     </form>
                                     @endcan
-
-                                    <!-- batalkan kirim ke CL-->
-                                    @can('unsubmit', $report)
-                                    <form action="{{ route('reports.unsubmit', $report) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit" onclick="return confirm('Apakah anda yakin akan membatalkan pengajuan laporan ini?')" class="btn btn-block btn-secondary btn-xs" style="margin-top: 10px">Batalkan Pengajuan</button>
-                                    </form>
-                                    @endcan
-
-
                                 </td>
                             </tr>
                             @endforeach
@@ -261,7 +257,9 @@
     <!-- /.modal -->
 
     <!-- Toastr -->
+
     <script src="{{ asset('') }}assets/plugins/toastr/toastr.min.js"></script>
+
 
     <script>
         @if(Session::has('success'))

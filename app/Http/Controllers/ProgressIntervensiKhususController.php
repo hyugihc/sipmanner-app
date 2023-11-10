@@ -25,7 +25,12 @@ class ProgressIntervensiKhususController extends Controller
     public function index(IntervensiKhusus $intervensiKhusus)
     {
         $user = Auth::user();
-        if ($user->provinsi_id != $intervensiKhusus->provinsi_id) abort(403);
+        //jika user bukan admin
+        if (!$user->isAdmin()) {
+
+            if ($user->provinsi_id != $intervensiKhusus->provinsi_id) abort(403, "Anda bukan dari satuan kerja ini");
+            //jika user bukan change champion dan user_id tidak sama dengan intervensi khusus user_id
+        }
 
         if ($user->isChangeLeader() or $user->isTopLeader()) {
             $progressPrograms = $intervensiKhusus->progress_intervensi_khususes()->where("status", "!=", 0)->get();

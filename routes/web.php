@@ -126,13 +126,17 @@ Route::group(['middleware' => 'auth'], function () {
     //upload laporan
     Route::post('/reports/{report}/upload-laporan', 'ReportController@uploadLaporan')->name('reports.upload-laporan');
     //unduh laporan
-    ROute::get('/reports/{report}/download-laporan', 'ReportController@downloadLaporan')->name('reports.download-laporan');
+    Route::get('/reports/{report}/download-laporan', 'ReportController@downloadLaporan')->name('reports.download-laporan');
+    //unsubmit
+    Route::put('/reports/{report}/unsubmit', 'ReportController@unsubmit')->name('reports.unsubmit');
 
     //=============================REKAP========================================    
     //rekap index ke rekap controller
     Route::get('/rekap-rencanaaksi', 'RekapController@indexIntervensi')->name('rekap.intervensikhusus.index');
     //rekap change agent network
     Route::get('/rekap-can',  'UserController@rekapCan')->name('rekap.can');
+    //rekap laporan
+    Route::get('/rekap-laporan', 'ReportController@rekapLaporan')->name('rekap.laporan.index');
 
 
 

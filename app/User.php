@@ -61,6 +61,14 @@ class User extends Authenticatable
         return $this->role->id == 3;
     }
 
+    //apakah changechampion dari provinsi ini
+    public function isChangeChampionOf($provinsi_id)
+    {
+        return $this->role->id == 3 && $this->provinsi_id == $provinsi_id;
+    }
+
+
+
     public function isChangeLeader()
     {
         return $this->role->id == 2;

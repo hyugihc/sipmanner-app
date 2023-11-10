@@ -107,16 +107,17 @@
                         Update 2.2.0
                         <ul>
                             {{-- judul --}}
-                            <li> submit <b>Progres</b> tidak perlu persetujuan Change Leader</li>
-                            <li> submit <b> Data CAN</b> tidak perlu persetujuan Change Leader</li>
+                            <li> menu <b>Rekap Laporan</b></li>
+                            <li> pilihan <b> Batalkan Pengajuan</b> pada <b>Laporan</b></li>
 
                         </ul>
                         Versi 2.2.0
                         <ul>
                             {{-- judul --}}
+                            <li> submit <b>Progres</b> tidak perlu persetujuan Change Leader</li>
+                            <li> submit <b> Data CAN</b> tidak perlu persetujuan Change Leader</li>
                             <li>Menggabungkan input dokumentasi dan bukti dukung pada menu <b>Progres</b></li>
                             <li>Penambahan Fitur Pencarian by Nama pada menu <b>Data</b></li>
-                            <li>Perbaikan bug pada logo <b>Sipmanner</b></li>
                         </ul>
                     </div>
                     <!-- /.card-body -->

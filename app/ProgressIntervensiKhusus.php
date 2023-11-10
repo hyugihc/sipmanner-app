@@ -37,7 +37,8 @@ class ProgressIntervensiKhusus extends Model
                 break;
 
             case '2':
-                return "Disetujui";
+                 #sebelumnya disetujui Change Leader
+                return "Tersubmit";
                 break;
 
             case '3':

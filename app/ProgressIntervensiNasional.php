@@ -30,8 +30,9 @@ class ProgressIntervensiNasional extends Model
                 return "Tersubmit";
                 break;
 
+                #sebelumnya disetujui ke Change Leader
             case '2':
-                return "Disetujui";
+                return "Tersubmit";
                 break;
 
             case '3':

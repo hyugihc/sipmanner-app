@@ -17,6 +17,7 @@ use Throwable;
 use Illuminate\Support\Facades\Notification;
 //define ReportSubmittedToCL
 use App\Notifications\ReportSubmittedToCL;
+use App\Notifications\ReportUnsubmittedToCL;
 //define log
 use Illuminate\Support\Facades\Log;
 
@@ -54,6 +55,28 @@ class ReportController extends Controller
         }
 
         return view('reports.index', compact('reports'));
+    }
+
+    //rekap laporan
+    public function rekapLaporan()
+    {
+        $user = Auth::user();
+        $year = $user->getSetting('tahun');
+
+        //jika admin ambil semua laporan pada tahun tersebut
+        if ($user->isAdmin()) {
+            $reports = Report::where('tahun', $year)->get();
+        }
+        //jika CC atau CL ambil laporan pada tahun tersebut yang berstatus diajukan dan disetujui
+        if ($user->isChangeChampion() or $user->isChangeLeader()) {
+            $clStatus = [1, 2, 4];
+            $reports = Report::where('tahun', $year)->whereIn('status', $clStatus)->get();
+        }
+
+        if ($year == 2021) {
+            return view('reports.2021-index', compact('reports'));
+        }
+        return view('reports.rekap-laporan', compact('reports'));
     }
 
 
@@ -130,7 +153,8 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
-        //
+        //check permission pada report policy bersama pesan errornya kalau ada
+        Auth::user()->cannot('view', $report) ?  abort(403) : true;
         return view('reports.show', compact('report'));
     }
 
@@ -221,7 +245,7 @@ class ReportController extends Controller
             $report->status = 1;
             $report->save();
             //kirim email ke change leader
-           
+
             try {
                 $changeLeader = User::where('role_id', 2)->where('provinsi_id', $user->provinsi_id)->first();
                 Notification::send($changeLeader, new ReportSubmittedToCL($report));
@@ -272,6 +296,30 @@ class ReportController extends Controller
 
         return redirect()->route('reports.index')
             ->with('success', 'Approval berhasil disimpan');
+    }
+
+    //unsubmit
+    public function unsubmit(Report $report)
+    {
+        Auth::user()->cannot('unsubmit', $report) ?  abort(403) : true;
+
+        $report->status = 0;
+        $report->save();
+
+        //kirim email pemberitahuan ke change leader terkait menggunakan try catch
+        try {
+            $changeLeader = User::where('role_id', 2)->where('provinsi_id', $report->provinsi_id)->first();
+            Notification::send($changeLeader, new ReportUnsubmittedToCL($report));
+            $message = 'Laporan berhasil diubah kembali menjadi draft';
+            $info = 'Email notifikasi telah dikirim ke Change Leader';
+            return redirect()->route('reports.index')
+                ->with('success', $message)->with('info', $info);
+        } catch (\Exception $e) {
+            //catatkan di log
+            Log::error($e->getMessage());
+            return redirect()->route('reports.index', $report)->with('success', 'Laporan berhasil diubah kembali menjadi draft')
+                ->with('warning', "Laporan berhasil disubmit, namun email ke change leader gagal dikirim");
+        }
     }
 
     public function print(Request $request, Report $report)
@@ -328,6 +376,8 @@ class ReportController extends Controller
     //upload laporan
     public function uploadLaporan(Request $request, Report $report)
     {
+        Auth::user()->cannot('uploadLaporan', $report) ?  abort(403) : true;
+
         $request->validate([
             'laporan' => 'required|file|mimes:pdf|max:6048',
         ]);
@@ -339,10 +389,7 @@ class ReportController extends Controller
 
 
         $file = $request->file('laporan');
-        $fileName = $report->tahun . '_' . $report->semester . '_' . $report->provinsi->nama . '_' . $report->id;
-        $fileExtension = $file->getClientOriginalExtension();
-        $fileSize = $file->getSize();
-        $fileMimeType = $file->getMimeType();
+        $fileName = $report->tahun . '_' . $report->semester . '_' . $report->provinsi->nama . '_' . $report->id . '.' . $file->getClientOriginalExtension();
         $filePath = 'laporan/' . $fileName;
         $file->storeAs('laporan', $fileName);
         $report->laporan = $filePath;
@@ -362,6 +409,10 @@ class ReportController extends Controller
     //unduh laporan
     public function downloadLaporan(Report $report)
     {
+        // jika $report->laporan tidak berekstensi pdf tambahkan ekstensi pdf pada file yang akan di download
+        // if (!str_contains($report->laporan, '.pdf')) {
+        //     $report->laporan = $report->laporan . '.pdf';
+        // }
         return Storage::disk('local')->download($report->laporan);
     }
 
