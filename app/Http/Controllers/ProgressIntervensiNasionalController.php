@@ -47,6 +47,19 @@ class ProgressIntervensiNasionalController extends Controller
         return view('progress.nasionals.index', compact('intervensiNasional', 'progressPrograms'));
     }
 
+    //index2
+    public function index2(IntervensiNasionalProvinsi $intervensiNasionalProvinsi)
+    {
+        //ambil intervensi nasional dari intervensi nasional provinsi ini
+        $intervensiNasional = $intervensiNasionalProvinsi->intervensiNasional;
+        //tampilkan progres intervensi nasional provinsi ini
+        $progressPrograms = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $intervensiNasionalProvinsi->id)->get();
+        return view('progress.nasionals.index', compact('intervensiNasional', 'progressPrograms'));
+    }
+
+
+
+
     /**
      * Show the form for creating a new resource.
      *

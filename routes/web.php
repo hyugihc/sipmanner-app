@@ -90,6 +90,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pins/{progressIntervensiNasional}/downloaddok', 'ProgressIntervensiNasionalController@downloadDok')->name('pins.download.dok');
     Route::get('/pins/{progressIntervensiNasional}/downloadduk', 'ProgressIntervensiNasionalController@downloadDuk')->name('pins.download.duk');
     Route::put('/pins/{progressIntervensiNasional}/approve', 'ProgressIntervensiNasionalController@approve')->name('pins.approve');
+    //view index progress intervensi nasional provinsi
+    Route::get('/progress-intervensi-nasionals-provinsi/{intervensiNasionalProvinsi}', 'ProgressIntervensiNasionalController@index2')->name('progress-intervensi-nasionals-provinsi.index2');
 
     //====================================PROGRES PIK====================================
     Route::resource('progress/intervensi-khususes.progress-intervensi-khususes', 'ProgressIntervensiKhususController')->middleware('progress.intervensi.khusus');

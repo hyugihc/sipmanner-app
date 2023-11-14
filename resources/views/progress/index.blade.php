@@ -78,7 +78,7 @@
                                     {{ $intervensiNasional->intervensiNasional->outcome }}
                                 </td>
                                 <td>
-                                    <a class="btn btn-block btn-primary btn-xs" href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasional->intervensiNasional->id) }}">Show
+                                    <a class="btn btn-block btn-primary btn-xs" href="{{ route('progress-intervensi-nasionals-provinsi.index2', $intervensiNasional) }}">Lihat
                                         Progress</a>
 
                                 </td>

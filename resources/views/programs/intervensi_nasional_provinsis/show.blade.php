@@ -88,7 +88,7 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-md-2">
-                                <a class="btn btn-block btn-primary btn-xs" href="{{ route('intervensi-nasionals.progress-intervensi-nasionals.index', $intervensiNasionalProvinsi->intervensiNasional->id) }}">Lihat
+                                <a class="btn btn-block btn-primary btn-xs" href="{{ route('progress-intervensi-nasionals-provinsi.index2', $intervensiNasionalProvinsi) }}">Lihat
                                     Progress</a>
                             </div>
                         </div>
