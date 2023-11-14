@@ -44,13 +44,15 @@ class IntervensiKhusus extends Model
     public function getRealisasiTerakhir()
     {
         //ambil progress yang mempunyai status 1 atau 2 pada tanggal terakhir
-        $progress = ProgressIntervensiKhusus::where('intervensi_khusus_id', $this->id)->where('status', 1)->orWhere('status', 2)->orderBy('tanggal', 'desc')->first();
+        $status = [1, 2];
+        $progress = ProgressIntervensiKhusus::where('intervensi_khusus_id', $this->id)->whereIn('status', $status)->orderBy('tanggal', 'desc')->first();
+
         if ($progress == null) {
             return null;
         } else {
             return $progress->realisasi_pelaksanaan_kegiatan;
         }
-        
+
         // if (ProgressIntervensiKhusus::where('intervensi_khusus_id', $this->id)->where('status', 2)->orderBy('tanggal', 'desc')->first() == null) {
         //     return null;
         // } else {
