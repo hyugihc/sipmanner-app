@@ -147,7 +147,7 @@ class LoginController extends Controller
                         $loggedinUser->avatar_text = $en_token;
                     }
                     $loggedinUser->save();
-                    $loggedinUser->setSetting('tahun', '2023');
+                    $loggedinUser->setSetting('tahun', '2024');
                     if (Session::has('url.intended')) {
                         return redirect()->intended();
                     } else {

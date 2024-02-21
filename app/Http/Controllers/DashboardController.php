@@ -162,7 +162,8 @@ class DashboardController extends Controller
         //progress Intervensi Nasional
         $pinMaxs = array();
         foreach ($intervensiNasionalProvinsiKeys as $inpk => $value) {
-            $pinMax = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $value)->where('status', 2)->orderByDesc('realisasi_pelaksanaan_kegiatan')->first();
+            $statusProgres=[1,2];
+            $pinMax = ProgressIntervensiNasional::where('intervensi_nasional_provinsi_id', $value)->whereIn('status', $statusProgres)->orderByDesc('realisasi_pelaksanaan_kegiatan')->first();
             if ($pinMax != null) {
                 $pinMaxs[] = $pinMax;
             }
@@ -171,7 +172,8 @@ class DashboardController extends Controller
         //Progress Intervensi Khusus
         $pikMaxs = array();
         foreach ($intervensiKhususKeys as $ikk => $value) {
-            $pikMax = ProgressIntervensiKhusus::where('intervensi_khusus_id', $value)->where('status', 2)->orderByDesc('tanggal')->first();
+            $statusProgres=[1,2];
+            $pikMax = ProgressIntervensiKhusus::where('intervensi_khusus_id', $value)->whereIn('status', $statusProgres)->orderByDesc('tanggal')->first();
             if ($pikMax != null) {
                 $pikMaxs[] = $pikMax;
             }

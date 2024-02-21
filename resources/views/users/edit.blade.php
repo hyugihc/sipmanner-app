@@ -49,7 +49,7 @@
                                 <div class="form-group">
                                     <label>Email</label>
                                     <input type="text" name="email" class="form-control" placeholder=""
-                                        value="{{ old('email', $user->email) }}" disabled>
+                                        value="{{ old('email', $user->email) }}">
                                 </div>
 
                                 <div class="form-group">

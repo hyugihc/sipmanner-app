@@ -93,6 +93,7 @@ class UserController extends Controller
         $user->password = ($request->password == null) ? true : Hash::make($request->password);
         $user->role_id = $request->role_id;
         $user->provinsi_id = $request->provinsi_id;
+        $user->email= $request->email;
         $user->save();
 
         return redirect()->route('users.index')

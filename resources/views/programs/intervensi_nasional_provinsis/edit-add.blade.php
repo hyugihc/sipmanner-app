@@ -67,7 +67,7 @@
 
                                 <div class="form-group">
                                     <label>Ukuran Keberhasilan*</label>
-                                    <span>(silakan sesuaikan % nya saja)</span>
+                                    <span>(Silakan menambahkan ukuran keberhasilan tanpa mengubah ukuran keberhasilan yang sudah ada)</span>
                                     <textarea type="text" name="ukuran_keberhasilan" class="form-control" placeholder="">{{ old('ukuran_keberhasilan', $intervensiNasionalProvinsi->intervensiNasional->ukuran_keberhasilan) }}</textarea>
                                     </textarea>
                                 </div>

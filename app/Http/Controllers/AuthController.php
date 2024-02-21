@@ -52,7 +52,7 @@ class AuthController extends Controller
         if (Auth::check()) { // true sekalian session field di users nanti bisa dipanggil via Auth
             //Login Success
             $user = User::where('email', $request->input('email'))->first();
-            $user->setSetting('tahun', '2023');
+            $user->setSetting('tahun', '2024');
             // $user->setSettings(['first_name' => 'John', 'last_name' => 'Smith']);
             if ($user->avatar == null) {
                 $user->avatar = 'https://community.bps.go.id/images/nofoto.JPG';

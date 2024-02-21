@@ -25,13 +25,13 @@ class StoreReportRequest extends FormRequest
     {
         $rules = [];
         if ($this->has('submit')) {
-            $rules['bab_i'] = 'required|min:5|max:10000';
-            $rules['bab_ii'] = 'required|min:5|max:10000';
-            $rules['bab_iii'] = 'required|min:5|max:10000';
-            $rules['bab_iv'] = 'required|min:5|max:10000';
-            $rules['bab_v'] = 'required|min:5|max:10000';
-            $rules['bab_vi'] = 'required|min:5|max:10000';
-            $rules['bab_vii'] = 'required|min:5|max:10000';
+            $rules['bab_i'] = 'required|min:5|max:20000';
+            $rules['bab_ii'] = 'required|min:5|max:20000';
+            $rules['bab_iii'] = 'required|min:5|max:20000';
+            $rules['bab_iv'] = 'required|min:5|max:20000';
+            $rules['bab_v'] = 'required|min:5|max:20000';
+            $rules['bab_vi'] = 'required|min:5|max:20000';
+            $rules['bab_vii'] = 'required|min:5|max:20000';
         }
         return $rules;
     }
